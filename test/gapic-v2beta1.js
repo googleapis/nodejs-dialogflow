@@ -227,7 +227,7 @@ describe('AgentsClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -320,7 +320,7 @@ describe('AgentsClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -408,7 +408,7 @@ describe('AgentsClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -496,7 +496,7 @@ describe('AgentsClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -1263,7 +1263,7 @@ describe('EntityTypesClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -1355,7 +1355,7 @@ describe('EntityTypesClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -1447,7 +1447,7 @@ describe('EntityTypesClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -1539,7 +1539,7 @@ describe('EntityTypesClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -1631,7 +1631,7 @@ describe('EntityTypesClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -2076,7 +2076,7 @@ describe('IntentsClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -2168,7 +2168,7 @@ describe('IntentsClient', () => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(responses => {
+        .then(() => {
           assert.fail();
         })
         .catch(err => {
@@ -2641,7 +2641,7 @@ describe('SessionsClient', () => {
 
       var stream = client
         .streamingDetectIntent()
-        .on('data', response => {
+        .on('data', () => {
           assert.fail();
         })
         .on('error', err => {
