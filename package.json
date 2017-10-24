@@ -1,7 +1,7 @@
 {
   "name": "@google-cloud/dialogflow",
   "description": "Dialogflow API client for Node.js",
-  "version": "0.7.1",
+  "version": "0.1.0",
   "license": "Apache-2.0",
   "author": "Google Inc",
   "engines": {
@@ -36,7 +36,10 @@
     "generate-scaffolding": "repo-tools generate all",
     "lint": "repo-tools lint --cmd eslint -- src/ samples/ system-test/ test/",
     "prettier": "repo-tools exec -- prettier --write src/*.js src/*/*.js samples/*.js samples/*/*.js test/*.js test/*/*.js",
-    "test": "mocha test/*.js"
+    "cover": "nyc --reporter=lcov mocha --require intelli-espower-loader test/*.js && nyc report",
+    "samples-test": "cd samples/ && npm link ../ && npm test && cd ../",
+    "test-no-cover": "repo-tools test run --cmd mocha -- test/*.js --no-timeouts",
+    "test": "repo-tools test run --cmd npm -- run cover"
   },
   "dependencies": {
     "google-gax": "^0.14.2",
@@ -46,18 +49,13 @@
   },
   "devDependencies": {
     "@google-cloud/nodejs-repo-tools": "^2.0.11",
-    "async": "^2.5.0",
-    "codecov": "^3.0.0",
     "eslint": "^4.9.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-prettier": "^2.3.1",
     "ink-docstrap": "^1.3.0",
-    "intelli-espower-loader": "^1.0.1",
     "jsdoc": "^3.5.5",
-    "mocha": "^3.5.3",
-    "nyc": "^11.2.1",
-    "power-assert": "^1.4.4",
+    "mocha": "^3.2.0",
     "prettier": "^1.7.4",
     "through2": "^2.0.3"
   }
