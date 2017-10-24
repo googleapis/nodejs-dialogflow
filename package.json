@@ -36,8 +36,7 @@
     "through2": "^2.0.3"
   },
   "scripts": {
-    "publish-module": "node ../../scripts/publish.js dialogflow",
-    "smoke-test": "mocha smoke-test/*.js --timeout 5000",
+    "generate-scaffolding": "repo-tools generate all",
     "test": "mocha test/*.js"
   },
   "license": "Apache-2.0",
