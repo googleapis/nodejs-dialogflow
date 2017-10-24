@@ -1,9 +1,13 @@
 {
-  "repository": "googleapis/nodejs-dialogflow",
   "name": "@google-cloud/dialogflow",
-  "version": "0.7.1",
-  "author": "Google Inc",
   "description": "Dialogflow API client for Node.js",
+  "version": "0.7.1",
+  "license": "Apache-2.0",
+  "author": "Google Inc",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "repository": "googleapis/nodejs-dialogflow",
   "main": "src/index.js",
   "files": [
     "protos",
@@ -24,6 +28,13 @@
     "dialogflow",
     "Dialogflow API"
   ],
+  "contributors": [
+    "Luke Sneeringer <lukesneeringer@google.com>"
+  ],
+  "scripts": {
+    "generate-scaffolding": "repo-tools generate all",
+    "test": "mocha test/*.js"
+  },
   "dependencies": {
     "google-gax": "^0.14.2",
     "lodash.merge": "^4.6.0",
@@ -34,13 +45,5 @@
     "@google-cloud/nodejs-repo-tools": "^2.0.11",
     "mocha": "^3.2.0",
     "through2": "^2.0.3"
-  },
-  "scripts": {
-    "generate-scaffolding": "repo-tools generate all",
-    "test": "mocha test/*.js"
-  },
-  "license": "Apache-2.0",
-  "engines": {
-    "node": ">=4.0.0"
   }
 }
