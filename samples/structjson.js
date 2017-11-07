@@ -20,7 +20,7 @@
 
 'use strict';
 
-function jsonToStructProto (json) {
+function jsonToStructProto(json) {
   const fields = {};
   for (let k in json) {
     fields[k] = jsonValueToProto(json[k]);
@@ -30,15 +30,18 @@ function jsonToStructProto (json) {
 }
 
 const JSON_SIMPLE_TYPE_TO_PROTO_KIND_MAP = {
-  [typeof (0)]: 'numberValue',
-  [typeof ('')]: 'stringValue',
-  [typeof (false)]: 'boolValue'
+  [typeof 0]: 'numberValue',
+  [typeof '']: 'stringValue',
+  [typeof false]: 'boolValue',
 };
 
-const JSON_SIMPLE_VALUE_KINDS =
-    new Set(['numberValue', 'stringValue', 'boolValue']);
+const JSON_SIMPLE_VALUE_KINDS = new Set([
+  'numberValue',
+  'stringValue',
+  'boolValue',
+]);
 
-function jsonValueToProto (value) {
+function jsonValueToProto(value) {
   const valueProto = {};
 
   if (value === null) {
@@ -47,20 +50,20 @@ function jsonValueToProto (value) {
   } else if (value instanceof Array) {
     valueProto.kind = 'listValue';
     valueProto.listValue = {values: value.map(jsonValueToProto)};
-  } else if (typeof (value) === 'object') {
+  } else if (typeof value === 'object') {
     valueProto.kind = 'structValue';
     valueProto.structValue = jsonToStructProto(value);
-  } else if (typeof (value) in JSON_SIMPLE_TYPE_TO_PROTO_KIND_MAP) {
-    const kind = JSON_SIMPLE_TYPE_TO_PROTO_KIND_MAP[typeof (value)];
+  } else if (typeof value in JSON_SIMPLE_TYPE_TO_PROTO_KIND_MAP) {
+    const kind = JSON_SIMPLE_TYPE_TO_PROTO_KIND_MAP[typeof value];
     valueProto.kind = kind;
     valueProto[kind] = value;
   } else {
-    console.warn('Unsupported value type ', typeof (value));
+    console.warn('Unsupported value type ', typeof value);
   }
   return valueProto;
 }
 
-function structProtoToJson (proto) {
+function structProtoToJson(proto) {
   if (!proto || !proto.fields) {
     return {};
   }
@@ -71,7 +74,7 @@ function structProtoToJson (proto) {
   return json;
 }
 
-function valueProtoToJson (proto) {
+function valueProtoToJson(proto) {
   if (!proto || !proto.kind) {
     return null;
   }
@@ -95,5 +98,5 @@ function valueProtoToJson (proto) {
 
 module.exports = {
   jsonToStructProto,
-  structProtoToJson
+  structProtoToJson,
 };

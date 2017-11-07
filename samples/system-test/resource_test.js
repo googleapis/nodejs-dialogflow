@@ -21,114 +21,122 @@ const tools = require(`@google-cloud/nodejs-repo-tools`);
 const cmd = 'node resource.js';
 const sessionId = require('uuid/v1')();
 
-test.before.serial('Remove all existing resources', async (t) => {
+test.before.serial('Remove all existing resources', async t => {
   await tools.runAsync(`${cmd} clear-agent`);
 });
 
-test.serial(
-    'setup-agent should create entity types and intents.', async (t) => {
-      const output = await tools.runAsync(`${cmd} setup-agent`);
-      t.true(output.includes('Created size entity type'));
-      t.true(output.includes('Created topping entity type'));
-      t.true(output.includes('Created Pizza intent'));
-      t.true(output.includes('Created ChangeDeliveryAddress intent'));
-      t.true(output.includes('Created PlaceOrder intent'));
-      t.true(output.includes('Created CancelOrder intent'));
-    });
+test.serial('setup-agent should create entity types and intents.', async t => {
+  const output = await tools.runAsync(`${cmd} setup-agent`);
+  t.true(output.includes('Created size entity type'));
+  t.true(output.includes('Created topping entity type'));
+  t.true(output.includes('Created Pizza intent'));
+  t.true(output.includes('Created ChangeDeliveryAddress intent'));
+  t.true(output.includes('Created PlaceOrder intent'));
+  t.true(output.includes('Created CancelOrder intent'));
+});
 
 test.serial(
-    'show-agent should show all created intents and entity types',
-    async (t) => {
-      const output = await tools.runAsync(`${cmd} show-agent`);
-      t.true(output.indexOf('  Display Name: Pizza') >= 0);
-      t.true(output.indexOf('  Display Name: ChangeDeliveryAddress') >= 0);
-      t.true(output.indexOf('  Display Name: PlaceOrder') >= 0);
-      t.true(output.indexOf('  Display Name: CancelOrder') >= 0);
-      t.true(output.indexOf('  Display Name: size') >= 0);
-      t.true(output.indexOf('  Display Name: topping') >= 0);
-    });
+  'show-agent should show all created intents and entity types',
+  async t => {
+    const output = await tools.runAsync(`${cmd} show-agent`);
+    t.true(output.indexOf('  Display Name: Pizza') >= 0);
+    t.true(output.indexOf('  Display Name: ChangeDeliveryAddress') >= 0);
+    t.true(output.indexOf('  Display Name: PlaceOrder') >= 0);
+    t.true(output.indexOf('  Display Name: CancelOrder') >= 0);
+    t.true(output.indexOf('  Display Name: size') >= 0);
+    t.true(output.indexOf('  Display Name: topping') >= 0);
+  }
+);
 
 // /////////////////////////////////////////////////////////////////////////////
 // Context and session entity type operations.
 // /////////////////////////////////////////////////////////////////////////////
 
 test.serial(
-    'setup-session should create contexts and session entity types',
-    async (t) => {
-      const output = await tools.runAsync(
-          `${cmd} setup-session ${sessionId}`);
-      t.true(output.includes('Created pizza_order context'));
-      t.true(output.includes('Overrode @size entity type'));
-      t.true(output.includes('Extended @topping entity type'));
-    });
+  'setup-session should create contexts and session entity types',
+  async t => {
+    const output = await tools.runAsync(`${cmd} setup-session ${sessionId}`);
+    t.true(output.includes('Created pizza_order context'));
+    t.true(output.includes('Overrode @size entity type'));
+    t.true(output.includes('Extended @topping entity type'));
+  }
+);
 
 test.serial(
-    'show-session should retrieve the created contexts and session entity types',
-    async (t) => {
-      const output = await tools.runAsync(`${cmd} show-session ${sessionId}`);
-      t.true(output.includes('Found context:\n  Name: pizza_order'));
-      t.true(output.includes('Found session entity type:\n  Name: size'));
-      t.true(output.includes(
-          'Found session entity type:\n  Name: topping'));
-    });
+  'show-session should retrieve the created contexts and session entity types',
+  async t => {
+    const output = await tools.runAsync(`${cmd} show-session ${sessionId}`);
+    t.true(output.includes('Found context:\n  Name: pizza_order'));
+    t.true(output.includes('Found session entity type:\n  Name: size'));
+    t.true(output.includes('Found session entity type:\n  Name: topping'));
+  }
+);
 
 test.serial(
-    'update-session-entity-type should update session entity type @size',
-    async (t) => {
-      const output = await tools.runAsync(
-          `${cmd} update-session-entity-type ${sessionId} size`);
-      t.true(output.includes('Session entity type updated'));
-      t.true(output.includes('foo: foo'));
-      t.true(output.includes('bar: bar'));
-    });
+  'update-session-entity-type should update session entity type @size',
+  async t => {
+    const output = await tools.runAsync(
+      `${cmd} update-session-entity-type ${sessionId} size`
+    );
+    t.true(output.includes('Session entity type updated'));
+    t.true(output.includes('foo: foo'));
+    t.true(output.includes('bar: bar'));
+  }
+);
 
-test.serial('update-context should update context "pizza_order"', async (t) => {
+test.serial('update-context should update context "pizza_order"', async t => {
   const output = await tools.runAsync(
-      `${cmd} update-context ${sessionId} pizza_order`);
+    `${cmd} update-context ${sessionId} pizza_order`
+  );
   t.true(output.includes('Context updated'));
   t.true(output.includes('foo: bar'));
 });
 
 test.serial(
-    'clear-session should delete contexts session entity types',
-    async (t) => {
-      const output = await tools.runAsync(`${cmd} clear-session ${sessionId}`);
-      t.true(output.includes('Session entity type topping deleted'));
-      t.true(output.includes('Session entity type size deleted'));
-      t.true(output.includes('Context pizza_order deleted'));
-    });
+  'clear-session should delete contexts session entity types',
+  async t => {
+    const output = await tools.runAsync(`${cmd} clear-session ${sessionId}`);
+    t.true(output.includes('Session entity type topping deleted'));
+    t.true(output.includes('Session entity type size deleted'));
+    t.true(output.includes('Context pizza_order deleted'));
+  }
+);
 
 // /////////////////////////////////////////////////////////////////////////////
 // Other intent and entity type operations.
 // /////////////////////////////////////////////////////////////////////////////
 
-test.serial(
-    'update-entity-type should update entity type', async (t) => {
-      const showAgentOutput = await tools.runAsync(`${cmd} show-agent`);
-      const toppingEntityId = showAgentOutput.match(
-          /Found entity type:\n {2}ID: (.*)\n {2}Display Name: topping/)[1];
-      const output = await tools.runAsync(
-          `${cmd} update-entity-type ${toppingEntityId}`);
-      t.truthy(output.includes('Updated entity type'));
-      t.truthy(output.includes('foo'));
-    });
+test.serial('update-entity-type should update entity type', async t => {
+  const showAgentOutput = await tools.runAsync(`${cmd} show-agent`);
+  const toppingEntityId = showAgentOutput.match(
+    /Found entity type:\n {2}ID: (.*)\n {2}Display Name: topping/
+  )[1];
+  const output = await tools.runAsync(
+    `${cmd} update-entity-type ${toppingEntityId}`
+  );
+  t.truthy(output.includes('Updated entity type'));
+  t.truthy(output.includes('foo'));
+});
 
-test.serial('update-intent should update intent "pizza"', async (t) => {
+test.serial('update-intent should update intent "pizza"', async t => {
   const showAgentOutput = await tools.runAsync(`${cmd} show-agent`);
   const pizzaIntentId = showAgentOutput.match(
-      /Found intent:\n {2}ID: (.*)\n {2}Display Name: Pizza/)[1];
+    /Found intent:\n {2}ID: (.*)\n {2}Display Name: Pizza/
+  )[1];
   const output = await tools.runAsync(`${cmd} update-intent ${pizzaIntentId}`);
   t.truthy(output.includes('Intent updated'));
   t.truthy(output.includes('PLATFORM_TELEGRAM'));
 });
 
 test.serial(
-    'clear-agent should delete all intents and entity types', async (t) => {
-      const output = await tools.runAsync(`${cmd} clear-agent`);
-      t.true(output.includes('Intent Pizza deleted'));
-      t.true(output.includes('Intent ChangeDeliveryAddress deleted'));
-      t.true(output.includes('Intent PlaceOrder deleted'));
-      t.true(output.includes('Intent CancelOrder deleted'));
-      t.true(output.includes('Entity type size deleted'));
-      t.true(output.includes('Entity type topping deleted'));
-    });
+  'clear-agent should delete all intents and entity types',
+  async t => {
+    const output = await tools.runAsync(`${cmd} clear-agent`);
+    t.true(output.includes('Intent Pizza deleted'));
+    t.true(output.includes('Intent ChangeDeliveryAddress deleted'));
+    t.true(output.includes('Intent PlaceOrder deleted'));
+    t.true(output.includes('Intent CancelOrder deleted'));
+    t.true(output.includes('Entity type size deleted'));
+    t.true(output.includes('Entity type topping deleted'));
+  }
+);

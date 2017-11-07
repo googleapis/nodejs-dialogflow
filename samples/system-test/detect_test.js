@@ -24,7 +24,7 @@ const cwd = path.join(__dirname, `..`);
 const audioFilename = `pizza_order.wav`;
 const audioFilepath = path.join(__dirname, `../resources/${audioFilename}`);
 
-test('Should detect text queries', async (t) => {
+test('Should detect text queries', async t => {
   const output = await runAsync(`${cmd} text -q "Hello" "World"`);
   const detectedIntents = output.split('Detected intent');
   detectedIntents.shift();
@@ -33,25 +33,36 @@ test('Should detect text queries', async (t) => {
   t.true(detectedIntents[1].includes('Query: World'));
 });
 
-test('Should detect event query', async (t) => {
+test('Should detect event query', async t => {
   const output = await runAsync(`${cmd} event WELCOME`);
   t.true(output.includes('Detected intent'));
   t.true(output.includes('Query: WELCOME'));
 });
 
-test('Should detect audio query', async (t) => {
+test('Should detect audio query', async t => {
   const output = await runAsync(`${cmd} audio ${audioFilepath} -r 22050`, cwd);
   t.true(output.includes('Detected intent'));
-  t.true(output.toLowerCase().includes(
-      `query: i'd like to order a medium pizza with mushrooms`));
+  t.true(
+    output
+      .toLowerCase()
+      .includes(`query: i'd like to order a medium pizza with mushrooms`)
+  );
 });
 
-test('Should detect audio query in streaming fashion', async (t) => {
+test('Should detect audio query in streaming fashion', async t => {
   const output = await runAsync(`${cmd} stream ${audioFilepath} -r 22050`, cwd);
-  t.true(output.toLowerCase().includes(
-      `intermediate transcript: i'd like to order a medium pizza with ` +
-          `mushrooms`));
+  t.true(
+    output
+      .toLowerCase()
+      .includes(
+        `intermediate transcript: i'd like to order a medium pizza with ` +
+          `mushrooms`
+      )
+  );
   t.true(output.includes('Detected intent'));
-  t.true(output.toLowerCase().includes(
-      `query: i'd like to order a medium pizza with mushrooms`));
+  t.true(
+    output
+      .toLowerCase()
+      .includes(`query: i'd like to order a medium pizza with mushrooms`)
+  );
 });
