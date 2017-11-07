@@ -1,18 +1,20 @@
 <img src="https://avatars2.githubusercontent.com/u/2810941?v=3&s=96" alt="Google Cloud Platform logo" title="Google Cloud Platform" align="right" height="96" width="96"/>
 
-# Google Cloud DialogFlow: Node.js Client
+# [Google Cloud Dialogflow: Node.js Client](https://github.com/googleapis/nodejs-dialogflow)
 
 [![release level](https://img.shields.io/badge/release%20level-beta-yellow.svg?style&#x3D;flat)](https://cloud.google.com/terms/launch-stages)
 [![CircleCI](https://img.shields.io/circleci/project/github/googleapis/nodejs-dialogflow.svg?style=flat)](https://circleci.com/gh/googleapis/nodejs-dialogflow)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/googleapis/nodejs-dialogflow?branch=master&svg=true)](https://ci.appveyor.com/project/googleapis/nodejs-dialogflow)
 [![codecov](https://img.shields.io/codecov/c/github/googleapis/nodejs-dialogflow/master.svg?style=flat)](https://codecov.io/gh/googleapis/nodejs-dialogflow)
 
-> Node.js idiomatic client for [DialogFlow][product-docs].
+> Node.js idiomatic client for [Dialogflow][product-docs].
 
-[Google Cloud DialogFlow](https://cloud.google.com/docs/dialogflow/)  is an enterprise-grade NLU platform that makes it easy for developers to design and integrate conversational user interfaces into mobile apps, web applications, devices, and bots.
+[Google Cloud Dialogflow](https://cloud.google.com/docs/dialogflow/)  is an enterprise-grade NLU platform that makes it easy for developers to design and integrate conversational user interfaces into mobile apps, web applications, devices, and bots.
 
-* [DialogFlow Node.js Client API Reference][client-docs]
-* [DialogFlow Documentation][product-docs]
+
+* [Dialogflow Node.js Client API Reference][client-docs]
+* [github.com/googleapis/nodejs-dialogflow](https://github.com/googleapis/nodejs-dialogflow)
+* [Dialogflow Documentation][product-docs]
 
 Read more about the client libraries for Cloud APIs, including the older
 Google APIs Client Libraries, in [Client Libraries Explained][explained].
@@ -41,7 +43,7 @@ Google APIs Client Libraries, in [Client Libraries Explained][explained].
 
     [Enable billing][billing]
 
-1.  Enable the Google Cloud DialogFlow API.
+1.  Enable the Google Cloud Dialogflow API.
 
     [Enable the API][enable_api]
 
@@ -67,7 +69,7 @@ const client = new dialogflow.SessionsClient();
 ```
 
 
-The [DialogFlow Node.js Client API Reference][client-docs] documentation
+The [Dialogflow Node.js Client API Reference][client-docs] documentation
 also contains samples.
 
 ## Versioning
@@ -85,13 +87,14 @@ More Information: [Google Cloud Platform Launch Stages][launch_stages]
 
 ## Contributing
 
-Contributions welcome! See the [Contributing Guide](.github/CONTRIBUTING.md).
+Contributions welcome! See the [Contributing Guide](https://github.com/googleapis/nodejs-dialogflow/blob/master/.github/CONTRIBUTING.md).
 
 ## License
 
 Apache Version 2.0
 
-See [LICENSE](LICENSE)
+See [LICENSE](https://github.com/googleapis/nodejs-dialogflow/blob/master/LICENSE)
 
 [client-docs]: https://cloud.google.com/nodejs/docs/reference/dialogflow/latest/
 [product-docs]: https://cloud.google.com/docs/dialogflow/
+[shell_img]: http://gstatic.com/cloudssh/images/open-btn.png
