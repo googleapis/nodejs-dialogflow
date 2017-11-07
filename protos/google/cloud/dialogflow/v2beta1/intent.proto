@@ -495,7 +495,7 @@ message Intent {
   // is matched. Context messages in this collection should not set the
   // parameters field.
   // Format: `projects/<Project ID>/agents/<Agent
-  // ID>/sessions/*/contexts/<Context ID>`.
+  // ID>/sessions/-/contexts/<Context ID>`.
   repeated Context output_contexts = 11;
 
   // Optional. Indicates whether to delete all contexts in the current

@@ -1,4 +1,4 @@
-// Copyright 2017, Google Inc. All rights reserved.
+// Copyright 2017, Google LLC All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -251,8 +251,7 @@ var QueryResult = {
  * Multiple request messages should be sent in order:
  *
  * 1.  The first message must contain `session`, `query_input` plus optionally
- *     `query_params` and/or `single_utterance`. The message must not contain
- *     `input_audio`.
+ *     `query_params` and/or `single_utterance`. The message must not contain `input_audio`.
  *
  * 2.  If `query_input` was set to a streaming input audio config,
  *     all subsequent messages must contain only `input_audio`.

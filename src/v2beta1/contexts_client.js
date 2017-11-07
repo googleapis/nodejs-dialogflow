@@ -1,4 +1,4 @@
-// Copyright 2017, Google Inc. All rights reserved.
+// Copyright 2017, Google LLC All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -189,7 +189,9 @@ class ContextsClient {
    * in this service.
    */
   static get scopes() {
-    return ['https://www.googleapis.com/auth/cloud-platform'];
+    return [
+      'https://www.googleapis.com/auth/cloud-platform',
+    ];
   }
 
   /**
@@ -354,7 +356,7 @@ class ContextsClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified context.
@@ -632,7 +634,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .project;
   }
 
   /**
@@ -643,7 +647,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .session;
   }
 
   /**
@@ -654,7 +660,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).project;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .project;
   }
 
   /**
@@ -665,7 +673,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).session;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .session;
   }
 
   /**
@@ -676,8 +686,11 @@ class ContextsClient {
    * @returns {String} - A string representing the context.
    */
   matchContextFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).context;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .context;
   }
 }
+
 
 module.exports = ContextsClient;

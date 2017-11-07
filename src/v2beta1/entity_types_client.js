@@ -1,4 +1,4 @@
-// Copyright 2017, Google Inc. All rights reserved.
+// Copyright 2017, Google LLC All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -127,15 +127,10 @@ class EntityTypesClient {
     };
     var protoFilesRoot = new gax.grpc.GoogleProtoFilesRoot();
     protoFilesRoot = protobuf.loadSync(
-      path.join(
-        __dirname,
-        '..',
-        '..',
-        'protos',
-        'google/cloud/dialogflow/v2beta1/entity_type.proto'
-      ),
+      path.join(__dirname, '..', '..', 'protos', 'google/cloud/dialogflow/v2beta1/entity_type.proto'),
       protoFilesRoot
     );
+
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -179,21 +174,13 @@ class EntityTypesClient {
     this._descriptors.longrunning = {
       batchUpdateEntityTypes: new gax.LongrunningDescriptor(
         this.operationsClient,
-        batchUpdateEntityTypesResponse.decode.bind(
-          batchUpdateEntityTypesResponse
-        ),
-        batchUpdateEntityTypesMetadata.decode.bind(
-          batchUpdateEntityTypesMetadata
-        )
+        batchUpdateEntityTypesResponse.decode.bind(batchUpdateEntityTypesResponse),
+        batchUpdateEntityTypesMetadata.decode.bind(batchUpdateEntityTypesMetadata)
       ),
       batchDeleteEntityTypes: new gax.LongrunningDescriptor(
         this.operationsClient,
-        batchDeleteEntityTypesResponse.decode.bind(
-          batchDeleteEntityTypesResponse
-        ),
-        batchDeleteEntityTypesMetadata.decode.bind(
-          batchDeleteEntityTypesMetadata
-        )
+        batchDeleteEntityTypesResponse.decode.bind(batchDeleteEntityTypesResponse),
+        batchDeleteEntityTypesMetadata.decode.bind(batchDeleteEntityTypesMetadata)
       ),
       batchCreateEntities: new gax.LongrunningDescriptor(
         this.operationsClient,
@@ -256,8 +243,7 @@ class EntityTypesClient {
             }
         ),
         defaults[methodName],
-        this._descriptors.page[methodName] ||
-          this._descriptors.longrunning[methodName]
+        this._descriptors.page[methodName] || this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -281,7 +267,9 @@ class EntityTypesClient {
    * in this service.
    */
   static get scopes() {
-    return ['https://www.googleapis.com/auth/cloud-platform'];
+    return [
+      'https://www.googleapis.com/auth/cloud-platform',
+    ];
   }
 
   /**
@@ -458,7 +446,7 @@ class EntityTypesClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified entity type.
@@ -781,11 +769,7 @@ class EntityTypesClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.batchUpdateEntityTypes(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.batchUpdateEntityTypes(request, options, callback);
   }
 
   /**
@@ -891,11 +875,7 @@ class EntityTypesClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.batchDeleteEntityTypes(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.batchDeleteEntityTypes(request, options, callback);
   }
 
   /**
@@ -1281,7 +1261,8 @@ class EntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectAgentName(projectAgentName) {
-    return this._pathTemplates.projectAgentPathTemplate.match(projectAgentName)
+    return this._pathTemplates.projectAgentPathTemplate
+      .match(projectAgentName)
       .project;
   }
 
@@ -1293,7 +1274,8 @@ class EntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromEntityTypeName(entityTypeName) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+    return this._pathTemplates.entityTypePathTemplate
+      .match(entityTypeName)
       .project;
   }
 
@@ -1305,9 +1287,11 @@ class EntityTypesClient {
    * @returns {String} - A string representing the entity_type.
    */
   matchEntityTypeFromEntityTypeName(entityTypeName) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+    return this._pathTemplates.entityTypePathTemplate
+      .match(entityTypeName)
       .entity_type;
   }
 }
+
 
 module.exports = EntityTypesClient;

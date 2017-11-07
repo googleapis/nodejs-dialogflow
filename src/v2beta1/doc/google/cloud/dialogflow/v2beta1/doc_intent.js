@@ -1,4 +1,4 @@
-// Copyright 2017, Google Inc. All rights reserved.
+// Copyright 2017, Google LLC All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@
  *   is matched. Context messages in this collection should not set the
  *   parameters field.
  *   Format: `projects/<Project ID>/agents/<Agent
- *   ID>/sessions/*/contexts/<Context ID>`.
+ *   ID>/sessions/-/contexts/<Context ID>`.
  *
  *   This object should have the same structure as [Context]{@link google.cloud.dialogflow.v2beta1.Context}
  *
