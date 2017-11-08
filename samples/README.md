@@ -1,8 +1,8 @@
 <img src="https://avatars2.githubusercontent.com/u/2810941?v=3&s=96" alt="Google Cloud Platform logo" title="Google Cloud Platform" align="right" height="96" width="96"/>
 
-# Google Cloud Conversation Engine API Node.js Samples
+# Google Dialogflow API Node.js Samples
 
-The [Cloud Conversation Engine](https://cloud.google.com/conversation/docs/) is
+[Dialogflow](https://dialogflow.com/docs/) is
 an enterprise-grade NLU platform that makes it easy for developers to design and
 integrate conversational user interfaces into mobile apps, web applications,
 devices, and bots.
@@ -30,23 +30,20 @@ how to query the intents.
 
 1.  Create a new Google Cloud project.
 
-1.  Enable Cloud Conversation Engine API for your Google Cloud project by doing
+1.  Enable Dialogflow API for your Google Cloud project by doing
     the following:
 
     *   Go to API Manager > Library.
-    *   Search for "Cloud Conversation Engine API".
+    *   Search for "Dialogflow API".
     *   Click the API in the search results, then click "ENABLE" button.
 
-    If you don't see Cloud Conversation Engine API, please contact
-    cloud-conversation-engine-users@googlegroups.com.
+1.  Create an dialogflow.com agent and associate it with the Google Cloud project with
+    Dialogflow API enabled:
 
-1.  Create an api.ai agent and associate it with the Google Cloud project with
-    Cloud Conversation Engine API enabled:
-
-    *   Go to https://api.ai. Log in or sign up
+    *   Go to https://dialogflow.com. Log in or sign up
     *   Create an agent
     *   On the [create agent UI][create_agent], set Google project to the Google
-        Cloud project with Cloud Conversation Engine API enabled.
+        Cloud project with Dialogflow API enabled.
 
     You can also run sample commands with existing agents. We recommend using a
     new agent because some commands will alter or delete the data of the agent.
@@ -68,7 +65,7 @@ how to query the intents.
 
 1.  Obtain service account authentication credentials.
 
-    Cloud Conversation Engine requires using service accounts for
+    Dialogflow v2 requires using service accounts for
     authentication. Follow the instructions below to create a service account
     and use it for authentication:
 
@@ -120,23 +117,21 @@ how to query the intents.
 
         npm install
 
-    NOTE: There is a bug in npm 5.0.x that doesn't install necessary
-    dependencies for the client library. Upgrading to npm >= 5.1.0 solves this
-    issue. Alternatively, you can copy the `@google-cloud` and the
-    `grpc-google-cloud-conversation-v1alpha` directories from `../library` to
-    the `node_module` subdirectory in this directory if you need to stick with
-    npm 5.0.x.
-
     With **yarn**:
 
         yarn install
 
 [node]: https://nodejs.org/
 [auth_command]: https://cloud.google.com/sdk/gcloud/reference/beta/auth/application-default/login
-[create_agent]: https://api.ai/docs/agents#creating
+[create_agent]: https://dialogflow.com/docs/agents#creating
 [gcp_auth]: https://cloud.google.com/docs/authentication#projects_and_resources
 
 ## Using the samples
+
+1.  Setup the sample
+        
+        cd samples
+        npm install
 
 1.  Setup the agent with sample intents and entity types:
 
@@ -157,8 +152,8 @@ how to query the intents.
 
 1.  Detect intent with audio:
 
-        node detect.js audio resources/pizza_order.wav -r 22050
-        node detect.js stream resources/pizza_order.wav -r 22050
+        node detect.js audio resources/book_a_room.wav -r 16000
+        node detect.js stream resources/book_a_room.wav -r 16000
 
     You should see intent for ordering a medium pizza with mushroom topping sent
     to 5 2nd Street New York New York.
@@ -229,9 +224,7 @@ how to query the intents.
 ### Sample agent
 
 The [Sample Agent](./SampleAgent.zip) zip file shows how to configure an agent
-for a pizza ordering and delivery service. The sample agent is equivalent to the
-agent created by the `setup-agent` command of the [resources](#resources)
-sample.
+for a room booking service.
 
 To use the sample agent, go to the [Export and Import][export_and_import] tab of
 the agent settings page. Click "Restore from zip" and upload the zip file.
@@ -239,7 +232,7 @@ the agent settings page. Click "Restore from zip" and upload the zip file.
 It's recommended to try the examples of the [Detecting
 intents](#detecting-intents) samples with this sample agent.
 
-[export_and_import]: https://api.ai/docs/agents#export
+[export_and_import]: https://dialogflow.com/docs/agents#export
 
 ### Detecting intents
 

@@ -1,6 +1,6 @@
 <img src="https://avatars2.githubusercontent.com/u/2810941?v=3&s=96" alt="Google Cloud Platform logo" title="Google Cloud Platform" align="right" height="96" width="96"/>
 
-# [Google Cloud Dialogflow: Node.js Client](https://github.com/googleapis/nodejs-dialogflow)
+# [Dialogflow v2: Node.js Client](https://github.com/googleapis/nodejs-dialogflow)
 
 [![release level](https://img.shields.io/badge/release%20level-beta-yellow.svg?style&#x3D;flat)](https://cloud.google.com/terms/launch-stages)
 [![CircleCI](https://img.shields.io/circleci/project/github/googleapis/nodejs-dialogflow.svg?style=flat)](https://circleci.com/gh/googleapis/nodejs-dialogflow)
@@ -9,7 +9,7 @@
 
 > Node.js idiomatic client for [Dialogflow][product-docs].
 
-[Google Cloud Dialogflow](https://cloud.google.com/docs/dialogflow/)  is an enterprise-grade NLU platform that makes it easy for developers to design and integrate conversational user interfaces into mobile apps, web applications, devices, and bots.
+[Google Cloud Dialogflow](https://cloud.google.com/docs/dialogflow/)  is an enterprise-grade NLU platform that makes it easy for developers to design and integrate conversational user interfaces into mobile apps, web applications, devices, and bots.  This is for Dialogflow's v2 API only.  For v1 please use Dialogflow's v1 SDK located here: https://github.com/dialogflow/dialogflow-nodejs-client
 
 
 * [Dialogflow Node.js Client API Reference][client-docs]
@@ -35,25 +35,24 @@ Google APIs Client Libraries, in [Client Libraries Explained][explained].
 
 ### Before you begin
 
-1.  Select or create a Cloud Platform project.
+1.  Create a Dialogflow agent
+    1. [Dialogflow Console][dialogflow-console]
+    	1. Make sure the switch is set to use the v2 API
+    -or-
+    1. [Google's Cloud Console] (Enterprise Edition only)
+    	1. Select or create a Cloud Platform project: [Go to the projects page][projects]
+        1. [Enable billing][billing]
+		1.  Enable the Google Cloud Dialogflow API: [Enable the API][enable_api]
+		1. Go to the Dialogflow tab and create a Dialogflow agent
 
-    [Go to the projects page][projects]
+1.  [Set up authentication with a service account][auth] so you can access the API from your machine. (you can find the project your Dialogflow agent is connected to in you [agent's settings][agent-settings])
 
-1.  Enable billing for your project.
-
-    [Enable billing][billing]
-
-1.  Enable the Google Cloud Dialogflow API.
-
-    [Enable the API][enable_api]
-
-1.  [Set up authentication with a service account][auth] so you can access the
-    API from your local workstation.
-
+[dialogflow-console]: https://console.dialogflow.com
 [projects]: https://console.cloud.google.com/project
 [billing]: https://support.google.com/cloud/answer/6293499#enable-billing
 [enable_api]: https://console.cloud.google.com/flows/enableapi?apiid=dialogflow.googleapis.com
 [auth]: https://cloud.google.com/docs/authentication/getting-started
+[agent-settings]: https://dialogflow.com/docs/agents#settings
 
 ### Installing the client library
 
