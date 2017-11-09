@@ -26,8 +26,8 @@ const VERSION = require('../../package.json').version;
  * Manages agent intents.
  *
  *
- * Refer to [documentation](https://api.ai/docs/intents) for more details about
- * # agent intents.
+ * Refer to [documentation](https://dialogflow.com/docs/intents) for more
+ * # details about agent intents.
  *
  * Standard methods.
  *
@@ -267,8 +267,8 @@ class IntentsClient {
    * @param {string} [request.languageCode]
    *   Optional. The language to list training phrases, parameters and rich
    *   messages for. If not specified, the agent's default language is used.
-   *   [More than a dozen languages](https://api.ai/docs/reference/language)
-   *   are supported.
+   *   [More than a dozen
+   *   languages](https://dialogflow.com/docs/reference/language) are supported.
    *   Note: languages must be enabled in the agent before they can be used.
    * @param {number} [request.intentView]
    *   Optional. The resource view to apply to the returned intent.
@@ -382,8 +382,8 @@ class IntentsClient {
    * @param {string} [request.languageCode]
    *   Optional. The language to list training phrases, parameters and rich
    *   messages for. If not specified, the agent's default language is used.
-   *   [More than a dozen languages](https://api.ai/docs/reference/language)
-   *   are supported.
+   *   [More than a dozen
+   *   languages](https://dialogflow.com/docs/reference/language) are supported.
    *   Note: languages must be enabled in the agent before they can be used.
    * @param {number} [request.intentView]
    *   Optional. The resource view to apply to the returned intent.
@@ -438,8 +438,8 @@ class IntentsClient {
    * @param {string} [request.languageCode]
    *   Optional. The language to retrieve training phrases, parameters and rich
    *   messages for. If not specified, the agent's default language is used.
-   *   [More than a dozen languages](https://api.ai/docs/reference/language)
-   *   are supported.
+   *   [More than a dozen
+   *   languages](https://dialogflow.com/docs/reference/language) are supported.
    *   Note: languages must be enabled in the agent, before they can be used.
    * @param {number} [request.intentView]
    *   Optional. The resource view to apply to the returned intent.
@@ -499,8 +499,8 @@ class IntentsClient {
    * @param {string} [request.languageCode]
    *   Optional. The language of training phrases, parameters and rich messages
    *   defined in `intent`. If not specified, the agent's default language is
-   *   used. [More than a dozen languages](https://api.ai/docs/reference/language)
-   *   are supported.
+   *   used. [More than a dozen
+   *   languages](https://dialogflow.com/docs/reference/language) are supported.
    *   Note: languages must be enabled in the agent, before they can be used.
    * @param {number} [request.intentView]
    *   Optional. The resource view to apply to the returned intent.
@@ -563,8 +563,8 @@ class IntentsClient {
    * @param {string} request.languageCode
    *   Optional. The language of training phrases, parameters and rich messages
    *   defined in `intent`. If not specified, the agent's default language is
-   *   used. [More than a dozen languages](https://api.ai/docs/reference/language)
-   *   are supported.
+   *   used. [More than a dozen
+   *   languages](https://dialogflow.com/docs/reference/language) are supported.
    *   Note: languages must be enabled in the agent, before they can be used.
    * @param {Object} [request.updateMask]
    *   Optional. The mask to control which fields get updated.
@@ -666,12 +666,12 @@ class IntentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The name of the agent to update or create intents in.
-   *   Format: `projects/<Project ID>/agents/<Agent ID>`.
+   *   Format: `projects/<Project ID>/agent`.
    * @param {string} request.languageCode
    *   Optional. The language of training phrases, parameters and rich messages
    *   defined in `intents`. If not specified, the agent's default language is
-   *   used. [More than a dozen languages](https://api.ai/docs/reference/language)
-   *   are supported.
+   *   used. [More than a dozen
+   *   languages](https://dialogflow.com/docs/reference/language) are supported.
    *   Note: languages must be enabled in the agent, before they can be used.
    * @param {string} [request.intentBatchUri]
    *   The URI to a file containing intents to update or create. The file
@@ -793,8 +793,8 @@ class IntentsClient {
    *   Required. The name of the agent to delete all entities types for. Format:
    *   `projects/<Project ID>/agent`.
    * @param {Object[]} request.intents
-   *   Required. The collection of entities to delete. Only the canonical `value`
-   *   must be filled in.
+   *   Required. The collection of intents to delete. Only intent `name` must be
+   *   filled in.
    *
    *   This object should have the same structure as [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}
    * @param {Object} [options]

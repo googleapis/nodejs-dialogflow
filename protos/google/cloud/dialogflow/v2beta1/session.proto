@@ -156,6 +156,11 @@ message QueryResult {
   // - If an event was provided as input, `query_text` is not set.
   string query_text = 1;
 
+  // The language that was triggered during intent detection.
+  // See [Language Support](https://dialogflow.com/docs/reference/language)
+  // for a list of the currently supported language codes.
+  string language_code = 15;
+
   // The confidence estimate between 0.0 and 1.0. A higher number
   // indicates an estimated greater likelihood that the recognized words are
   // correct. The default of 0.0 is a sentinel value indicating that confidence
@@ -359,7 +364,8 @@ message InputAudioConfig {
   int32 sample_rate_hertz = 2;
 
   // Required. The language of the supplied audio. Dialogflow does not do
-  // translations. See [Language Support](https://docs.api.ai/docs/languages)
+  // translations. See
+  // [Language Support](https://dialogflow.com/docs/reference/language)
   // for a list of the currently supported language codes.
   // Note that queries in the same session do not necessarily need to specify
   // the same language.
