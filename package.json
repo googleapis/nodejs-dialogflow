@@ -32,11 +32,11 @@
     "Luke Sneeringer <lukesneeringer@google.com>"
   ],
   "scripts": {
+    "cover": "nyc --reporter=lcov mocha --require intelli-espower-loader test/*.js && nyc report",
     "docs": "repo-tools exec -- jsdoc -c .jsdoc.js",
     "generate-scaffolding": "repo-tools generate all",
     "lint": "repo-tools lint --cmd eslint -- src/ samples/ system-test/ test/",
     "prettier": "repo-tools exec -- prettier --write src/*.js src/*/*.js samples/*.js samples/*/*.js test/*.js test/*/*.js",
-    "cover": "nyc --reporter=lcov mocha --require intelli-espower-loader test/*.js && nyc report",
     "samples-test": "cd samples/ && npm link ../ && npm test && cd ../",
     "test-no-cover": "repo-tools test run --cmd mocha -- test/*.js --no-timeouts",
     "test": "repo-tools test run --cmd npm -- run cover"
