@@ -1,7 +1,7 @@
 {
   "requiresKeyFile": true,
   "requiresProjectId": true,
-  "client_reference_url": "https://cloud.google.com/nodejs/docs/reference/dialogflow/latest/",
+  "client_reference_url": "https://cloud.google.com/nodejs/docs/reference/dialogflow-enterprise/latest/",
   "release_quality": "beta",
   "samples": [],
 
@@ -9,7 +9,7 @@
   "id": "dialogflow",
   "name": "Google Cloud Dialogflow",
   "short_name": "Dialogflow",
-  "docs_url": "https://cloud.google.com/docs/dialogflow/",
+  "docs_url": "https://cloud.google.com/docs/dialogflow-enterprise/",
   "description": "[Google Cloud Dialogflow](https://cloud.google.com/docs/dialogflow/)  is an enterprise-grade NLU platform that makes it easy for developers to design and integrate conversational user interfaces into mobile apps, web applications, devices, and bots.",
   "api_id": "dialogflow.googleapis.com"
 }
