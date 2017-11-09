@@ -95,6 +95,6 @@ Apache Version 2.0
 
 See [LICENSE](https://github.com/googleapis/nodejs-dialogflow/blob/master/LICENSE)
 
-[client-docs]: https://cloud.google.com/nodejs/docs/reference/dialogflow/latest/
-[product-docs]: https://cloud.google.com/docs/dialogflow/
+[client-docs]: https://cloud.google.com/nodejs/docs/reference/dialogflow-enterprise/latest/
+[product-docs]: https://cloud.google.com/docs/dialogflow-enterprise/
 [shell_img]: http://gstatic.com/cloudssh/images/open-btn.png
