@@ -59,15 +59,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - system_tests:
-          requires:
-            - lint
-            - docs
-          filters:
-            branches:
-              only: master
-            tags:
-              only: /^v[\d.]+$/
       - sample_tests:
           requires:
             - lint
@@ -79,7 +70,6 @@ workflows:
               only: /^v[\d.]+$/
       - publish_npm:
           requires:
-            - system_tests
             - sample_tests
           filters:
             branches:
@@ -134,7 +124,7 @@ jobs:
           name: Link the module being tested to the samples.
           command: |
             cd samples/
-            npm link @google-cloud/language
+            npm link @google-cloud/dialogflow
             npm install
             cd ..
       - run:
@@ -173,7 +163,7 @@ jobs:
           name: Link the module being tested to the samples.
           command: |
             cd samples/
-            npm link @google-cloud/language
+            npm link @google-cloud/dialogflow
             npm install
             cd ..
       - run:
@@ -181,12 +171,12 @@ jobs:
           command: npm run samples-test
           environment:
             GCLOUD_PROJECT: long-door-651
-            GOOGLE_APPLICATION_CREDENTIALS: /var/language/.circleci/key.json
+            GOOGLE_APPLICATION_CREDENTIALS: /var/dialogflow/.circleci/key.json
       - run:
           name: Remove unencrypted key.
           command: rm .circleci/key.json
           when: always
-    working_directory: /var/language/
+    working_directory: /var/dialogflow/
 
   system_tests:
     docker:
