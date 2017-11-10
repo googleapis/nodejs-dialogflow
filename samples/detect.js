@@ -20,12 +20,15 @@ const fs = require('fs');
 const structjson = require('./structjson.js');
 const pump = require('pump');
 const through2 = require('through2');
-const dialogflow = require('../src');
-
-const sessionClient = new dialogflow.SessionsClient(opt);
-const contextClient = new dialogflow.ContextsClient(opt);
 
 function detectTextIntent (projectId, sessionId, queries, languageCode) {
+  // Imports the Dialogflow library
+  const dialogflow = require('../src');
+
+  // Instantiates a sessison and context client
+  const sessionClient = new dialogflow.SessionsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+  const contextClient = new dialogflow.ContextsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+
   if (!queries || !queries.length) {
     return;
   }
@@ -89,6 +92,13 @@ function detectTextIntent (projectId, sessionId, queries, languageCode) {
 
 function detectEventIntent (
     projectId, sessionId, eventName, languageCode) {
+    // Imports the Dialogflow library
+  const dialogflow = require('../src');
+
+  // Instantiates a sessison and context client
+  const sessionClient = new dialogflow.SessionsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+  const contextClient = new dialogflow.ContextsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+
   // The path to identify the agent that owns the created intent.
   const sessionPath =
       sessionClient.sessionPath(projectId, sessionId);
@@ -116,6 +126,13 @@ function detectEventIntent (
 function detectAudioIntent (
     projectId, sessionId, filename, encoding, sampleRateHertz,
     languageCode) {
+  // Imports the Dialogflow library
+  const dialogflow = require('../src');
+
+  // Instantiates a sessison and context client
+  const sessionClient = new dialogflow.SessionsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+  const contextClient = new dialogflow.ContextsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+
   // The path to identify the agent that owns the created intent.
   const sessionPath =
       sessionClient.sessionPath(projectId, sessionId);
@@ -151,6 +168,13 @@ function detectAudioIntent (
 function streamingDetectIntent (
     projectId, sessionId, filename, encoding, sampleRateHertz,
     languageCode) {
+  // Imports the Dialogflow library
+  const dialogflow = require('../src');
+
+  // Instantiates a sessison and context client
+  const sessionClient = new dialogflow.SessionsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+  const contextClient = new dialogflow.ContextsClient({servicePath: 'staging-dialogflow.sandbox.googleapis.com'})
+
   // The path to the local file on which to perform speech recognition, e.g.
   // /path/to/audio.raw const filename = '/path/to/audio.raw';
 
