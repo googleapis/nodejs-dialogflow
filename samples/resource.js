@@ -335,7 +335,6 @@ function logEntityType(entityType) {
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
-  //console.log(entityType)
   console.log(
     '  ID:',
     entityTypesClient.matchEntityTypeFromEntityTypeName(entityType.name)
@@ -773,6 +772,14 @@ function createIntents(projectId) {
 }
 
 function listIntents(projectId) {
+  // Imports the Dialogflow library
+  const dialogflow = require('../src');
+
+  // Instantiates clients
+  const intentsClient = new dialogflow.IntentsClient({
+    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
+  });
+
   // The path to identify the agent that owns the intents.
   const projectAgentPath = intentsClient.projectAgentPath(projectId);
 
@@ -792,23 +799,6 @@ function listIntents(projectId) {
 }
 
 function showIntents(projectId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('../src');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-
   return listIntents(projectId).then(intents => {
     return Promise.all(
       intents.map(intent => {
@@ -823,16 +813,7 @@ function getIntent(intent) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
@@ -857,28 +838,12 @@ function getIntent(intent) {
 }
 
 function clearIntents(projectId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('../src');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-
   // Send the request for listing intents.
   return listIntents(projectId)
     .then(intents => {
       return Promise.all(
         intents.map(intent => {
+
           return deleteIntent(intent);
         })
       );
@@ -893,16 +858,7 @@ function deleteIntent(intent) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
@@ -924,16 +880,7 @@ function updateIntent(projectId, intentId) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
@@ -980,6 +927,17 @@ function updateIntent(projectId, intentId) {
 }
 
 function logIntent(intent) {
+  // Imports the Dialogflow library
+  const dialogflow = require('../src');
+
+  // Instantiates clients
+  const contextsClient = new dialogflow.ContextsClient({
+    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
+  });
+  const intentsClient = new dialogflow.IntentsClient({
+    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
+  });
+
   console.log(`  ID:`, intentsClient.matchIntentFromIntentName(intent.name));
   console.log(`  Display Name: ${intent.displayName}`);
   const outputContexts = intent.outputContexts
@@ -1025,15 +983,6 @@ function createContext(projectId, sessionId) {
   const contextsClient = new dialogflow.ContextsClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
 
   const sessionPath = contextsClient.sessionPath(projectId, sessionId);
 
@@ -1076,15 +1025,6 @@ function listContexts(projectId, sessionId) {
   const contextsClient = new dialogflow.ContextsClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
 
   // The path to identify the agent that owns the contexts.
   const sessionPath = contextsClient.sessionPath(projectId, sessionId);
@@ -1105,23 +1045,6 @@ function listContexts(projectId, sessionId) {
 }
 
 function showContexts(projectId, sessionId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('../src');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-
   return listContexts(projectId, sessionId).then(contexts => {
     return Promise.all(
       contexts.map(context => {
@@ -1137,15 +1060,6 @@ function getContext(context) {
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
@@ -1168,23 +1082,6 @@ function getContext(context) {
 }
 
 function clearContexts(projectId, sessionId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('../src');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-
   return listContexts(projectId, sessionId).then(contexts => {
     return Promise.all(
       contexts.map(context => {
@@ -1200,15 +1097,6 @@ function deleteContext(context) {
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
@@ -1235,15 +1123,6 @@ function updateContext(projectId, sessionId, contextId) {
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
@@ -1294,15 +1173,6 @@ function logContext(context) {
   const contextsClient = new dialogflow.ContextsClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
 
   console.log(
     `  Name:`,
@@ -1326,16 +1196,10 @@ function createSessionEntityType(projectId, sessionId) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
+    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
+  });
+  const contextsClient = new dialogflow.ContextsClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
 
@@ -1397,23 +1261,6 @@ function createSessionEntityType(projectId, sessionId) {
 }
 
 function showSessionEntityTypes(projectId, sessionId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('../src');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-
   // There is no listSessionEntityTypes API, use listEntityTypes to get possible
   // entity type names.
   listEntityTypes(projectId).then(entityTypes => {
@@ -1434,15 +1281,6 @@ function getSessionEntityType(projectId, sessionId, entityTypeName) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
@@ -1478,23 +1316,6 @@ function getSessionEntityType(projectId, sessionId, entityTypeName) {
 }
 
 function clearSessionEntityTypes(projectId, sessionId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('../src');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-
   // There is no listSessionEntityTypes API, use listEntityTypes to get possible
   // entity type names.
   listEntityTypes(projectId).then(entityTypes => {
@@ -1515,15 +1336,6 @@ function deleteSessionEntityType(projectId, sessionId, entityTypeName) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
@@ -1562,15 +1374,6 @@ function updateSessionEntityType(projectId, sessionId, entityTypeName) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
@@ -1613,15 +1416,6 @@ function logSessionEntityType(sessionEntityType) {
   const dialogflow = require('../src');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const entityTypesClient = new dialogflow.EntityTypesClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
-  const intentsClient = new dialogflow.IntentsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
@@ -1692,7 +1486,11 @@ function setTimeoutPromise(delayMillis) {
   });
 }
 
-function verifyCommand(callback, projectId, arg2, arg3) {
+function verifyCommand(callback, force, projectId, arg2, arg3) {
+  if (force){
+    callback(projectId, arg2, arg3);
+    return;
+  }
   //add a special warning for these functions because they delete the agent
   const deletionWarningFunctions = [setupAgent, clearAgent];
   // Prompt the user for confirmation
@@ -1745,17 +1543,20 @@ const cli = require(`yargs`)
     'projectId',
     "Please provide your Dialogflow agent's project ID with the -p flag or through the GOOGLE_CLOUD_PROJECT env var"
   )
+  .boolean('force')
+  .alias('force', ['f'])
+  .describe('force', 'force operation without a prompt')
   .command(
     `setup-agent`,
     `Create entity types and intent for ordering pizzas.`,
     {},
-    opts => verifyCommand(setupAgent, opts.projectId)
+    opts => verifyCommand(setupAgent, opts.force, opts.projectId)
   )
   .command(
     `clear-agent`,
     `Delete all intents and entity types from an agent.`,
     {},
-    opts => verifyCommand(clearAgent, opts.projectId)
+    opts => verifyCommand(clearAgent, opts.force, opts.projectId)
   )
   .command(
     `show-agent`,
@@ -1767,10 +1568,10 @@ const cli = require(`yargs`)
     `update-entity-type <entityTypeId>`,
     `Update an entity type.`,
     {},
-    opts => verifyCommand(updateEntityType, opts.projectId, opts.entityTypeId)
+    opts => verifyCommand(updateEntityType, opts.force, opts.projectId, opts.entityTypeId)
   )
   .command(`update-intent <intentId>`, `Update an intent.`, {}, opts =>
-    verifyCommand(updateIntent, opts.projectId, opts.intentId)
+    verifyCommand(updateIntent, opts.force, opts.projectId, opts.intentId)
   )
   .command(
     `setup-session <sessionId>`,
@@ -1789,7 +1590,7 @@ const cli = require(`yargs`)
     `clear-session <sessionId>`,
     `Delete all contexts and session entity types.`,
     {},
-    opts => verifyCommand(clearSession, opts.projectId, opts.sessionId)
+    opts => verifyCommand(clearSession, opts.force, opts.projectId, opts.sessionId)
   )
   .command(
     `update-context <sessionId> <contextId>`,
@@ -1798,6 +1599,7 @@ const cli = require(`yargs`)
     opts =>
       verifyCommand(
         updateContext,
+        opts.force,
         opts.projectId,
         opts.sessionId,
         opts.contextId
@@ -1810,6 +1612,7 @@ const cli = require(`yargs`)
     opts =>
       verifyCommand(
         updateSessionEntityType,
+        opts.force, 
         opts.projectId,
         opts.sessionId,
         opts.entityTypeName
