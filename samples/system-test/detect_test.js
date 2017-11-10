@@ -21,40 +21,56 @@ const {runAsync} = require('@google-cloud/nodejs-repo-tools');
 
 const cmd = 'node detect.js';
 const cwd = path.join(__dirname, `..`);
-const audioFilepathBookARoom = path.join(__dirname, `../resources/book_a_room.wav`).replace(/(\s+)/g, '\\$1');
-const audioFilepathMountainView = path.join(__dirname, `../resources/mountain_view.wav`);
+const audioFilepathBookARoom = path
+  .join(__dirname, `../resources/book_a_room.wav`)
+  .replace(/(\s+)/g, '\\$1');
+const audioFilepathMountainView = path.join(
+  __dirname,
+  `../resources/mountain_view.wav`
+);
 const audioFilepathToday = path.join(__dirname, `../resources/today.wav`);
 const audioFilepath230pm = path.join(__dirname, `../resources/230pm.wav`);
-const audioFilepathHalfAnHour = path.join(__dirname, `../resources/half_an_hour.wav`);
-const audioFilepathTwoPeople = path.join(__dirname, `../resources/two_people.wav`);
+const audioFilepathHalfAnHour = path.join(
+  __dirname,
+  `../resources/half_an_hour.wav`
+);
+const audioFilepathTwoPeople = path.join(
+  __dirname,
+  `../resources/two_people.wav`
+);
 
-test('Should detect text queries', async (t) => {
-  const output = await runAsync(`${cmd} text -s test-test-seesion-id -q "hello" "book a meeting room" "Mountain View" "tomorrow" "10am" "2 hours" "10 people" "A" "yes"`);
+test('Should detect text queries', async t => {
+  const output = await runAsync(
+    `${cmd} text -s test-test-seesion-id -q "hello" "book a meeting room" "Mountain View" "tomorrow" "10am" "2 hours" "10 people" "A" "yes"`
+  );
   const detectedIntents = output.split('Detected intent');
   detectedIntents.shift();
   t.is(detectedIntents.length, 9);
   t.true(detectedIntents[8].includes('Response: All set.'));
 });
 
-test('Should detect event query', async (t) => {
+test('Should detect event query', async t => {
   const output = await runAsync(`${cmd} event WELCOME`);
   t.true(output.includes('Detected intent'));
   t.true(output.includes('Query: WELCOME'));
 });
 
-test('Should detect audio query', async (t) => {
-  const output = await runAsync(`${cmd} audio ${audioFilepathBookARoom} -r 16000`, cwd);
+test('Should detect audio query', async t => {
+  const output = await runAsync(
+    `${cmd} audio ${audioFilepathBookARoom} -r 16000`,
+    cwd
+  );
   t.true(output.includes('Detected intent'));
-  t.true(output.includes(
-      `Query: book a room`));
+  t.true(output.includes(`Query: book a room`));
 });
 
-test('Should detect audio query in streaming fashion', async (t) => {
-  console.log(`${cmd} stream ${audioFilepathBookARoom} -r 16000`, cwd)
-  const output = await runAsync(`${cmd} stream ${audioFilepathBookARoom} -r 16000`, cwd);
-  t.true(output.includes(
-      `Intermediate transcript: book`));
+test('Should detect audio query in streaming fashion', async t => {
+  console.log(`${cmd} stream ${audioFilepathBookARoom} -r 16000`, cwd);
+  const output = await runAsync(
+    `${cmd} stream ${audioFilepathBookARoom} -r 16000`,
+    cwd
+  );
+  t.true(output.includes(`Intermediate transcript: book`));
   t.true(output.includes('Detected intent'));
-  t.true(output.includes(
-      `Query: book a room`));
+  t.true(output.includes(`Query: book a room`));
 });
