@@ -3,7 +3,7 @@
   "requiresProjectId": true,
   "client_reference_url": "https://cloud.google.com/nodejs/docs/reference/dialogflow/latest/",
   "release_quality": "beta",
-  "samples": [],
+  "samples": ["quickstart.js", "detect.js", "resource.js"],
 
   "_product": "dialogflow",
   "id": "dialogflow",

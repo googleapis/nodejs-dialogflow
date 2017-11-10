@@ -843,7 +843,6 @@ function clearIntents(projectId) {
     .then(intents => {
       return Promise.all(
         intents.map(intent => {
-
           return deleteIntent(intent);
         })
       );
@@ -1487,7 +1486,7 @@ function setTimeoutPromise(delayMillis) {
 }
 
 function verifyCommand(callback, force, projectId, arg2, arg3) {
-  if (force){
+  if (force) {
     callback(projectId, arg2, arg3);
     return;
   }
@@ -1568,7 +1567,13 @@ const cli = require(`yargs`)
     `update-entity-type <entityTypeId>`,
     `Update an entity type.`,
     {},
-    opts => verifyCommand(updateEntityType, opts.force, opts.projectId, opts.entityTypeId)
+    opts =>
+      verifyCommand(
+        updateEntityType,
+        opts.force,
+        opts.projectId,
+        opts.entityTypeId
+      )
   )
   .command(`update-intent <intentId>`, `Update an intent.`, {}, opts =>
     verifyCommand(updateIntent, opts.force, opts.projectId, opts.intentId)
@@ -1590,7 +1595,8 @@ const cli = require(`yargs`)
     `clear-session <sessionId>`,
     `Delete all contexts and session entity types.`,
     {},
-    opts => verifyCommand(clearSession, opts.force, opts.projectId, opts.sessionId)
+    opts =>
+      verifyCommand(clearSession, opts.force, opts.projectId, opts.sessionId)
   )
   .command(
     `update-context <sessionId> <contextId>`,
@@ -1612,7 +1618,7 @@ const cli = require(`yargs`)
     opts =>
       verifyCommand(
         updateSessionEntityType,
-        opts.force, 
+        opts.force,
         opts.projectId,
         opts.sessionId,
         opts.entityTypeName

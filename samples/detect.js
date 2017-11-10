@@ -254,7 +254,7 @@ function logQueryResult(sessionClient, result) {
   const contextClient = new dialogflow.ContextsClient({
     servicePath: 'staging-dialogflow.sandbox.googleapis.com',
   });
-  
+
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);
   if (result.intent) {

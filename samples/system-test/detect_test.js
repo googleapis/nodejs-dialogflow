@@ -40,9 +40,7 @@ const audioFilepathTwoPeople = path.join(
 );
 
 test('Should detect text queries', async t => {
-  const output = await runAsync(
-    `${cmd} text -q "hello"`
-  );
+  const output = await runAsync(`${cmd} text -q "hello"`);
   t.true(output.includes('Detected intent'));
 });
 
@@ -52,11 +50,15 @@ test('Should detect event query', async t => {
 });
 
 test('Should detect audio query', async t => {
-  const output = await runAsync(`${cmd} audio ${audioFilepathBookARoom} -r 16000`);
+  const output = await runAsync(
+    `${cmd} audio ${audioFilepathBookARoom} -r 16000`
+  );
   t.true(output.includes('Detected intent'));
 });
 
 test('Should detect audio query in streaming fashion', async t => {
-  const output = await runAsync(`${cmd} stream ${audioFilepathBookARoom} -r 16000`);
+  const output = await runAsync(
+    `${cmd} stream ${audioFilepathBookARoom} -r 16000`
+  );
   t.true(output.includes('Detected intent'));
 });
