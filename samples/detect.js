@@ -26,9 +26,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
-  const sessionClient = new dialogflow.SessionsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
+  const sessionClient = new dialogflow.SessionsClient();
 
   if (!queries || !queries.length) {
     return;
@@ -97,9 +95,7 @@ function detectEventIntent(projectId, sessionId, eventName, languageCode) {
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
-  const sessionClient = new dialogflow.SessionsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
+  const sessionClient = new dialogflow.SessionsClient();
 
   // The path to identify the agent that owns the created intent.
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -137,9 +133,7 @@ function detectAudioIntent(
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
-  const sessionClient = new dialogflow.SessionsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
+  const sessionClient = new dialogflow.SessionsClient();
 
   // The path to identify the agent that owns the created intent.
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -184,9 +178,7 @@ function streamingDetectIntent(
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
-  const sessionClient = new dialogflow.SessionsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
+  const sessionClient = new dialogflow.SessionsClient();
 
   // The path to the local file on which to perform speech recognition, e.g.
   // /path/to/audio.raw const filename = '/path/to/audio.raw';
@@ -251,9 +243,7 @@ function logQueryResult(sessionClient, result) {
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a context client
-  const contextClient = new dialogflow.ContextsClient({
-    servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-  });
+  const contextClient = new dialogflow.ContextsClient();
 
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);

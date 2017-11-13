@@ -23,9 +23,7 @@ const languageCode = 'en-US';
 
 // Instantiate a DialogFlow client.
 const dialogflow = require('@google-cloud/dialogflow');
-const sessionClient = new dialogflow.SessionsClient({
-  servicePath: 'staging-dialogflow.sandbox.googleapis.com',
-});
+const sessionClient = new dialogflow.SessionsClient();
 
 // Define session path
 const sessionPath = sessionClient.sessionPath(projectId, sessionId);
