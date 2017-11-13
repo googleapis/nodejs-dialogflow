@@ -171,6 +171,11 @@ var QueryInput = {
  *     multiple alternatives, a particular one is picked.
  *   - If an event was provided as input, `query_text` is not set.
  *
+ * @property {string} languageCode
+ *   The language that was triggered during intent detection.
+ *   See [Language Support](https://dialogflow.com/docs/reference/language)
+ *   for a list of the currently supported language codes.
+ *
  * @property {number} speechRecognitionConfidence
  *   The confidence estimate between 0.0 and 1.0. A higher number
  *   indicates an estimated greater likelihood that the recognized words are
@@ -445,10 +450,10 @@ var StreamingRecognitionResult = {
  *
  * @property {string} languageCode
  *   Required. The language of the supplied audio. Dialogflow does not do
- *   translations. See [Language Support](https://docs.api.ai/docs/languages)
- *   for a list of the currently supported language codes.
- *   Note that queries in the same session do not necessarily need to specify
- *   the same language.
+ *   translations. See [Language
+ *   Support](https://dialogflow.com/docs/languages) for a list of the
+ *   currently supported language codes. Note that queries in the same session
+ *   do not necessarily need to specify the same language.
  *
  * @property {string[]} phraseHints
  *   Optional. The collection of phrase hints which are used to boost accuracy
@@ -472,9 +477,10 @@ var InputAudioConfig = {
  *   Text length must not exceed 256 bytes.
  *
  * @property {string} languageCode
- *   Required. The language of this conversational query.
- *   Note that queries in the same session do not necessarily need to specify
- *   the same language.
+ *   Required. The language of this conversational query. See [Language
+ *   Support](https://dialogflow.com/docs/languages) for a list of the
+ *   currently supported language codes. Note that queries in the same session
+ *   do not necessarily need to specify the same language.
  *
  * @typedef TextInput
  * @memberof google.cloud.dialogflow.v2beta1
@@ -498,6 +504,12 @@ var TextInput = {
  *   Optional. The collection of parameters associated with the event.
  *
  *   This object should have the same structure as [Struct]{@link google.protobuf.Struct}
+ *
+ * @property {string} languageCode
+ *   Optional. The language of this query. See [Language
+ *   Support](https://dialogflow.com/docs/languages) for a list of the
+ *   currently supported language codes. Note that queries in the same session
+ *   do not necessarily need to specify the same language.
  *
  * @typedef EventInput
  * @memberof google.cloud.dialogflow.v2beta1

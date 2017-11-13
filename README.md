@@ -43,5 +43,7 @@ View the [source code][_2_code].
 [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/,samples/README.md)[_2_docs]: 
 [_2_code]: 
 
+[client-docs]: https://cloud.google.com/nodejs/docs/reference/dialogflow-enterprise/latest/
+[product-docs]: https://cloud.google.com/docs/dialogflow-enterprise/
 [shell_img]: http://gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/README.md

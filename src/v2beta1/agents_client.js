@@ -26,8 +26,8 @@ const VERSION = require('../../package.json').version;
  * Manages conversational agents.
  *
  *
- * Refer to [documentation](https://api.ai/docs/agents) for more details about
- * # agents.
+ * Refer to [documentation](https://dialogflow.com/docs/agents) for more details
+ * # about agents.
  *
  * Standard methods.
  *
@@ -261,7 +261,7 @@ class AgentsClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The name of the agent.
+   *   Required. The project that the agent to fetch is associated with.
    *   Format: `projects/<Project ID>`.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
@@ -463,12 +463,13 @@ class AgentsClient {
    * Trains the specified agent.
    *
    *
-   * Operation<response: google.protobuf.Empty>
+   * Operation<response: google.protobuf.Empty,
+   *           metadata: google.protobuf.Struct>
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The name of the agent to train.
+   *   Required. The project that the agent to train is associated with.
    *   Format: `projects/<Project ID>`.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
@@ -557,12 +558,13 @@ class AgentsClient {
    * Exports the specified agent to a ZIP file.
    *
    *
-   * Operation<response: ExportAgentResponse>
+   * Operation<response: ExportAgentResponse,
+   *           metadata: google.protobuf.Struct>
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The name of the agent to export.
+   *   Required. The project that the agent to export is associated with.
    *   Format: `projects/<Project ID>`.
    * @param {string} [request.agentUri]
    *   Optional. The URI to export the agent to. Note: The URI must start with
@@ -658,12 +660,13 @@ class AgentsClient {
    * versions from ImportAgentRequest.
    *
    *
-   * Operation<response: google.protobuf.Empty>
+   * Operation<response: google.protobuf.Empty,
+   *           metadata: google.protobuf.Struct>
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The name of the agent to import.
+   *   Required. The project that the agent to import is associated with.
    *   Format: `projects/<Project ID>`.
    * @param {string} [request.agentUri]
    *   The URI to a file containing the agent to import. Note: The URI must
@@ -760,12 +763,13 @@ class AgentsClient {
    * entity types in the older version are deleted.
    *
    *
-   * Operation<response: google.protobuf.Empty>
+   * Operation<response: google.protobuf.Empty,
+   *           metadata: google.protobuf.Struct>
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The name of the agent to restore.
+   *   Required. The project that the agent to restore is associated with.
    *   Format: `projects/<Project ID>`.
    * @param {string} [request.agentUri]
    *   The URI to a file containing the agent to restore. Note: The URI must
