@@ -28,10 +28,8 @@ function createEntityTypes(projectId) {
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
   const entityTypesClient = new dialogflow.EntityTypesClient();
   const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   // The path to the agent the created entity type belongs to.
   const agentPath = intentsClient.projectAgentPath(projectId);
@@ -101,10 +99,8 @@ function listEntityTypes(projectId) {
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
   const entityTypesClient = new dialogflow.EntityTypesClient();
   const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   // The path to the agent the entity types belong to.
   const agentPath = intentsClient.projectAgentPath(projectId);
@@ -126,15 +122,6 @@ function listEntityTypes(projectId) {
 }
 
 function clearEntityTypes(projectId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('@google-cloud/dialogflow');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-  const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
-
   // List all entity types then delete all of them.
   return listEntityTypes(projectId).then(entityTypes => {
     return Promise.all(
@@ -150,10 +137,7 @@ function deleteEntityType(entityType) {
   const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
   const entityTypesClient = new dialogflow.EntityTypesClient();
-  const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   // The request.
   const request = {
@@ -162,7 +146,7 @@ function deleteEntityType(entityType) {
   // Call the client library to delete the entity type.
   return entityTypesClient
     .deleteEntityType(request)
-    .then(responses => {
+    .then(() => {
       console.log(`Entity type ${entityType.displayName} deleted`);
     })
     .catch(err => {
@@ -174,15 +158,6 @@ function deleteEntityType(entityType) {
 }
 
 function showEntityTypes(projectId) {
-  // Imports the Dialogflow library
-  const dialogflow = require('@google-cloud/dialogflow');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-  const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
-
   // List all entity types then delete all of them.
   return listEntityTypes(projectId).then(entityTypes => {
     return Promise.all(
@@ -197,11 +172,8 @@ function getEntityType(entityType) {
   // Imports the Dialogflow library
   const dialogflow = require('@google-cloud/dialogflow');
 
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
+  // Instantiates client
   const entityTypesClient = new dialogflow.EntityTypesClient();
-  const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   // The request.
   const request = {name: entityType.name};
@@ -222,11 +194,8 @@ function updateEntityType(projectId, entityTypeId) {
   // Imports the Dialogflow library
   const dialogflow = require('@google-cloud/dialogflow');
 
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
+  // Instantiates client
   const entityTypesClient = new dialogflow.EntityTypesClient();
-  const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   // The path to the entity type to be updated.
   const entityTypePath = entityTypesClient.entityTypePath(
@@ -265,11 +234,8 @@ function logEntityType(entityType) {
   // Imports the Dialogflow library
   const dialogflow = require('@google-cloud/dialogflow');
 
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
+  // Instantiates client.
   const entityTypesClient = new dialogflow.EntityTypesClient();
-  const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   console.log(
     '  ID:',
@@ -305,9 +271,7 @@ function createIntents(projectId) {
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient();
-  const entityTypesClient = new dialogflow.EntityTypesClient();
   const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   // The path to identify the agent that owns the created intent.
   const agentPath = intentsClient.projectAgentPath(projectId);
@@ -788,7 +752,7 @@ function deleteIntent(intent) {
   // Send the request for retrieving the intent.
   return intentsClient
     .deleteIntent(request)
-    .then(responses => {
+    .then(() => {
       console.log(`Intent ${intent.displayName} deleted`);
     })
     .catch(err => {
@@ -1016,7 +980,7 @@ function deleteContext(context) {
   // Send the request for retrieving the context.
   return contextsClient
     .deleteContext(request)
-    .then(responses => {
+    .then(() => {
       console.log(`Context ${contextId} deleted`);
     })
     .catch(err => {
@@ -1249,7 +1213,7 @@ function deleteSessionEntityType(projectId, sessionId, entityTypeName) {
   // Send the request for retrieving the sessionEntityType.
   return sessionEntityTypesClient
     .deleteSessionEntityType(request)
-    .then(responses => {
+    .then(() => {
       console.log(`Session entity type ${entityTypeName} deleted`);
     })
     .catch(err => {
@@ -1372,7 +1336,7 @@ function clearSession(projectId, sessionId) {
 }
 
 function setTimeoutPromise(delayMillis) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     setTimeout(() => resolve(), delayMillis);
   });
 }
