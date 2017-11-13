@@ -90,7 +90,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
     });
 }
 
-function detectEventIntent(projectId, sessionId, eventName, languageCode) {
+function detectEventIntent(projectId, sessionId, eventName) {
   // Imports the Dialogflow library
   const dialogflow = require('@google-cloud/dialogflow');
 
