@@ -1494,7 +1494,7 @@ function verifyCommand(callback, force, projectId, arg2, arg3) {
   const deletionWarningFunctions = [setupAgent, clearAgent];
   // Prompt the user for confirmation
   // This action may change their agent's behavior
-  let userConfirmationPrompt = `\nWarning! This operation will alter the Dialogflow agent with the project ID \'${projectId}\' for ALL users and developers.`;
+  let userConfirmationPrompt = `\nWarning! This operation will alter the Dialogflow agent with the project ID '${projectId}' for ALL users and developers.`;
   if (deletionWarningFunctions.includes(callback)) {
     userConfirmationPrompt += `\nTHIS WILL DELETE ALL EXISTING INTENTS AND ENTITIES`;
   }
@@ -1515,7 +1515,7 @@ function verifyCommand(callback, force, projectId, arg2, arg3) {
     function(err, result) {
       var input = result.confirm.toLowerCase();
       // If the user didn't say yes/y, abort
-      if (input != 'y' && input != 'yes') {
+      if (input !== 'y' && input !== 'yes') {
         console.log('Operation aborted.');
         return;
       }
