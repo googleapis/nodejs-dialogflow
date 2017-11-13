@@ -23,7 +23,7 @@ const through2 = require('through2');
 
 function detectTextIntent(projectId, sessionId, queries, languageCode) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
   const sessionClient = new dialogflow.SessionsClient({
@@ -94,7 +94,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
 
 function detectEventIntent(projectId, sessionId, eventName, languageCode) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
   const sessionClient = new dialogflow.SessionsClient({
@@ -134,7 +134,7 @@ function detectAudioIntent(
   languageCode
 ) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
   const sessionClient = new dialogflow.SessionsClient({
@@ -181,7 +181,7 @@ function streamingDetectIntent(
   languageCode
 ) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a sessison client
   const sessionClient = new dialogflow.SessionsClient({
@@ -248,7 +248,7 @@ function streamingDetectIntent(
 
 function logQueryResult(sessionClient, result) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a context client
   const contextClient = new dialogflow.ContextsClient({

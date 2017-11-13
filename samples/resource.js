@@ -25,7 +25,7 @@ const prompt = require('prompt');
 
 function createEntityTypes(projectId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -106,7 +106,7 @@ function createEntityTypes(projectId) {
 
 function listEntityTypes(projectId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -143,7 +143,7 @@ function listEntityTypes(projectId) {
 
 function clearEntityTypes(projectId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -171,7 +171,7 @@ function clearEntityTypes(projectId) {
 
 function deleteEntityType(entityType) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -207,7 +207,7 @@ function deleteEntityType(entityType) {
 
 function showEntityTypes(projectId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -235,7 +235,7 @@ function showEntityTypes(projectId) {
 
 function getEntityType(entityType) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -268,7 +268,7 @@ function getEntityType(entityType) {
 
 function updateEntityType(projectId, entityTypeId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -319,7 +319,7 @@ function updateEntityType(projectId, entityTypeId) {
 
 function logEntityType(entityType) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -365,7 +365,7 @@ function logEntityType(entityType) {
 
 function createIntents(projectId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -773,7 +773,7 @@ function createIntents(projectId) {
 
 function listIntents(projectId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const intentsClient = new dialogflow.IntentsClient({
@@ -810,7 +810,7 @@ function showIntents(projectId) {
 
 function getIntent(intent) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const intentsClient = new dialogflow.IntentsClient({
@@ -854,7 +854,7 @@ function clearIntents(projectId) {
 
 function deleteIntent(intent) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const intentsClient = new dialogflow.IntentsClient({
@@ -876,7 +876,7 @@ function deleteIntent(intent) {
 
 function updateIntent(projectId, intentId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const intentsClient = new dialogflow.IntentsClient({
@@ -927,7 +927,7 @@ function updateIntent(projectId, intentId) {
 
 function logIntent(intent) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -976,7 +976,7 @@ function logIntent(intent) {
 
 function createContext(projectId, sessionId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -1018,7 +1018,7 @@ function createContext(projectId, sessionId) {
 
 function listContexts(projectId, sessionId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -1055,7 +1055,7 @@ function showContexts(projectId, sessionId) {
 
 function getContext(context) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -1092,7 +1092,7 @@ function clearContexts(projectId, sessionId) {
 
 function deleteContext(context) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -1118,7 +1118,7 @@ function deleteContext(context) {
 
 function updateContext(projectId, sessionId, contextId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -1166,7 +1166,7 @@ function updateContext(projectId, sessionId, contextId) {
 
 function logContext(context) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient({
@@ -1192,7 +1192,7 @@ function logContext(context) {
 
 function createSessionEntityType(projectId, sessionId) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
@@ -1277,7 +1277,7 @@ function showSessionEntityTypes(projectId, sessionId) {
 
 function getSessionEntityType(projectId, sessionId, entityTypeName) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
@@ -1332,7 +1332,7 @@ function clearSessionEntityTypes(projectId, sessionId) {
 
 function deleteSessionEntityType(projectId, sessionId, entityTypeName) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
@@ -1370,7 +1370,7 @@ function deleteSessionEntityType(projectId, sessionId, entityTypeName) {
 
 function updateSessionEntityType(projectId, sessionId, entityTypeName) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({
@@ -1412,7 +1412,7 @@ function updateSessionEntityType(projectId, sessionId, entityTypeName) {
 
 function logSessionEntityType(sessionEntityType) {
   // Imports the Dialogflow library
-  const dialogflow = require('../src');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient({

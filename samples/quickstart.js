@@ -22,7 +22,7 @@ const query = 'hello';
 const languageCode = 'en-US';
 
 // Instantiate a DialogFlow client.
-const dialogflow = require('../src');
+const dialogflow = require('@google-cloud/dialogflow');
 const sessionClient = new dialogflow.SessionsClient({
   servicePath: 'staging-dialogflow.sandbox.googleapis.com',
 });
