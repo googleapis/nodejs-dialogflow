@@ -133,7 +133,6 @@ test.serial(
   }
 );
 
-
 test.after.always('Setting up agent for other tests', async () => {
   await tools.runAsync(`${cmd} restore-room-agent -f`);
 });
