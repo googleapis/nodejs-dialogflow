@@ -1,533 +1,156 @@
 <img src="https://avatars2.githubusercontent.com/u/2810941?v=3&s=96" alt="Google Cloud Platform logo" title="Google Cloud Platform" align="right" height="96" width="96"/>
 
-# Dialogflow: Node.js Samples
+# [Dialogflow: Node.js Client](https://github.com/dialogflow/dialogflow-nodejs-client-v2)
 
-[![Open in Cloud Shell][shell_img]][shell_link]
+[![release level](https://img.shields.io/badge/release%20level-beta-yellow.svg?style&#x3D;flat)](https://cloud.google.com/terms/launch-stages)
+[![CircleCI](https://img.shields.io/circleci/project/github/dialogflow/dialogflow-nodejs-client-v2.svg?style=flat)](https://circleci.com/gh/dialogflow/dialogflow-nodejs-client-v2)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/dialogflow/dialogflow-nodejs-client-v2?branch=master&svg=true)](https://ci.appveyor.com/project/dialogflow/dialogflow-nodejs-client-v2)
+[![codecov](https://img.shields.io/codecov/c/github/dialogflow/dialogflow-nodejs-client-v2/master.svg?style=flat)](https://codecov.io/gh/dialogflow/dialogflow-nodejs-client-v2)
+
+> Node.js idiomatic client for [Dialogflow][product-docs].
 
 [Dialogflow](https://dialogflow.com/docs/reference/v2-agent-setup) is an enterprise-grade NLU platform that makes it easy for developers to design and integrate conversational user interfaces into mobile apps, web applications, devices, and bots.
 
-## Table of Contents
 
-* [Before you begin](#before-you-begin)
+* [Dialogflow Node.js Client API Reference][client-docs]
+* [github.com/dialogflow/dialogflow-nodejs-client-v2](https://github.com/dialogflow/dialogflow-nodejs-client-v2)
+* [Dialogflow Documentation][product-docs]
+
+Read more about the client libraries for Cloud APIs, including the older
+Google APIs Client Libraries, in [Client Libraries Explained][explained].
+
+[explained]: https://cloud.google.com/apis/docs/client-libraries-explained
+
+**Table of contents:**
+
+* [Quickstart](#quickstart)
+  * [Before you begin](#before-you-begin)
+  * [Installing the client library](#installing-the-client-library)
+  * [Using the client library](#using-the-client-library)
 * [Samples](#samples)
-  * [Detect Intent (Text)](#detect-intent-text)
-  * [Detect Intent (Audio)](#detect-intent-audio)
-  * [Detect Intent (Streaming)](#detect-intent-streaming)
-  * [Create Entity](#create-entity)
-  * [Delete Entity](#delete-entity)
-  * [Create Intent](#create-intent)
-  * [Delete Intent](#delete-intent)
-  * [Create Context](#create-context)
-  * [Delete Context](#delete-context)
-  * [Create Session Entity Type](#create-session-entity-type)
-  * [Delete Session Entity Type](#delete-session-entity-type)
+* [Versioning](#versioning)
+* [Contributing](#contributing)
+* [License](#license)
 
-## Before you begin
+## Quickstart
 
-Before running the samples, make sure you've followed the steps in the
-[Before you begin section](../README.md#before-you-begin) of the client
-library's README.
+### Before you begin
+
+1.  Select or create a Cloud Platform project.
+
+    [Go to the projects page][projects]
+
+1.  Enable billing for your project.
+
+    [Enable billing][billing]
+
+1.  Enable the Dialogflow API.
+
+    [Enable the API][enable_api]
+
+1.  [Set up authentication with a service account][auth] so you can access the
+    API from your local workstation.
+
+[projects]: https://console.cloud.google.com/project
+[billing]: https://support.google.com/cloud/answer/6293499#enable-billing
+[enable_api]: https://console.cloud.google.com/flows/enableapi?apiid=dialogflow.googleapis.com
+[auth]: https://cloud.google.com/docs/authentication/getting-started
+
+### Installing the client library
+
+    npm install --save dialogflow
+
+### Using the client library
+
+```javascript
+// You can find your project ID in your Dialogflow agent settings
+const projectId = 'ENTER_PROJECT_ID_HERE'; //https://dialogflow.com/docs/agents#settings
+const sessionId = 'quickstart-session-id';
+const query = 'hello';
+const languageCode = 'en-US';
+
+// Instantiate a DialogFlow client.
+const dialogflow = require('dialogflow');
+const sessionClient = new dialogflow.SessionsClient();
+
+// Define session path
+const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+
+// The text query request.
+const request = {
+  session: sessionPath,
+  queryInput: {
+    text: {
+      text: query,
+      languageCode: languageCode,
+    },
+  },
+};
+
+// Send request and log result
+sessionClient
+  .detectIntent(request)
+  .then(responses => {
+    console.log('Detected intent');
+    const result = responses[0].queryResult;
+    console.log(`  Query: ${result.queryText}`);
+    console.log(`  Response: ${result.fulfillmentText}`);
+    if (result.intent) {
+      console.log(`  Intent: ${result.intent.displayName}`);
+    } else {
+      console.log(`  No intent matched.`);
+    }
+  })
+  .catch(err => {
+    console.error('ERROR:', err);
+  });
+```
 
 ## Samples
 
-### Detect Intent (Text)
+Samples are in the [`samples/`](https://github.com/dialogflow/dialogflow-nodejs-client-v2/tree/master/samples) directory. The samples' `README.md`
+has instructions for running the samples.
 
-View the [source code][dialogflow_detect_intent_text_0_code].
+| Sample                      | Source Code                       | Try it |
+| --------------------------- | --------------------------------- | ------ |
+| Detect Intent (Text) | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/detect.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/detect.js,samples/README.md) |
+| Detect Intent (Audio) | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/detect.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/detect.js,samples/README.md) |
+| Detect Intent (Streaming) | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/detect.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/detect.js,samples/README.md) |
+| Create Entity | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Delete Entity | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Create Intent | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Delete Intent | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Create Context | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Delete Context | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Create Session Entity Type | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Delete Session Entity Type | [source code](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
 
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/detect.js,samples/README.md)
+The [Dialogflow Node.js Client API Reference][client-docs] documentation
+also contains samples.
 
-__Usage:__ `node detect.js --help`
+## Versioning
 
-```
-Commands:
-  text               Detects the intent for text queries.
-  event <eventName>  Detects the intent for a client-generated event name.
-  audio <filename>   Detects the intent for audio queries in a local file.
-  stream <filename>  Detects the intent in a local audio file by streaming it to the Conversation API.
+This library follows [Semantic Versioning](http://semver.org/).
 
-Options:
-  --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                                                      [string] [required]
-  --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
-                                                              [string] [default: "af8a98d0-337b-11e8-8607-fbfe951984f6"]
-  --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
-  --encoding, -e         The encoding of the input audio.
-               [choices: "AUDIO_ENCODING_LINEAR16", "AUDIO_ENCODING_FLAC", "AUDIO_ENCODING_MULAW", "AUDIO_ENCODING_AMR",
-                  "AUDIO_ENCODING_AMR_WB", "AUDIO_ENCODING_OGG_OPUS", "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE"] [default:
-                                                                                              "AUDIO_ENCODING_LINEAR16"]
-  --sampleRateHertz, -r  The sample rate in Hz of the input audio. Only required if the input audio is in raw format.
-                                                                                                                [number]
-  --help                 Show help                                                                             [boolean]
+This library is considered to be in **beta**. This means it is expected to be
+mostly stable while we work toward a general availability release; however,
+complete stability is not guaranteed. We will address issues and requests
+against beta libraries with a high priority.
 
-Examples:
-  node detect.js text -q "hello" "book a room" "Mountain View" "today" "230pm" "half an hour" "two people" "A" "yes"
-  node detect.js event order_pizza
-  node detect.js audio resources/book_a_room.wav -r 16000
-  node detect.js stream resources/mountain_view.wav -r 16000
+More Information: [Google Cloud Platform Launch Stages][launch_stages]
 
-For more information, see https://cloud.google.com/conversation/docs
-```
+[launch_stages]: https://cloud.google.com/terms/launch-stages
 
-[dialogflow_detect_intent_text_0_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.DetectIntentRequest
-[dialogflow_detect_intent_text_0_code]: detect.js
+## Contributing
 
-### Detect Intent (Audio)
+Contributions welcome! See the [Contributing Guide](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/.github/CONTRIBUTING.md).
 
-View the [source code][dialogflow_detect_intent_audio_1_code].
+## License
 
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/detect.js,samples/README.md)
+Apache Version 2.0
 
-__Usage:__ `node detect.js --help`
+See [LICENSE](https://github.com/dialogflow/dialogflow-nodejs-client-v2/blob/master/LICENSE)
 
-```
-Commands:
-  text               Detects the intent for text queries.
-  event <eventName>  Detects the intent for a client-generated event name.
-  audio <filename>   Detects the intent for audio queries in a local file.
-  stream <filename>  Detects the intent in a local audio file by streaming it to the Conversation API.
-
-Options:
-  --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                                                      [string] [required]
-  --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
-                                                              [string] [default: "afb9e630-337b-11e8-8051-45999b31e531"]
-  --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
-  --encoding, -e         The encoding of the input audio.
-               [choices: "AUDIO_ENCODING_LINEAR16", "AUDIO_ENCODING_FLAC", "AUDIO_ENCODING_MULAW", "AUDIO_ENCODING_AMR",
-                  "AUDIO_ENCODING_AMR_WB", "AUDIO_ENCODING_OGG_OPUS", "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE"] [default:
-                                                                                              "AUDIO_ENCODING_LINEAR16"]
-  --sampleRateHertz, -r  The sample rate in Hz of the input audio. Only required if the input audio is in raw format.
-                                                                                                                [number]
-  --help                 Show help                                                                             [boolean]
-
-Examples:
-  node detect.js text -q "hello" "book a room" "Mountain View" "today" "230pm" "half an hour" "two people" "A" "yes"
-  node detect.js event order_pizza
-  node detect.js audio resources/book_a_room.wav -r 16000
-  node detect.js stream resources/mountain_view.wav -r 16000
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_detect_intent_audio_1_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.DetectIntentRequest
-[dialogflow_detect_intent_audio_1_code]: detect.js
-
-### Detect Intent (Streaming)
-
-View the [source code][dialogflow_detect_intent_streaming_2_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/detect.js,samples/README.md)
-
-__Usage:__ `node detect.js --help`
-
-```
-Commands:
-  text               Detects the intent for text queries.
-  event <eventName>  Detects the intent for a client-generated event name.
-  audio <filename>   Detects the intent for audio queries in a local file.
-  stream <filename>  Detects the intent in a local audio file by streaming it to the Conversation API.
-
-Options:
-  --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                                                      [string] [required]
-  --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
-                                                              [string] [default: "afeed8e0-337b-11e8-952d-a3576b001625"]
-  --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
-  --encoding, -e         The encoding of the input audio.
-               [choices: "AUDIO_ENCODING_LINEAR16", "AUDIO_ENCODING_FLAC", "AUDIO_ENCODING_MULAW", "AUDIO_ENCODING_AMR",
-                  "AUDIO_ENCODING_AMR_WB", "AUDIO_ENCODING_OGG_OPUS", "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE"] [default:
-                                                                                              "AUDIO_ENCODING_LINEAR16"]
-  --sampleRateHertz, -r  The sample rate in Hz of the input audio. Only required if the input audio is in raw format.
-                                                                                                                [number]
-  --help                 Show help                                                                             [boolean]
-
-Examples:
-  node detect.js text -q "hello" "book a room" "Mountain View" "today" "230pm" "half an hour" "two people" "A" "yes"
-  node detect.js event order_pizza
-  node detect.js audio resources/book_a_room.wav -r 16000
-  node detect.js stream resources/mountain_view.wav -r 16000
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_detect_intent_streaming_2_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.DetectIntentRequest
-[dialogflow_detect_intent_streaming_2_code]: detect.js
-
-### Create Entity
-
-View the [source code][dialogflow_create_entity_3_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_create_entity_3_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.EntityTypes.CreateEntityType
-[dialogflow_create_entity_3_code]: resource.js
-
-### Delete Entity
-
-View the [source code][dialogflow_delete_entity_4_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_delete_entity_4_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.EntityTypes.DeleteEntityType
-[dialogflow_delete_entity_4_code]: resource.js
-
-### Create Intent
-
-View the [source code][dialogflow_create_intent_5_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_create_intent_5_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.Intents.CreateIntent
-[dialogflow_create_intent_5_code]: resource.js
-
-### Delete Intent
-
-View the [source code][dialogflow_delete_intent_6_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_delete_intent_6_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.Intents.DeleteIntent
-[dialogflow_delete_intent_6_code]: resource.js
-
-### Create Context
-
-View the [source code][dialogflow_create_context_7_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_create_context_7_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.Contexts.CreateContext
-[dialogflow_create_context_7_code]: resource.js
-
-### Delete Context
-
-View the [source code][dialogflow_delete_context_8_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_delete_context_8_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.Contexts.DeleteContext
-[dialogflow_delete_context_8_code]: resource.js
-
-### Create Session Entity Type
-
-View the [source code][dialogflow_create_session_entity_type_9_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_create_session_entity_type_9_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.SessionEntityTypes.CreateSessionEntityType
-[dialogflow_create_session_entity_type_9_code]: resource.js
-
-### Delete Session Entity Type
-
-View the [source code][dialogflow_delete_session_entity_type_10_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/resource.js,samples/README.md)
-
-__Usage:__ `node resource.js --help`
-
-```
-Commands:
-  setup-agent                                              Create entity types and intent for ordering pizzas.
-  clear-agent                                              Delete all intents and entity types from an agent.
-  show-agent                                               Show all intents and entity types from an agent.
-  update-entity-type <entityTypeId>                        Update an entity type.
-  update-intent <intentId>                                 Update an intent.
-  setup-session <sessionId>                                Create contexts and session entity types for a session. It
-                                                           assumes the agents is set up by setup-agent command.
-  show-session <sessionId>                                 Show all contexts and session entity types in a session.
-  clear-session <sessionId>                                Delete all contexts and session entity types.
-  update-context <sessionId> <contextId>                   Update a context.
-  update-session-entity-type <sessionId> <entityTypeName>  Update a session entity type.
-  restore-room-agent                                       Restore the room booking Dialogflow agent
-
-Options:
-  --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
-  --force, -f      force operation without a prompt                                                            [boolean]
-  --help           Show help                                                                                   [boolean]
-
-Examples:
-  node resource.js setup-agent
-  node resource.js show-agent
-  node resource.js clear-agent
-  node resource.js update-entity-type "my-entity-type-id"
-  node resource.js update-intent "my-intent-id"
-  node resource.js setup-session "my-session-id"
-  node resource.js show-session "my-session-id"
-  node resource.js clear-session "my-session-id"
-  node resource.js update-context "my-session-id" "my-context-id"
-  node resource.js update-session-entity-type "my-session-id" "my-entity-type-name"
-
-For more information, see https://cloud.google.com/conversation/docs
-```
-
-[dialogflow_delete_session_entity_type_10_docs]: https://dialogflow.com/docs/reference/api-v2/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.SessionEntityTypes.DeleteSessionEntityType
-[dialogflow_delete_session_entity_type_10_code]: resource.js
-
+[client-docs]: https://dialogflow.com/docs/reference/api-v2/rpc/
+[product-docs]: https://dialogflow.com/docs/reference/api-v2/rpc/
 [shell_img]: //gstatic.com/cloudssh/images/open-btn.png
-[shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/dialogflow/dialogflow-nodejs-client-v2&page=editor&open_in_editor=samples/README.md
