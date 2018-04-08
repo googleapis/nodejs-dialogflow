@@ -1,5 +1,6 @@
 {
   "name": "nodejs-docs-samples-conversation",
+  "description": "dialogflow should be set to a real semver version if using outside this repository",
   "version": "0.0.1",
   "private": true,
   "license": "Apache-2.0",
