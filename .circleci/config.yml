@@ -128,14 +128,12 @@ jobs:
             if ! test -x "$repo_tools"; then
               chmod +x "$repo_tools"
             fi
-            npm link
           environment:
             NPM_CONFIG_PREFIX: /home/node/.npm-global
       - run:
-          name: Link the module being tested to the samples.
+          name: Install samples.
           command: |
             cd samples/
-            npm link dialogflow
             npm install
             cd ..
           environment:
@@ -177,7 +175,7 @@ jobs:
                 -out .circleci/key.json \
                 -k "${SYSTEM_TESTS_ENCRYPTION_KEY}"
       - run:
-          name: Install and link the module.
+          name: Install the module.
           command: |
             mkdir -p /home/node/.npm-global
             npm install
@@ -185,14 +183,12 @@ jobs:
             if ! test -x "$repo_tools"; then
               chmod +x "$repo_tools"
             fi
-            npm link
           environment:
             NPM_CONFIG_PREFIX: /home/node/.npm-global
       - run:
-          name: Link the module being tested to the samples.
+          name: Install samples.
           command: |
             cd samples/
-            npm link dialogflow
             npm install
             cd ..
           environment:
