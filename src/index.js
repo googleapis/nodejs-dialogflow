@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 /**
  * @namespace google
  */
@@ -119,7 +118,6 @@ module.exports = gapic.v2;
  *   Reference to {@link v2.SessionsClient}
  */
 module.exports.v2 = gapic.v2;
-
 
 /**
  * The `dialogflow` package has the following named exports:
