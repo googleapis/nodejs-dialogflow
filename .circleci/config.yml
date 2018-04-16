@@ -67,7 +67,7 @@ workflows:
 jobs:
   node4:
     docker:
-      - image: 'node:4@sha256:36adaf7ae6d88589009b54b1fef7a660768db5ec8248e82944604c07455d46ba'
+      - image: 'node:4@sha256:db9cbb9420b52d591e36eb66a019995f5d2c3a05b5087918ea1ab0ba3949b74d'
         user: node
     steps: &unit_tests_steps
       - checkout
@@ -99,22 +99,22 @@ jobs:
           when: always
   node6:
     docker:
-      - image: 'node:6@sha256:d317acbe49df83929ff0c51f18c29a2aa470a172c2d72653bf266a2822578301'
+      - image: 'node:6@sha256:4c90d660e51d7187c01f3001d95c8c922b084a83f5001660ef16986301e8a860'
         user: node
     steps: *unit_tests_steps
   node8:
     docker:
-      - image: 'node:8@sha256:a4c4106ddda19c2c228cbdfbc0f0d7a5f27c383b0486f88fc2c2c40153763cf5'
+      - image: 'node:8@sha256:26e4c77f9f797c3993780943239fa79419f011dd93ae4e0097089e2145aeaa24'
         user: node
     steps: *unit_tests_steps
   node9:
     docker:
-      - image: 'node:9@sha256:8a4ad1abc3fcec3fc2d75420dfb5e7d042768ad6b60cab3a98a7450ec8be8915'
+      - image: 'node:9@sha256:bd7b9aaf77ab2ce1e83e7e79fc0969229214f9126ced222c64eab49dc0bdae90'
         user: node
     steps: *unit_tests_steps
   lint:
     docker:
-      - image: 'node:8@sha256:a4c4106ddda19c2c228cbdfbc0f0d7a5f27c383b0486f88fc2c2c40153763cf5'
+      - image: 'node:8@sha256:26e4c77f9f797c3993780943239fa79419f011dd93ae4e0097089e2145aeaa24'
         user: node
     steps:
       - checkout
@@ -147,7 +147,7 @@ jobs:
             NPM_CONFIG_PREFIX: /home/node/.npm-global
   docs:
     docker:
-      - image: 'node:8@sha256:a4c4106ddda19c2c228cbdfbc0f0d7a5f27c383b0486f88fc2c2c40153763cf5'
+      - image: 'node:8@sha256:26e4c77f9f797c3993780943239fa79419f011dd93ae4e0097089e2145aeaa24'
         user: node
     steps:
       - checkout
@@ -165,7 +165,7 @@ jobs:
           command: npm run docs
   sample_tests:
     docker:
-      - image: 'node:8@sha256:a4c4106ddda19c2c228cbdfbc0f0d7a5f27c383b0486f88fc2c2c40153763cf5'
+      - image: 'node:8@sha256:26e4c77f9f797c3993780943239fa79419f011dd93ae4e0097089e2145aeaa24'
         user: node
     steps:
       - checkout
@@ -211,7 +211,7 @@ jobs:
     working_directory: /home/node/dialogflow-samples
   publish_npm:
     docker:
-      - image: 'node:8@sha256:a4c4106ddda19c2c228cbdfbc0f0d7a5f27c383b0486f88fc2c2c40153763cf5'
+      - image: 'node:8@sha256:26e4c77f9f797c3993780943239fa79419f011dd93ae4e0097089e2145aeaa24'
         user: node
     steps:
       - checkout
