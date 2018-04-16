@@ -183,23 +183,6 @@ module.exports.v2 = gapic.v2;
  * @property {constructor} SessionsClient
  *   Reference to {@link v2beta1.SessionsClient}
  */
-module.exports = gapic.v2beta1;
-
-/**
- * @type {object}
- * @property {constructor} AgentsClient
- *   Reference to {@link v2beta1.AgentsClient}
- * @property {constructor} ContextsClient
- *   Reference to {@link v2beta1.ContextsClient}
- * @property {constructor} EntityTypesClient
- *   Reference to {@link v2beta1.EntityTypesClient}
- * @property {constructor} IntentsClient
- *   Reference to {@link v2beta1.IntentsClient}
- * @property {constructor} SessionEntityTypesClient
- *   Reference to {@link v2beta1.SessionEntityTypesClient}
- * @property {constructor} SessionsClient
- *   Reference to {@link v2beta1.SessionsClient}
- */
 module.exports.v2beta1 = gapic.v2beta1;
 
 // Alias `module.exports` as `module.exports.default`, for future-proofing.
