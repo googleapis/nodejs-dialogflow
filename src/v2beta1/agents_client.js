@@ -125,9 +125,7 @@ class AgentsClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gax.PathTemplate(
-        'projects/{project}'
-      ),
+      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -142,10 +140,15 @@ class AgentsClient {
     };
     var protoFilesRoot = new gax.grpc.GoogleProtoFilesRoot();
     protoFilesRoot = protobuf.loadSync(
-      path.join(__dirname, '..', '..', 'protos', 'google/cloud/dialogflow/v2beta1/agent.proto'),
+      path.join(
+        __dirname,
+        '..',
+        '..',
+        'protos',
+        'google/cloud/dialogflow/v2beta1/agent.proto'
+      ),
       protoFilesRoot
     );
-
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -155,30 +158,16 @@ class AgentsClient {
       grpc: gaxGrpc.grpc,
     }).operationsClient(opts);
 
-    var trainAgentResponse = protoFilesRoot.lookup(
-      'google.protobuf.Empty'
-    );
-    var trainAgentMetadata = protoFilesRoot.lookup(
-      'google.protobuf.Struct'
-    );
+    var trainAgentResponse = protoFilesRoot.lookup('google.protobuf.Empty');
+    var trainAgentMetadata = protoFilesRoot.lookup('google.protobuf.Struct');
     var exportAgentResponse = protoFilesRoot.lookup(
       'google.cloud.dialogflow.v2beta1.ExportAgentResponse'
     );
-    var exportAgentMetadata = protoFilesRoot.lookup(
-      'google.protobuf.Struct'
-    );
-    var importAgentResponse = protoFilesRoot.lookup(
-      'google.protobuf.Empty'
-    );
-    var importAgentMetadata = protoFilesRoot.lookup(
-      'google.protobuf.Struct'
-    );
-    var restoreAgentResponse = protoFilesRoot.lookup(
-      'google.protobuf.Empty'
-    );
-    var restoreAgentMetadata = protoFilesRoot.lookup(
-      'google.protobuf.Struct'
-    );
+    var exportAgentMetadata = protoFilesRoot.lookup('google.protobuf.Struct');
+    var importAgentResponse = protoFilesRoot.lookup('google.protobuf.Empty');
+    var importAgentMetadata = protoFilesRoot.lookup('google.protobuf.Struct');
+    var restoreAgentResponse = protoFilesRoot.lookup('google.protobuf.Empty');
+    var restoreAgentMetadata = protoFilesRoot.lookup('google.protobuf.Struct');
 
     this._descriptors.longrunning = {
       trainAgent: new gax.LongrunningDescriptor(
@@ -243,7 +232,8 @@ class AgentsClient {
             }
         ),
         defaults[methodName],
-        this._descriptors.page[methodName] || this._descriptors.longrunning[methodName]
+        this._descriptors.page[methodName] ||
+          this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -267,9 +257,7 @@ class AgentsClient {
    * in this service.
    */
   static get scopes() {
-    return [
-      'https://www.googleapis.com/auth/cloud-platform',
-    ];
+    return ['https://www.googleapis.com/auth/cloud-platform'];
   }
 
   /**
@@ -487,7 +475,7 @@ class AgentsClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Trains the specified agent.
@@ -940,11 +928,8 @@ class AgentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate
-      .match(projectName)
-      .project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 }
-
 
 module.exports = AgentsClient;

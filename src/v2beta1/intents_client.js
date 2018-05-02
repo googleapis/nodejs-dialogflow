@@ -140,9 +140,7 @@ class IntentsClient {
       agentPathTemplate: new gax.PathTemplate(
         'projects/{project}/agents/{agent}'
       ),
-      projectPathTemplate: new gax.PathTemplate(
-        'projects/{project}'
-      ),
+      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -157,10 +155,15 @@ class IntentsClient {
     };
     var protoFilesRoot = new gax.grpc.GoogleProtoFilesRoot();
     protoFilesRoot = protobuf.loadSync(
-      path.join(__dirname, '..', '..', 'protos', 'google/cloud/dialogflow/v2beta1/intent.proto'),
+      path.join(
+        __dirname,
+        '..',
+        '..',
+        'protos',
+        'google/cloud/dialogflow/v2beta1/intent.proto'
+      ),
       protoFilesRoot
     );
-
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -237,7 +240,8 @@ class IntentsClient {
             }
         ),
         defaults[methodName],
-        this._descriptors.page[methodName] || this._descriptors.longrunning[methodName]
+        this._descriptors.page[methodName] ||
+          this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -261,9 +265,7 @@ class IntentsClient {
    * in this service.
    */
   static get scopes() {
-    return [
-      'https://www.googleapis.com/auth/cloud-platform',
-    ];
+    return ['https://www.googleapis.com/auth/cloud-platform'];
   }
 
   /**
@@ -448,7 +450,7 @@ class IntentsClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Retrieves the specified intent.
@@ -977,8 +979,7 @@ class IntentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectAgentName(projectAgentName) {
-    return this._pathTemplates.projectAgentPathTemplate
-      .match(projectAgentName)
+    return this._pathTemplates.projectAgentPathTemplate.match(projectAgentName)
       .project;
   }
 
@@ -990,9 +991,7 @@ class IntentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromIntentName(intentName) {
-    return this._pathTemplates.intentPathTemplate
-      .match(intentName)
-      .project;
+    return this._pathTemplates.intentPathTemplate.match(intentName).project;
   }
 
   /**
@@ -1003,9 +1002,7 @@ class IntentsClient {
    * @returns {String} - A string representing the intent.
    */
   matchIntentFromIntentName(intentName) {
-    return this._pathTemplates.intentPathTemplate
-      .match(intentName)
-      .intent;
+    return this._pathTemplates.intentPathTemplate.match(intentName).intent;
   }
 
   /**
@@ -1016,9 +1013,7 @@ class IntentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromAgentName(agentName) {
-    return this._pathTemplates.agentPathTemplate
-      .match(agentName)
-      .project;
+    return this._pathTemplates.agentPathTemplate.match(agentName).project;
   }
 
   /**
@@ -1029,9 +1024,7 @@ class IntentsClient {
    * @returns {String} - A string representing the agent.
    */
   matchAgentFromAgentName(agentName) {
-    return this._pathTemplates.agentPathTemplate
-      .match(agentName)
-      .agent;
+    return this._pathTemplates.agentPathTemplate.match(agentName).agent;
   }
 
   /**
@@ -1042,11 +1035,8 @@ class IntentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate
-      .match(projectName)
-      .project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 }
-
 
 module.exports = IntentsClient;

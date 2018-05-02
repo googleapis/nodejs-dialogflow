@@ -205,9 +205,7 @@ class ContextsClient {
    * in this service.
    */
   static get scopes() {
-    return [
-      'https://www.googleapis.com/auth/cloud-platform',
-    ];
+    return ['https://www.googleapis.com/auth/cloud-platform'];
   }
 
   /**
@@ -382,7 +380,7 @@ class ContextsClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Retrieves the specified context.
@@ -718,9 +716,7 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate
-      .match(sessionName)
-      .project;
+    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
   }
 
   /**
@@ -731,9 +727,7 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate
-      .match(sessionName)
-      .session;
+    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
   }
 
   /**
@@ -744,9 +738,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .project;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).project;
   }
 
   /**
@@ -757,9 +751,9 @@ class ContextsClient {
    * @returns {String} - A string representing the environment.
    */
   matchEnvironmentFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .environment;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).environment;
   }
 
   /**
@@ -770,9 +764,9 @@ class ContextsClient {
    * @returns {String} - A string representing the user.
    */
   matchUserFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .user;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).user;
   }
 
   /**
@@ -783,9 +777,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .session;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).session;
   }
 
   /**
@@ -796,9 +790,7 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate
-      .match(contextName)
-      .project;
+    return this._pathTemplates.contextPathTemplate.match(contextName).project;
   }
 
   /**
@@ -809,9 +801,7 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate
-      .match(contextName)
-      .session;
+    return this._pathTemplates.contextPathTemplate.match(contextName).session;
   }
 
   /**
@@ -822,9 +812,7 @@ class ContextsClient {
    * @returns {String} - A string representing the context.
    */
   matchContextFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate
-      .match(contextName)
-      .context;
+    return this._pathTemplates.contextPathTemplate.match(contextName).context;
   }
 
   /**
@@ -835,9 +823,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate
-      .match(environmentContextName)
-      .project;
+    return this._pathTemplates.environmentContextPathTemplate.match(
+      environmentContextName
+    ).project;
   }
 
   /**
@@ -848,9 +836,9 @@ class ContextsClient {
    * @returns {String} - A string representing the environment.
    */
   matchEnvironmentFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate
-      .match(environmentContextName)
-      .environment;
+    return this._pathTemplates.environmentContextPathTemplate.match(
+      environmentContextName
+    ).environment;
   }
 
   /**
@@ -861,9 +849,9 @@ class ContextsClient {
    * @returns {String} - A string representing the user.
    */
   matchUserFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate
-      .match(environmentContextName)
-      .user;
+    return this._pathTemplates.environmentContextPathTemplate.match(
+      environmentContextName
+    ).user;
   }
 
   /**
@@ -874,9 +862,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate
-      .match(environmentContextName)
-      .session;
+    return this._pathTemplates.environmentContextPathTemplate.match(
+      environmentContextName
+    ).session;
   }
 
   /**
@@ -887,11 +875,10 @@ class ContextsClient {
    * @returns {String} - A string representing the context.
    */
   matchContextFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate
-      .match(environmentContextName)
-      .context;
+    return this._pathTemplates.environmentContextPathTemplate.match(
+      environmentContextName
+    ).context;
   }
 }
-
 
 module.exports = ContextsClient;

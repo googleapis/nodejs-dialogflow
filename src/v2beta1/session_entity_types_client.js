@@ -199,9 +199,7 @@ class SessionEntityTypesClient {
    * in this service.
    */
   static get scopes() {
-    return [
-      'https://www.googleapis.com/auth/cloud-platform',
-    ];
+    return ['https://www.googleapis.com/auth/cloud-platform'];
   }
 
   /**
@@ -314,7 +312,11 @@ class SessionEntityTypesClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.listSessionEntityTypes(request, options, callback);
+    return this._innerApiCalls.listSessionEntityTypes(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -376,7 +378,7 @@ class SessionEntityTypesClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Retrieves the specified session entity type.
@@ -489,7 +491,11 @@ class SessionEntityTypesClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.createSessionEntityType(request, options, callback);
+    return this._innerApiCalls.createSessionEntityType(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -548,7 +554,11 @@ class SessionEntityTypesClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.updateSessionEntityType(request, options, callback);
+    return this._innerApiCalls.updateSessionEntityType(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -593,7 +603,11 @@ class SessionEntityTypesClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.deleteSessionEntityType(request, options, callback);
+    return this._innerApiCalls.deleteSessionEntityType(
+      request,
+      options,
+      callback
+    );
   }
 
   // --------------------
@@ -658,7 +672,13 @@ class SessionEntityTypesClient {
    * @param {String} entityType
    * @returns {String}
    */
-  environmentSessionEntityTypePath(project, environment, user, session, entityType) {
+  environmentSessionEntityTypePath(
+    project,
+    environment,
+    user,
+    session,
+    entityType
+  ) {
     return this._pathTemplates.environmentSessionEntityTypePathTemplate.render({
       project: project,
       environment: environment,
@@ -676,9 +696,7 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate
-      .match(sessionName)
-      .project;
+    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
   }
 
   /**
@@ -689,9 +707,7 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate
-      .match(sessionName)
-      .session;
+    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
   }
 
   /**
@@ -702,9 +718,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .project;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).project;
   }
 
   /**
@@ -715,9 +731,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the environment.
    */
   matchEnvironmentFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .environment;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).environment;
   }
 
   /**
@@ -728,9 +744,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the user.
    */
   matchUserFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .user;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).user;
   }
 
   /**
@@ -741,9 +757,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate
-      .match(environmentSessionName)
-      .session;
+    return this._pathTemplates.environmentSessionPathTemplate.match(
+      environmentSessionName
+    ).session;
   }
 
   /**
@@ -754,9 +770,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionEntityTypeName(sessionEntityTypeName) {
-    return this._pathTemplates.sessionEntityTypePathTemplate
-      .match(sessionEntityTypeName)
-      .project;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -767,9 +783,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionEntityTypeName(sessionEntityTypeName) {
-    return this._pathTemplates.sessionEntityTypePathTemplate
-      .match(sessionEntityTypeName)
-      .session;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -780,9 +796,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the entity_type.
    */
   matchEntityTypeFromSessionEntityTypeName(sessionEntityTypeName) {
-    return this._pathTemplates.sessionEntityTypePathTemplate
-      .match(sessionEntityTypeName)
-      .entity_type;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -792,10 +808,12 @@ class SessionEntityTypesClient {
    *   A fully-qualified path representing a environment_session_entity_type resources.
    * @returns {String} - A string representing the project.
    */
-  matchProjectFromEnvironmentSessionEntityTypeName(environmentSessionEntityTypeName) {
-    return this._pathTemplates.environmentSessionEntityTypePathTemplate
-      .match(environmentSessionEntityTypeName)
-      .project;
+  matchProjectFromEnvironmentSessionEntityTypeName(
+    environmentSessionEntityTypeName
+  ) {
+    return this._pathTemplates.environmentSessionEntityTypePathTemplate.match(
+      environmentSessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -805,10 +823,12 @@ class SessionEntityTypesClient {
    *   A fully-qualified path representing a environment_session_entity_type resources.
    * @returns {String} - A string representing the environment.
    */
-  matchEnvironmentFromEnvironmentSessionEntityTypeName(environmentSessionEntityTypeName) {
-    return this._pathTemplates.environmentSessionEntityTypePathTemplate
-      .match(environmentSessionEntityTypeName)
-      .environment;
+  matchEnvironmentFromEnvironmentSessionEntityTypeName(
+    environmentSessionEntityTypeName
+  ) {
+    return this._pathTemplates.environmentSessionEntityTypePathTemplate.match(
+      environmentSessionEntityTypeName
+    ).environment;
   }
 
   /**
@@ -818,10 +838,12 @@ class SessionEntityTypesClient {
    *   A fully-qualified path representing a environment_session_entity_type resources.
    * @returns {String} - A string representing the user.
    */
-  matchUserFromEnvironmentSessionEntityTypeName(environmentSessionEntityTypeName) {
-    return this._pathTemplates.environmentSessionEntityTypePathTemplate
-      .match(environmentSessionEntityTypeName)
-      .user;
+  matchUserFromEnvironmentSessionEntityTypeName(
+    environmentSessionEntityTypeName
+  ) {
+    return this._pathTemplates.environmentSessionEntityTypePathTemplate.match(
+      environmentSessionEntityTypeName
+    ).user;
   }
 
   /**
@@ -831,10 +853,12 @@ class SessionEntityTypesClient {
    *   A fully-qualified path representing a environment_session_entity_type resources.
    * @returns {String} - A string representing the session.
    */
-  matchSessionFromEnvironmentSessionEntityTypeName(environmentSessionEntityTypeName) {
-    return this._pathTemplates.environmentSessionEntityTypePathTemplate
-      .match(environmentSessionEntityTypeName)
-      .session;
+  matchSessionFromEnvironmentSessionEntityTypeName(
+    environmentSessionEntityTypeName
+  ) {
+    return this._pathTemplates.environmentSessionEntityTypePathTemplate.match(
+      environmentSessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -844,12 +868,13 @@ class SessionEntityTypesClient {
    *   A fully-qualified path representing a environment_session_entity_type resources.
    * @returns {String} - A string representing the entity_type.
    */
-  matchEntityTypeFromEnvironmentSessionEntityTypeName(environmentSessionEntityTypeName) {
-    return this._pathTemplates.environmentSessionEntityTypePathTemplate
-      .match(environmentSessionEntityTypeName)
-      .entity_type;
+  matchEntityTypeFromEnvironmentSessionEntityTypeName(
+    environmentSessionEntityTypeName
+  ) {
+    return this._pathTemplates.environmentSessionEntityTypePathTemplate.match(
+      environmentSessionEntityTypeName
+    ).entity_type;
   }
 }
-
 
 module.exports = SessionEntityTypesClient;
