@@ -106,14 +106,15 @@ class SessionsClient {
       sessionPathTemplate: new gax.PathTemplate(
         'projects/{project}/agent/sessions/{session}'
       ),
+      environmentSessionPathTemplate: new gax.PathTemplate(
+        'projects/{project}/agent/environments/{environment}/users/{user}/sessions/{session}'
+      ),
     };
 
     // Some of the methods on this service provide streaming responses.
     // Provide descriptors for these.
     this._descriptors.stream = {
-      streamingDetectIntent: new gax.StreamDescriptor(
-        gax.StreamType.BIDI_STREAMING
-      ),
+      streamingDetectIntent: new gax.StreamDescriptor(gax.StreamType.BIDI_STREAMING),
     };
 
     // Put together the default options sent with requests.
@@ -138,7 +139,10 @@ class SessionsClient {
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    var sessionsStubMethods = ['detectIntent', 'streamingDetectIntent'];
+    var sessionsStubMethods = [
+      'detectIntent',
+      'streamingDetectIntent',
+    ];
     for (let methodName of sessionsStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         sessionsStub.then(
@@ -173,7 +177,9 @@ class SessionsClient {
    * in this service.
    */
   static get scopes() {
-    return ['https://www.googleapis.com/auth/cloud-platform'];
+    return [
+      'https://www.googleapis.com/auth/cloud-platform',
+    ];
   }
 
   /**
@@ -200,12 +206,14 @@ class SessionsClient {
    * @param {string} request.session
    *   Required. The name of the session this query is sent to. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>`, or
-   *   `projects/<Project ID>/agent/runtimes/<Runtime ID>/sessions/<Session ID>`.
-   *   Note: Runtimes are under construction and will be available soon.
-   *   If <Runtime ID> is not specified, we assume default 'sandbox' runtime.
-   *   It's up to the API caller to choose an appropriate session ID. It can be
-   *   a random number or some type of user identifier (preferably hashed).
-   *   The length of the session ID must not exceed 36 bytes.
+   *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
+   *   construction and will be available soon. If <Environment ID> is not
+   *   specified, we assume default 'draft' environment. If <User ID> is not
+   *   specified, we are using "-". It’s up to the API caller to choose an
+   *   appropriate <Session ID>. and <User Id>. They can be a random numbers or
+   *   some type of user and session identifiers (preferably hashed). The length
+   *   of the <Session ID> and <User ID> must not exceed 36 characters.
    * @param {Object} request.queryInput
    *   Required. The input specification. It can be set to:
    *
@@ -327,6 +335,24 @@ class SessionsClient {
   }
 
   /**
+   * Return a fully-qualified environment_session resource name string.
+   *
+   * @param {String} project
+   * @param {String} environment
+   * @param {String} user
+   * @param {String} session
+   * @returns {String}
+   */
+  environmentSessionPath(project, environment, user, session) {
+    return this._pathTemplates.environmentSessionPathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+    });
+  }
+
+  /**
    * Parse the sessionName from a session resource.
    *
    * @param {String} sessionName
@@ -334,7 +360,9 @@ class SessionsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .project;
   }
 
   /**
@@ -345,8 +373,63 @@ class SessionsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .session;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the project.
+   */
+  matchProjectFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .project;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the environment.
+   */
+  matchEnvironmentFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .environment;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the user.
+   */
+  matchUserFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .user;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the session.
+   */
+  matchSessionFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .session;
   }
 }
+
 
 module.exports = SessionsClient;

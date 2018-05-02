@@ -119,8 +119,14 @@ class ContextsClient {
       sessionPathTemplate: new gax.PathTemplate(
         'projects/{project}/agent/sessions/{session}'
       ),
+      environmentSessionPathTemplate: new gax.PathTemplate(
+        'projects/{project}/agent/environments/{environment}/users/{user}/sessions/{session}'
+      ),
       contextPathTemplate: new gax.PathTemplate(
         'projects/{project}/agent/sessions/{session}/contexts/{context}'
+      ),
+      environmentContextPathTemplate: new gax.PathTemplate(
+        'projects/{project}/agent/sessions/{environment}/users/{user}/{session}/contexts/{context}'
       ),
     };
 
@@ -199,7 +205,9 @@ class ContextsClient {
    * in this service.
    */
   static get scopes() {
-    return ['https://www.googleapis.com/auth/cloud-platform'];
+    return [
+      'https://www.googleapis.com/auth/cloud-platform',
+    ];
   }
 
   /**
@@ -223,9 +231,11 @@ class ContextsClient {
    * @param {string} request.parent
    *   Required. The session to list all contexts from.
    *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-   *   `projects/<Project ID>/agent/runtimes/<Runtime ID>/sessions/<Session ID>`.
-   *   Note: Runtimes are under construction and will be available soon.
-   *   If <Runtime ID> is not specified, we assume default 'sandbox' runtime.
+   *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
+   *   construction and will be available soon. If <Environment ID> is not
+   *   specified, we assume default 'draft' environment. If <User ID> is not
+   *   specified, we assume default '-' user.
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
    *   response. If page streaming is performed per-resource, this
@@ -331,9 +341,11 @@ class ContextsClient {
    * @param {string} request.parent
    *   Required. The session to list all contexts from.
    *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-   *   `projects/<Project ID>/agent/runtimes/<Runtime ID>/sessions/<Session ID>`.
-   *   Note: Runtimes are under construction and will be available soon.
-   *   If <Runtime ID> is not specified, we assume default 'sandbox' runtime.
+   *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
+   *   construction and will be available soon. If <Environment ID> is not
+   *   specified, we assume default 'draft' environment. If <User ID> is not
+   *   specified, we assume default '-' user.
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
    *   response. If page streaming is performed per-resource, this
@@ -370,7 +382,7 @@ class ContextsClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified context.
@@ -380,10 +392,11 @@ class ContextsClient {
    * @param {string} request.name
    *   Required. The name of the context. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
-   *   or `projects/<Project ID>/agent/runtimes/<Runtime ID>/sessions/<Session
-   *   ID>/contexts/<Context ID>`. Note: Runtimes are under construction and will
-   *   be available soon. If <Runtime ID> is not specified, we assume default
-   *   'sandbox' runtime.
+   *   or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *   ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments and
+   *   users are under construction and will be available soon. If <Environment
+   *   ID> is not specified, we assume default 'draft' environment. If <User ID>
+   *   is not specified, we assume default '-' user.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
@@ -431,9 +444,11 @@ class ContextsClient {
    * @param {string} request.parent
    *   Required. The session to create a context for.
    *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-   *   `projects/<Project ID>/agent/runtimes/<Runtime ID>/sessions/<Session ID>`.
-   *   Note: Runtimes are under construction and will be available soon.
-   *   If <Runtime ID> is not specified, we assume default 'sandbox' runtime.
+   *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
+   *   construction and will be available soon. If <Environment ID> is not
+   *   specified, we assume default 'draft' environment. If <User ID> is not
+   *   specified, we assume default '-' user.
    * @param {Object} request.context
    *   Required. The context to create.
    *
@@ -542,10 +557,12 @@ class ContextsClient {
    * @param {string} request.name
    *   Required. The name of the context to delete. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
-   *   or `projects/<Project ID>/agent/runtimes/<Runtime ID>/sessions/<Session
-   *   ID>/contexts/<Context ID>`. Note: Runtimes are under construction and will
-   *   be available soon. If <Runtime ID> is not specified, we assume default
-   *   'sandbox' runtime.
+   *   or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *   ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments and
+   *   users are under construction and will be available soon. If <Environment
+   *   ID> is not specified, we assume default 'draft' environment. If <User ID>
+   *   is not specified, we assume default
+   *   '-' user.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
@@ -585,9 +602,11 @@ class ContextsClient {
    * @param {string} request.parent
    *   Required. The name of the session to delete all contexts from. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project
-   *   ID>/agent/runtimes/<Runtime ID>/sessions/<Session ID>`. Note: Runtimes are
-   *   under construction and will be available soon. If <Runtime ID> is not
-   *   specified we assume default 'sandbox' runtime.
+   *   ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *   ID>`. Note: Environments and users are under construction and will be
+   *   available soon. If <Environment ID> is not specified we assume default
+   *   'draft' environment. If <User ID> is not specified, we assume default
+   *   '-' user.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
@@ -638,6 +657,24 @@ class ContextsClient {
   }
 
   /**
+   * Return a fully-qualified environment_session resource name string.
+   *
+   * @param {String} project
+   * @param {String} environment
+   * @param {String} user
+   * @param {String} session
+   * @returns {String}
+   */
+  environmentSessionPath(project, environment, user, session) {
+    return this._pathTemplates.environmentSessionPathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+    });
+  }
+
+  /**
    * Return a fully-qualified context resource name string.
    *
    * @param {String} project
@@ -654,6 +691,26 @@ class ContextsClient {
   }
 
   /**
+   * Return a fully-qualified environment_context resource name string.
+   *
+   * @param {String} project
+   * @param {String} environment
+   * @param {String} user
+   * @param {String} session
+   * @param {String} context
+   * @returns {String}
+   */
+  environmentContextPath(project, environment, user, session, context) {
+    return this._pathTemplates.environmentContextPathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+      context: context,
+    });
+  }
+
+  /**
    * Parse the sessionName from a session resource.
    *
    * @param {String} sessionName
@@ -661,7 +718,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .project;
   }
 
   /**
@@ -672,7 +731,61 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .session;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the project.
+   */
+  matchProjectFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .project;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the environment.
+   */
+  matchEnvironmentFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .environment;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the user.
+   */
+  matchUserFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .user;
+  }
+
+  /**
+   * Parse the environmentSessionName from a environment_session resource.
+   *
+   * @param {String} environmentSessionName
+   *   A fully-qualified path representing a environment_session resources.
+   * @returns {String} - A string representing the session.
+   */
+  matchSessionFromEnvironmentSessionName(environmentSessionName) {
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .session;
   }
 
   /**
@@ -683,7 +796,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).project;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .project;
   }
 
   /**
@@ -694,7 +809,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).session;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .session;
   }
 
   /**
@@ -705,8 +822,76 @@ class ContextsClient {
    * @returns {String} - A string representing the context.
    */
   matchContextFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).context;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .context;
+  }
+
+  /**
+   * Parse the environmentContextName from a environment_context resource.
+   *
+   * @param {String} environmentContextName
+   *   A fully-qualified path representing a environment_context resources.
+   * @returns {String} - A string representing the project.
+   */
+  matchProjectFromEnvironmentContextName(environmentContextName) {
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .project;
+  }
+
+  /**
+   * Parse the environmentContextName from a environment_context resource.
+   *
+   * @param {String} environmentContextName
+   *   A fully-qualified path representing a environment_context resources.
+   * @returns {String} - A string representing the environment.
+   */
+  matchEnvironmentFromEnvironmentContextName(environmentContextName) {
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .environment;
+  }
+
+  /**
+   * Parse the environmentContextName from a environment_context resource.
+   *
+   * @param {String} environmentContextName
+   *   A fully-qualified path representing a environment_context resources.
+   * @returns {String} - A string representing the user.
+   */
+  matchUserFromEnvironmentContextName(environmentContextName) {
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .user;
+  }
+
+  /**
+   * Parse the environmentContextName from a environment_context resource.
+   *
+   * @param {String} environmentContextName
+   *   A fully-qualified path representing a environment_context resources.
+   * @returns {String} - A string representing the session.
+   */
+  matchSessionFromEnvironmentContextName(environmentContextName) {
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .session;
+  }
+
+  /**
+   * Parse the environmentContextName from a environment_context resource.
+   *
+   * @param {String} environmentContextName
+   *   A fully-qualified path representing a environment_context resources.
+   * @returns {String} - A string representing the context.
+   */
+  matchContextFromEnvironmentContextName(environmentContextName) {
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .context;
   }
 }
+
 
 module.exports = ContextsClient;
