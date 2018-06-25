@@ -807,6 +807,12 @@ function updateIntent(projectId, intentId) {
         intent: intent,
       };
 
+      if(intent.followupIntentInfo){
+        delete intent.followupIntentInfo;
+        console.log(`If you dont do this - you will land up with below error`);
+        console.log(`Error: 3 INVALID_ARGUMENT: Read only field 'followup_intent_info' cannot be updated.`);
+      }
+
       return intentsClient.updateIntent(updateIntentRequest);
     })
     .then(responses => {
