@@ -53,15 +53,15 @@ function createEntityTypes(projectId) {
     },
   };
   promises.push(
-    entityTypesClient
-      .createEntityType(sizeRequest)
-      .then(responses => {
-        console.log('Created size entity type:');
-        logEntityType(responses[0]);
-      })
-      .catch(err => {
-        console.error('Failed to create size entity type:', err);
-      })
+      entityTypesClient
+          .createEntityType(sizeRequest)
+          .then(responses => {
+            console.log('Created size entity type:');
+            logEntityType(responses[0]);
+          })
+          .catch(err => {
+            console.error('Failed to create size entity type:', err);
+          })
   );
 
   // Create an entity of type named "topping", with possible values without
@@ -81,15 +81,15 @@ function createEntityTypes(projectId) {
     },
   };
   promises.push(
-    entityTypesClient
-      .createEntityType(toppingRequest)
-      .then(responses => {
-        console.log('Created topping entity type:');
-        logEntityType(responses[0]);
-      })
-      .catch(err => {
-        console.error('Failed to create topping entity type:', err);
-      })
+      entityTypesClient
+          .createEntityType(toppingRequest)
+          .then(responses => {
+            console.log('Created topping entity type:');
+            logEntityType(responses[0]);
+          })
+          .catch(err => {
+            console.error('Failed to create topping entity type:', err);
+          })
   );
 
   return Promise.all(promises);
@@ -114,22 +114,22 @@ function listEntityTypes(projectId) {
 
   // Call the client library to retrieve a list of all existing entity types.
   return entityTypesClient
-    .listEntityTypes(request)
-    .then(responses => {
-      return responses[0];
-    })
-    .catch(err => {
-      console.error('Failed to list entity types:', err);
-    });
+      .listEntityTypes(request)
+      .then(responses => {
+        return responses[0];
+      })
+      .catch(err => {
+        console.error('Failed to list entity types:', err);
+      });
 }
 
 function clearEntityTypes(projectId) {
   // List all entity types then delete all of them.
   return listEntityTypes(projectId).then(entityTypes => {
     return Promise.all(
-      entityTypes.map(entityType => {
-        return deleteEntityType(entityType);
-      })
+        entityTypes.map(entityType => {
+          return deleteEntityType(entityType);
+        })
     );
   });
 }
@@ -148,16 +148,16 @@ function deleteEntityType(entityType) {
   };
   // Call the client library to delete the entity type.
   return entityTypesClient
-    .deleteEntityType(request)
-    .then(() => {
-      console.log(`Entity type ${entityType.displayName} deleted`);
-    })
-    .catch(err => {
-      console.error(
-        `Failed to delete entity type ${entityType.displayName}:`,
-        err
-      );
-    });
+      .deleteEntityType(request)
+      .then(() => {
+        console.log(`Entity type ${entityType.displayName} deleted`);
+      })
+      .catch(err => {
+        console.error(
+            `Failed to delete entity type ${entityType.displayName}:`,
+            err
+        );
+      });
   // [END dialogflow_delete_entity]
 }
 
@@ -165,9 +165,9 @@ function showEntityTypes(projectId) {
   // List all entity types then delete all of them.
   return listEntityTypes(projectId).then(entityTypes => {
     return Promise.all(
-      entityTypes.map(entityType => {
-        return getEntityType(entityType);
-      })
+        entityTypes.map(entityType => {
+          return getEntityType(entityType);
+        })
     );
   });
 }
@@ -184,14 +184,14 @@ function getEntityType(entityType) {
 
   // Call the client library to retrieve an entity type.
   return entityTypesClient
-    .getEntityType(request)
-    .then(responses => {
-      console.log('Found entity type:');
-      logEntityType(responses[0]);
-    })
-    .catch(err => {
-      console.error(`Failed to get entity type ${entityType.displayName}`, err);
-    });
+      .getEntityType(request)
+      .then(responses => {
+        console.log('Found entity type:');
+        logEntityType(responses[0]);
+      })
+      .catch(err => {
+        console.error(`Failed to get entity type ${entityType.displayName}`, err);
+      });
 }
 
 function updateEntityType(projectId, entityTypeId) {
@@ -203,8 +203,8 @@ function updateEntityType(projectId, entityTypeId) {
 
   // The path to the entity type to be updated.
   const entityTypePath = entityTypesClient.entityTypePath(
-    projectId,
-    entityTypeId
+      projectId,
+      entityTypeId
   );
 
   // UpdateEntityType does full snapshot update. For incremental update
@@ -214,24 +214,24 @@ function updateEntityType(projectId, entityTypeId) {
   };
 
   entityTypesClient
-    .getEntityType(getEntityTypeRequest)
-    .then(responses => {
-      const entityType = responses[0];
-      // Add a new entity foo to the entity type.
-      entityType.entities.push({value: 'foo', synonyms: ['foo']});
-      const request = {
-        entityType: entityType,
-      };
+      .getEntityType(getEntityTypeRequest)
+      .then(responses => {
+        const entityType = responses[0];
+        // Add a new entity foo to the entity type.
+        entityType.entities.push({value: 'foo', synonyms: ['foo']});
+        const request = {
+          entityType: entityType,
+        };
 
-      return entityTypesClient.updateEntityType(request);
-    })
-    .then(responses => {
-      console.log('Updated entity type:');
-      logEntityType(responses[0]);
-    })
-    .catch(err => {
-      console.error('Failed to update entity type', err);
-    });
+        return entityTypesClient.updateEntityType(request);
+      })
+      .then(responses => {
+        console.log('Updated entity type:');
+        logEntityType(responses[0]);
+      })
+      .catch(err => {
+        console.error('Failed to update entity type', err);
+      });
 }
 
 function logEntityType(entityType) {
@@ -242,13 +242,13 @@ function logEntityType(entityType) {
   const entityTypesClient = new dialogflow.EntityTypesClient();
 
   console.log(
-    '  ID:',
-    entityTypesClient.matchEntityTypeFromEntityTypeName(entityType.name)
+      '  ID:',
+      entityTypesClient.matchEntityTypeFromEntityTypeName(entityType.name)
   );
   console.log('  Display Name:', entityType.displayName);
   console.log(
-    '  Auto expansion:',
-    entityType.autoExpansionMode === 'AUTO_EXPANSION_MODE_DEFAULT'
+      '  Auto expansion:',
+      entityType.autoExpansionMode === 'AUTO_EXPANSION_MODE_DEFAULT'
   );
   if (!entityType.entities) {
     console.log('  No entity defined.');
@@ -296,9 +296,9 @@ function createIntents(projectId) {
   const pizzaOutputContexts = [
     {
       name: contextsClient.contextPath(
-        projectId,
-        '*' /* sessionId */,
-        'pizza_order'
+          projectId,
+          '*' /* sessionId */,
+          'pizza_order'
       ),
       lifespanCount: 5,
     },
@@ -340,7 +340,7 @@ function createIntents(projectId) {
         text: {
           text: [
             'No problem. Getting a $size pizza with $topping and delivering ' +
-              'to $address.',
+            'to $address.',
           ],
         },
       },
@@ -348,15 +348,15 @@ function createIntents(projectId) {
         text: {
           text: [
             'Reply "check" to place your order. Reply "cancel" to cancel ' +
-              'your order. You can change your delivery address as well.',
+            'your order. You can change your delivery address as well.',
           ],
         },
       },
       {
         quickReplies: {
           title:
-            'No problem. Getting a $size pizza with $topping and ' +
-            'delivering to $address.',
+          'No problem. Getting a $size pizza with $topping and ' +
+          'delivering to $address.',
           quickReplies: ['Place order', 'Cancel'],
         },
         platform: 'PLATFORM_FACEBOOK',
@@ -418,14 +418,14 @@ function createIntents(projectId) {
 
   // Create the pizza intent
   intentsClient
-    .createIntent(pizzaRequest)
-    .then(responses => {
-      console.log('Created Pizza intent:');
-      logIntent(responses[0]);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+      .createIntent(pizzaRequest)
+      .then(responses => {
+        console.log('Created Pizza intent:');
+        logIntent(responses[0]);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+      });
 
   // Create an intent to change the delivery address. This intent sets input
   // contexts to make sure it's triggered in the conversation with the pizza
@@ -442,9 +442,9 @@ function createIntents(projectId) {
   const changeDeliveryAddressOutputContexts = [
     {
       name: contextsClient.contextPath(
-        projectId,
-        '*' /* sessionId */,
-        'pizza_order'
+          projectId,
+          '*' /* sessionId */,
+          'pizza_order'
       ),
       lifespanCount: 5,
     },
@@ -486,7 +486,7 @@ function createIntents(projectId) {
         text: {
           text: [
             'Reply "check" to place your order. Reply "cancel" to cancel ' +
-              'your order. You can change your delivery address as well.',
+            'your order. You can change your delivery address as well.',
           ],
         },
       },
@@ -537,14 +537,14 @@ function createIntents(projectId) {
 
   // Create the size intent
   intentsClient
-    .createIntent(changeDeliveryAddressRequest)
-    .then(responses => {
-      console.log('Created ChangeDeliveryAddress intent: ');
-      logIntent(responses[0]);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+      .createIntent(changeDeliveryAddressRequest)
+      .then(responses => {
+        console.log('Created ChangeDeliveryAddress intent: ');
+        logIntent(responses[0]);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+      });
 
   // Finally, create two intents, one to place the order, and the other one to
   // cancel it.
@@ -614,14 +614,14 @@ function createIntents(projectId) {
   };
 
   intentsClient
-    .createIntent(placeOrderRequest)
-    .then(responses => {
-      console.log('Created PlaceOrder intent: ');
-      logIntent(responses[0]);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+      .createIntent(placeOrderRequest)
+      .then(responses => {
+        console.log('Created PlaceOrder intent: ');
+        logIntent(responses[0]);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+      });
 
   const cancelOrderInputContexts = [
     contextsClient.contextPath(projectId, '*' /* sessionId */, 'pizza_order'),
@@ -658,14 +658,14 @@ function createIntents(projectId) {
   };
 
   intentsClient
-    .createIntent(cancelOrderRequest)
-    .then(responses => {
-      console.log('Created Cancel Order intent: ');
-      logIntent(responses[0]);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+      .createIntent(cancelOrderRequest)
+      .then(responses => {
+        console.log('Created Cancel Order intent: ');
+        logIntent(responses[0]);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+      });
   // [END dialogflow_create_intent]
 }
 
@@ -685,21 +685,21 @@ function listIntents(projectId) {
 
   // Send the request for listing intents.
   return intentsClient
-    .listIntents(request)
-    .then(responses => {
-      return responses[0];
-    })
-    .catch(err => {
-      console.error('Failed to list intents:', err);
-    });
+      .listIntents(request)
+      .then(responses => {
+        return responses[0];
+      })
+      .catch(err => {
+        console.error('Failed to list intents:', err);
+      });
 }
 
 function showIntents(projectId) {
   return listIntents(projectId).then(intents => {
     return Promise.all(
-      intents.map(intent => {
-        return getIntent(intent);
-      })
+        intents.map(intent => {
+          return getIntent(intent);
+        })
     );
   });
 }
@@ -721,29 +721,29 @@ function getIntent(intent) {
 
   // Send the request for retrieving the intent.
   return intentsClient
-    .getIntent(request)
-    .then(responses => {
-      console.log('Found intent:');
-      logIntent(responses[0]);
-    })
-    .catch(err => {
-      console.error(`Failed to get intent ${intent.displayName}`, err);
-    });
+      .getIntent(request)
+      .then(responses => {
+        console.log('Found intent:');
+        logIntent(responses[0]);
+      })
+      .catch(err => {
+        console.error(`Failed to get intent ${intent.displayName}`, err);
+      });
 }
 
 function clearIntents(projectId) {
   // Send the request for listing intents.
   return listIntents(projectId)
-    .then(intents => {
-      return Promise.all(
-        intents.map(intent => {
-          return deleteIntent(intent);
-        })
-      );
-    })
-    .catch(err => {
-      console.error('Failed to list intents:', err);
-    });
+      .then(intents => {
+        return Promise.all(
+            intents.map(intent => {
+              return deleteIntent(intent);
+            })
+        );
+      })
+      .catch(err => {
+        console.error('Failed to list intents:', err);
+      });
 }
 
 function deleteIntent(intent) {
@@ -758,13 +758,13 @@ function deleteIntent(intent) {
 
   // Send the request for retrieving the intent.
   return intentsClient
-    .deleteIntent(request)
-    .then(() => {
-      console.log(`Intent ${intent.displayName} deleted`);
-    })
-    .catch(err => {
-      console.error(`Failed to delete intent ${intent.displayName}:`, err);
-    });
+      .deleteIntent(request)
+      .then(() => {
+        console.log(`Intent ${intent.displayName} deleted`);
+      })
+      .catch(err => {
+        console.error(`Failed to delete intent ${intent.displayName}:`, err);
+      });
   // [END dialogflow_delete_intent]
 }
 
@@ -789,33 +789,39 @@ function updateIntent(projectId, intentId) {
   };
 
   intentsClient
-    .getIntent(getIntentRequest)
-    .then(responses => {
-      const intent = responses[0];
-      // Add a new response message for telegram to the intent.
-      intent.messages.push({
-        image: {imageUri: 'http://www.example.com/logo.png'},
-        platform: 'PLATFORM_TELEGRAM',
+      .getIntent(getIntentRequest)
+      .then(responses => {
+        const intent = responses[0];
+        // Add a new response message for telegram to the intent.
+        intent.messages.push({
+          image: {imageUri: 'http://www.example.com/logo.png'},
+          platform: 'PLATFORM_TELEGRAM',
+        });
+        // And make sure telegram uses default messages as well.
+        if (intent.defaultResponsePlatforms.indexOf('PLATFORM_TELEGRAM') < 0) {
+          intent.defaultResponsePlatforms.push('PLATFORM_TELEGRAM');
+        }
+
+        if (intent.followupIntentInfo) {
+          delete intent.followupIntentInfo;
+          console.log(`If you dont do this - you will land up with below error`);
+          console.log(`Error: 3 INVALID_ARGUMENT: Read only field 'followup_intent_info' cannot be updated.`);
+        }
+
+        // Now update the intent.
+        const updateIntentRequest = {
+          intent: intent,
+        };
+
+        return intentsClient.updateIntent(updateIntentRequest);
+      })
+      .then(responses => {
+        console.log('Intent updated:');
+        logIntent(responses[0]);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
       });
-      // And make sure telegram uses default messages as well.
-      if (intent.defaultResponsePlatforms.indexOf('PLATFORM_TELEGRAM') < 0) {
-        intent.defaultResponsePlatforms.push('PLATFORM_TELEGRAM');
-      }
-
-      // Now update the intent.
-      const updateIntentRequest = {
-        intent: intent,
-      };
-
-      return intentsClient.updateIntent(updateIntentRequest);
-    })
-    .then(responses => {
-      console.log('Intent updated:');
-      logIntent(responses[0]);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
   // [END dialogflow_update_intent]
 }
 
@@ -830,10 +836,10 @@ function logIntent(intent) {
   console.log(`  ID:`, intentsClient.matchIntentFromIntentName(intent.name));
   console.log(`  Display Name: ${intent.displayName}`);
   const outputContexts = intent.outputContexts
-    .map(context => {
-      return contextsClient.matchContextFromContextName(context.name);
-    })
-    .join(', ');
+      .map(context => {
+        return contextsClient.matchContextFromContextName(context.name);
+      })
+      .join(', ');
   console.log(`  Priority: ${intent.priority}`);
   console.log(`  Output contexts: ${outputContexts}`);
 
@@ -841,7 +847,7 @@ function logIntent(intent) {
   console.log(`  Parameters:`);
   intent.parameters.forEach(parameter => {
     console.log(
-      `    ${parameter.displayName}: ${parameter.entityTypeDisplayName}`
+        `    ${parameter.displayName}: ${parameter.entityTypeDisplayName}`
     );
   });
 
@@ -849,13 +855,13 @@ function logIntent(intent) {
   intent.messages.forEach(message => {
     const messageContent = JSON.stringify(message[message.message]);
     console.log(
-      `    (${message.platform}) ${message.message}: ${messageContent}`
+        `    (${message.platform}) ${message.message}: ${messageContent}`
     );
   });
 
   const defaultResponsePlatforms = intent.defaultResponsePlatforms.join(', ');
   console.log(
-    `  Platforms using default responses: ${defaultResponsePlatforms}`
+      `  Platforms using default responses: ${defaultResponsePlatforms}`
   );
   console.log('');
 }
@@ -877,9 +883,9 @@ function createContext(projectId, sessionId) {
   // Create a pizza_order context with the same parameters as the Pizza intent
   // created by createIntent().
   const pizzaContextPath = contextsClient.contextPath(
-    projectId,
-    sessionId,
-    'pizza_order'
+      projectId,
+      sessionId,
+      'pizza_order'
   );
   const pizzaContextRequest = {
     parent: sessionPath,
@@ -922,21 +928,21 @@ function listContexts(projectId, sessionId) {
 
   // Send the request for listing contexts.
   return contextsClient
-    .listContexts(request)
-    .then(responses => {
-      return responses[0];
-    })
-    .catch(err => {
-      console.error('Failed to list contexts:', err);
-    });
+      .listContexts(request)
+      .then(responses => {
+        return responses[0];
+      })
+      .catch(err => {
+        console.error('Failed to list contexts:', err);
+      });
 }
 
 function showContexts(projectId, sessionId) {
   return listContexts(projectId, sessionId).then(contexts => {
     return Promise.all(
-      contexts.map(context => {
-        return getContext(context);
-      })
+        contexts.map(context => {
+          return getContext(context);
+        })
     );
   });
 }
@@ -956,22 +962,22 @@ function getContext(context) {
 
   // Send the request for retrieving the context.
   return contextsClient
-    .getContext(request)
-    .then(responses => {
-      console.log('Found context:');
-      logContext(responses[0]);
-    })
-    .catch(err => {
-      console.error(`Failed to get context ${contextId}:`, err);
-    });
+      .getContext(request)
+      .then(responses => {
+        console.log('Found context:');
+        logContext(responses[0]);
+      })
+      .catch(err => {
+        console.error(`Failed to get context ${contextId}:`, err);
+      });
 }
 
 function clearContexts(projectId, sessionId) {
   return listContexts(projectId, sessionId).then(contexts => {
     return Promise.all(
-      contexts.map(context => {
-        return deleteContext(context);
-      })
+        contexts.map(context => {
+          return deleteContext(context);
+        })
     );
   });
 }
@@ -991,13 +997,13 @@ function deleteContext(context) {
 
   // Send the request for retrieving the context.
   return contextsClient
-    .deleteContext(request)
-    .then(() => {
-      console.log(`Context ${contextId} deleted`);
-    })
-    .catch(err => {
-      console.error(`Failed to delete context ${contextId}`, err);
-    });
+      .deleteContext(request)
+      .then(() => {
+        console.log(`Context ${contextId} deleted`);
+      })
+      .catch(err => {
+        console.error(`Failed to delete context ${contextId}`, err);
+      });
 }
 
 function updateContext(projectId, sessionId, contextId) {
@@ -1009,9 +1015,9 @@ function updateContext(projectId, sessionId, contextId) {
 
   // The path to identify the context to be deleted.
   const contextPath = contextsClient.contextPath(
-    projectId,
-    sessionId,
-    contextId
+      projectId,
+      sessionId,
+      contextId
   );
 
   // UpdateContext does full snapshot updates. For incremental update
@@ -1021,29 +1027,29 @@ function updateContext(projectId, sessionId, contextId) {
   };
 
   contextsClient
-    .getContext(getContextRequest)
-    .then(responses => {
-      const context = responses[0];
-      // Add a new parameter value.
+      .getContext(getContextRequest)
+      .then(responses => {
+        const context = responses[0];
+        // Add a new parameter value.
 
-      const parametersJson = structjson.structProtoToJson(context.parameters);
-      parametersJson['foo'] = 'bar';
-      context.parameters = structjson.jsonToStructProto(parametersJson);
+        const parametersJson = structjson.structProtoToJson(context.parameters);
+        parametersJson['foo'] = 'bar';
+        context.parameters = structjson.jsonToStructProto(parametersJson);
 
-      // Now update the context.
-      const updateContextRequest = {
-        context: context,
-      };
+        // Now update the context.
+        const updateContextRequest = {
+          context: context,
+        };
 
-      return contextsClient.updateContext(updateContextRequest);
-    })
-    .then(responses => {
-      console.log('Context updated:');
-      logContext(responses[0]);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+        return contextsClient.updateContext(updateContextRequest);
+      })
+      .then(responses => {
+        console.log('Context updated:');
+        logContext(responses[0]);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+      });
 }
 
 function logContext(context) {
@@ -1054,8 +1060,8 @@ function logContext(context) {
   const contextsClient = new dialogflow.ContextsClient();
 
   console.log(
-    `  Name:`,
-    contextsClient.matchContextFromContextName(context.name)
+      `  Name:`,
+      contextsClient.matchContextFromContextName(context.name)
   );
   console.log(`  Lifespan: ${context.lifespanCount}`);
   console.log(`  Parameters:`);
@@ -1085,9 +1091,9 @@ function createSessionEntityType(projectId, sessionId) {
   // NOTE: Unlike other resources, the resource name of the session entity type
   // is the display name of the entity type, not the ID.
   const sizeSessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
-    projectId,
-    sessionId,
-    'size'
+      projectId,
+      sessionId,
+      'size'
   );
   const sizeSessionEntityTypeRequest = {
     parent: sessionPath,
@@ -1103,17 +1109,17 @@ function createSessionEntityType(projectId, sessionId) {
   };
 
   sessionEntityTypesClient
-    .createSessionEntityType(sizeSessionEntityTypeRequest)
-    .then(responses => {
-      console.log('Overrode @size entity type:');
-      logSessionEntityType(responses[0]);
-    });
+      .createSessionEntityType(sizeSessionEntityTypeRequest)
+      .then(responses => {
+        console.log('Overrode @size entity type:');
+        logSessionEntityType(responses[0]);
+      });
 
   // Create a session entity type that extends the @topping entity type.
   const toppingSessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
-    projectId,
-    sessionId,
-    'topping'
+      projectId,
+      sessionId,
+      'topping'
   );
   const toppingSessionEntityTypeRequest = {
     parent: sessionPath,
@@ -1128,11 +1134,11 @@ function createSessionEntityType(projectId, sessionId) {
   };
 
   sessionEntityTypesClient
-    .createSessionEntityType(toppingSessionEntityTypeRequest)
-    .then(responses => {
-      console.log('Extended @topping entity type:');
-      logSessionEntityType(responses[0]);
-    });
+      .createSessionEntityType(toppingSessionEntityTypeRequest)
+      .then(responses => {
+        console.log('Extended @topping entity type:');
+        logSessionEntityType(responses[0]);
+      });
 }
 
 function showSessionEntityTypes(projectId, sessionId) {
@@ -1140,13 +1146,13 @@ function showSessionEntityTypes(projectId, sessionId) {
   // entity type names.
   listEntityTypes(projectId).then(entityTypes => {
     return Promise.all(
-      entityTypes.map(entityType => {
-        return getSessionEntityType(
-          projectId,
-          sessionId,
-          entityType.displayName
-        );
-      })
+        entityTypes.map(entityType => {
+          return getSessionEntityType(
+              projectId,
+              sessionId,
+              entityType.displayName
+          );
+        })
     );
   });
 }
@@ -1160,9 +1166,9 @@ function getSessionEntityType(projectId, sessionId, entityTypeName) {
 
   // The path to identify the sessionEntityType to be retrieved.
   const sessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
-    projectId,
-    sessionId,
-    entityTypeName
+      projectId,
+      sessionId,
+      entityTypeName
   );
 
   const request = {
@@ -1171,21 +1177,21 @@ function getSessionEntityType(projectId, sessionId, entityTypeName) {
 
   // Send the request for retrieving the sessionEntityType.
   return sessionEntityTypesClient
-    .getSessionEntityType(request)
-    .then(responses => {
-      console.log('Found session entity type:');
-      logSessionEntityType(responses[0]);
-    })
-    .catch(err => {
-      if (err.code === grpc.status.NOT_FOUND) {
-        console.log(`Session entity type ${entityTypeName} is not found.`);
-      } else {
-        console.error(
-          `Failed to get session entity type ${entityTypeName}:`,
-          err
-        );
-      }
-    });
+      .getSessionEntityType(request)
+      .then(responses => {
+        console.log('Found session entity type:');
+        logSessionEntityType(responses[0]);
+      })
+      .catch(err => {
+        if (err.code === grpc.status.NOT_FOUND) {
+          console.log(`Session entity type ${entityTypeName} is not found.`);
+        } else {
+          console.error(
+              `Failed to get session entity type ${entityTypeName}:`,
+              err
+          );
+        }
+      });
 }
 
 function clearSessionEntityTypes(projectId, sessionId) {
@@ -1193,13 +1199,13 @@ function clearSessionEntityTypes(projectId, sessionId) {
   // entity type names.
   listEntityTypes(projectId).then(entityTypes => {
     return Promise.all(
-      entityTypes.map(entityType => {
-        return deleteSessionEntityType(
-          projectId,
-          sessionId,
-          entityType.displayName
-        );
-      })
+        entityTypes.map(entityType => {
+          return deleteSessionEntityType(
+              projectId,
+              sessionId,
+              entityType.displayName
+          );
+        })
     );
   });
 }
@@ -1213,9 +1219,9 @@ function deleteSessionEntityType(projectId, sessionId, entityTypeName) {
 
   // The path to identify the sessionEntityType to be deleted.
   const sessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
-    projectId,
-    sessionId,
-    entityTypeName
+      projectId,
+      sessionId,
+      entityTypeName
   );
 
   const request = {
@@ -1224,20 +1230,20 @@ function deleteSessionEntityType(projectId, sessionId, entityTypeName) {
 
   // Send the request for retrieving the sessionEntityType.
   return sessionEntityTypesClient
-    .deleteSessionEntityType(request)
-    .then(() => {
-      console.log(`Session entity type ${entityTypeName} deleted`);
-    })
-    .catch(err => {
-      if (err.code === grpc.status.NOT_FOUND) {
-        console.log(
-          `Cannot delete session entity type ${entityTypeName} because ` +
-            `it is not found.`
-        );
-      } else {
-        console.error(`Failed to delete ${entityTypeName}:`, err);
-      }
-    });
+      .deleteSessionEntityType(request)
+      .then(() => {
+        console.log(`Session entity type ${entityTypeName} deleted`);
+      })
+      .catch(err => {
+        if (err.code === grpc.status.NOT_FOUND) {
+          console.log(
+              `Cannot delete session entity type ${entityTypeName} because ` +
+              `it is not found.`
+          );
+        } else {
+          console.error(`Failed to delete ${entityTypeName}:`, err);
+        }
+      });
 }
 
 function updateSessionEntityType(projectId, sessionId, entityTypeName) {
@@ -1249,9 +1255,9 @@ function updateSessionEntityType(projectId, sessionId, entityTypeName) {
 
   // The path to identify the sessionEntityType to be deleted.
   const sessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
-    projectId,
-    sessionId,
-    entityTypeName
+      projectId,
+      sessionId,
+      entityTypeName
   );
 
   // Update the session entity type.
@@ -1270,14 +1276,14 @@ function updateSessionEntityType(projectId, sessionId, entityTypeName) {
     },
   };
   sessionEntityTypesClient
-    .updateSessionEntityType(request)
-    .then(responses => {
-      console.log('Session entity type updated:');
-      logSessionEntityType(responses[0]);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+      .updateSessionEntityType(request)
+      .then(responses => {
+        console.log('Session entity type updated:');
+        logSessionEntityType(responses[0]);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+      });
 }
 
 function logSessionEntityType(sessionEntityType) {
@@ -1288,13 +1294,13 @@ function logSessionEntityType(sessionEntityType) {
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   console.log(
-    `  Name:`,
-    sessionEntityTypesClient.matchEntityTypeFromSessionEntityTypeName(
-      sessionEntityType.name
-    )
+      `  Name:`,
+      sessionEntityTypesClient.matchEntityTypeFromSessionEntityTypeName(
+          sessionEntityType.name
+      )
   );
   console.log(
-    `  Entity override mode: ${sessionEntityType.entityOverrideMode}`
+      `  Entity override mode: ${sessionEntityType.entityOverrideMode}`
   );
   console.log(`  Entities:`);
   sessionEntityType.entities.forEach(entity => {
@@ -1309,7 +1315,7 @@ function logSessionEntityType(sessionEntityType) {
 
 function restoreRoomAgent(projectId) {
   const fs = require('fs');
-  fs.readFile('./resources/RoomReservation.zip', function(err, data) {
+  fs.readFile('./resources/RoomReservation.zip', function (err, data) {
     if (err) {
       console.error(err);
     }
@@ -1343,20 +1349,20 @@ function restoreAgent(projectId, data) {
 
 function setupAgent(projectId) {
   clearAgent(projectId)
-    .then(() => createEntityTypes(projectId))
-    .then(() => createIntents(projectId));
+      .then(() => createEntityTypes(projectId))
+      .then(() => createIntents(projectId));
 }
 
 function clearAgent(projectId) {
   return (
-    clearIntents(projectId)
+      clearIntents(projectId)
       // Give api.ai some time to clean up the references to existing entity
       // types.
-      .then(() => {
-        console.log('Waiting 10 seconds before deleting entity types.');
-        return setTimeoutPromise(10000);
-      })
-      .then(() => clearEntityTypes(projectId))
+          .then(() => {
+            console.log('Waiting 10 seconds before deleting entity types.');
+            return setTimeoutPromise(10000);
+          })
+          .then(() => clearEntityTypes(projectId))
   );
 }
 
@@ -1371,13 +1377,13 @@ function setupSession(projectId, sessionId) {
 
 function showSession(projectId, sessionId) {
   showContexts(projectId, sessionId).then(() =>
-    showSessionEntityTypes(projectId, sessionId)
+      showSessionEntityTypes(projectId, sessionId)
   );
 }
 
 function clearSession(projectId, sessionId) {
   clearContexts(projectId, sessionId).then(() =>
-    clearSessionEntityTypes(projectId, sessionId)
+      clearSessionEntityTypes(projectId, sessionId)
   );
 }
 
@@ -1397,164 +1403,164 @@ function verifyCommand(callback, force, projectId, arg2, arg3) {
   // Prompt the user for confirmation
   // This action may change their agent's behavior
   let userConfirmationPrompt =
-    '\nWarning! This operation will alter the Dialogflow agent with the ' +
-    `project ID '${projectId}' for ALL users and developers.`;
+      '\nWarning! This operation will alter the Dialogflow agent with the ' +
+      `project ID '${projectId}' for ALL users and developers.`;
   if (deletionWarningFunctions.includes(callback)) {
     userConfirmationPrompt +=
-      '\nTHIS WILL DELETE ALL EXISTING INTENTS AND ENTITIES';
+        '\nTHIS WILL DELETE ALL EXISTING INTENTS AND ENTITIES';
   }
   userConfirmationPrompt += `\nAre you sure you want to continue?`;
 
   prompt.start();
   prompt.get(
-    {
-      properties: {
-        confirm: {
-          pattern: /^(yes|no|y|n)$/gi,
-          description: userConfirmationPrompt,
-          required: true,
-          default: 'yes/no',
+      {
+        properties: {
+          confirm: {
+            pattern: /^(yes|no|y|n)$/gi,
+            description: userConfirmationPrompt,
+            required: true,
+            default: 'yes/no',
+          },
         },
       },
-    },
-    function(err, result) {
-      var input = result.confirm.toLowerCase();
-      // If the user didn't say yes/y, abort
-      if (input !== 'y' && input !== 'yes') {
-        console.log('Operation aborted.');
-        return;
+      function (err, result) {
+        var input = result.confirm.toLowerCase();
+        // If the user didn't say yes/y, abort
+        if (input !== 'y' && input !== 'yes') {
+          console.log('Operation aborted.');
+          return;
+        }
+        // If the user says yes/y call intended function
+        callback(projectId, arg2, arg3);
       }
-      // If the user says yes/y call intended function
-      callback(projectId, arg2, arg3);
-    }
   );
 }
 
 const cli = require(`yargs`)
-  .demand(1)
-  .options({
-    projectId: {
-      alias: 'p',
-      default: process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT,
-      description:
+    .demand(1)
+    .options({
+      projectId: {
+        alias: 'p',
+        default: process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT,
+        description:
         'The Project ID to use. Defaults to the value of the ' +
         'GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT environment variables.',
-      requiresArg: true,
-      type: 'string',
-    },
-  })
-  .demandOption(
-    'projectId',
-    "Please provide your Dialogflow agent's project ID with the -p flag or through the GOOGLE_CLOUD_PROJECT env var"
-  )
-  .boolean('force')
-  .alias('force', ['f'])
-  .describe('force', 'force operation without a prompt')
-  .command(
-    `setup-agent`,
-    `Create entity types and intent for ordering pizzas.`,
-    {},
-    opts => verifyCommand(setupAgent, opts.force, opts.projectId)
-  )
-  .command(
-    `clear-agent`,
-    `Delete all intents and entity types from an agent.`,
-    {},
-    opts => verifyCommand(clearAgent, opts.force, opts.projectId)
-  )
-  .command(
-    `show-agent`,
-    `Show all intents and entity types from an agent.`,
-    {},
-    opts => showAgent(opts.projectId)
-  )
-  .command(
-    `update-entity-type <entityTypeId>`,
-    `Update an entity type.`,
-    {},
-    opts =>
-      verifyCommand(
-        updateEntityType,
-        opts.force,
-        opts.projectId,
-        opts.entityTypeId
-      )
-  )
-  .command(`update-intent <intentId>`, `Update an intent.`, {}, opts =>
-    verifyCommand(updateIntent, opts.force, opts.projectId, opts.intentId)
-  )
-  .command(
-    `setup-session <sessionId>`,
-    `Create contexts and session entity types for a session. It assumes ` +
-      `the agents is set up by setup-agent command.`,
-    {},
-    opts => setupSession(opts.projectId, opts.sessionId)
-  )
-  .command(
-    `show-session <sessionId>`,
-    `Show all contexts and session entity types in a session.`,
-    {},
-    opts => showSession(opts.projectId, opts.sessionId)
-  )
-  .command(
-    `clear-session <sessionId>`,
-    `Delete all contexts and session entity types.`,
-    {},
-    opts =>
-      verifyCommand(clearSession, opts.force, opts.projectId, opts.sessionId)
-  )
-  .command(
-    `update-context <sessionId> <contextId>`,
-    `Update a context.`,
-    {},
-    opts =>
-      verifyCommand(
-        updateContext,
-        opts.force,
-        opts.projectId,
-        opts.sessionId,
-        opts.contextId
-      )
-  )
-  .command(
-    `update-session-entity-type <sessionId> <entityTypeName>`,
-    `Update a session entity type.`,
-    {},
-    opts =>
-      verifyCommand(
-        updateSessionEntityType,
-        opts.force,
-        opts.projectId,
-        opts.sessionId,
-        opts.entityTypeName
-      )
-  )
-  .command(
-    `restore-room-agent`,
-    `Restore the room booking Dialogflow agent`,
-    {},
-    opts => verifyCommand(restoreRoomAgent, opts.force, opts.projectId)
-  )
-  .example(`node $0 setup-agent`)
-  .example(`node $0 show-agent`)
-  .example(`node $0 clear-agent`)
-  .example(`node $0 update-entity-type "my-entity-type-id"`)
-  .example(`node $0 update-intent "my-intent-id"`)
-  .example(`node $0 setup-session "my-session-id"`)
-  .example(`node $0 show-session "my-session-id"`)
-  .example(`node $0 clear-session "my-session-id"`)
-  .example(`node $0 update-context "my-session-id" "my-context-id"`)
-  .example(
-    `node $0 update-session-entity-type "my-session-id" ` +
-      `"my-entity-type-name"`
-  )
-  .wrap(120)
-  .recommendCommands()
-  .epilogue(
-    `For more information, see https://cloud.google.com/conversation/docs`
-  )
-  .help()
-  .strict();
+        requiresArg: true,
+        type: 'string',
+      },
+    })
+    .demandOption(
+        'projectId',
+        "Please provide your Dialogflow agent's project ID with the -p flag or through the GOOGLE_CLOUD_PROJECT env var"
+    )
+    .boolean('force')
+    .alias('force', ['f'])
+    .describe('force', 'force operation without a prompt')
+    .command(
+        `setup-agent`,
+        `Create entity types and intent for ordering pizzas.`,
+        {},
+        opts => verifyCommand(setupAgent, opts.force, opts.projectId)
+    )
+    .command(
+        `clear-agent`,
+        `Delete all intents and entity types from an agent.`,
+        {},
+        opts => verifyCommand(clearAgent, opts.force, opts.projectId)
+    )
+    .command(
+        `show-agent`,
+        `Show all intents and entity types from an agent.`,
+        {},
+        opts => showAgent(opts.projectId)
+    )
+    .command(
+        `update-entity-type <entityTypeId>`,
+        `Update an entity type.`,
+        {},
+        opts =>
+            verifyCommand(
+                updateEntityType,
+                opts.force,
+                opts.projectId,
+                opts.entityTypeId
+            )
+    )
+    .command(`update-intent <intentId>`, `Update an intent.`, {}, opts =>
+        verifyCommand(updateIntent, opts.force, opts.projectId, opts.intentId)
+    )
+    .command(
+        `setup-session <sessionId>`,
+        `Create contexts and session entity types for a session. It assumes ` +
+        `the agents is set up by setup-agent command.`,
+        {},
+        opts => setupSession(opts.projectId, opts.sessionId)
+    )
+    .command(
+        `show-session <sessionId>`,
+        `Show all contexts and session entity types in a session.`,
+        {},
+        opts => showSession(opts.projectId, opts.sessionId)
+    )
+    .command(
+        `clear-session <sessionId>`,
+        `Delete all contexts and session entity types.`,
+        {},
+        opts =>
+            verifyCommand(clearSession, opts.force, opts.projectId, opts.sessionId)
+    )
+    .command(
+        `update-context <sessionId> <contextId>`,
+        `Update a context.`,
+        {},
+        opts =>
+            verifyCommand(
+                updateContext,
+                opts.force,
+                opts.projectId,
+                opts.sessionId,
+                opts.contextId
+            )
+    )
+    .command(
+        `update-session-entity-type <sessionId> <entityTypeName>`,
+        `Update a session entity type.`,
+        {},
+        opts =>
+            verifyCommand(
+                updateSessionEntityType,
+                opts.force,
+                opts.projectId,
+                opts.sessionId,
+                opts.entityTypeName
+            )
+    )
+    .command(
+        `restore-room-agent`,
+        `Restore the room booking Dialogflow agent`,
+        {},
+        opts => verifyCommand(restoreRoomAgent, opts.force, opts.projectId)
+    )
+    .example(`node $0 setup-agent`)
+    .example(`node $0 show-agent`)
+    .example(`node $0 clear-agent`)
+    .example(`node $0 update-entity-type "my-entity-type-id"`)
+    .example(`node $0 update-intent "my-intent-id"`)
+    .example(`node $0 setup-session "my-session-id"`)
+    .example(`node $0 show-session "my-session-id"`)
+    .example(`node $0 clear-session "my-session-id"`)
+    .example(`node $0 update-context "my-session-id" "my-context-id"`)
+    .example(
+        `node $0 update-session-entity-type "my-session-id" ` +
+        `"my-entity-type-name"`
+    )
+    .wrap(120)
+    .recommendCommands()
+    .epilogue(
+        `For more information, see https://cloud.google.com/conversation/docs`
+    )
+    .help()
+    .strict();
 
 if (module === require.main) {
   cli.parse(process.argv.slice(2));
