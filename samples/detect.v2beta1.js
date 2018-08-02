@@ -1,5 +1,5 @@
 /**
- * Copyright 2017, Google, LLC.
+ * Copyright 2018, Google, LLC.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -27,6 +27,12 @@ function createKnowledgeBase(projectId, displayName) {
 
   // Instantiate a DialogFlow client.
   var client = new dialogflow.KnowledgeBasesClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const displayName = `your knowledge base display name, e.g. myKnowledgeBase`;
 
   var formattedParent = client.projectPath(projectId);
   var knowledgeBase = {
@@ -59,6 +65,12 @@ function getKnowledgeBase(projectId, knowledgeBaseFullName) {
   // Instantiate a DialogFlow client.
   var client = new dialogflow.KnowledgeBasesClient();
 
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+
   const fullName = knowledgeBaseFullName;
 
   client
@@ -86,17 +98,21 @@ function listKnowledgeBases(projectId) {
     projectPath: projectId,
   });
 
-  // Iterate over all elements.
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+
   var formattedParent = client.projectPath(projectId);
 
   client
     .listKnowledgeBases({parent: formattedParent})
     .then(responses => {
       var resources = responses[0];
-      for (let i = 0; i < resources.length; i += 1) {
-        console.log(`  Display name is : ${resources[i].displayName}`);
-        console.log(`  Knowledge base is : ${resources[i].name}`);
-      }
+      resources.forEach(r => {
+        console.log(`  Display name is : ${r.displayName}`);
+        console.log(`  Knowledge base is : ${r.name}`);
+      });
     })
     .catch(err => {
       console.error(err);
@@ -111,6 +127,12 @@ function deleteKnowledgeBase(projectId, knowledgeBaseFullName) {
 
   // Instantiate a DialogFlow KnowledgeBasesClient.
   var client = new dialogflow.KnowledgeBasesClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   const fullName = knowledgeBaseFullName;
 
@@ -145,6 +167,14 @@ function createDocument(
     projectId: projectId,
   });
 
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+  //const documentPath = `path of the document you'd like to add, e.g. https://dialogflow.com/docs/knowledge-connectors`;
+  //const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
+
   var request = {
     parent: knowledgeBaseFullName,
     document: {
@@ -174,6 +204,12 @@ function listDocuments(projectId, knowledgeBaseFullName) {
   var client = new dialogflow.DocumentsClient({
     projectId: projectId,
   });
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   client
     .listDocuments({parent: knowledgeBaseFullName})
@@ -207,6 +243,11 @@ function getDocument(documentId) {
     projectId: projectId,
   });
 
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
+
   client
     .getDocument({name: documentId})
     .then(responses => {
@@ -234,6 +275,12 @@ function deleteDocument(projectId, documentId) {
     projectId: projectId,
   });
 
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
+
   client
     .deleteDocument({name: documentId})
     .then(console.log(`document deleted`))
@@ -246,9 +293,19 @@ function deleteDocument(projectId, documentId) {
 //v2b1 features
 function detectIntentandSentiment(projectId, sessionId, query, languageCode) {
   // [START dialogflow_detect_intent_with_sentiment_analysis]
-  // Instantiate a DialogFlow client.
+  // Imports the Google Cloud DialogFlow library
   const dialogflow = require('dialogflow').v2beta1;
+
+  // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const sessionId = `user specific ID of session, e.g. 12345`;
+  //const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
+  //const languageCode = 'BCP-47 language code, e.g. en-US';
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -314,9 +371,22 @@ function detectIntentwithTexttoSpeechResponse(
   outputFile
 ) {
   // [START dialogflow_detect_intent_with_texttospeech_response]
-  // Instantiate a DialogFlow client.
+  // Imports the Google Cloud DialogFlow library
   const dialogflow = require('dialogflow').v2beta1;
+
+  // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const sessionId = `user specific ID of session, e.g. 12345`;
+  //const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
+  //const languageCode = 'BCP-47 language code, e.g. en-US';
+  //const outputFile = `path for audio output file, e.g. ./resources/myOutput.wav`;
+
+  // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
   const fs = require(`fs`);
 
@@ -361,9 +431,20 @@ function detectIntentKnowledge(
   query
 ) {
   // [START dialogflow_detect_intent_knowledge]
-  // Instantiate a DialogFlow client.
+  // Imports the Google Cloud DialogFlow library
   const dialogflow = require('dialogflow').v2beta1;
+
+  // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const sessionId = `user specific ID of session, e.g. 12345`;
+  //const languageCode = 'BCP-47 language code, e.g. en-US';
+  //const knowledgeBaseId = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+  //const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -421,9 +502,21 @@ function detectIntentwithModelSelection(
   // [START dialogflow_detect_intent_with_model_selection]
   const fs = require('fs');
 
-  // Instantiate a DialogFlow client.
+  // Imports the Google Cloud DialogFlow library
   const dialogflow = require('dialogflow').v2beta1;
+
+  // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  //const sessionId = `user specific ID of session, e.g. 12345`;
+  //const audioFilePath = `path to local audio file, e.g. ./resources/book_a_room.wav`;
+  //const languageCode = 'BCP-47 language code, e.g. en-US';
+  //const model = `speech mode selected for given request, e.g. video, phone_call, command_and_search, default`;
+
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
   // Read the content of the audio file and send it as part of the request.
