@@ -213,13 +213,13 @@ function listDocuments(projectId, knowledgeBaseFullName) {
       console.log(
         `There are ${resources.length} documents in ${knowledgeBaseFullName}`
       );
-      resources.forEach(r => {
-        console.log(` KnowledgeType: ${r.knowledgeType}`);
-        console.log(` displayName: ${r.displayName}`);
-        console.log(` mimeType: ${r.mimeType}`);
-        console.log(` contentUri: ${r.contentUri}`);
-        console.log(` source: ${r.source}`);
-        console.log(` name: ${r.name}`);
+      resources.forEach(resource => {
+        console.log(` KnowledgeType: ${resource.knowledgeType}`);
+        console.log(` displayName: ${resource.displayName}`);
+        console.log(` mimeType: ${resource.mimeType}`);
+        console.log(` contentUri: ${resource.contentUri}`);
+        console.log(` source: ${resource.source}`);
+        console.log(` name: ${resource.name}`);
       });
     })
     .catch(err => {
@@ -303,10 +303,6 @@ function detectIntentandSentiment(projectId, sessionId, query, languageCode) {
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
-
-  if (!query || !query.length) {
-    return;
-  }
 
   // The text query request.
   const request = {
@@ -461,8 +457,6 @@ function detectIntentKnowledge(
       },
     },
   };
-
-  console.log(`Query is ${query}`);
 
   sessionClient
     .detectIntent(request)
