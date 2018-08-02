@@ -22,7 +22,7 @@ const structjson = require('./structjson.js');
 
 function createKnowledgeBase(projectId, displayName) {
   // [START dialogflow_create_knowledge_base]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
@@ -59,7 +59,7 @@ function createKnowledgeBase(projectId, displayName) {
 
 function getKnowledgeBase(projectId, knowledgeBaseFullName) {
   // [START dialogflow_get_knowledge_base]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
@@ -90,7 +90,7 @@ function getKnowledgeBase(projectId, knowledgeBaseFullName) {
 
 function listKnowledgeBases(projectId) {
   // [START dialogflow_list_knowledge_base]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow KnowledgeBasesClient.
@@ -144,7 +144,6 @@ function deleteKnowledgeBase(projectId, knowledgeBaseFullName) {
       const result = responses[0];
       console.log(`Name: ${result.name}`);
       console.log(`displayName: ${result.displayName}`);
-      return result.displayName;
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -159,7 +158,7 @@ function createDocument(
   documentName
 ) {
   // [START dialogflow_create_document]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
@@ -197,7 +196,7 @@ function createDocument(
 
 function listDocuments(projectId, knowledgeBaseFullName) {
   // [START dialogflow_list_document]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
@@ -235,7 +234,7 @@ function listDocuments(projectId, knowledgeBaseFullName) {
 
 function getDocument(documentId) {
   // [START dialogflow_get_document]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
@@ -267,7 +266,7 @@ function getDocument(documentId) {
 
 function deleteDocument(projectId, documentId) {
   // [START dialogflow_delete_document]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
@@ -293,7 +292,7 @@ function deleteDocument(projectId, documentId) {
 //v2b1 features
 function detectIntentandSentiment(projectId, sessionId, query, languageCode) {
   // [START dialogflow_detect_intent_with_sentiment_analysis]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
@@ -371,7 +370,7 @@ function detectIntentwithTexttoSpeechResponse(
   outputFile
 ) {
   // [START dialogflow_detect_intent_with_texttospeech_response]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
@@ -431,7 +430,7 @@ function detectIntentKnowledge(
   query
 ) {
   // [START dialogflow_detect_intent_knowledge]
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
@@ -502,7 +501,7 @@ function detectIntentwithModelSelection(
   // [START dialogflow_detect_intent_with_model_selection]
   const fs = require('fs');
 
-  // Imports the Google Cloud DialogFlow library
+  // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.

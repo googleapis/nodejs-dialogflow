@@ -149,21 +149,6 @@ test.serial(
   }
 );
 
-// test.serial(
-//   `It should confirm document is deleted with listDocuments`,
-//   async t => {
-//     //knowbaseFullName = `projects/mlapisamples-cfrater-1/knowledgeBases/NzAyNjQ1OTg0MzYyODEwNTcyOA`;
-//     const output = await runAsync(
-//       `${cmd} listDocuments -n "${knowbaseFullName}"`
-//     );
-//     const parsedOut = output.split(`\n`);
-//     const howManyDocs = parsedOut[0].split(`/`)[0];
-//     console.log(`confirming document deleted:`);
-//     console.log(`${parsedOut[0]}`);
-//     t.true(howManyDocs.includes(`There are 0 documents in projects`));
-//   }
-// );
-
 test.serial(
   `It should delete this knowledge base with deleteKnowledgeBase`,
   async t => {
