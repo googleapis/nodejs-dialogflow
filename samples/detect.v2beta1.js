@@ -285,7 +285,6 @@ function deleteDocument(projectId, documentId) {
   // [END dialogflow_delete_document]
 }
 
-//v2b1 features
 function detectIntentandSentiment(projectId, sessionId, query, languageCode) {
   // [START dialogflow_detect_intent_with_sentiment_analysis]
   // Imports the Dialogflow client library
