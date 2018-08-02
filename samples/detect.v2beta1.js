@@ -714,7 +714,9 @@ const cli = require(`yargs`)
   .example(
     `node $0 detectIntentandSentiment "Book a great room for six great folks!"`
   )
-  //.example(`node $0 stream resources/mountain_view.wav -r 16000`)
+  .example(
+    `node $0 detectIntentwithModelSelection -i "./resources/book_a_room.wav" -l "en-US" -o "phone_call"`
+  )
   .wrap(120)
   .recommendCommands()
   .epilogue(

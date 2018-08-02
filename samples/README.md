@@ -52,9 +52,9 @@ Commands:
 Options:
   --version              Show version number                                                                   [boolean]
   --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                                                      [string] [required]
+                         environment variables.                  [string] [required] [default: "mlapisamples-cfrater-1"]
   --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
-                                                              [string] [default: "a6ee09c0-70f0-11e8-8d23-63e745d585eb"]
+                                                              [string] [default: "8ac55890-9696-11e8-9d79-657f7a7cdf9d"]
   --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
   --encoding, -e         The encoding of the input audio.
                [choices: "AUDIO_ENCODING_LINEAR16", "AUDIO_ENCODING_FLAC", "AUDIO_ENCODING_MULAW", "AUDIO_ENCODING_AMR",
@@ -96,9 +96,9 @@ Commands:
 Options:
   --version              Show version number                                                                   [boolean]
   --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                                                      [string] [required]
+                         environment variables.                  [string] [required] [default: "mlapisamples-cfrater-1"]
   --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
-                                                              [string] [default: "a7572bd0-70f0-11e8-8567-cfcff039b200"]
+                                                              [string] [default: "8af7da40-9696-11e8-8701-5514a8889e58"]
   --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
   --encoding, -e         The encoding of the input audio.
                [choices: "AUDIO_ENCODING_LINEAR16", "AUDIO_ENCODING_FLAC", "AUDIO_ENCODING_MULAW", "AUDIO_ENCODING_AMR",
@@ -140,9 +140,9 @@ Commands:
 Options:
   --version              Show version number                                                                   [boolean]
   --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                                                      [string] [required]
+                         environment variables.                  [string] [required] [default: "mlapisamples-cfrater-1"]
   --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
-                                                              [string] [default: "a79c4b20-70f0-11e8-8130-7d00c605276f"]
+                                                              [string] [default: "8b2a8300-9696-11e8-a595-114fc193b406"]
   --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
   --encoding, -e         The encoding of the input audio.
                [choices: "AUDIO_ENCODING_LINEAR16", "AUDIO_ENCODING_FLAC", "AUDIO_ENCODING_MULAW", "AUDIO_ENCODING_AMR",
@@ -193,7 +193,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -244,7 +244,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -295,7 +295,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -346,7 +346,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -397,7 +397,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -448,7 +448,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -499,7 +499,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -550,7 +550,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                                                            [string] [required]
+                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
