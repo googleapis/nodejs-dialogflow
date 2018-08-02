@@ -31,8 +31,8 @@ function createKnowledgeBase(projectId, displayName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const displayName = `your knowledge base display name, e.g. myKnowledgeBase`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const displayName = `your knowledge base display name, e.g. myKnowledgeBase`;
 
   var formattedParent = client.projectPath(projectId);
   var knowledgeBase = {
@@ -68,14 +68,12 @@ function getKnowledgeBase(projectId, knowledgeBaseFullName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-
-  const fullName = knowledgeBaseFullName;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   client
     .getKnowledgeBase({
-      name: fullName,
+      name: knowledgeBaseFullName,
     })
     .then(responses => {
       const result = responses[0];
@@ -101,7 +99,7 @@ function listKnowledgeBases(projectId) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
 
   var formattedParent = client.projectPath(projectId);
 
@@ -110,8 +108,8 @@ function listKnowledgeBases(projectId) {
     .then(responses => {
       var resources = responses[0];
       resources.forEach(r => {
-        console.log(`  Display name is : ${r.displayName}`);
-        console.log(`  Knowledge base is : ${r.name}`);
+        console.log(`Display name... ${r.displayName}`);
+        console.log(`Knowledge base... ${r.name}`);
       });
     })
     .catch(err => {
@@ -131,14 +129,12 @@ function deleteKnowledgeBase(projectId, knowledgeBaseFullName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-
-  const fullName = knowledgeBaseFullName;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   client
     .deleteKnowledgeBase({
-      name: fullName,
+      name: knowledgeBaseFullName,
     })
     .then(responses => {
       const result = responses[0];
@@ -169,10 +165,10 @@ function createDocument(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-  //const documentPath = `path of the document you'd like to add, e.g. https://dialogflow.com/docs/knowledge-connectors`;
-  //const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+  // const documentPath = `path of the document you'd like to add, e.g. https://dialogflow.com/docs/knowledge-connectors`;
+  // const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
 
   var request = {
     parent: knowledgeBaseFullName,
@@ -207,8 +203,8 @@ function listDocuments(projectId, knowledgeBaseFullName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   client
     .listDocuments({parent: knowledgeBaseFullName})
@@ -245,7 +241,7 @@ function getDocument(documentId) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
+  // const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
 
   client
     .getDocument({name: documentId})
@@ -277,8 +273,8 @@ function deleteDocument(projectId, documentId) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
 
   client
     .deleteDocument({name: documentId})
@@ -301,10 +297,10 @@ function detectIntentandSentiment(projectId, sessionId, query, languageCode) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const sessionId = `user specific ID of session, e.g. 12345`;
-  //const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
-  //const languageCode = 'BCP-47 language code, e.g. en-US';
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const sessionId = `user specific ID of session, e.g. 12345`;
+  // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -379,11 +375,11 @@ function detectIntentwithTexttoSpeechResponse(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const sessionId = `user specific ID of session, e.g. 12345`;
-  //const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
-  //const languageCode = 'BCP-47 language code, e.g. en-US';
-  //const outputFile = `path for audio output file, e.g. ./resources/myOutput.wav`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const sessionId = `user specific ID of session, e.g. 12345`;
+  // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
+  // const outputFile = `path for audio output file, e.g. ./resources/myOutput.wav`;
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -439,11 +435,11 @@ function detectIntentKnowledge(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const sessionId = `user specific ID of session, e.g. 12345`;
-  //const languageCode = 'BCP-47 language code, e.g. en-US';
-  //const knowledgeBaseId = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-  //const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const sessionId = `user specific ID of session, e.g. 12345`;
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
+  // const knowledgeBaseId = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+  // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -510,11 +506,11 @@ function detectIntentwithModelSelection(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  //const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
-  //const sessionId = `user specific ID of session, e.g. 12345`;
-  //const audioFilePath = `path to local audio file, e.g. ./resources/book_a_room.wav`;
-  //const languageCode = 'BCP-47 language code, e.g. en-US';
-  //const model = `speech mode selected for given request, e.g. video, phone_call, command_and_search, default`;
+  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const sessionId = `user specific ID of session, e.g. 12345`;
+  // const audioFilePath = `path to local audio file, e.g. ./resources/book_a_room.wav`;
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
+  // const model = `speech mode selected for given request, e.g. video, phone_call, command_and_search, default`;
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
