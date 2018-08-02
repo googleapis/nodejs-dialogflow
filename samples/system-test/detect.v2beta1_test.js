@@ -31,20 +31,14 @@ const testDocName = `TestDoc`;
 const testDocumentPath = `https://dialogflow.com/docs/concepts/google-projects-faq`;
 
 test.serial(`It should create a knowledge base`, async t => {
-  //console.log(`displayname should be: ${testKnowledgeBaseName}`);
   const output = await runAsync(
     `${cmd} createKnowledgeBase -k ${testKnowledgeBaseName}`
   );
   const parsedOut = output.split(`\n`);
-  //console.log(`parsedOut[0] is: ${parsedOut[0]}`);
-  //console.log(`parsedOut[1] is: ${parsedOut[1]}`);
   const confirmName = parsedOut[1].split(`:`)[1].trim();
-  //console.log(`Confirm Name is: ${confirmName}`);
   t.true(confirmName === testKnowledgeBaseName);
   knowbaseDisplayName = confirmName;
   knowbaseFullName = parsedOut[0].split(`:`)[1].trim();
-  //console.log(`Full Name is: ${knowbaseFullName}`);
-  //console.log(`Output is: ${output}`);
 });
 
 test.serial(
@@ -53,9 +47,7 @@ test.serial(
     const output = await runAsync(
       `${cmd} getKnowledgeBase -n "${knowbaseFullName}"`
     );
-    //console.log(`getKnowledgeBase: input is ${knowbaseFullName}`);
     const parsedOut = output.split(`\n`);
-    //console.log(`getKnowledgeBase: output is ${output}`);
     t.true(
       parsedOut[0].includes(knowbaseFullName) &&
         parsedOut[1].includes(knowbaseDisplayName)
@@ -72,7 +64,6 @@ test.serial(
     parsedOut.forEach(p => {
       if (p.includes(testKnowledgeBaseName)) t.pass();
     });
-    // //console.log(output);
   }
 );
 
@@ -81,7 +72,6 @@ test.serial(`It should create a document in Knowledge Base`, async t => {
     `${cmd} createDocument -n "${knowbaseFullName}" -z "${testDocumentPath}" -m "${testDocName}"`
   );
   t.true(output.includes(`Document created`));
-  //console.log(`Document created successfully`);
 });
 
 test.serial(
@@ -93,7 +83,6 @@ test.serial(
     const parsedOut = output.split(`\n`);
     documentFullPath = parsedOut[parsedOut.length - 1].split(`:`)[1];
     t.true(documentFullPath !== ``);
-    //console.log(`Confirming documentID: ${documentFullPath}`);
   }
 );
 
@@ -107,7 +96,6 @@ test.serial(`It should detect Intent with Text to Speech Response`, async t => {
       `Audio content written to file: ./resources/output.wav`
     )
   );
-  //console.log(`confirm audio file generated: ${parsedOut[1]}`);
 });
 
 test.serial(`It should detect Intent Knowledge`, async t => {
@@ -116,7 +104,6 @@ test.serial(`It should detect Intent Knowledge`, async t => {
   );
   const parsedOut = output.split(`\n`);
   t.true(parsedOut[parsedOut.length - 3] !== null);
-  //console.log(`confirm query result: ${parsedOut[parsedOut.length - 5]}`);
 });
 
 test.serial(`It should detect sentiment with intent`, async t => {
@@ -125,21 +112,17 @@ test.serial(`It should detect sentiment with intent`, async t => {
   );
   const parsedOut = output.split(`\n`);
   t.true(parsedOut[parsedOut.length - 3].includes(`Detected sentiment`));
-  //console.log(`confirm sentiment result: ${parsedOut[parsedOut.length - 2]}`);
-  //console.log(`confirm sentiment result: ${parsedOut[parsedOut.length - 1]}`);
 });
 
 test.serial(`It should detect Intent with Model Selection`, async t => {
   const output = await runAsync(`${cmd} detectIntentwithModelSelection`);
   const parsedOut = output.split(`\n`);
   t.true(parsedOut[1] !== null);
-  //console.log(`ParsedOut[1] is: ${parsedOut[1]}`);
 });
 
 test.serial(
   `It should delete document just created with deleteDocument`,
   async t => {
-    //console.log(`Deleting document: ${documentFullPath}`);
     const output = await runAsync(
       `${cmd} deleteDocument -d "${documentFullPath}"`
     );

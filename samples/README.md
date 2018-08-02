@@ -63,7 +63,7 @@ Commands:
 Options:
   --version              Show version number                                                                   [boolean]
   --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                  [string] [required] [default: "mlapisamples-cfrater-1"]
+                         environment variables.                  [string] [required] [default: "gcloud-project-name"]
   --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
                                                               [string] [default: "6ac7bd60-96a7-11e8-aaf1-2be61153eaa1"]
   --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
@@ -132,7 +132,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: " "]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -205,7 +205,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: " "]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -278,7 +278,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: " "]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -351,7 +351,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: " "]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -424,7 +424,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "gcloud-project-name"]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -497,7 +497,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "gcloud-project-name"]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -570,7 +570,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "gcloud-project-name"]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -643,7 +643,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "gcloud-project-name"]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -716,7 +716,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "gcloud-project-name"]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -789,7 +789,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "gcloud-project-name"]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -862,7 +862,7 @@ Options:
                                'command_and_search', 'default'                          [string] [default: "phone_call"]
   --outputFile, -f                                                          [string] [default: "./resources/output.wav"]
   --projectId, -p              The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or
-                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "mlapisamples-cfrater-1"]
+                               GOOGLE_CLOUD_PROJECT environment variables.  [string] [default: "gcloud-project-name"]
   --queries, -q                An array of text queries              [array] [required] [default: ["How do I sign up?"]]
   --sampleRateHertz, -r        The sample rate in Hz of the input audio. Only required if the input audio is in raw
                                format.                                                         [number] [default: 16000]
@@ -910,7 +910,7 @@ Commands:
 Options:
   --version              Show version number                                                                   [boolean]
   --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                  [string] [required] [default: "mlapisamples-cfrater-1"]
+                         environment variables.                  [string] [required] [default: "gcloud-project-name"]
   --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
                                                               [string] [default: "6d22c460-96a7-11e8-8898-73a768ffb741"]
   --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
@@ -954,7 +954,7 @@ Commands:
 Options:
   --version              Show version number                                                                   [boolean]
   --projectId, -p        The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                         environment variables.                  [string] [required] [default: "mlapisamples-cfrater-1"]
+                         environment variables.                  [string] [required] [default: "gcloud-project-name"]
   --sessionId, -s        The identifier of the detect session. Defaults to a random UUID.
                                                               [string] [default: "6d5434a0-96a7-11e8-a573-1fed0528f24b"]
   --languageCode, -l     The language code of the query. Defaults to "en-US".                [string] [default: "en-US"]
@@ -1007,7 +1007,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -1058,7 +1058,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -1109,7 +1109,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -1160,7 +1160,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -1211,7 +1211,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -1262,7 +1262,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -1313,7 +1313,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
@@ -1364,7 +1364,7 @@ Commands:
 Options:
   --version        Show version number                                                                         [boolean]
   --projectId, -p  The Project ID to use. Defaults to the value of the GCLOUD_PROJECT or GOOGLE_CLOUD_PROJECT
-                   environment variables.                        [string] [required] [default: "mlapisamples-cfrater-1"]
+                   environment variables.                        [string] [required] [default: "gcloud-project-name"]
   --force, -f      force operation without a prompt                                                            [boolean]
   --help           Show help                                                                                   [boolean]
 
