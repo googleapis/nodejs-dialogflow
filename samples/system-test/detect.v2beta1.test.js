@@ -58,10 +58,9 @@ test.serial(
     const output = await runAsync(
       `${cmd} getKnowledgeBase -n "${knowbaseFullName}"`
     );
-    const parsedOut = output.split(`\n`);
+    //const parsedOut = output.split(`\n`);
     t.true(
-      parsedOut[0].includes(knowbaseFullName) &&
-        parsedOut[1].includes(knowbaseDisplayName)
+      output.includes(knowbaseFullName) && output.includes(knowbaseDisplayName)
     );
   }
 );
@@ -144,10 +143,6 @@ test.serial(
     const output = await runAsync(
       `${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`
     );
-    const parsedOut = output.split(`\n`);
-    t.true(
-      parsedOut[0].includes(`Name: undefined`) &&
-        parsedOut[1].includes(`displayName: undefined`)
-    );
+    t.true(output.includes(`Name: undefined`));
   }
 );
