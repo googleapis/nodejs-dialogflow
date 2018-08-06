@@ -195,7 +195,6 @@ function createDocument(
       const response = data[0];
       console.log(`Content URI...${response.contentUri}`);
       console.log(`displayName...${response.displayName}`);
-      //console.log(`knowledgeTypes...${response.knowlegeTypes[0]}`);
       console.log(`mimeType...${response.mimeType}`);
       console.log(`name...${response.name}`);
       console.log(`source...${response.source}`);
@@ -296,14 +295,9 @@ function deleteDocument(projectId, documentId) {
     .deleteDocument({name: documentId})
     .then(responses => {
       var operation = responses[0];
-      //var initialApiResponse = responses[1];
       return operation.promise();
     })
     .then(responses => {
-      //console.log(JSON.stringify(responses));
-      //var result = responses[0];
-      //var metadata = responses[1];
-      //var finalApiResponse = responses[2];
       if (responses[2] !== null) console.log(`document deleted`);
     })
     .catch(err => {
