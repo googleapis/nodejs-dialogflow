@@ -19,7 +19,8 @@ const test = require(`ava`);
 const {runAsync} = require('@google-cloud/nodejs-repo-tools');
 
 const cmd = 'node detect.v2beta1.js';
-const testQuery = [`How do I sign up?`];
+//const testQuery = [`How do I sign up?`];
+const testQuery = `Where is my data stored?`;
 
 const testKnowledgeBaseName = 'TestKnowBase';
 
@@ -28,9 +29,10 @@ let knowbaseFullName;
 
 let documentFullPath;
 const testDocName = `TestDoc`;
-const testDocumentPath = `https://dialogflow.com/docs/concepts/google-projects-faq`;
+//const testDocumentPath = `https://dialogflow.com/docs/concepts/google-projects-faq`;
+const testDocumentPath = `https://cloud.google.com/storage/docs/faq`;
 
-test.serial(`It should create a knowledge base`, async t => {
+test.before(`It should create a knowledge base`, async t => {
   const output = await runAsync(
     `${cmd} createKnowledgeBase -k ${testKnowledgeBaseName}`
   );
@@ -39,6 +41,15 @@ test.serial(`It should create a knowledge base`, async t => {
   t.true(confirmName === testKnowledgeBaseName);
   knowbaseDisplayName = confirmName;
   knowbaseFullName = parsedOut[0].split(`:`)[1].trim();
+});
+
+test.before(`It should detect Intent with Model Selection`, async t => {
+  const output = await runAsync(`${cmd} detectIntentwithModelSelection`);
+  t.true(
+    output.includes(
+      `I can help with that. Where would you like to reserve a room?`
+    )
+  );
 });
 
 test.serial(
@@ -90,41 +101,38 @@ test.serial(`It should detect Intent with Text to Speech Response`, async t => {
   const output = await runAsync(
     `${cmd} detectIntentwithTexttoSpeechResponse -q "${testQuery}"`
   );
-  const parsedOut = output.split(`\n`);
   t.true(
-    parsedOut[1].includes(
-      `Audio content written to file: ./resources/output.wav`
-    )
+    output.includes(`Audio content written to file: ./resources/output.wav`)
   );
 });
 
+test.serial(`Refresh agent to detect Knowledge`, async t => {
+  const output = await runAsync(`node resource.js show-agent`);
+  t.pass();
+});
+
 test.serial(`It should detect Intent Knowledge`, async t => {
+  const knowBaseId = knowbaseFullName.split(`/`);
   const output = await runAsync(
-    `${cmd} detectIntentKnowledge -q "${testQuery}"`
+    `${cmd} detectIntentKnowledge -q "${testQuery}" -n "${
+      knowBaseId[knowBaseId.length - 1]
+    }"`
   );
-  const parsedOut = output.split(`\n`);
-  t.true(parsedOut[parsedOut.length - 3] !== null);
+  t.true(output.includes(`Detected Intent:`));
 });
 
 test.serial(`It should detect sentiment with intent`, async t => {
   const output = await runAsync(
     `${cmd} detectIntentandSentiment -q "${testQuery}"`
   );
-  const parsedOut = output.split(`\n`);
-  t.true(parsedOut[parsedOut.length - 3].includes(`Detected sentiment`));
-});
-
-test.serial(`It should detect Intent with Model Selection`, async t => {
-  const output = await runAsync(`${cmd} detectIntentwithModelSelection`);
-  const parsedOut = output.split(`\n`);
-  t.true(parsedOut[1] !== null);
+  t.true(output.includes(`Detected sentiment`));
 });
 
 test.serial(
-  `It should delete document just created with deleteDocument`,
+  `It should deletnode document just created with deleteDocument`,
   async t => {
     const output = await runAsync(
-      `${cmd} deleteDocument -d "${documentFullPath}"`
+      `${cmd} deleteDocument -d ${documentFullPath}`
     );
     t.true(output.includes(`document deleted`));
   }

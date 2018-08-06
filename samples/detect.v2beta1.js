@@ -151,7 +151,9 @@ function createDocument(
   projectId,
   knowledgeBaseFullName,
   documentPath,
-  documentName
+  documentName,
+  knowledgeTypes,
+  mimeType
 ) {
   // [START dialogflow_create_document]
   // Imports the Dialogflow client library
@@ -169,21 +171,35 @@ function createDocument(
   // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
   // const documentPath = `path of the document you'd like to add, e.g. https://dialogflow.com/docs/knowledge-connectors`;
   // const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
-
+  // const knowledgeTypes = `The Knowledge type of the Document. e.g. FAQ`;
+  // const mimeType = `The mime_type of the Document. e.g. text/csv, text/html,text/plain, text/pdf etc.`;
   var request = {
     parent: knowledgeBaseFullName,
     document: {
-      knowledgeTypes: [`FAQ`],
+      knowledgeTypes: [knowledgeTypes],
       displayName: documentName,
       contentUri: documentPath,
       source: `contentUri`,
-      mimeType: `text/html`,
+      mimeType: mimeType,
     },
   };
 
   client
     .createDocument(request)
-    .then(console.log(`Document created`))
+    .then(data => {
+      const operation = data[0];
+      return operation.promise();
+    })
+    .then(data => {
+      console.log(`Document created`);
+      const response = data[0];
+      console.log(`Content URI...${response.contentUri}`);
+      console.log(`displayName...${response.displayName}`);
+      //console.log(`knowledgeTypes...${response.knowlegeTypes[0]}`);
+      console.log(`mimeType...${response.mimeType}`);
+      console.log(`name...${response.name}`);
+      console.log(`source...${response.source}`);
+    })
     .catch(err => {
       console.error(err);
     });
@@ -278,7 +294,18 @@ function deleteDocument(projectId, documentId) {
 
   client
     .deleteDocument({name: documentId})
-    .then(console.log(`document deleted`))
+    .then(responses => {
+      var operation = responses[0];
+      //var initialApiResponse = responses[1];
+      return operation.promise();
+    })
+    .then(responses => {
+      //console.log(JSON.stringify(responses));
+      //var result = responses[0];
+      //var metadata = responses[1];
+      //var finalApiResponse = responses[2];
+      if (responses[2] !== null) console.log(`document deleted`);
+    })
     .catch(err => {
       console.error(err);
     });
@@ -417,7 +444,7 @@ function detectIntentKnowledge(
   projectId,
   sessionId,
   languageCode,
-  knowledgeBaseId,
+  knowledgeBaseFullName,
   query
 ) {
   // [START dialogflow_detect_intent_knowledge]
@@ -438,6 +465,11 @@ function detectIntentKnowledge(
 
   // Define session path
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const knowbase = new dialogflow.KnowledgeBasesClient();
+  const knowledgeBasePath = knowbase.knowledgeBasePath(
+    projectId,
+    knowledgeBaseFullName
+  );
 
   // The audio query request
   const request = {
@@ -449,12 +481,7 @@ function detectIntentKnowledge(
       },
     },
     queryParams: {
-      knowledgeBasesClient: {
-        knowledgeBasePath: {
-          project: projectId,
-          knowledgeBase: knowledgeBaseId,
-        },
-      },
+      knowledgeBaseNames: [knowledgeBasePath],
     },
   };
 
@@ -479,6 +506,14 @@ function detectIntentKnowledge(
     });
   // [END dialogflow_detect_intent_knowledge]
 }
+
+// detectIntentKnowledge(
+//   projectId,
+//   sessionId,
+//   `en-US`,
+//   `MTUzMjIwOTAzNTcyNDQ1NTkzNjA`,
+//   `how do I sign up?`
+// );
 
 function detectIntentwithModelSelection(
   projectId,
@@ -625,15 +660,29 @@ const cli = require(`yargs`)
       requiresArg: true,
       description: `full path knowledge base`,
     },
+    knowledgeTypes: {
+      alias: `t`,
+      type: `string`,
+      default: `FAQ`,
+      requiresArg: true,
+      description: `The Knowledge type of the Document.`,
+    },
     languageCode: {
-      alias: 'l',
+      alias: `l`,
       default: 'en-US',
       type: 'string',
       requiresArg: true,
       description: 'The language code of the query. Defaults to "en-US".',
     },
+    mimeType: {
+      alias: `y`,
+      default: `text/html`,
+      type: `string`,
+      requiresArg: true,
+      description: `The mime_type of the Document`,
+    },
     model: {
-      alias: 'o',
+      alias: `o`,
       default: `phone_call`,
       type: `string`,
       requiresArg: true,
@@ -655,14 +704,14 @@ const cli = require(`yargs`)
       requiresArg: true,
       type: 'string',
     },
-    queries: {
+    query: {
       alias: 'q',
       array: true,
       string: true,
       demandOption: true,
       requiresArg: true,
       description: 'An array of text queries',
-      default: [`How do I sign up?`],
+      default: `Where is my data stored?`,
     },
     sampleRateHertz: {
       alias: 'r',
@@ -708,7 +757,9 @@ const cli = require(`yargs`)
         opts.projectId,
         opts.knowledgeBaseFullName,
         opts.documentPath,
-        opts.documentName
+        opts.documentName,
+        opts.knowledgeTypes,
+        opts.mimeType
       )
   )
   .command(
@@ -737,7 +788,7 @@ const cli = require(`yargs`)
       detectIntentwithTexttoSpeechResponse(
         opts.projectId,
         opts.sessionId,
-        opts.queries,
+        opts.query,
         opts.languageCode,
         opts.outputFile
       )
@@ -750,9 +801,9 @@ const cli = require(`yargs`)
       detectIntentKnowledge(
         opts.projectId,
         opts.sessionId,
-        opts.knowledgeBaseName,
         opts.languageCode,
-        opts.queries
+        opts.knowledgeBaseFullName,
+        opts.query
       )
   )
   .command(
@@ -763,7 +814,7 @@ const cli = require(`yargs`)
       detectIntentandSentiment(
         opts.projectId,
         opts.sessionId,
-        opts.queries,
+        opts.query,
         opts.languageCode
       )
   )
@@ -785,13 +836,13 @@ const cli = require(`yargs`)
   .example(`node $0 listKnowledgeBases`)
   .example(`node $0 deleteKnowledgeBase -n "KNOWLEDGEBASEFULLNAME"`)
   .example(
-    `node $0 createDocument -n "KNOWLEDGEBASEFULLNAME" -p "URIHTMLPATHTODOC"`
+    `node $0 createDocument -n "KNOWLEDGEBASEFULLNAME" -p "URIHTMLPATHTODOC" -m "MyDoc"`
   )
   .example(`node $0 getDocument -n "KNOWLEDGEBASEFULLNAME" -d "FULLDOCUMENTID"`)
   .example(`node $0 listDocuments -n "KNOWLEDGEBASEFULLNAME"`)
   .example(`node $0 deleteDocument -d "FULLDOCUMENTID"`)
   .example(`node $0 detectIntentwithTexttoSpeechResponse "How do I sign up?"`)
-  .example(`node $0 detectIntentKnowledge "how do i sign up?"`)
+  .example(`node $0 detectIntentKnowledge -q "how do i sign up?"`)
   .example(
     `node $0 detectIntentandSentiment "Book a great room for six great folks!"`
   )
