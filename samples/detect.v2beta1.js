@@ -31,7 +31,7 @@ function createKnowledgeBase(projectId, displayName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const displayName = `your knowledge base display name, e.g. myKnowledgeBase`;
 
   var formattedParent = client.projectPath(projectId);
@@ -67,7 +67,7 @@ function getKnowledgeBase(projectId, knowledgeBaseFullName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   client
@@ -98,7 +98,7 @@ function listKnowledgeBases(projectId) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
 
   var formattedParent = client.projectPath(projectId);
 
@@ -128,7 +128,7 @@ function deleteKnowledgeBase(projectId, knowledgeBaseFullName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   client
@@ -166,7 +166,7 @@ function createDocument(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
   // const documentPath = `path of the document you'd like to add, e.g. https://dialogflow.com/docs/knowledge-connectors`;
   // const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
@@ -217,7 +217,7 @@ function listDocuments(projectId, knowledgeBaseFullName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
 
   client
@@ -287,7 +287,7 @@ function deleteDocument(projectId, documentId) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
 
   client
@@ -316,7 +316,7 @@ function detectIntentandSentiment(projectId, sessionId, query, languageCode) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const sessionId = `user specific ID of session, e.g. 12345`;
   // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
   // const languageCode = 'BCP-47 language code, e.g. en-US';
@@ -390,7 +390,7 @@ function detectIntentwithTexttoSpeechResponse(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const sessionId = `user specific ID of session, e.g. 12345`;
   // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
   // const languageCode = 'BCP-47 language code, e.g. en-US';
@@ -450,7 +450,7 @@ function detectIntentKnowledge(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const sessionId = `user specific ID of session, e.g. 12345`;
   // const languageCode = 'BCP-47 language code, e.g. en-US';
   // const knowledgeBaseId = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
@@ -519,7 +519,7 @@ function detectIntentwithModelSelection(
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const projectId = `your GCLOUD project name, if not specified as env variable e.g. my-Gcloud-Project`;
+  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const sessionId = `user specific ID of session, e.g. 12345`;
   // const audioFilePath = `path to local audio file, e.g. ./resources/book_a_room.wav`;
   // const languageCode = 'BCP-47 language code, e.g. en-US';
