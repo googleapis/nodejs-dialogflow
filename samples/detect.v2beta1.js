@@ -49,7 +49,6 @@ function createKnowledgeBase(projectId, displayName) {
       const result = responses[0];
       console.log(`Name: ${result.name}`);
       console.log(`displayName: ${result.displayName}`);
-      return result.displayName;
     })
     .catch(err => {
       console.error('ERROR:', err);
