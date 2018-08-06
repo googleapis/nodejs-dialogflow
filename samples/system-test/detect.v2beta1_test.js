@@ -107,7 +107,7 @@ test.serial(`It should detect Intent with Text to Speech Response`, async t => {
 });
 
 test.serial(`Refresh agent to detect Knowledge`, async t => {
-  const output = await runAsync(`node resource.js show-agent`);
+  await runAsync(`node resource.js show-agent`);
   t.pass();
 });
 

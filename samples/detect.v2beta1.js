@@ -507,14 +507,6 @@ function detectIntentKnowledge(
   // [END dialogflow_detect_intent_knowledge]
 }
 
-// detectIntentKnowledge(
-//   projectId,
-//   sessionId,
-//   `en-US`,
-//   `MTUzMjIwOTAzNTcyNDQ1NTkzNjA`,
-//   `how do I sign up?`
-// );
-
 function detectIntentwithModelSelection(
   projectId,
   sessionId,
