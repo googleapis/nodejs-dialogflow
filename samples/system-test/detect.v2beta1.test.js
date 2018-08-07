@@ -21,7 +21,7 @@ const {runAsync} = require('@google-cloud/nodejs-repo-tools');
 const cmd = 'node detect.v2beta1.js';
 const testQuery = `Where is my data stored?`;
 
-const testKnowledgeBaseName = 'TestKnowBase';
+const testKnowledgeBaseName = 'TestKnowledgeBase';
 
 let knowbaseDisplayName;
 let knowbaseFullName;

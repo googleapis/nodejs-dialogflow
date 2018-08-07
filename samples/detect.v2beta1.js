@@ -76,7 +76,7 @@ function getKnowledgeBase(projectId, knowledgeBaseFullName) {
     })
     .then(responses => {
       const result = responses[0];
-      console.log(`Name: ${result.name}`);
+      console.log(`name: ${result.name}`);
       console.log(`displayName: ${result.displayName}`);
     })
     .catch(err => {
@@ -171,6 +171,7 @@ function createDocument(
   // const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
   // const knowledgeTypes = `The Knowledge type of the Document. e.g. FAQ`;
   // const mimeType = `The mime_type of the Document. e.g. text/csv, text/html,text/plain, text/pdf etc.`;
+
   var request = {
     parent: knowledgeBaseFullName,
     document: {
@@ -227,12 +228,12 @@ function listDocuments(projectId, knowledgeBaseFullName) {
         `There are ${resources.length} documents in ${knowledgeBaseFullName}`
       );
       resources.forEach(resource => {
-        console.log(` KnowledgeType: ${resource.knowledgeType}`);
-        console.log(` displayName: ${resource.displayName}`);
-        console.log(` mimeType: ${resource.mimeType}`);
-        console.log(` contentUri: ${resource.contentUri}`);
-        console.log(` source: ${resource.source}`);
-        console.log(` name: ${resource.name}`);
+        console.log(`KnowledgeType: ${resource.knowledgeType}`);
+        console.log(`displayName: ${resource.displayName}`);
+        console.log(`mimeType: ${resource.mimeType}`);
+        console.log(`contentUri: ${resource.contentUri}`);
+        console.log(`source: ${resource.source}`);
+        console.log(`name: ${resource.name}`);
       });
     })
     .catch(err => {
