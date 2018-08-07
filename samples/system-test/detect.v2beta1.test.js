@@ -26,7 +26,7 @@ const testKnowledgeBaseName = 'TestKnowledgeBase';
 const testDocName = `TestDoc`;
 const testDocumentPath = `https://cloud.google.com/storage/docs/faq`;
 
-test.before(`It should create a knowledge base`, async t => {
+test.serial(`It should create a knowledge base`, async t => {
   // Check that the knowledge base does not yet exist
   let output = await runAsync(`${cmd} listKnowledgeBases`);
   t.false(output.includes(testKnowledgeBaseName));
