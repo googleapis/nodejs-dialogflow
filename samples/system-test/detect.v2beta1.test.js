@@ -51,10 +51,6 @@ test.before(`It should detect Intent with Model Selection`, async t => {
   console.log(`output is ${output}`);
 });
 
-test.serial('Restoring Room reservation agent', async () => {
-  await runAsync(`node resource.js restore-room-agent -f`);
-});
-
 test.serial(
   `It should register newly created knowledge base with getKnowledgeBase`,
   async t => {
@@ -72,10 +68,6 @@ test.serial(
   async t => {
     const output = await runAsync(`${cmd} listKnowledgeBases`);
     t.true(output.includes(testKnowledgeBaseName));
-    const parsedOut = output.split(`\n`);
-    parsedOut.forEach(p => {
-      if (p.includes(testKnowledgeBaseName)) t.pass();
-    });
   }
 );
 
@@ -94,7 +86,7 @@ test.serial(
     );
     const parsedOut = output.split(`\n`);
     documentFullPath = parsedOut[parsedOut.length - 1].split(`:`)[1];
-    t.true(documentFullPath !== ``);
+    t.true(output.includes(`There are 1 documents in ${knowbaseFullName}`));
   }
 );
 

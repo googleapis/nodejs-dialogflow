@@ -628,7 +628,7 @@ const cli = require(`yargs`)
     },
     knowledgeBaseName: {
       alias: `k`,
-      default: `TestKnowBase`,
+      default: `TestKnowledgeBase`,
       type: `string`,
       requiresArg: true,
       description: `The name of the knowledge base to search from`,
