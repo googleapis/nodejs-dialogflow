@@ -56,28 +56,30 @@ function createKnowledgeBase(projectId, displayName) {
   // [END dialogflow_create_knowledge_base]
 }
 
-function getKnowledgeBase(projectId, knowledgeBaseFullName) {
+function getKnowledgeBase(projectId, knowledgeBaseId) {
   // [START dialogflow_get_knowledge_base]
   // Imports the Dialogflow client library
   const dialogflow = require('dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
-  var client = new dialogflow.KnowledgeBasesClient();
+  var client = new dialogflow.KnowledgeBasesClient({
+    projectId: projectId,
+  });
 
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
   // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-
+  var formattedName = client.knowledgeBasePath(projectId, knowledgeBaseId);
   client
     .getKnowledgeBase({
-      name: knowledgeBaseFullName,
+      name: formattedName,
     })
     .then(responses => {
       const result = responses[0];
-      console.log(`name: ${result.name}`);
       console.log(`displayName: ${result.displayName}`);
+      console.log(`name: ${result.name}`);
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -107,8 +109,8 @@ function listKnowledgeBases(projectId) {
     .then(responses => {
       var resources = responses[0];
       resources.forEach(r => {
-        console.log(`Display name... ${r.displayName}`);
-        console.log(`Knowledge base... ${r.name}`);
+        console.log(`displayName: ${r.displayName}`);
+        console.log(`name: ${r.name}`);
       });
     })
     .catch(err => {
@@ -453,7 +455,7 @@ function detectIntentKnowledge(
   // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const sessionId = `user specific ID of session, e.g. 12345`;
   // const languageCode = 'BCP-47 language code, e.g. en-US';
-  // const knowledgeBaseId = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
   // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
 
   // Define session path
@@ -639,6 +641,12 @@ const cli = require(`yargs`)
       requiresArg: true,
       description: `full path knowledge base`,
     },
+    knowledgeBaseId: {
+      alias: `b`,
+      type: `string`,
+      requiresArg: `true`,
+      description: `specific Id string for knowledge base`,
+    },
     knowledgeTypes: {
       alias: `t`,
       type: `string`,
@@ -716,7 +724,7 @@ const cli = require(`yargs`)
     `getKnowledgeBase`,
     `Gets Knowledge base by Knowledge Base Name`,
     {},
-    opts => getKnowledgeBase(opts.projectId, opts.knowledgeBaseFullName)
+    opts => getKnowledgeBase(opts.projectId, opts.knowledgeBaseId)
   )
   .command(
     `listKnowledgeBases`,
@@ -817,7 +825,7 @@ const cli = require(`yargs`)
   .example(
     `node $0 createDocument -n "KNOWLEDGEBASEFULLNAME" -p "URIHTMLPATHTODOC" -m "MyDoc"`
   )
-  .example(`node $0 getDocument -n "KNOWLEDGEBASEFULLNAME" -d "FULLDOCUMENTID"`)
+  .example(`node $0 getDocument -d "FULLDOCUMENTID"`)
   .example(`node $0 listDocuments -n "KNOWLEDGEBASEFULLNAME"`)
   .example(`node $0 deleteDocument -d "FULLDOCUMENTID"`)
   .example(`node $0 detectIntentwithTexttoSpeechResponse "How do I sign up?"`)
