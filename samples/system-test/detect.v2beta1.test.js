@@ -19,7 +19,6 @@ const test = require(`ava`);
 const {runAsync} = require('@google-cloud/nodejs-repo-tools');
 
 const cmd = 'node detect.v2beta1.js';
-//const testQuery = [`How do I sign up?`];
 const testQuery = `Where is my data stored?`;
 
 const testKnowledgeBaseName = 'TestKnowBase';
@@ -29,7 +28,6 @@ let knowbaseFullName;
 
 let documentFullPath;
 const testDocName = `TestDoc`;
-//const testDocumentPath = `https://dialogflow.com/docs/concepts/google-projects-faq`;
 const testDocumentPath = `https://cloud.google.com/storage/docs/faq`;
 
 test.before(`It should create a knowledge base`, async t => {
@@ -47,9 +45,14 @@ test.before(`It should detect Intent with Model Selection`, async t => {
   const output = await runAsync(`${cmd} detectIntentwithModelSelection`);
   t.true(
     output.includes(
-      `I can help with that. Where would you like to reserve a room?`
+      `Response: I can help with that. Where would you like to reserve a room?`
     )
   );
+  console.log(`output is ${output}`);
+});
+
+test.serial('Restoring Room reservation agent', async () => {
+  await runAsync(`node resource.js restore-room-agent -f`);
 });
 
 test.serial(
@@ -58,7 +61,6 @@ test.serial(
     const output = await runAsync(
       `${cmd} getKnowledgeBase -n "${knowbaseFullName}"`
     );
-    //const parsedOut = output.split(`\n`);
     t.true(
       output.includes(knowbaseFullName) && output.includes(knowbaseDisplayName)
     );
@@ -137,12 +139,12 @@ test.serial(
   }
 );
 
-test.serial(
+test.after(
   `It should delete this knowledge base with deleteKnowledgeBase`,
   async t => {
     const output = await runAsync(
       `${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`
     );
-    t.true(output.includes(`Name: undefined`));
+    t.true(output.includes(`Knowledge Base deleted`));
   }
 );

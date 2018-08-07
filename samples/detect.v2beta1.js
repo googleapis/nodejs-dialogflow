@@ -137,8 +137,7 @@ function deleteKnowledgeBase(projectId, knowledgeBaseFullName) {
     })
     .then(responses => {
       const result = responses[0];
-      console.log(`Name: ${result.name}`);
-      console.log(`displayName: ${result.displayName}`);
+      if (result.name === 'undefined') console.log(`Knowledge Base deleted`);
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -297,7 +296,7 @@ function deleteDocument(projectId, documentId) {
       return operation.promise();
     })
     .then(responses => {
-      if (responses[2] !== null) console.log(`document deleted`);
+      if (responses[2].done === true) console.log(`document deleted`);
     })
     .catch(err => {
       console.error(err);
@@ -548,44 +547,38 @@ function detectIntentwithModelSelection(
       return sessionClient.detectIntent(request);
     })
     .then(responses => {
-      logQueryResult(sessionClient, responses[0].queryResult);
+      const contextClient = new dialogflow.ContextsClient();
+      const result = responses[0].queryResult;
+      console.log(`  Query: ${result.queryText}`);
+      console.log(`  Response: ${result.fulfillmentText}`);
+      if (result.intent) {
+        console.log(`  Intent: ${result.intent.displayName}`);
+      } else {
+        console.log(`  No intent matched.`);
+      }
+      const parameters = JSON.stringify(
+        structjson.structProtoToJson(result.parameters)
+      );
+      console.log(`  Parameters: ${parameters}`);
+      if (result.outputContexts && result.outputContexts.length) {
+        console.log(`  Output contexts:`);
+        result.outputContexts.forEach(context => {
+          const contextId = contextClient.matchContextFromContextName(
+            context.name
+          );
+          const contextParameters = JSON.stringify(
+            structjson.structProtoToJson(context.parameters)
+          );
+          console.log(`    ${contextId}`);
+          console.log(`      lifespan: ${context.lifespanCount}`);
+          console.log(`      parameters: ${contextParameters}`);
+        });
+      }
     })
     .catch(err => {
       console.error('ERROR:', err);
     });
   // [END dialogflow_detect_intent_with_model_selection]
-}
-
-function logQueryResult(sessionClient, result) {
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates a context client
-  const contextClient = new dialogflow.ContextsClient();
-
-  console.log(`  Query: ${result.queryText}`);
-  console.log(`  Response: ${result.fulfillmentText}`);
-  if (result.intent) {
-    console.log(`  Intent: ${result.intent.displayName}`);
-  } else {
-    console.log(`  No intent matched.`);
-  }
-  const parameters = JSON.stringify(
-    structjson.structProtoToJson(result.parameters)
-  );
-  console.log(`  Parameters: ${parameters}`);
-  if (result.outputContexts && result.outputContexts.length) {
-    console.log(`  Output contexts:`);
-    result.outputContexts.forEach(context => {
-      const contextId = contextClient.matchContextFromContextName(context.name);
-      const contextParameters = JSON.stringify(
-        structjson.structProtoToJson(context.parameters)
-      );
-      console.log(`    ${contextId}`);
-      console.log(`      lifespan: ${context.lifespanCount}`);
-      console.log(`      parameters: ${contextParameters}`);
-    });
-  }
 }
 
 const cli = require(`yargs`)
