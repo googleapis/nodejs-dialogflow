@@ -84,8 +84,6 @@ test.serial(
     const output = await runAsync(
       `${cmd} listDocuments -n "${knowbaseFullName}"`
     );
-    const parsedOut = output.split(`\n`);
-    documentFullPath = parsedOut[parsedOut.length - 1].split(`:`)[1];
     t.true(output.includes(`There are 1 documents in ${knowbaseFullName}`));
   }
 );
