@@ -6,13 +6,12 @@
   "author": "Google LLC",
   "repository": "dialogflow/dialogflow-nodejs-client-v2",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "test": "ava system-test"
   },
   "dependencies": {
-    "@google-cloud/common": "^0.20.0",
     "dialogflow": "0.6.0",
     "grpc": "^1.4.1",
     "pump": "^3.0.0",
