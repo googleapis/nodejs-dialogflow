@@ -74,14 +74,14 @@ class SessionsClient {
     // Create a `gaxGrpc` object, with any grpc-specific options
     // sent to the client.
     opts.scopes = this.constructor.scopes;
-    var gaxGrpc = gax.grpc(opts);
+    const gaxGrpc = new gax.GrpcClient(opts);
 
     // Save the auth object to the client, for use by other methods.
     this.auth = gaxGrpc.auth;
 
     // Determine the client header string.
-    var clientHeader = [
-      `gl-node/${process.version.node}`,
+    const clientHeader = [
+      `gl-node/${process.version}`,
       `grpc/${gaxGrpc.grpcVersion}`,
       `gax/${gax.version}`,
       `gapic/${VERSION}`,
@@ -91,7 +91,7 @@ class SessionsClient {
     }
 
     // Load the applicable protos.
-    var protos = merge(
+    const protos = merge(
       {},
       gaxGrpc.loadProto(
         path.join(__dirname, '..', '..', 'protos'),
@@ -120,7 +120,7 @@ class SessionsClient {
     };
 
     // Put together the default options sent with requests.
-    var defaults = gaxGrpc.constructSettings(
+    const defaults = gaxGrpc.constructSettings(
       'google.cloud.dialogflow.v2beta1.Sessions',
       gapicConfig,
       opts.clientConfig,
@@ -134,20 +134,20 @@ class SessionsClient {
 
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Sessions.
-    var sessionsStub = gaxGrpc.createStub(
+    const sessionsStub = gaxGrpc.createStub(
       protos.google.cloud.dialogflow.v2beta1.Sessions,
       opts
     );
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    var sessionsStubMethods = ['detectIntent', 'streamingDetectIntent'];
+    const sessionsStubMethods = ['detectIntent', 'streamingDetectIntent'];
     for (let methodName of sessionsStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         sessionsStub.then(
           stub =>
             function() {
-              var args = Array.prototype.slice.call(arguments, 0);
+              const args = Array.prototype.slice.call(arguments, 0);
               return stub[methodName].apply(stub, args);
             }
         ),
@@ -204,13 +204,12 @@ class SessionsClient {
    *   Required. The name of the session this query is sent to. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>`, or
    *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
-   *   construction and will be available soon. If <Environment ID> is not
-   *   specified, we assume default 'draft' environment. If <User ID> is not
-   *   specified, we are using "-". It’s up to the API caller to choose an
-   *   appropriate <Session ID>. and <User Id>. They can be a random numbers or
-   *   some type of user and session identifiers (preferably hashed). The length
-   *   of the <Session ID> and <User ID> must not exceed 36 characters.
+   *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+   *   default 'draft' environment. If `User ID` is not specified, we are using
+   *   "-". It’s up to the API caller to choose an appropriate `Session ID` and
+   *   `User Id`. They can be a random numbers or some type of user and session
+   *   identifiers (preferably hashed). The length of the `Session ID` and
+   *   `User ID` must not exceed 36 characters.
    * @param {Object} request.queryInput
    *   Required. The input specification. It can be set to:
    *
@@ -226,6 +225,12 @@ class SessionsClient {
    *   Optional. The parameters of this query.
    *
    *   This object should have the same structure as [QueryParameters]{@link google.cloud.dialogflow.v2beta1.QueryParameters}
+   * @param {Object} [request.outputAudioConfig]
+   *   Optional. Instructs the speech synthesizer how to generate the output
+   *   audio. If this field is not set and agent-level speech synthesizer is not
+   *   configured, no output audio is generated.
+   *
+   *   This object should have the same structure as [OutputAudioConfig]{@link google.cloud.dialogflow.v2beta1.OutputAudioConfig}
    * @param {string} [request.inputAudio]
    *   Optional. The natural language speech audio to be processed. This field
    *   should be populated iff `query_input` is set to an input audio config.
@@ -245,19 +250,19 @@ class SessionsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.SessionsClient({
+   * const client = new dialogflow.v2beta1.SessionsClient({
    *   // optional auth parameters.
    * });
    *
-   * var formattedSession = client.sessionPath('[PROJECT]', '[SESSION]');
-   * var queryInput = {};
-   * var request = {
+   * const formattedSession = client.sessionPath('[PROJECT]', '[SESSION]');
+   * const queryInput = {};
+   * const request = {
    *   session: formattedSession,
    *   queryInput: queryInput,
    * };
    * client.detectIntent(request)
    *   .then(responses => {
-   *     var response = responses[0];
+   *     const response = responses[0];
    *     // doThingsWith(response)
    *   })
    *   .catch(err => {
@@ -291,16 +296,16 @@ class SessionsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.SessionsClient({
+   * const client = new dialogflow.v2beta1.SessionsClient({
    *   // optional auth parameters.
    * });
    *
-   * var stream = client.streamingDetectIntent().on('data', response => {
+   * const stream = client.streamingDetectIntent().on('data', response => {
    *   // doThingsWith(response)
    * });
-   * var session = '';
-   * var queryInput = {};
-   * var request = {
+   * const session = '';
+   * const queryInput = {};
+   * const request = {
    *   session: session,
    *   queryInput: queryInput,
    * };

@@ -70,7 +70,7 @@
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.Agent definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var Agent = {
+const Agent = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 
   /**
@@ -111,7 +111,7 @@ var Agent = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.GetAgentRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var GetAgentRequest = {
+const GetAgentRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -133,7 +133,7 @@ var GetAgentRequest = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.SearchAgentsRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var SearchAgentsRequest = {
+const SearchAgentsRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -154,7 +154,7 @@ var SearchAgentsRequest = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.SearchAgentsResponse definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var SearchAgentsResponse = {
+const SearchAgentsResponse = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -169,7 +169,7 @@ var SearchAgentsResponse = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.TrainAgentRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var TrainAgentRequest = {
+const TrainAgentRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -181,15 +181,17 @@ var TrainAgentRequest = {
  *   Format: `projects/<Project ID>`.
  *
  * @property {string} agentUri
- *   Optional. The Google Cloud Storage URI to export the agent to.
- *   Note: The URI must start with
- *   "gs://". If left unspecified, the serialized agent is returned inline.
+ *   Optional. The
+ *   [Google Cloud Storage](https://cloud.google.com/storage/docs/)
+ *   URI to export the agent to.
+ *   The format of this URI must be `gs://<bucket-name>/<object-name>`.
+ *   If left unspecified, the serialized agent is returned inline.
  *
  * @typedef ExportAgentRequest
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.ExportAgentRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var ExportAgentRequest = {
+const ExportAgentRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -204,23 +206,23 @@ var ExportAgentRequest = {
  *   The exported agent.
  *
  *   Example for how to export an agent to a zip file via a command line:
- *
- *   curl \
- *     'https://dialogflow.googleapis.com/v2beta1/projects/<project_name>/agent:export'\
+ *   <pre>curl \
+ *     'https://dialogflow.googleapis.com/v2beta1/projects/&lt;project_name&gt;/agent:export'\
  *     -X POST \
- *     -H 'Authorization: Bearer '$(gcloud auth print-access-token) \
+ *     -H 'Authorization: Bearer '$(gcloud auth application-default
+ *     print-access-token) \
  *     -H 'Accept: application/json' \
  *     -H 'Content-Type: application/json' \
  *     --compressed \
  *     --data-binary '{}' \
  *   | grep agentContent | sed -e 's/.*"agentContent": "\([^"]*\)".* /\1/' \
- *   | base64 --decode > <agent zip file>
+ *   | base64 --decode > &lt;agent zip file&gt;</pre>
  *
  * @typedef ExportAgentResponse
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.ExportAgentResponse definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var ExportAgentResponse = {
+const ExportAgentResponse = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -239,23 +241,23 @@ var ExportAgentResponse = {
  *   The agent to import.
  *
  *   Example for how to import an agent via the command line:
- *
- *   curl \
- *     'https://dialogflow.googleapis.com/v2beta1/projects/<project_name>/agent:import\
+ *   <pre>curl \
+ *     'https://dialogflow.googleapis.com/v2beta1/projects/&lt;project_name&gt;/agent:import\
  *      -X POST \
- *      -H 'Authorization: Bearer '$(gcloud auth print-access-token) \
+ *      -H 'Authorization: Bearer '$(gcloud auth application-default
+ *      print-access-token) \
  *      -H 'Accept: application/json' \
  *      -H 'Content-Type: application/json' \
  *      --compressed \
  *      --data-binary "{
- *         'agentContent': '$(cat <agent zip file> | base64 -w 0)'
- *      }"
+ *         'agentContent': '$(cat &lt;agent zip file&gt; | base64 -w 0)'
+ *      }"</pre>
  *
  * @typedef ImportAgentRequest
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.ImportAgentRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var ImportAgentRequest = {
+const ImportAgentRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -274,22 +276,22 @@ var ImportAgentRequest = {
  *   The agent to restore.
  *
  *   Example for how to restore an agent via the command line:
- *
- *   curl \
- *     'https://dialogflow.googleapis.com/v2beta1/projects/<project_name>/agent:restore\
+ *   <pre>curl \
+ *     'https://dialogflow.googleapis.com/v2beta1/projects/&lt;project_name&gt;/agent:restore\
  *      -X POST \
- *      -H 'Authorization: Bearer '$(gcloud auth print-access-token) \
+ *      -H 'Authorization: Bearer '$(gcloud auth application-default
+ *      print-access-token) \
  *      -H 'Accept: application/json' \
  *      -H 'Content-Type: application/json' \
  *      --compressed \
  *      --data-binary "{
- *          'agentContent': '$(cat <agent zip file> | base64 -w 0)'
- *      }" \
+ *          'agentContent': '$(cat &lt;agent zip file&gt; | base64 -w 0)'
+ *      }"</pre>
  *
  * @typedef RestoreAgentRequest
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.RestoreAgentRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/agent.proto}
  */
-var RestoreAgentRequest = {
+const RestoreAgentRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };

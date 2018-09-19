@@ -87,14 +87,14 @@ class ContextsClient {
     // Create a `gaxGrpc` object, with any grpc-specific options
     // sent to the client.
     opts.scopes = this.constructor.scopes;
-    var gaxGrpc = gax.grpc(opts);
+    const gaxGrpc = new gax.GrpcClient(opts);
 
     // Save the auth object to the client, for use by other methods.
     this.auth = gaxGrpc.auth;
 
     // Determine the client header string.
-    var clientHeader = [
-      `gl-node/${process.version.node}`,
+    const clientHeader = [
+      `gl-node/${process.version}`,
       `grpc/${gaxGrpc.grpcVersion}`,
       `gax/${gax.version}`,
       `gapic/${VERSION}`,
@@ -104,7 +104,7 @@ class ContextsClient {
     }
 
     // Load the applicable protos.
-    var protos = merge(
+    const protos = merge(
       {},
       gaxGrpc.loadProto(
         path.join(__dirname, '..', '..', 'protos'),
@@ -142,7 +142,7 @@ class ContextsClient {
     };
 
     // Put together the default options sent with requests.
-    var defaults = gaxGrpc.constructSettings(
+    const defaults = gaxGrpc.constructSettings(
       'google.cloud.dialogflow.v2beta1.Contexts',
       gapicConfig,
       opts.clientConfig,
@@ -156,14 +156,14 @@ class ContextsClient {
 
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Contexts.
-    var contextsStub = gaxGrpc.createStub(
+    const contextsStub = gaxGrpc.createStub(
       protos.google.cloud.dialogflow.v2beta1.Contexts,
       opts
     );
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    var contextsStubMethods = [
+    const contextsStubMethods = [
       'listContexts',
       'getContext',
       'createContext',
@@ -176,7 +176,7 @@ class ContextsClient {
         contextsStub.then(
           stub =>
             function() {
-              var args = Array.prototype.slice.call(arguments, 0);
+              const args = Array.prototype.slice.call(arguments, 0);
               return stub[methodName].apply(stub, args);
             }
         ),
@@ -230,10 +230,9 @@ class ContextsClient {
    *   Required. The session to list all contexts from.
    *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
    *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
-   *   construction and will be available soon. If <Environment ID> is not
-   *   specified, we assume default 'draft' environment. If <User ID> is not
-   *   specified, we assume default '-' user.
+   *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+   *   default 'draft' environment. If `User ID` is not specified, we assume
+   *   default '-' user.
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
    *   response. If page streaming is performed per-resource, this
@@ -267,16 +266,16 @@ class ContextsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.ContextsClient({
+   * const client = new dialogflow.v2beta1.ContextsClient({
    *   // optional auth parameters.
    * });
    *
    * // Iterate over all elements.
-   * var formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
+   * const formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
    *
    * client.listContexts({parent: formattedParent})
    *   .then(responses => {
-   *     var resources = responses[0];
+   *     const resources = responses[0];
    *     for (let i = 0; i < resources.length; i += 1) {
    *       // doThingsWith(resources[i])
    *     }
@@ -286,17 +285,17 @@ class ContextsClient {
    *   });
    *
    * // Or obtain the paged response.
-   * var formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
+   * const formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
    *
    *
-   * var options = {autoPaginate: false};
-   * var callback = responses => {
+   * const options = {autoPaginate: false};
+   * const callback = responses => {
    *   // The actual resources in a response.
-   *   var resources = responses[0];
+   *   const resources = responses[0];
    *   // The next request if the response shows that there are more responses.
-   *   var nextRequest = responses[1];
+   *   const nextRequest = responses[1];
    *   // The actual response object, if necessary.
-   *   // var rawResponse = responses[2];
+   *   // const rawResponse = responses[2];
    *   for (let i = 0; i < resources.length; i += 1) {
    *     // doThingsWith(resources[i]);
    *   }
@@ -340,10 +339,9 @@ class ContextsClient {
    *   Required. The session to list all contexts from.
    *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
    *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
-   *   construction and will be available soon. If <Environment ID> is not
-   *   specified, we assume default 'draft' environment. If <User ID> is not
-   *   specified, we assume default '-' user.
+   *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+   *   default 'draft' environment. If `User ID` is not specified, we assume
+   *   default '-' user.
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
    *   response. If page streaming is performed per-resource, this
@@ -360,11 +358,11 @@ class ContextsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.ContextsClient({
+   * const client = new dialogflow.v2beta1.ContextsClient({
    *   // optional auth parameters.
    * });
    *
-   * var formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
+   * const formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
    * client.listContextsStream({parent: formattedParent})
    *   .on('data', element => {
    *     // doThingsWith(element)
@@ -391,10 +389,9 @@ class ContextsClient {
    *   Required. The name of the context. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
    *   or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments and
-   *   users are under construction and will be available soon. If <Environment
-   *   ID> is not specified, we assume default 'draft' environment. If <User ID>
-   *   is not specified, we assume default '-' user.
+   *   ID>/sessions/<Session ID>/contexts/<Context ID>`. If `Environment ID` is
+   *   not specified, we assume default 'draft' environment. If `User ID` is not
+   *   specified, we assume default '-' user.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
@@ -410,14 +407,14 @@ class ContextsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.ContextsClient({
+   * const client = new dialogflow.v2beta1.ContextsClient({
    *   // optional auth parameters.
    * });
    *
-   * var formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
+   * const formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
    * client.getContext({name: formattedName})
    *   .then(responses => {
-   *     var response = responses[0];
+   *     const response = responses[0];
    *     // doThingsWith(response)
    *   })
    *   .catch(err => {
@@ -443,10 +440,9 @@ class ContextsClient {
    *   Required. The session to create a context for.
    *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
    *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>`. Note: Environments and users are under
-   *   construction and will be available soon. If <Environment ID> is not
-   *   specified, we assume default 'draft' environment. If <User ID> is not
-   *   specified, we assume default '-' user.
+   *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+   *   default 'draft' environment. If `User ID` is not specified, we assume
+   *   default '-' user.
    * @param {Object} request.context
    *   Required. The context to create.
    *
@@ -466,19 +462,19 @@ class ContextsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.ContextsClient({
+   * const client = new dialogflow.v2beta1.ContextsClient({
    *   // optional auth parameters.
    * });
    *
-   * var formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
-   * var context = {};
-   * var request = {
+   * const formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
+   * const context = {};
+   * const request = {
    *   parent: formattedParent,
    *   context: context,
    * };
    * client.createContext(request)
    *   .then(responses => {
-   *     var response = responses[0];
+   *     const response = responses[0];
    *     // doThingsWith(response)
    *   })
    *   .catch(err => {
@@ -523,14 +519,14 @@ class ContextsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.ContextsClient({
+   * const client = new dialogflow.v2beta1.ContextsClient({
    *   // optional auth parameters.
    * });
    *
-   * var context = {};
+   * const context = {};
    * client.updateContext({context: context})
    *   .then(responses => {
-   *     var response = responses[0];
+   *     const response = responses[0];
    *     // doThingsWith(response)
    *   })
    *   .catch(err => {
@@ -556,11 +552,9 @@ class ContextsClient {
    *   Required. The name of the context to delete. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
    *   or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments and
-   *   users are under construction and will be available soon. If <Environment
-   *   ID> is not specified, we assume default 'draft' environment. If <User ID>
-   *   is not specified, we assume default
-   *   '-' user.
+   *   ID>/sessions/<Session ID>/contexts/<Context ID>`. If `Environment ID` is
+   *   not specified, we assume default 'draft' environment. If `User ID` is not
+   *   specified, we assume default '-' user.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
@@ -573,11 +567,11 @@ class ContextsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.ContextsClient({
+   * const client = new dialogflow.v2beta1.ContextsClient({
    *   // optional auth parameters.
    * });
    *
-   * var formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
+   * const formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
    * client.deleteContext({name: formattedName}).catch(err => {
    *   console.error(err);
    * });
@@ -601,10 +595,8 @@ class ContextsClient {
    *   Required. The name of the session to delete all contexts from. Format:
    *   `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project
    *   ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
-   *   ID>`. Note: Environments and users are under construction and will be
-   *   available soon. If <Environment ID> is not specified we assume default
-   *   'draft' environment. If <User ID> is not specified, we assume default
-   *   '-' user.
+   *   ID>`. If `Environment ID` is not specified we assume default 'draft'
+   *   environment. If `User ID` is not specified, we assume default '-' user.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
@@ -617,11 +609,11 @@ class ContextsClient {
    *
    * const dialogflow = require('dialogflow.v2beta1');
    *
-   * var client = new dialogflow.v2beta1.ContextsClient({
+   * const client = new dialogflow.v2beta1.ContextsClient({
    *   // optional auth parameters.
    * });
    *
-   * var formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
+   * const formattedParent = client.sessionPath('[PROJECT]', '[SESSION]');
    * client.deleteAllContexts({parent: formattedParent}).catch(err => {
    *   console.error(err);
    * });

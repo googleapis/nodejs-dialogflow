@@ -21,12 +21,10 @@
  * @property {string} name
  *   Required. The unique identifier of the context. Format:
  *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`,
- *   or
- *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *   ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments and
- *   users are under construction and will be available soon. The Context ID is
- *   always converted to lowercase. If <Environment ID> is not specified, we
- *   assume default 'draft' environment. If <User ID> is not specified, we
+ *   or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+ *   ID>/sessions/<Session ID>/contexts/<Context ID>`. The `Context ID` is
+ *   always converted to lowercase. If `Environment ID` is not specified, we
+ *   assume default 'draft' environment. If `User ID` is not specified, we
  *   assume default '-' user.
  *
  * @property {number} lifespanCount
@@ -46,7 +44,7 @@
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.Context definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var Context = {
+const Context = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -57,10 +55,9 @@ var Context = {
  *   Required. The session to list all contexts from.
  *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
  *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *   ID>/sessions/<Session ID>`. Note: Environments and users are under
- *   construction and will be available soon. If <Environment ID> is not
- *   specified, we assume default 'draft' environment. If <User ID> is not
- *   specified, we assume default '-' user.
+ *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+ *   default 'draft' environment. If `User ID` is not specified, we assume
+ *   default '-' user.
  *
  * @property {number} pageSize
  *   Optional. The maximum number of items to return in a single page. By
@@ -73,7 +70,7 @@ var Context = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.ListContextsRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var ListContextsRequest = {
+const ListContextsRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -94,7 +91,7 @@ var ListContextsRequest = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.ListContextsResponse definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var ListContextsResponse = {
+const ListContextsResponse = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -105,16 +102,15 @@ var ListContextsResponse = {
  *   Required. The name of the context. Format:
  *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
  *   or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *   ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments and
- *   users are under construction and will be available soon. If <Environment
- *   ID> is not specified, we assume default 'draft' environment. If <User ID>
- *   is not specified, we assume default '-' user.
+ *   ID>/sessions/<Session ID>/contexts/<Context ID>`. If `Environment ID` is
+ *   not specified, we assume default 'draft' environment. If `User ID` is not
+ *   specified, we assume default '-' user.
  *
  * @typedef GetContextRequest
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.GetContextRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var GetContextRequest = {
+const GetContextRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -125,10 +121,9 @@ var GetContextRequest = {
  *   Required. The session to create a context for.
  *   Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
  *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *   ID>/sessions/<Session ID>`. Note: Environments and users are under
- *   construction and will be available soon. If <Environment ID> is not
- *   specified, we assume default 'draft' environment. If <User ID> is not
- *   specified, we assume default '-' user.
+ *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+ *   default 'draft' environment. If `User ID` is not specified, we assume
+ *   default '-' user.
  *
  * @property {Object} context
  *   Required. The context to create.
@@ -139,7 +134,7 @@ var GetContextRequest = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.CreateContextRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var CreateContextRequest = {
+const CreateContextRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -160,7 +155,7 @@ var CreateContextRequest = {
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.UpdateContextRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var UpdateContextRequest = {
+const UpdateContextRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -171,17 +166,15 @@ var UpdateContextRequest = {
  *   Required. The name of the context to delete. Format:
  *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
  *   or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *   ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments and
- *   users are under construction and will be available soon. If <Environment
- *   ID> is not specified, we assume default 'draft' environment. If <User ID>
- *   is not specified, we assume default
- *   '-' user.
+ *   ID>/sessions/<Session ID>/contexts/<Context ID>`. If `Environment ID` is
+ *   not specified, we assume default 'draft' environment. If `User ID` is not
+ *   specified, we assume default '-' user.
  *
  * @typedef DeleteContextRequest
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.DeleteContextRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var DeleteContextRequest = {
+const DeleteContextRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };
 
@@ -192,15 +185,13 @@ var DeleteContextRequest = {
  *   Required. The name of the session to delete all contexts from. Format:
  *   `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project
  *   ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *   ID>`. Note: Environments and users are under construction and will be
- *   available soon. If <Environment ID> is not specified we assume default
- *   'draft' environment. If <User ID> is not specified, we assume default
- *   '-' user.
+ *   ID>`. If `Environment ID` is not specified we assume default 'draft'
+ *   environment. If `User ID` is not specified, we assume default '-' user.
  *
  * @typedef DeleteAllContextsRequest
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.DeleteAllContextsRequest definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/context.proto}
  */
-var DeleteAllContextsRequest = {
+const DeleteAllContextsRequest = {
   // This is for documentation. Actual contents will be loaded by gRPC.
 };

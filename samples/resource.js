@@ -367,10 +367,10 @@ function createIntents(projectId) {
 
   // The phrases for training the linguistic model.
   const pizzaPhrases = [
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'Order pizza'}]},
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'Pizza'}]},
+    {type: 'EXAMPLE', parts: [{text: 'Order pizza'}]},
+    {type: 'EXAMPLE', parts: [{text: 'Pizza'}]},
     {
-      type: 'TYPE_EXAMPLE',
+      type: 'EXAMPLE',
       parts: [
         {text: 'Get me a '},
         {text: 'large', entityType: '@size', alias: 'size'},
@@ -385,7 +385,7 @@ function createIntents(projectId) {
       ],
     },
     {
-      type: 'TYPE_EXAMPLE',
+      type: 'EXAMPLE',
       parts: [
         {text: "I'd like to order a "},
         {text: 'large', entityType: '@size', alias: 'size'},
@@ -394,7 +394,7 @@ function createIntents(projectId) {
       ],
     },
     {
-      type: 'TYPE_TEMPLATE',
+      type: 'TEMPLATE',
       parts: [{text: "I'd like a @size:size pizza"}],
     },
   ];
@@ -500,7 +500,7 @@ function createIntents(projectId) {
   // template.
   const changeDeliveryAddressPhrases = [
     {
-      type: 'TYPE_EXAMPLE',
+      type: 'EXAMPLE',
       parts: [
         {text: 'Change address to '},
         {
@@ -511,7 +511,7 @@ function createIntents(projectId) {
       ],
     },
     {
-      type: 'TYPE_EXAMPLE',
+      type: 'EXAMPLE',
       parts: [
         {
           text: '1 1st st, new york, ny',
@@ -596,10 +596,10 @@ function createIntents(projectId) {
   };
 
   const placeOrderPhrases = [
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'check'}]},
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'confirm'}]},
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'yes'}]},
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'place order'}]},
+    {type: 'EXAMPLE', parts: [{text: 'check'}]},
+    {type: 'EXAMPLE', parts: [{text: 'confirm'}]},
+    {type: 'EXAMPLE', parts: [{text: 'yes'}]},
+    {type: 'EXAMPLE', parts: [{text: 'place order'}]},
   ];
 
   const placeOrderIntent = Object.assign(
@@ -642,10 +642,10 @@ function createIntents(projectId) {
   };
 
   const cancelOrderPhrases = [
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'cancel'}]},
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'no'}]},
-    {type: 'TYPE_EXAMPLE', parts: [{text: 'cancel order'}]},
-    {type: 'TYPE_EXAMPLE', parts: [{text: "I don't want it any more"}]},
+    {type: 'EXAMPLE', parts: [{text: 'cancel'}]},
+    {type: 'EXAMPLE', parts: [{text: 'no'}]},
+    {type: 'EXAMPLE', parts: [{text: 'cancel order'}]},
+    {type: 'EXAMPLE', parts: [{text: "I don't want it any more"}]},
   ];
 
   const cancelOrderIntent = Object.assign(
@@ -1426,7 +1426,7 @@ function verifyCommand(callback, force, projectId, arg2, arg3) {
       },
     },
     function(err, result) {
-      var input = result.confirm.toLowerCase();
+      let input = result.confirm.toLowerCase();
       // If the user didn't say yes/y, abort
       if (input !== 'y' && input !== 'yes') {
         console.log('Operation aborted.');
