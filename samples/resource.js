@@ -809,7 +809,11 @@ function updateIntent(projectId, intentId) {
       if (intent.defaultResponsePlatforms.indexOf('PLATFORM_TELEGRAM') < 0) {
         intent.defaultResponsePlatforms.push('PLATFORM_TELEGRAM');
       }
-
+      if (intent.followupIntentInfo) {
+        delete intent.followupIntentInfo;
+        console.log(`If you dont do this - you will land up with below error`);
+        console.log(`Error: 3 INVALID_ARGUMENT: Read only field 'followup_intent_info' cannot be updated.`);
+      }
       // Now update the intent.
       const updateIntentRequest = {
         intent: intent,
