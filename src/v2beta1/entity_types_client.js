@@ -266,7 +266,7 @@ class EntityTypesClient {
       'batchUpdateEntities',
       'batchDeleteEntities',
     ];
-    for (const methodName of entityTypesStubMethods) {
+    for (let methodName of entityTypesStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         entityTypesStub.then(
           stub =>

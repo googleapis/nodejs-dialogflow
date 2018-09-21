@@ -171,7 +171,7 @@ class ContextsClient {
       'deleteContext',
       'deleteAllContexts',
     ];
-    for (const methodName of contextsStubMethods) {
+    for (let methodName of contextsStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         contextsStub.then(
           stub =>

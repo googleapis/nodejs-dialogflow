@@ -147,7 +147,7 @@ class KnowledgeBasesClient {
       'createKnowledgeBase',
       'deleteKnowledgeBase',
     ];
-    for (const methodName of knowledgeBasesStubMethods) {
+    for (let methodName of knowledgeBasesStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         knowledgeBasesStub.then(
           stub =>
