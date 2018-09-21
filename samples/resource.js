@@ -285,12 +285,12 @@ function createIntent(
   const trainingPhrases = [];
 
   trainingPhrasesParts.forEach(trainingPhrasesPart => {
-    var part = {
+    const part = {
       text: trainingPhrasesPart,
     };
 
     // Here we create a new training phrase for each provided part.
-    var trainingPhrase = {
+    const trainingPhrase = {
       type: 'EXAMPLE',
       parts: [part],
     };
@@ -479,7 +479,7 @@ function createSessionEntityType(
   );
 
   // Here we use the entity value as the only synonym.
-  var entities = [];
+  const entities = [];
   entityValues.forEach(entityValue => {
     entities.push({
       value: entityValue,
