@@ -15,7 +15,7 @@
 
 'use strict';
 
-const common = require('@google-cloud/common');
+const util = require('util');
 const fs = require('fs');
 const structjson = require('./structjson.js');
 const pump = require('pump');
@@ -145,7 +145,7 @@ function detectAudioIntent(
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
   // Read the content of the audio file and send it as part of the request.
-  const readFile = common.util.promisify(fs.readFile, {singular: true});
+  const readFile = util.promisify(fs.readFile);
   readFile(filename)
     .then(inputAudio => {
       // The audio query request
@@ -200,7 +200,7 @@ function streamingDetectIntent(
 
   // The BCP-47 language code to use, e.g. 'en-US'
   // const languageCode = 'en-US';
-  let sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
   const initialStreamRequest = {
     session: sessionPath,

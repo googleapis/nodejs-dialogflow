@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "author": "Google LLC",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "repository": "dialogflow/dialogflow-nodejs-client-v2",
   "main": "src/index.js",
@@ -46,22 +46,22 @@
     "test-no-cover": "mocha test/",
     "test": "npm run cover",
     "system-test": "mocha system-test/ --timeout 600000",
-    "all-test": "npm test && npm run system-test && npm run samples-test"
+    "all-test": "npm test && npm run system-test && npm run samples-test",
+    "fix": "eslint '**/*.js' --fix && npm run prettier"
   },
   "dependencies": {
-    "google-gax": "^0.17.1",
+    "google-gax": "^0.20.0",
     "lodash.merge": "^4.6.0",
     "lodash.union": "^4.6.0",
     "protobufjs": "^6.8.0"
   },
   "devDependencies": {
-    "@google-cloud/common": "^0.20.0",
     "@google-cloud/nodejs-repo-tools": "^2.1.1",
     "async": "^2.6.0",
     "codecov": "^3.0.0",
     "eslint": "^5.0.0",
-    "eslint-config-prettier": "^2.6.0",
-    "eslint-plugin-node": "^6.0.0",
+    "eslint-config-prettier": "^3.0.0",
+    "eslint-plugin-node": "^7.0.0",
     "eslint-plugin-prettier": "^2.3.1",
     "extend": "^3.0.1",
     "ink-docstrap": "^1.3.0",
