@@ -193,7 +193,7 @@ class DocumentsClient {
       'createDocument',
       'deleteDocument',
     ];
-    for (const methodName of documentsStubMethods) {
+    for (let methodName of documentsStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         documentsStub.then(
           stub =>

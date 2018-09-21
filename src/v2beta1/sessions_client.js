@@ -142,7 +142,7 @@ class SessionsClient {
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
     const sessionsStubMethods = ['detectIntent', 'streamingDetectIntent'];
-    for (const methodName of sessionsStubMethods) {
+    for (let methodName of sessionsStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         sessionsStub.then(
           stub =>
