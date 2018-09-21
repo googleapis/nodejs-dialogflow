@@ -31,7 +31,7 @@ const message1 = 'message_1';
 const message2 = 'message_2';
 
 test.serial('Test creating / listing / deleting a context.', async t => {
-  const output = await tools.runAsync(
+  let output = await tools.runAsync(
     `${cmd} create-context -s ${sessionId} -c ${contextName} -l 3`
   );
   t.true(output.includes(sessionId));
@@ -57,7 +57,7 @@ test.serial(
   'Test creating / listing / deleting a entity type and entity.',
   async t => {
     // Create the Entity Type
-    const output = await tools.runAsync(
+    let output = await tools.runAsync(
       `${cmd} create-entity-type -d ${displayName} -k KIND_MAP`
     );
     t.true(output.includes('entityTypes'));
@@ -106,7 +106,7 @@ test.serial(
 );
 
 test.serial('Test creating / listing / deleting a intent.', async t => {
-  const output = await tools.runAsync(
+  let output = await tools.runAsync(
     `${cmd} create-intent -d ${displayName} -t ${phrase1} -t ${phrase2} -m ${message1} -m ${message2}`
   );
   t.true(output.includes('intents'));
@@ -128,7 +128,7 @@ test.serial(
   'Test creating / listing / deleting a session entity type',
   async t => {
     // Create the Entity Type
-    const output = await tools.runAsync(
+    let output = await tools.runAsync(
       `${cmd} create-entity-type -d ${displayName} -k KIND_MAP`
     );
     t.true(output.includes('entityTypes'));
