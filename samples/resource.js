@@ -15,10 +15,6 @@
 
 'use strict';
 
-const grpc = require('grpc');
-const structjson = require('./structjson.js');
-const prompt = require('prompt');
-
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for entity types.
 // /////////////////////////////////////////////////////////////////////////////
@@ -38,8 +34,8 @@ function createEntityType(projectId, displayName, kind) {
     parent: agentPath,
     entityType: {
       displayName: displayName,
-      kind: kind
-    }
+      kind: kind,
+    },
   };
 
   entityTypesClient
@@ -76,7 +72,7 @@ function listEntityTypes(projectId) {
         console.log(`Entity type name: ${entityType.name}`);
         console.log(`Entity type display name: ${entityType.displayName}`);
         console.log(`Number of entities: ${entityType.entities.length}\n`);
-      })
+      });
       return responses[0];
     })
     .catch(err => {
@@ -93,7 +89,10 @@ function deleteEntityType(projectId, entityTypeId) {
   // Instantiates clients
   const entityTypesClient = new dialogflow.EntityTypesClient();
 
-  const entityTypePath = entityTypesClient.entityTypePath(projectId, entityTypeId);
+  const entityTypePath = entityTypesClient.entityTypePath(
+    projectId,
+    entityTypeId
+  );
 
   const request = {
     name: entityTypePath,
@@ -106,34 +105,9 @@ function deleteEntityType(projectId, entityTypeId) {
       console.log(`Entity type ${entityTypePath} deleted`);
     })
     .catch(err => {
-      console.error(
-        `Failed to delete entity type ${entityType.displayName}:`,
-        err
-      );
+      console.error(`Failed to delete entity type ${entityTypePath}:`, err);
     });
   // [END dialogflow_delete_entity_type]
-}
-
-function getEntityType(entityType) {
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates client
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-
-  // The request.
-  const request = {name: entityType.name};
-
-  // Call the client library to retrieve an entity type.
-  return entityTypesClient
-    .getEntityType(request)
-    .then(responses => {
-      console.log('Found entity type:');
-      logEntityType(responses[0]);
-    })
-    .catch(err => {
-      console.error(`Failed to get entity type ${entityType.displayName}`, err);
-    });
 }
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -153,12 +127,12 @@ function createEntity(projectId, entityTypeId, entityValue, synonyms) {
 
   const entity = {
     value: entityValue,
-    synonyms: synonyms
+    synonyms: synonyms,
   };
 
   const createEntitiesRequest = {
     parent: agentPath,
-    entities: [entity]
+    entities: [entity],
   };
 
   entityTypesClient
@@ -182,7 +156,10 @@ function listEntities(projectId, entityTypeId) {
   const entityTypesClient = new dialogflow.EntityTypesClient();
 
   // The path to the agent the entity types belong to.
-  const entityTypePath = entityTypesClient.entityTypePath(projectId, entityTypeId);
+  const entityTypePath = entityTypesClient.entityTypePath(
+    projectId,
+    entityTypeId
+  );
 
   // The request.
   const request = {
@@ -196,7 +173,7 @@ function listEntities(projectId, entityTypeId) {
       responses[0].entities.forEach(entity => {
         console.log(`Entity value: ${entity.value}`);
         console.log(`Entity synonyms: ${entity.synonyms}`);
-      })
+      });
       return responses[0];
     })
     .catch(err => {
@@ -214,11 +191,14 @@ function deleteEntity(projectId, entityTypeId, entityValue) {
   const entityTypesClient = new dialogflow.EntityTypesClient();
 
   // The path to the agent the entity types belong to.
-  const entityTypePath = entityTypesClient.entityTypePath(projectId, entityTypeId);
+  const entityTypePath = entityTypesClient.entityTypePath(
+    projectId,
+    entityTypeId
+  );
 
   const request = {
     parent: entityTypePath,
-    entityValues: [entityValue]
+    entityValues: [entityValue],
   };
 
   // Call the client library to delete the entity type.
@@ -264,17 +244,19 @@ function listIntents(projectId) {
         console.log(`Intent display name: ${intent.displayName}`);
         console.log(`Action: ${intent.action}`);
         console.log(`Root folowup intent: ${intent.rootFollowupIntentName}`);
-        console.log(`Parent followup intent: ${intent.parentFollowupIntentName}`);
-        
+        console.log(
+          `Parent followup intent: ${intent.parentFollowupIntentName}`
+        );
+
         console.log('Input contexts:');
         intent.inputContextNames.forEach(inputContextName => {
           console.log(`\tName: ${inputContextName}`);
-        })
+        });
 
         console.log('Output contexts:');
         intent.outputContexts.forEach(outputContext => {
           console.log(`\tName: ${outputContext.name}`);
-        })
+        });
       });
       return responses[0];
     })
@@ -284,14 +266,19 @@ function listIntents(projectId) {
   // [END dialogflow_list_intents]
 }
 
-function createIntent(projectId, displayName, trainingPhrasesParts, messageTexts) {
+function createIntent(
+  projectId,
+  displayName,
+  trainingPhrasesParts,
+  messageTexts
+) {
   // [START dialogflow_create_intent]
   // Imports the Dialogflow library
   const dialogflow = require('dialogflow');
 
   // Instantiates the Intent Client
   const intentsClient = new dialogflow.IntentsClient();
-  
+
   // The path to identify the agent that owns the created intent.
   const agentPath = intentsClient.projectAgentPath(projectId);
 
@@ -299,24 +286,24 @@ function createIntent(projectId, displayName, trainingPhrasesParts, messageTexts
 
   trainingPhrasesParts.forEach(trainingPhrasesPart => {
     var part = {
-      text: trainingPhrasesPart
+      text: trainingPhrasesPart,
     };
-    
+
     // Here we create a new training phrase for each provided part.
     var trainingPhrase = {
       type: 'EXAMPLE',
-      parts: [part]
+      parts: [part],
     };
 
     trainingPhrases.push(trainingPhrase);
   });
 
   const messageText = {
-    text: messageTexts
+    text: messageTexts,
   };
 
   const message = {
-    text: messageText
+    text: messageText,
   };
 
   const intent = {
@@ -327,8 +314,8 @@ function createIntent(projectId, displayName, trainingPhrasesParts, messageTexts
 
   const createIntentRequest = {
     parent: agentPath,
-    intent: intent
-  }
+    intent: intent,
+  };
 
   // Create the intent
   intentsClient
@@ -357,40 +344,11 @@ function deleteIntent(projectId, intentId) {
   // Send the request for deleting the intent.
   return intentsClient
     .deleteIntent(request)
-    .then(
-      console.log(`Intent ${intentPath} deleted`)
-    )
+    .then(console.log(`Intent ${intentPath} deleted`))
     .catch(err => {
-      console.error(`Failed to delete intent ${intent.displayName}:`, err);
+      console.error(`Failed to delete intent ${intentPath}:`, err);
     });
   // [END dialogflow_delete_intent]
-}
-
-function getIntent(projectId, displayName) {
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const intentsClient = new dialogflow.IntentsClient();
-
-  const request = {
-    // By default training phrases are not returned. If you want training
-    // phrases included in the returned intent, uncomment the line below.
-    //
-    // intentView: 'INTENT_VIEW_FULL',
-    name: intent.name,
-  };
-
-  // Send the request for retrieving the intent.
-  return intentsClient
-    .getIntent(request)
-    .then(responses => {
-      console.log('Found intent:');
-      logIntent(responses[0]);
-    })
-    .catch(err => {
-      console.error(`Failed to get intent ${intent.displayName}`, err);
-    });
 }
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -406,7 +364,11 @@ function createContext(projectId, sessionId, contextId, lifespanCount) {
   const contextsClient = new dialogflow.ContextsClient();
 
   const sessionPath = contextsClient.sessionPath(projectId, sessionId);
-  const contextPath = contextsClient.contextPath(projectId, sessionId, contextId);
+  const contextPath = contextsClient.contextPath(
+    projectId,
+    sessionId,
+    contextId
+  );
 
   const createContextRequest = {
     parent: sessionPath,
@@ -444,10 +406,10 @@ function listContexts(projectId, sessionId) {
       responses[0].forEach(context => {
         console.log(`Context name: ${context.name}`);
         console.log(`Lifespan count: ${context.lifespanCount}`);
-        console.log('Fields:')
-        if (context.parameters != null) {
-          context.parameters.fields.forEach(field, value => {
-            console.log(`\t${field}: ${value}`);
+        console.log('Fields:');
+        if (context.parameters !== null) {
+          context.parameters.fields.forEach(field => {
+            console.log(`\t${field.field}: ${field.value}`);
           });
         }
       });
@@ -467,7 +429,11 @@ function deleteContext(projectId, sessionId, contextId) {
   // Instantiates clients
   const contextsClient = new dialogflow.ContextsClient();
 
-  const contextPath = contextsClient.contextPath(projectId, sessionId, contextId);
+  const contextPath = contextsClient.contextPath(
+    projectId,
+    sessionId,
+    contextId
+  );
 
   const request = {
     name: contextPath,
@@ -485,43 +451,27 @@ function deleteContext(projectId, sessionId, contextId) {
   // [END dialogflow_delete_context]
 }
 
-function getContext(context) {
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
-
-  const request = {
-    name: context.name,
-  };
-
-  const contextId = contextsClient.matchContextFromContextName(context.name);
-
-  // Send the request for retrieving the context.
-  return contextsClient
-    .getContext(request)
-    .then(responses => {
-      console.log('Found context:');
-      logContext(responses[0]);
-    })
-    .catch(err => {
-      console.error(`Failed to get context ${contextId}:`, err);
-    });
-}
-
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for session entity type
 // /////////////////////////////////////////////////////////////////////////////
 
-function createSessionEntityType(projectId, sessionId, entityValues, entityTypeDisplayName, entityOverrideMode) {
+function createSessionEntityType(
+  projectId,
+  sessionId,
+  entityValues,
+  entityTypeDisplayName,
+  entityOverrideMode
+) {
   // Imports the Dialogflow library
   const dialogflow = require('dialogflow');
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
-  const sessionPath = sessionEntityTypesClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionEntityTypesClient.sessionPath(
+    projectId,
+    sessionId
+  );
   const sessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
     projectId,
     sessionId,
@@ -560,7 +510,10 @@ function listSessionEntityTypes(projectId, sessionId) {
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
-  const sessionPath = sessionEntityTypesClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionEntityTypesClient.sessionPath(
+    projectId,
+    sessionId
+  );
 
   const request = {
     parent: sessionPath,
@@ -572,11 +525,16 @@ function listSessionEntityTypes(projectId, sessionId) {
     .then(responses => {
       responses[0].forEach(sessionEntityType => {
         console.log(`Session entity type name: ${sessionEntityType.name}`);
-        console.log(`Number of entities: ${sessionEntityType.entities.length}\n`);
+        console.log(
+          `Number of entities: ${sessionEntityType.entities.length}\n`
+        );
       });
     })
     .catch(err => {
-      console.error(`Failed to list session entity types for ${sessionId}:`, err);
+      console.error(
+        `Failed to list session entity types for ${sessionId}:`,
+        err
+      );
     });
 }
 
@@ -605,7 +563,7 @@ function deleteSessionEntityType(projectId, sessionId, entityTypeDisplayName) {
       console.log(`Session entity type ${entityTypeDisplayName} deleted`);
     })
     .catch(err => {
-      console.error(`Failed to delete ${entityTypeName}:`, err);
+      console.error(`Failed to delete ${entityTypeDisplayName}:`, err);
     });
 }
 
@@ -653,11 +611,8 @@ const cli = require(`yargs`)
     },
     opts => createEntityType(opts.projectId, opts.displayName, opts.kind)
   )
-  .command(
-    'list-entity-types',
-    'List entity types',
-    {},
-    opts => listEntityTypes(opts.projectId)
+  .command('list-entity-types', 'List entity types', {}, opts =>
+    listEntityTypes(opts.projectId)
   )
   .command(
     'delete-entity-type',
@@ -698,7 +653,13 @@ const cli = require(`yargs`)
         description: 'Synonyms',
       },
     },
-    opts => createEntity(opts.projectId, opts.entityTypeId, opts.entityValue, opts.synonyms)
+    opts =>
+      createEntity(
+        opts.projectId,
+        opts.entityTypeId,
+        opts.entityValue,
+        opts.synonyms
+      )
   )
   .command(
     'list-entities',
@@ -760,7 +721,13 @@ const cli = require(`yargs`)
         description: 'Lifespan Count',
       },
     },
-    opts => createContext(opts.projectId, opts.sessionId, opts.contextId, opts.lifespanCount)
+    opts =>
+      createContext(
+        opts.projectId,
+        opts.sessionId,
+        opts.contextId,
+        opts.lifespanCount
+      )
   )
   .command(
     'list-contexts',
@@ -825,13 +792,16 @@ const cli = require(`yargs`)
         description: 'Message Texts',
       },
     },
-    opts => createIntent(opts.projectId, opts.displayName, opts.trainingPhrasesParts, opts.messageTexts)
+    opts =>
+      createIntent(
+        opts.projectId,
+        opts.displayName,
+        opts.trainingPhrasesParts,
+        opts.messageTexts
+      )
   )
-  .command(
-    'list-intents',
-    'List Intent',
-    {},
-    opts => listIntents(opts.projectId)
+  .command('list-intents', 'List Intent', {}, opts =>
+    listIntents(opts.projectId)
   )
   .command(
     'delete-intent',
@@ -880,12 +850,14 @@ const cli = require(`yargs`)
         description: 'Display Name',
       },
     },
-    opts => createSessionEntityType(
-      opts.projectId,
-      opts.sessionId,
-      opts.entityValues,
-      opts.entityTypeDisplayName,
-      opts.entityOverrideMode)
+    opts =>
+      createSessionEntityType(
+        opts.projectId,
+        opts.sessionId,
+        opts.entityValues,
+        opts.entityTypeDisplayName,
+        opts.entityOverrideMode
+      )
   )
   .command(
     'list-session-entity-types',
@@ -920,7 +892,12 @@ const cli = require(`yargs`)
         description: 'Display Name',
       },
     },
-    opts => deleteSessionEntityType(opts.projectId, opts.sessionId, opts.entityTypeDisplayName)
+    opts =>
+      deleteSessionEntityType(
+        opts.projectId,
+        opts.sessionId,
+        opts.entityTypeDisplayName
+      )
   )
   .example(`node $0 setup-agent`)
   .example(`node $0 show-agent`)
