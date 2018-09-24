@@ -3,7 +3,7 @@ Thanks for stopping by to let us know something could be better!
 Please run down the following list and make sure you've tried the usual "quick
 fixes":
 
-  - Search the issues already opened: https://github.com/dialogflow/dialogflow-nodejs-client-v2/issues
+  - Search the issues already opened: https://github.com/googleapis/nodejs-dialogflow/issues
   - Search the issues on our "catch-all" repository: https://github.com/GoogleCloudPlatform/google-cloud-node
   - Search StackOverflow: http://stackoverflow.com/questions/tagged/google-cloud-platform+node.js
 
