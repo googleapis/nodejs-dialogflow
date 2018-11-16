@@ -37,14 +37,16 @@ it('Should detect event query', async () => {
 
 it('Should detect audio query', async () => {
   const output = await runAsync(
-    `${cmd} audio ${audioFilepathBookARoom} -r 16000`, cwd
+    `${cmd} audio ${audioFilepathBookARoom} -r 16000`,
+    cwd
   );
   assert.strictEqual(output.includes('Detected intent'), true);
 });
 
 it('Should detect audio query in streaming fashion', async () => {
   const output = await runAsync(
-    `${cmd} stream ${audioFilepathBookARoom} -r 16000`, cwd
+    `${cmd} stream ${audioFilepathBookARoom} -r 16000`,
+    cwd
   );
   assert.strictEqual(output.includes('Detected intent'), true);
 });

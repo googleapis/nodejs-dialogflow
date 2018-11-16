@@ -33,9 +33,13 @@ it('It should create a knowledge base', async () => {
 
   // Creates a knowledge base
   output = await runAsync(
-    `${cmd} createKnowledgeBase -k ${testKnowledgeBaseName}`, cwd
+    `${cmd} createKnowledgeBase -k ${testKnowledgeBaseName}`,
+    cwd
   );
-  assert.strictEqual(output.includes(`displayName: ${testKnowledgeBaseName}`), true);
+  assert.strictEqual(
+    output.includes(`displayName: ${testKnowledgeBaseName}`),
+    true
+  );
   const knowbaseFullName = output
     .split('\n')[0]
     .split(':')[1]
@@ -51,12 +55,16 @@ it('It should create a knowledge base', async () => {
 
   // Get the knowledge base
   output = await runAsync(`${cmd} getKnowledgeBase -b "${knowbaseId}"`, cwd);
-  assert.strictEqual(output.includes(`displayName: ${testKnowledgeBaseName}`), true);
+  assert.strictEqual(
+    output.includes(`displayName: ${testKnowledgeBaseName}`),
+    true
+  );
   assert.strictEqual(output.includes(`name: ${knowbaseFullName}`), true);
 
   // Create a document
   output = await runAsync(
-    `${cmd} createDocument -n "${knowbaseFullName}" -z "${testDocumentPath}" -m "${testDocName}"`, cwd
+    `${cmd} createDocument -n "${knowbaseFullName}" -z "${testDocumentPath}" -m "${testDocName}"`,
+    cwd
   );
   assert.strictEqual(output.includes('Document created'), true);
 
@@ -64,11 +72,15 @@ it('It should create a knowledge base', async () => {
   output = await runAsync(`${cmd} listDocuments -n "${knowbaseFullName}"`);
   const parsedOut = output.split('\n');
   const documentFullPath = parsedOut[parsedOut.length - 1].split(':')[1];
-  assert.strictEqual(output.includes(`There are 1 documents in ${knowbaseFullName}`), true);
+  assert.strictEqual(
+    output.includes(`There are 1 documents in ${knowbaseFullName}`),
+    true
+  );
 
   // Detect intent with Knowledge Base
   output = await runAsync(
-    `${cmd} detectIntentKnowledge -q "${testQuery}" -n "${knowbaseId}"`, cwd
+    `${cmd} detectIntentKnowledge -q "${testQuery}" -n "${knowbaseId}"`,
+    cwd
   );
   assert.strictEqual(output.includes('Detected Intent:'), true);
 
@@ -82,7 +94,8 @@ it('It should create a knowledge base', async () => {
 
   // Delete the Knowledge Base
   output = await runAsync(
-    `${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`, cwd
+    `${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`,
+    cwd
   );
 
   // List the Knowledge Base
@@ -95,22 +108,26 @@ it('It should detect Intent with Model Selection', async () => {
   assert.strictEqual(
     output.includes(
       'Response: I can help with that. Where would you like to reserve a room?'
-    ), true
+    ),
+    true
   );
 });
 
 it('It should detect Intent with Text to Speech Response', async () => {
   const output = await runAsync(
-    `${cmd} detectIntentwithTexttoSpeechResponse -q "${testQuery}"`, cwd
+    `${cmd} detectIntentwithTexttoSpeechResponse -q "${testQuery}"`,
+    cwd
   );
   assert.strictEqual(
-    output.includes('Audio content written to file: ./resources/output.wav'), true
+    output.includes('Audio content written to file: ./resources/output.wav'),
+    true
   );
 });
 
 it('It should detect sentiment with intent', async () => {
   const output = await runAsync(
-    `${cmd} detectIntentandSentiment -q "${testQuery}"`, cwd
+    `${cmd} detectIntentandSentiment -q "${testQuery}"`,
+    cwd
   );
   assert.strictEqual(output.includes('Detected sentiment'), true);
 });
