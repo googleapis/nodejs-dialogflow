@@ -14,6 +14,7 @@
  */
 
 'use strict';
+
 const path = require('path');
 const assert = require('assert');
 const {runAsync} = require('@google-cloud/nodejs-repo-tools');
