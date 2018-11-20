@@ -59,6 +59,7 @@
     "nyc": "^13.0.0",
     "power-assert": "^1.4.4",
     "prettier": "^1.7.4",
-    "through2": "^3.0.0"
+    "through2": "^3.0.0",
+    "@types/sinon": "5.0.5"
   }
 }
