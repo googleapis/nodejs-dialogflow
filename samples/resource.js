@@ -38,14 +38,10 @@ async function createEntityType(projectId, displayName, kind) {
     },
   };
 
-  try {
-    const responses = await entityTypesClient.createEntityType(
-      createEntityTypeRequest
-    );
-    console.log(`Created ${responses[0].name} entity type`);
-  } catch (err) {
-    console.error('Failed to create size entity type:', err);
-  }
+  const responses = await entityTypesClient.createEntityType(
+    createEntityTypeRequest
+  );
+  console.log(`Created ${responses[0].name} entity type`);
   // [END dialogflow_create_entity_type]
 }
 
@@ -64,18 +60,14 @@ async function listEntityTypes(projectId) {
     parent: agentPath,
   };
 
-  try {
-    // Call the client library to retrieve a list of all existing entity types.
-    const [response] = await entityTypesClient.listEntityTypes(request);
-    response.forEach(entityType => {
-      console.log(`Entity type name: ${entityType.name}`);
-      console.log(`Entity type display name: ${entityType.displayName}`);
-      console.log(`Number of entities: ${entityType.entities.length}\n`);
-    });
-    return response;
-  } catch (err) {
-    console.error('Failed to list entity types:', err);
-  }
+  // Call the client library to retrieve a list of all existing entity types.
+  const [response] = await entityTypesClient.listEntityTypes(request);
+  response.forEach(entityType => {
+    console.log(`Entity type name: ${entityType.name}`);
+    console.log(`Entity type display name: ${entityType.displayName}`);
+    console.log(`Number of entities: ${entityType.entities.length}\n`);
+  });
+  return response;
   // [END dialogflow_list_entity_types]
 }
 
@@ -97,13 +89,9 @@ async function deleteEntityType(projectId, entityTypeId) {
   };
 
   // Call the client library to delete the entity type.
-  try {
-    const response = await entityTypesClient.deleteEntityType(request);
-    console.log(`Entity type ${entityTypePath} deleted`);
-    return response;
-  } catch (err) {
-    console.error(`Failed to delete entity type ${entityTypePath}:`, err);
-  }
+  const response = await entityTypesClient.deleteEntityType(request);
+  console.log(`Entity type ${entityTypePath} deleted`);
+  return response;
   // [END dialogflow_delete_entity_type]
 }
 
@@ -132,15 +120,11 @@ async function createEntity(projectId, entityTypeId, entityValue, synonyms) {
     entities: [entity],
   };
 
-  try {
-    const [response] = await entityTypesClient.batchCreateEntities(
-      createEntitiesRequest
-    );
-    console.log('Created entity type:');
-    console.log(response);
-  } catch (err) {
-    console.error('Failed to create size entity type:', err);
-  }
+  const [response] = await entityTypesClient.batchCreateEntities(
+    createEntitiesRequest
+  );
+  console.log('Created entity type:');
+  console.log(response);
   // [END dialogflow_create_entity]
 }
 
@@ -163,17 +147,13 @@ async function listEntities(projectId, entityTypeId) {
     name: entityTypePath,
   };
 
-  try {
-    // Call the client library to retrieve a list of all existing entity types.
-    const [response] = await entityTypesClient.getEntityType(request);
-    response.entities.forEach(entity => {
-      console.log(`Entity value: ${entity.value}`);
-      console.log(`Entity synonyms: ${entity.synonyms}`);
-    });
-    return response;
-  } catch (err) {
-    console.error('Failed to list entity types:', err);
-  }
+  // Call the client library to retrieve a list of all existing entity types.
+  const [response] = await entityTypesClient.getEntityType(request);
+  response.entities.forEach(entity => {
+    console.log(`Entity value: ${entity.value}`);
+    console.log(`Entity synonyms: ${entity.synonyms}`);
+  });
+  return response;
   // [END dialogflow_create_entity]
 }
 
@@ -196,13 +176,9 @@ async function deleteEntity(projectId, entityTypeId, entityValue) {
     entityValues: [entityValue],
   };
 
-  try {
-    // Call the client library to delete the entity type.
-    await entityTypesClient.batchDeleteEntities(request);
-    console.log(`Entity Value ${entityValue} deleted`);
-  } catch (err) {
-    console.error(`Failed to delete entity value: ${entityValue}:`, err);
-  }
+  // Call the client library to delete the entity type.
+  await entityTypesClient.batchDeleteEntities(request);
+  console.log(`Entity Value ${entityValue} deleted`);
   // [END dialogflow_delete_entity]
 }
 
@@ -227,30 +203,26 @@ async function listIntents(projectId) {
 
   console.log(projectAgentPath);
 
-  try {
-    // Send the request for listing intents.
-    const [response] = await intentsClient.listIntents(request);
-    response.forEach(intent => {
-      console.log('====================');
-      console.log(`Intent name: ${intent.name}`);
-      console.log(`Intent display name: ${intent.displayName}`);
-      console.log(`Action: ${intent.action}`);
-      console.log(`Root folowup intent: ${intent.rootFollowupIntentName}`);
-      console.log(`Parent followup intent: ${intent.parentFollowupIntentName}`);
+  // Send the request for listing intents.
+  const [response] = await intentsClient.listIntents(request);
+  response.forEach(intent => {
+    console.log('====================');
+    console.log(`Intent name: ${intent.name}`);
+    console.log(`Intent display name: ${intent.displayName}`);
+    console.log(`Action: ${intent.action}`);
+    console.log(`Root folowup intent: ${intent.rootFollowupIntentName}`);
+    console.log(`Parent followup intent: ${intent.parentFollowupIntentName}`);
 
-      console.log('Input contexts:');
-      intent.inputContextNames.forEach(inputContextName => {
-        console.log(`\tName: ${inputContextName}`);
-      });
-
-      console.log('Output contexts:');
-      intent.outputContexts.forEach(outputContext => {
-        console.log(`\tName: ${outputContext.name}`);
-      });
+    console.log('Input contexts:');
+    intent.inputContextNames.forEach(inputContextName => {
+      console.log(`\tName: ${inputContextName}`);
     });
-  } catch (err) {
-    console.error('Failed to list intents:', err);
-  }
+
+    console.log('Output contexts:');
+    intent.outputContexts.forEach(outputContext => {
+      console.log(`\tName: ${outputContext.name}`);
+    });
+  });
   // [END dialogflow_list_intents]
 }
 
@@ -305,13 +277,9 @@ async function createIntent(
     intent: intent,
   };
 
-  try {
-    // Create the intent
-    const responses = await intentsClient.createIntent(createIntentRequest);
-    console.log(`Intent ${responses[0].name} created`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  // Create the intent
+  const responses = await intentsClient.createIntent(createIntentRequest);
+  console.log(`Intent ${responses[0].name} created`);
   // [END dialogflow_create_intent]
 }
 
@@ -327,14 +295,10 @@ async function deleteIntent(projectId, intentId) {
 
   const request = {name: intentPath};
 
-  try {
-    // Send the request for deleting the intent.
-    const result = await intentsClient.deleteIntent(request);
-    console.log(`Intent ${intentPath} deleted`);
-    return result;
-  } catch (err) {
-    console.error(`Failed to delete intent ${intentPath}:`, err);
-  }
+  // Send the request for deleting the intent.
+  const result = await intentsClient.deleteIntent(request);
+  console.log(`Intent ${intentPath} deleted`);
+  return result;
   // [END dialogflow_delete_intent]
 }
 
@@ -385,23 +349,19 @@ async function listContexts(projectId, sessionId) {
     parent: sessionPath,
   };
 
-  try {
-    // Send the request for listing contexts.
-    const [response] = await contextsClient.listContexts(request);
-    response.forEach(context => {
-      console.log(`Context name: ${context.name}`);
-      console.log(`Lifespan count: ${context.lifespanCount}`);
-      console.log('Fields:');
-      if (context.parameters !== null) {
-        context.parameters.fields.forEach(field => {
-          console.log(`\t${field.field}: ${field.value}`);
-        });
-      }
-    });
-    return response;
-  } catch (err) {
-    console.error('Failed to list contexts:', err);
-  }
+  // Send the request for listing contexts.
+  const [response] = await contextsClient.listContexts(request);
+  response.forEach(context => {
+    console.log(`Context name: ${context.name}`);
+    console.log(`Lifespan count: ${context.lifespanCount}`);
+    console.log('Fields:');
+    if (context.parameters !== null) {
+      context.parameters.fields.forEach(field => {
+        console.log(`\t${field.field}: ${field.value}`);
+      });
+    }
+  });
+  return response;
   // [END dialogflow_list_contexts]
 }
 
@@ -423,14 +383,10 @@ async function deleteContext(projectId, sessionId, contextId) {
     name: contextPath,
   };
 
-  try {
-    // Send the request for retrieving the context.
-    const result = await contextsClient.deleteContext(request);
-    console.log(`Context ${contextPath} deleted`);
-    return result;
-  } catch (err) {
-    console.error(`Failed to delete context ${contextId}`, err);
-  }
+  // Send the request for retrieving the context.
+  const result = await contextsClient.deleteContext(request);
+  console.log(`Context ${contextPath} deleted`);
+  return result;
   // [END dialogflow_delete_context]
 }
 
@@ -501,18 +457,14 @@ async function listSessionEntityTypes(projectId, sessionId) {
     parent: sessionPath,
   };
 
-  try {
-    // Send the request for retrieving the sessionEntityType.
-    const [response] = await sessionEntityTypesClient.listSessionEntityTypes(
-      request
-    );
-    response.forEach(sessionEntityType => {
-      console.log(`Session entity type name: ${sessionEntityType.name}`);
-      console.log(`Number of entities: ${sessionEntityType.entities.length}\n`);
-    });
-  } catch (err) {
-    console.error(`Failed to list session entity types for ${sessionId}:`, err);
-  }
+  // Send the request for retrieving the sessionEntityType.
+  const [response] = await sessionEntityTypesClient.listSessionEntityTypes(
+    request
+  );
+  response.forEach(sessionEntityType => {
+    console.log(`Session entity type name: ${sessionEntityType.name}`);
+    console.log(`Number of entities: ${sessionEntityType.entities.length}\n`);
+  });
 }
 
 async function deleteSessionEntityType(
@@ -537,16 +489,12 @@ async function deleteSessionEntityType(
     name: sessionEntityTypePath,
   };
 
-  try {
-    // Send the request for retrieving the sessionEntityType.
-    const result = await sessionEntityTypesClient.deleteSessionEntityType(
-      request
-    );
-    console.log(`Session entity type ${entityTypeDisplayName} deleted`);
-    return result;
-  } catch (err) {
-    console.error(`Failed to delete ${entityTypeDisplayName}:`, err);
-  }
+  // Send the request for retrieving the sessionEntityType.
+  const result = await sessionEntityTypesClient.deleteSessionEntityType(
+    request
+  );
+  console.log(`Session entity type ${entityTypeDisplayName} deleted`);
+  return result;
 }
 
 // /////////////////////////////////////////////////////////////////////////////
