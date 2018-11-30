@@ -293,8 +293,9 @@ async function detectIntentandSentiment(
   };
 
   // Send request and log result
-  const [result] = await sessionClient.detectIntent(request);
+  const responses = await sessionClient.detectIntent(request);
   console.log('Detected intent');
+  const result = responses[0].queryResult;
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);
   if (result.intent) {
