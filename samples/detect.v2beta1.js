@@ -362,15 +362,13 @@ async function detectIntentwithTexttoSpeechResponse(
   const responses = await sessionClient.detectIntent(request);
   console.log('Detected intent:');
   const audioFile = responses[0].outputAudio;
-  await util.promisify(
-    fs.writeFile(outputFile, audioFile, 'binary', err => {
-      if (err) {
-        console.error('ERROR:', err);
-        return;
-      }
-      console.log(`Audio content written to file: ${outputFile}`);
-    })
-  );
+  await util.promisify(fs.writeFile)(outputFile, audioFile, 'binary', err => {
+    if (err) {
+      console.error('ERROR:', err);
+      return;
+    }
+    console.log(`Audio content written to file: ${outputFile}`);
+  });
   // [END dialogflow_detect_intent_with_texttospeech_response]
 }
 
