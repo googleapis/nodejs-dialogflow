@@ -364,6 +364,7 @@ async function detectIntentwithTexttoSpeechResponse(
   console.log('Detected intent:');
   const audioFile = responses[0].outputAudio;
   await util.promisify(fs.writeFile)(outputFile, audioFile, 'binary');
+  console.log(`Audio content written to file: ${outputFile}`);
   // [END dialogflow_detect_intent_with_texttospeech_response]
 }
 
