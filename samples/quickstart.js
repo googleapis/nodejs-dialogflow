@@ -18,15 +18,16 @@
 // [START dialogflow_quickstart]
 
 const dialogflow = require('dialogflow');
+const uuid = require('uuid');
 
 /**
  * Send a query to the dialogflow agent, and return the query result.
- * @param {string} sessionId A unique identifier for the given session
- * @param {string} query The query to send to the dialogflow agent
- * @param {string} languageCode The language used by the client (en-US)
  * @param {string} projectId The project to be used
  */
-async function main(sessionId, query, languageCode, projectId) {
+async function runSample(projectId = 'your-project-id') {
+  // A unique identifier for the given session
+  const sessionId = uuid.v4();
+
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient();
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -36,8 +37,10 @@ async function main(sessionId, query, languageCode, projectId) {
     session: sessionPath,
     queryInput: {
       text: {
-        text: query,
-        languageCode: languageCode,
+        // The query to send to the dialogflow agent
+        text: 'hello',
+        // The language used by the client (en-US)
+        languageCode: 'en-US',
       },
     },
   };
@@ -57,17 +60,17 @@ async function main(sessionId, query, languageCode, projectId) {
 // [END dialogflow_quickstart]
 
 const args = process.argv.slice(2);
-if (args.length !== 4) {
+if (args.length !== 1) {
   console.error(`
     USAGE:
-       node quickstart.js <sessionId> <query> <languageCode> <projectId>
+       node quickstart.js <projectId>
 
      EXAMPLE:
-       node quickstart.js quickstart-session-id hello en-US my-project-id
+       node quickstart.js my-project-id
 
     You can find your project ID in your Dialogflow agent settings:  https://dialogflow.com/docs/agents#settings.
   `);
   process.exit(1);
 }
 
-main(...args).catch(console.error);
+runSample(...args).catch(console.error);
