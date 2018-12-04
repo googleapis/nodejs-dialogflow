@@ -35,16 +35,18 @@
 1. Try an example:
 
 ```javascript
+
 const dialogflow = require('dialogflow');
+const uuid = require('uuid');
 
 /**
  * Send a query to the dialogflow agent, and return the query result.
- * @param {string} sessionId A unique identifier for the given session
- * @param {string} query The query to send to the dialogflow agent
- * @param {string} languageCode The language used by the client (en-US)
  * @param {string} projectId The project to be used
  */
-async function main(sessionId, query, languageCode, projectId) {
+async function runSample(projectId = 'your-project-id') {
+  // A unique identifier for the given session
+  const sessionId = uuid.v4();
+
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient();
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -54,8 +56,10 @@ async function main(sessionId, query, languageCode, projectId) {
     session: sessionPath,
     queryInput: {
       text: {
-        text: query,
-        languageCode: languageCode,
+        // The query to send to the dialogflow agent
+        text: 'hello',
+        // The language used by the client (en-US)
+        languageCode: 'en-US',
       },
     },
   };
