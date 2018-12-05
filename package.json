@@ -34,8 +34,7 @@
     "generate-scaffolding": "repo-tools generate all && repo-tools generate lib_samples_readme -l samples/ --config ../.cloud-repo-tools.json",
     "lint": "eslint '**/*.js'",
     "samples-test": "cd samples/ && npm link ../ && npm test && cd ../",
-    "test-no-cover": "mocha test/",
-    "test": "npm run cover",
+    "test": "nyc mocha",
     "system-test": "mocha system-test/ --timeout 600000",
     "all-test": "npm test && npm run system-test && npm run samples-test",
     "fix": "eslint '**/*.js' --fix"
