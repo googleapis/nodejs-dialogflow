@@ -33,6 +33,9 @@
 /**
  * @namespace google.rpc
  */
+/**
+ * @namespace google.type
+ */
 
 'use strict';
 
