@@ -192,6 +192,8 @@ class DocumentsClient {
       'getDocument',
       'createDocument',
       'deleteDocument',
+      'updateDocument',
+      'reloadDocument',
     ];
     for (const methodName of documentsStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
@@ -684,6 +686,129 @@ class DocumentsClient {
     });
 
     return this._innerApiCalls.deleteDocument(request, options, callback);
+  }
+
+  /**
+   * Updates the specified document.
+   * Operation <response: Document,
+   *            metadata: KnowledgeOperationMetadata>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {Object} [request.document]
+   *   Required. The document to update.
+   *
+   *   This object should have the same structure as [Document]{@link google.cloud.dialogflow.v2beta1.Document}
+   * @param {Object} [request.updateMask]
+   *   Optional. Not specified means `update all`.
+   *   Currently, only `display_name` can be updated, an InvalidArgument will be
+   *   returned for attempting to update other fields.
+   *
+   *   This object should have the same structure as [FieldMask]{@link google.protobuf.FieldMask}
+   * @param {Object} [options]
+   *   Optional parameters. You can override the default settings for this call, e.g, timeout,
+   *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
+   * @param {function(?Error, ?Object)} [callback]
+   *   The function which will be called with the result of the API call.
+   *
+   *   The second parameter to the callback is an object representing [Operation]{@link google.longrunning.Operation}.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   *
+   * @example
+   *
+   * const dialogflow = require('dialogflow');
+   *
+   * const client = new dialogflow.v2beta1.DocumentsClient({
+   *   // optional auth parameters.
+   * });
+   *
+   *
+   * client.updateDocument({})
+   *   .then(responses => {
+   *     const response = responses[0];
+   *     // doThingsWith(response)
+   *   })
+   *   .catch(err => {
+   *     console.error(err);
+   *   });
+   */
+  updateDocument(request, options, callback) {
+    if (options instanceof Function && callback === undefined) {
+      callback = options;
+      options = {};
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      'document.name': request.document.name,
+    });
+
+    return this._innerApiCalls.updateDocument(request, options, callback);
+  }
+
+  /**
+   * Reloads the specified document from its specified source, content_uri or
+   * content. The previously loaded content of the document will be deleted.
+   * Note: Even when the content of the document has not changed, there still
+   * may be side effects because of internal implementation changes.
+   * Operation <response: Document,
+   *            metadata: KnowledgeOperationMetadata>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} [request.name]
+   *   The name of the document to reload.
+   *   Format: `projects/<Project ID>/knowledgeBases/<Knowledge Base
+   *   ID>/documents/<Document ID>`
+   * @param {Object} [options]
+   *   Optional parameters. You can override the default settings for this call, e.g, timeout,
+   *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
+   * @param {function(?Error, ?Object)} [callback]
+   *   The function which will be called with the result of the API call.
+   *
+   *   The second parameter to the callback is an object representing [Operation]{@link google.longrunning.Operation}.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   *
+   * @example
+   *
+   * const dialogflow = require('dialogflow');
+   *
+   * const client = new dialogflow.v2beta1.DocumentsClient({
+   *   // optional auth parameters.
+   * });
+   *
+   *
+   * client.reloadDocument({})
+   *   .then(responses => {
+   *     const response = responses[0];
+   *     // doThingsWith(response)
+   *   })
+   *   .catch(err => {
+   *     console.error(err);
+   *   });
+   */
+  reloadDocument(request, options, callback) {
+    if (options instanceof Function && callback === undefined) {
+      callback = options;
+      options = {};
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      name: request.name,
+    });
+
+    return this._innerApiCalls.reloadDocument(request, options, callback);
   }
 
   // --------------------

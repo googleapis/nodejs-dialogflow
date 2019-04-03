@@ -146,6 +146,7 @@ class KnowledgeBasesClient {
       'getKnowledgeBase',
       'createKnowledgeBase',
       'deleteKnowledgeBase',
+      'updateKnowledgeBase',
     ];
     for (const methodName of knowledgeBasesStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
@@ -526,6 +527,67 @@ class KnowledgeBasesClient {
     });
 
     return this._innerApiCalls.deleteKnowledgeBase(request, options, callback);
+  }
+
+  /**
+   * Updates the specified knowledge base.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {Object} [request.knowledgeBase]
+   *   Required. The knowledge base to update.
+   *
+   *   This object should have the same structure as [KnowledgeBase]{@link google.cloud.dialogflow.v2beta1.KnowledgeBase}
+   * @param {Object} [request.updateMask]
+   *   Optional. Not specified means `update all`.
+   *   Currently, only `display_name` can be updated, an InvalidArgument will be
+   *   returned for attempting to update other fields.
+   *
+   *   This object should have the same structure as [FieldMask]{@link google.protobuf.FieldMask}
+   * @param {Object} [options]
+   *   Optional parameters. You can override the default settings for this call, e.g, timeout,
+   *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/global.html#CallOptions} for the details.
+   * @param {function(?Error, ?Object)} [callback]
+   *   The function which will be called with the result of the API call.
+   *
+   *   The second parameter to the callback is an object representing [KnowledgeBase]{@link google.cloud.dialogflow.v2beta1.KnowledgeBase}.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [KnowledgeBase]{@link google.cloud.dialogflow.v2beta1.KnowledgeBase}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   *
+   * @example
+   *
+   * const dialogflow = require('dialogflow');
+   *
+   * const client = new dialogflow.v2beta1.KnowledgeBasesClient({
+   *   // optional auth parameters.
+   * });
+   *
+   *
+   * client.updateKnowledgeBase({})
+   *   .then(responses => {
+   *     const response = responses[0];
+   *     // doThingsWith(response)
+   *   })
+   *   .catch(err => {
+   *     console.error(err);
+   *   });
+   */
+  updateKnowledgeBase(request, options, callback) {
+    if (options instanceof Function && callback === undefined) {
+      callback = options;
+      options = {};
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      'knowledge_base.name': request.knowledgeBase.name,
+    });
+
+    return this._innerApiCalls.updateKnowledgeBase(request, options, callback);
   }
 
   // --------------------

@@ -1242,6 +1242,118 @@ describe('DocumentsClient', () => {
       );
     });
   });
+
+  describe('updateDocument', () => {
+    it('invokes updateDocument without error', done => {
+      const client = new dialogflowModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock response
+      const name = 'name3373707';
+      const done_ = true;
+      const expectedResponse = {
+        name: name,
+        done: done_,
+      };
+
+      // Mock Grpc layer
+      client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
+        request,
+        expectedResponse
+      );
+
+      client.updateDocument(request, (err, response) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
+
+    it('invokes updateDocument with error', done => {
+      const client = new dialogflowModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock Grpc layer
+      client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+
+      client.updateDocument(request, (err, response) => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
+    });
+  });
+
+  describe('reloadDocument', () => {
+    it('invokes reloadDocument without error', done => {
+      const client = new dialogflowModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock response
+      const name = 'name3373707';
+      const done_ = true;
+      const expectedResponse = {
+        name: name,
+        done: done_,
+      };
+
+      // Mock Grpc layer
+      client._innerApiCalls.reloadDocument = mockSimpleGrpcMethod(
+        request,
+        expectedResponse
+      );
+
+      client.reloadDocument(request, (err, response) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
+
+    it('invokes reloadDocument with error', done => {
+      const client = new dialogflowModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock Grpc layer
+      client._innerApiCalls.reloadDocument = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+
+      client.reloadDocument(request, (err, response) => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
+    });
+  });
 });
 describe('EntityTypesClient', () => {
   describe('listEntityTypes', () => {
@@ -2825,6 +2937,62 @@ describe('KnowledgeBasesClient', () => {
       client.deleteKnowledgeBase(request, err => {
         assert(err instanceof Error);
         assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
+    });
+  });
+
+  describe('updateKnowledgeBase', () => {
+    it('invokes updateKnowledgeBase without error', done => {
+      const client = new dialogflowModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock response
+      const name = 'name3373707';
+      const displayName = 'displayName1615086568';
+      const expectedResponse = {
+        name: name,
+        displayName: displayName,
+      };
+
+      // Mock Grpc layer
+      client._innerApiCalls.updateKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        expectedResponse
+      );
+
+      client.updateKnowledgeBase(request, (err, response) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
+
+    it('invokes updateKnowledgeBase with error', done => {
+      const client = new dialogflowModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock Grpc layer
+      client._innerApiCalls.updateKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+
+      client.updateKnowledgeBase(request, (err, response) => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
         done();
       });
     });
