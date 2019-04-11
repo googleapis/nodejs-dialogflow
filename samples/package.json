@@ -12,7 +12,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "mocha system-test --timeout=600000"
+    "test": "mocha --timeout=600000"
   },
   "dependencies": {
     "dialogflow": "^0.8.2",
@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "execa": "^1.0.0",
     "mocha": "^6.0.0"
   }
 }

@@ -15,40 +15,30 @@
 
 'use strict';
 
-const path = require('path');
 const {assert} = require('chai');
-const execa = require('execa');
+const cp = require('child_process');
 const uuid = require('uuid/v4');
 
+const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
+
 const cmd = 'node detect.v2beta1.js';
-const {cwd} = path.join(__dirname, '..');
 const testQuery = 'Where is my data stored?';
 const testKnowledgeBaseName = `${uuid().split('-')[0]}-TestKnowledgeBase`;
 const testDocName = 'TestDoc';
 const testDocumentPath = 'https://cloud.google.com/storage/docs/faq';
-
-const exec = async cmd => {
-  const res = await execa.shell(cmd, {cwd});
-  if (res.stderr) {
-    throw new Error(res.stderr);
-  }
-  return res.stdout;
-};
 
 describe('v2beta1 detection', () => {
   let knowbaseFullName;
   let knowbaseId;
   let documentFullPath;
 
-  it('should create a knowledge base', async () => {
+  it('should create a knowledge base', () => {
     // Check that the knowledge base does not yet exist
-    let output = await exec(`${cmd} listKnowledgeBases`);
+    let output = execSync(`${cmd} listKnowledgeBases`);
     assert.notInclude(output, testKnowledgeBaseName);
 
     // Creates a knowledge base
-    output = await exec(
-      `${cmd} createKnowledgeBase -k ${testKnowledgeBaseName}`
-    );
+    output = execSync(`${cmd} createKnowledgeBase -k ${testKnowledgeBaseName}`);
     assert.include(output, `displayName: ${testKnowledgeBaseName}`);
 
     knowbaseFullName = output
@@ -61,67 +51,67 @@ describe('v2beta1 detection', () => {
       .trim();
   });
 
-  it('should list the knowledge bases', async () => {
-    const output = await exec(`${cmd} listKnowledgeBases`);
+  it('should list the knowledge bases', () => {
+    const output = execSync(`${cmd} listKnowledgeBases`);
     assert.include(output, testKnowledgeBaseName);
   });
 
-  it('should get a knowledge base', async () => {
-    const output = await exec(`${cmd} getKnowledgeBase -b "${knowbaseId}"`);
+  it('should get a knowledge base', () => {
+    const output = execSync(`${cmd} getKnowledgeBase -b "${knowbaseId}"`);
     assert.include(output, `displayName: ${testKnowledgeBaseName}`);
     assert.include(output, `name: ${knowbaseFullName}`);
   });
 
-  it('should create a document', async () => {
-    const output = await exec(
+  it('should create a document', () => {
+    const output = execSync(
       `${cmd} createDocument -n "${knowbaseFullName}" -z "${testDocumentPath}" -m "${testDocName}"`
     );
     assert.include(output, 'Document created');
   });
 
-  it('should list documents', async () => {
-    const output = await exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
+  it('should list documents', () => {
+    const output = execSync(`${cmd} listDocuments -n "${knowbaseFullName}"`);
     const parsedOut = output.split('\n');
     documentFullPath = parsedOut[parsedOut.length - 1].split(':')[1];
     assert.include(output, `There are 1 documents in ${knowbaseFullName}`);
   });
 
   it('should detect intent with a knowledge base', async () => {
-    const output = await exec(
+    const output = execSync(
       `${cmd} detectIntentKnowledge -q "${testQuery}" -n "${knowbaseId}"`
     );
     assert.include(output, 'Detected Intent:');
   });
 
-  it('should delete a document', async () => {
-    const output = await exec(`${cmd} deleteDocument -d ${documentFullPath}`);
+  it('should delete a document', () => {
+    const output = execSync(`${cmd} deleteDocument -d ${documentFullPath}`);
     assert.include(output, 'document deleted');
   });
 
-  it('should list the document', async () => {
-    const output = await exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
+  it('should list the document', () => {
+    const output = execSync(`${cmd} listDocuments -n "${knowbaseFullName}"`);
     assert.notInclude(output, documentFullPath);
   });
 
-  it('should delete the Knowledge Base', async () => {
-    await exec(`${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`);
+  it('should delete the Knowledge Base', () => {
+    execSync(`${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`);
   });
 
-  it('should list the Knowledge Base', async () => {
-    const output = await exec(`${cmd} listKnowledgeBases`);
+  it('should list the Knowledge Base', () => {
+    const output = execSync(`${cmd} listKnowledgeBases`);
     assert.notInclude(output, testKnowledgeBaseName);
   });
 
-  it('should detect Intent with Model Selection', async () => {
-    const output = await exec(`${cmd} detectIntentwithModelSelection`);
+  it('should detect Intent with Model Selection', () => {
+    const output = execSync(`${cmd} detectIntentwithModelSelection`);
     assert.include(
       output,
       'Response: I can help with that. Where would you like to reserve a room?'
     );
   });
 
-  it('should detect Intent with Text to Speech Response', async () => {
-    const output = await exec(
+  it('should detect Intent with Text to Speech Response', () => {
+    const output = execSync(
       `${cmd} detectIntentwithTexttoSpeechResponse -q "${testQuery}"`
     );
     assert.include(
@@ -130,8 +120,8 @@ describe('v2beta1 detection', () => {
     );
   });
 
-  it('should detect sentiment with intent', async () => {
-    const output = await exec(
+  it('should detect sentiment with intent', () => {
+    const output = execSync(
       `${cmd} detectIntentandSentiment -q "${testQuery}"`
     );
     assert.include(output, 'Detected sentiment');

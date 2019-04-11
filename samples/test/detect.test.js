@@ -17,39 +17,32 @@
 
 const path = require('path');
 const {assert} = require('chai');
-const execa = require('execa');
+const cp = require('child_process');
 
+const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 const cmd = 'node detect.js';
-const cwd = path.join(__dirname, '..');
-
 const audioFilepathBookARoom = path
   .join(__dirname, '../resources/book_a_room.wav')
   .replace(/(\s+)/g, '\\$1');
 
 describe('basic detection', () => {
-  it('should detect text queries', async () => {
-    const {stdout} = await execa.shell(`${cmd} text -q "hello"`, {cwd});
+  it('should detect text queries', () => {
+    const stdout = execSync(`${cmd} text -q "hello"`);
     assert.include(stdout, 'Detected intent');
   });
 
-  it('should detect event query', async () => {
-    const {stdout} = await execa.shell(`${cmd} event WELCOME`, {cwd});
+  it('should detect event query', () => {
+    const stdout = execSync(`${cmd} event WELCOME`);
     assert.include(stdout, 'Query: WELCOME');
   });
 
-  it('should detect audio query', async () => {
-    const {stdout} = await execa.shell(
-      `${cmd} audio ${audioFilepathBookARoom} -r 16000`,
-      {cwd}
-    );
+  it('should detect audio query', () => {
+    const stdout = execSync(`${cmd} audio ${audioFilepathBookARoom} -r 16000`);
     assert.include(stdout, 'Detected intent');
   });
 
-  it('should detect audio query in streaming fashion', async () => {
-    const {stdout} = await execa.shell(
-      `${cmd} stream ${audioFilepathBookARoom} -r 16000`,
-      {cwd}
-    );
+  it('should detect audio query in streaming fashion', () => {
+    const stdout = execSync(`${cmd} stream ${audioFilepathBookARoom} -r 16000`);
     assert.include(stdout, 'Detected intent');
   });
 });

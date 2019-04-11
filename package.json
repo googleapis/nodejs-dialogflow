@@ -11,9 +11,7 @@
   "main": "src/index.js",
   "files": [
     "protos",
-    "src",
-    "AUTHORS",
-    "COPYING"
+    "src"
   ],
   "keywords": [
     "google apis client",
