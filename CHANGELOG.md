@@ -1,3 +1,17 @@
+# [0.9.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v0.8.2...v0.9.0) (2019-04-20)
+
+
+### Bug Fixes
+
+* include 'x-goog-request-params' header in requests ([#310](https://www.github.com/googleapis/nodejs-dialogflow/issues/310)) ([479defe](https://www.github.com/googleapis/nodejs-dialogflow/commit/479defe))
+
+
+### Features
+
+* support audio config ([4ecea0e](https://www.github.com/googleapis/nodejs-dialogflow/commit/4ecea0e))
+
+
+
 # Changelog
 
 [npm history][1]
