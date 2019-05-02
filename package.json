@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "author": "Google LLC",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.10.0"
   },
   "repository": "googleapis/nodejs-dialogflow",
   "main": "src/index.js",
@@ -43,7 +43,7 @@
     "predocs-test": "npm run docs"
   },
   "dependencies": {
-    "google-gax": "^0.25.0",
+    "google-gax": "^0.26.0",
     "lodash.merge": "^4.6.0",
     "protobufjs": "^6.8.0"
   },
