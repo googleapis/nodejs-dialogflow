@@ -1243,7 +1243,7 @@ describe('DocumentsClient', () => {
     });
   });
 
-  describe('updateDocument', () => {
+  describe('updateDocument', function() {
     it('invokes updateDocument without error', done => {
       const client = new dialogflowModule.v2beta1.DocumentsClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
@@ -1251,27 +1251,42 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const request = {};
+      const document = {};
+      const request = {
+        document: document,
+      };
 
       // Mock response
       const name = 'name3373707';
-      const done_ = true;
+      const displayName = 'displayName1615086568';
+      const mimeType = 'mimeType-196041627';
+      const contentUri = 'contentUri-388807514';
       const expectedResponse = {
         name: name,
-        done: done_,
+        displayName: displayName,
+        mimeType: mimeType,
+        contentUri: contentUri,
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
+      client._innerApiCalls.updateDocument = mockLongRunningGrpcMethod(
         request,
         expectedResponse
       );
 
-      client.updateDocument(request, (err, response) => {
-        assert.ifError(err);
-        assert.deepStrictEqual(response, expectedResponse);
-        done();
-      });
+      client
+        .updateDocument(request)
+        .then(responses => {
+          const operation = responses[0];
+          return operation.promise();
+        })
+        .then(responses => {
+          assert.deepStrictEqual(responses[0], expectedResponse);
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
     });
 
     it('invokes updateDocument with error', done => {
@@ -1281,21 +1296,47 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const request = {};
+      const document = {};
+      const request = {
+        document: document,
+      };
 
       // Mock Grpc layer
-      client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
+      client._innerApiCalls.updateDocument = mockLongRunningGrpcMethod(
         request,
         null,
         error
       );
 
-      client.updateDocument(request, (err, response) => {
-        assert(err instanceof Error);
-        assert.strictEqual(err.code, FAKE_STATUS_CODE);
-        assert(typeof response === 'undefined');
-        done();
+      client
+        .updateDocument(request)
+        .then(responses => {
+          const operation = responses[0];
+          return operation.promise();
+        })
+        .then(() => {
+          assert.fail();
+        })
+        .catch(err => {
+          assert(err instanceof Error);
+          assert.strictEqual(err.code, FAKE_STATUS_CODE);
+          done();
+        });
+    });
+
+    it('has longrunning decoder functions', () => {
+      const client = new dialogflowModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
       });
+      assert(
+        client._descriptors.longrunning.updateDocument
+          .responseDecoder instanceof Function
+      );
+      assert(
+        client._descriptors.longrunning.updateDocument
+          .metadataDecoder instanceof Function
+      );
     });
   });
 
@@ -2950,7 +2991,10 @@ describe('KnowledgeBasesClient', () => {
       });
 
       // Mock request
-      const request = {};
+      const knowledgeBase = {};
+      const request = {
+        knowledgeBase: knowledgeBase,
+      };
 
       // Mock response
       const name = 'name3373707';
@@ -2980,7 +3024,10 @@ describe('KnowledgeBasesClient', () => {
       });
 
       // Mock request
-      const request = {};
+      const knowledgeBase = {};
+      const request = {
+        knowledgeBase: knowledgeBase,
+      };
 
       // Mock Grpc layer
       client._innerApiCalls.updateKnowledgeBase = mockSimpleGrpcMethod(

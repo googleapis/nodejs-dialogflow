@@ -102,10 +102,10 @@ class KnowledgeBasesClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
       knowledgeBasePathTemplate: new gax.PathTemplate(
         'projects/{project}/knowledgeBases/{knowledge_base}'
       ),
+      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -534,7 +534,7 @@ class KnowledgeBasesClient {
    *
    * @param {Object} request
    *   The request object that will be sent.
-   * @param {Object} [request.knowledgeBase]
+   * @param {Object} request.knowledgeBase
    *   Required. The knowledge base to update.
    *
    *   This object should have the same structure as [KnowledgeBase]{@link google.cloud.dialogflow.v2beta1.KnowledgeBase}
@@ -563,8 +563,8 @@ class KnowledgeBasesClient {
    *   // optional auth parameters.
    * });
    *
-   *
-   * client.updateKnowledgeBase({})
+   * const knowledgeBase = {};
+   * client.updateKnowledgeBase({knowledgeBase: knowledgeBase})
    *   .then(responses => {
    *     const response = responses[0];
    *     // doThingsWith(response)
@@ -595,18 +595,6 @@ class KnowledgeBasesClient {
   // --------------------
 
   /**
-   * Return a fully-qualified project resource name string.
-   *
-   * @param {String} project
-   * @returns {String}
-   */
-  projectPath(project) {
-    return this._pathTemplates.projectPathTemplate.render({
-      project: project,
-    });
-  }
-
-  /**
    * Return a fully-qualified knowledge_base resource name string.
    *
    * @param {String} project
@@ -621,14 +609,15 @@ class KnowledgeBasesClient {
   }
 
   /**
-   * Parse the projectName from a project resource.
+   * Return a fully-qualified project resource name string.
    *
-   * @param {String} projectName
-   *   A fully-qualified path representing a project resources.
-   * @returns {String} - A string representing the project.
+   * @param {String} project
+   * @returns {String}
    */
-  matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+  projectPath(project) {
+    return this._pathTemplates.projectPathTemplate.render({
+      project: project,
+    });
   }
 
   /**
@@ -655,6 +644,17 @@ class KnowledgeBasesClient {
     return this._pathTemplates.knowledgeBasePathTemplate.match(
       knowledgeBaseName
     ).knowledge_base;
+  }
+
+  /**
+   * Parse the projectName from a project resource.
+   *
+   * @param {String} projectName
+   *   A fully-qualified path representing a project resources.
+   * @returns {String} - A string representing the project.
+   */
+  matchProjectFromProjectName(projectName) {
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 }
 
