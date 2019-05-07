@@ -6,6 +6,9 @@
 
 ## [0.9.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v0.8.2...v0.9.0) (2019-05-07)
 
+### BREAKING CHANGE
+
+This release drops support for node versions below v8.10.0.
 
 ### Bug Fixes
 
