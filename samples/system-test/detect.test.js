@@ -60,7 +60,7 @@ describe('basic detection', () => {
 
   it('should detect Intent with Text to Speech Response', async () => {
     const {stdout} = await execa.shell(
-      `${cmd_tts} ${projectId} '' ${testQuery}`,
+      `${cmd_tts} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US' './resources/output.wav'`,
       {cwd}
     );
     assert.include(
@@ -71,7 +71,7 @@ describe('basic detection', () => {
 
   it('should detect sentiment with intent', async () => {
     const {stdout} = await execa.shell(
-      `${cmd_sentiment} ${projectId} '' ${testQuery}`,
+      `${cmd_sentiment} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US'`,
       {cwd}
     );
     assert.include(stdout, 'Detected sentiment');
