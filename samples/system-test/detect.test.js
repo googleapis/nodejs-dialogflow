@@ -52,4 +52,21 @@ describe('basic detection', () => {
     );
     assert.include(stdout, 'Detected intent');
   });
+
+  it('should detect Intent with Text to Speech Response', async () => {
+    const output = await exec(
+      `node ../detect-intent-TTS-response.v2.js ${projectId} '' ${testQuery}`
+    );
+    assert.include(
+      output,
+      'Audio content written to file: ./resources/output.wav'
+    );
+  });
+
+  it('should detect sentiment with intent', async () => {
+    const output = await exec(
+      `node ../detect-intent-sentiment.v2.js ${projectId} '' ${testQuery}`
+    );
+    assert.include(output, 'Detected sentiment');
+  });
 });
