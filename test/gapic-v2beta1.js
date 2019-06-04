@@ -24,6 +24,22 @@ const error = new Error();
 error.code = FAKE_STATUS_CODE;
 
 describe('AgentsClient', () => {
+  it('has servicePath', () => {
+    const servicePath = dialogflowModule.v2beta1.AgentsClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint = dialogflowModule.v2beta1.AgentsClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.AgentsClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('getAgent', () => {
     it('invokes getAgent without error', done => {
       const client = new dialogflowModule.v2beta1.AgentsClient({
@@ -521,6 +537,22 @@ describe('AgentsClient', () => {
   });
 });
 describe('ContextsClient', () => {
+  it('has servicePath', () => {
+    const servicePath = dialogflowModule.v2beta1.ContextsClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint = dialogflowModule.v2beta1.ContextsClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.ContextsClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('listContexts', () => {
     it('invokes listContexts without error', done => {
       const client = new dialogflowModule.v2beta1.ContextsClient({
@@ -893,6 +925,22 @@ describe('ContextsClient', () => {
   });
 });
 describe('DocumentsClient', () => {
+  it('has servicePath', () => {
+    const servicePath = dialogflowModule.v2beta1.DocumentsClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint = dialogflowModule.v2beta1.DocumentsClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.DocumentsClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('listDocuments', () => {
     it('invokes listDocuments without error', done => {
       const client = new dialogflowModule.v2beta1.DocumentsClient({
@@ -1397,6 +1445,22 @@ describe('DocumentsClient', () => {
   });
 });
 describe('EntityTypesClient', () => {
+  it('has servicePath', () => {
+    const servicePath = dialogflowModule.v2beta1.EntityTypesClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint = dialogflowModule.v2beta1.EntityTypesClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.EntityTypesClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('listEntityTypes', () => {
     it('invokes listEntityTypes without error', done => {
       const client = new dialogflowModule.v2beta1.EntityTypesClient({
@@ -2178,6 +2242,22 @@ describe('EntityTypesClient', () => {
   });
 });
 describe('IntentsClient', () => {
+  it('has servicePath', () => {
+    const servicePath = dialogflowModule.v2beta1.IntentsClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint = dialogflowModule.v2beta1.IntentsClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.IntentsClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('listIntents', () => {
     it('invokes listIntents without error', done => {
       const client = new dialogflowModule.v2beta1.IntentsClient({
@@ -2727,6 +2807,24 @@ describe('IntentsClient', () => {
   });
 });
 describe('KnowledgeBasesClient', () => {
+  it('has servicePath', () => {
+    const servicePath =
+      dialogflowModule.v2beta1.KnowledgeBasesClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint =
+      dialogflowModule.v2beta1.KnowledgeBasesClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.KnowledgeBasesClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('listKnowledgeBases', () => {
     it('invokes listKnowledgeBases without error', done => {
       const client = new dialogflowModule.v2beta1.KnowledgeBasesClient({
@@ -3046,6 +3144,24 @@ describe('KnowledgeBasesClient', () => {
   });
 });
 describe('SessionEntityTypesClient', () => {
+  it('has servicePath', () => {
+    const servicePath =
+      dialogflowModule.v2beta1.SessionEntityTypesClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint =
+      dialogflowModule.v2beta1.SessionEntityTypesClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.SessionEntityTypesClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('listSessionEntityTypes', () => {
     it('invokes listSessionEntityTypes without error', done => {
       const client = new dialogflowModule.v2beta1.SessionEntityTypesClient({
@@ -3365,6 +3481,22 @@ describe('SessionEntityTypesClient', () => {
   });
 });
 describe('SessionsClient', () => {
+  it('has servicePath', () => {
+    const servicePath = dialogflowModule.v2beta1.SessionsClient.servicePath;
+    assert(servicePath);
+  });
+
+  it('has apiEndpoint', () => {
+    const apiEndpoint = dialogflowModule.v2beta1.SessionsClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+
+  it('has port', () => {
+    const port = dialogflowModule.v2beta1.SessionsClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+
   describe('detectIntent', () => {
     it('invokes detectIntent without error', done => {
       const client = new dialogflowModule.v2beta1.SessionsClient({
