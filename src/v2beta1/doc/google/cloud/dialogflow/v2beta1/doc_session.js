@@ -24,7 +24,7 @@
  *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
  *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
  *   default 'draft' environment. If `User ID` is not specified, we are using
- *   "-". It’s up to the API caller to choose an appropriate `Session ID` and
+ *   "-". It's up to the API caller to choose an appropriate `Session ID` and
  *   `User Id`. They can be a random numbers or some type of user and session
  *   identifiers (preferably hashed). The length of the `Session ID` and
  *   `User ID` must not exceed 36 characters.
@@ -105,9 +105,7 @@ const DetectIntentRequest = {
  *   generated audio content will be empty.
  *
  * @property {Object} outputAudioConfig
- *   Instructs the speech synthesizer how to generate the output audio. This
- *   field is populated from the agent-level speech synthesizer configuration,
- *   if enabled.
+ *   The config used by the speech synthesizer to generate the output audio.
  *
  *   This object should have the same structure as [OutputAudioConfig]{@link google.cloud.dialogflow.v2beta1.OutputAudioConfig}
  *
@@ -183,7 +181,7 @@ const QueryParameters = {
  * 1.  An audio config which
  *     instructs the speech recognizer how to process the speech audio.
  *
- * 2.  A conversational query in the form of text,.
+ * 2.  A conversational query in the form of text.
  *
  * 3.  An event that specifies which intent to trigger.
  *
@@ -227,7 +225,7 @@ const QueryInput = {
  * @property {string} languageCode
  *   The language that was triggered during intent detection.
  *   See [Language
- *   Support](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   Support](https://cloud.google.com/dialogflow/docs/reference/language)
  *   for a list of the currently supported language codes.
  *
  * @property {number} speechRecognitionConfidence
@@ -424,10 +422,8 @@ const KnowledgeAnswers = {
  *     `query_params` and/or `single_utterance`. If the client wants to receive
  *     an audio response, it should also contain `output_audio_config`.
  *     The message must not contain `input_audio`.
- *
  * 2.  If `query_input` was set to a streaming input audio config,
- *     all subsequent messages must contain only `input_audio`.
- *     Otherwise, finish the request stream.
+ *     all subsequent messages must contain `input_audio`. Otherwise, finish the request stream.
  *
  * @property {string} session
  *   Required. The name of the session the query is sent to.
@@ -436,7 +432,7 @@ const KnowledgeAnswers = {
  *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
  *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
  *   default 'draft' environment. If `User ID` is not specified, we are using
- *   "-". It’s up to the API caller to choose an appropriate `Session ID` and
+ *   "-". It's up to the API caller to choose an appropriate `Session ID` and
  *   `User Id`. They can be a random numbers or some type of user and session
  *   identifiers (preferably hashed). The length of the `Session ID` and
  *   `User ID` must not exceed 36 characters.
@@ -541,6 +537,11 @@ const StreamingDetectIntentRequest = {
  *
  * @property {Buffer} outputAudio
  *   The audio data bytes encoded as specified in the request.
+ *   Note: The output audio is generated based on the values of default platform
+ *   text responses found in the `query_result.fulfillment_messages` field. If
+ *   multiple default text responses exist, they will be concatenated when
+ *   generating audio. If no default platform text responses exist, the
+ *   generated audio content will be empty.
  *
  * @property {Object} outputAudioConfig
  *   The config used by the speech synthesizer to generate the output audio.
@@ -614,6 +615,29 @@ const StreamingDetectIntentResponse = {
  *   This field is typically only provided if `is_final` is true and you should
  *   not rely on it being accurate or even set.
  *
+ * @property {number} stability
+ *   An estimate of the likelihood that the speech recognizer will
+ *   not change its guess about this interim recognition result:
+ *   * If the value is unspecified or 0.0, Dialogflow didn't compute the
+ *     stability. In particular, Dialogflow will only provide stability for
+ *     `MESSAGE_TYPE_TRANSCRIPT` results with `is_final = false`.
+ *   * Otherwise, the value is in (0.0, 1.0] where 0.0 means completely
+ *     unstable and 1.0 means completely stable.
+ *
+ * @property {Object[]} speechWordInfo
+ *   Word-specific information for the words recognized by Speech in
+ *   transcript. Populated if and only if `message_type` =
+ *   `MESSAGE_TYPE_TRANSCRIPT` and [InputAudioConfig.enable_word_info] is set.
+ *
+ *   This object should have the same structure as [SpeechWordInfo]{@link google.cloud.dialogflow.v2beta1.SpeechWordInfo}
+ *
+ * @property {Object} speechEndOffset
+ *   Time offset of the end of this Speech recognition result relative to the
+ *   beginning of the audio. Only populated for `message_type` =
+ *   `MESSAGE_TYPE_TRANSCRIPT`.
+ *
+ *   This object should have the same structure as [Duration]{@link google.protobuf.Duration}
+ *
  * @typedef StreamingRecognitionResult
  * @memberof google.cloud.dialogflow.v2beta1
  * @see [google.cloud.dialogflow.v2beta1.StreamingRecognitionResult definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/dialogflow/v2beta1/session.proto}
@@ -661,7 +685,7 @@ const StreamingRecognitionResult = {
  *
  * @property {string} languageCode
  *   Required. The language of this conversational query. See [Language
- *   Support](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   Support](https://cloud.google.com/dialogflow/docs/reference/language)
  *   for a list of the currently supported language codes. Note that queries in
  *   the same session do not necessarily need to specify the same language.
  *
@@ -690,7 +714,7 @@ const TextInput = {
  *
  * @property {string} languageCode
  *   Required. The language of this query. See [Language
- *   Support](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   Support](https://cloud.google.com/dialogflow/docs/reference/language)
  *   for a list of the currently supported language codes. Note that queries in
  *   the same session do not necessarily need to specify the same language.
  *
