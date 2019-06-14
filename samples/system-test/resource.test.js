@@ -17,13 +17,18 @@
 
 const path = require('path');
 const {assert} = require('chai');
-const execa = require('execa');
+const cp = require('child_process');
 const uuid = require('uuid');
 
 const cwd = path.join(__dirname, '..');
 const exec = async cmd => {
-  const {stdout} = await execa.shell(cmd, {cwd});
-  return stdout;
+  cp.cwd = cwd;
+  try {
+    const res = cp.execSync(cmd, {stdio: 'pipe'});
+    return res.toString('utf-8');
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 describe('resources', () => {

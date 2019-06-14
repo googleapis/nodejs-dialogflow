@@ -17,7 +17,7 @@
 
 const path = require('path');
 const {assert} = require('chai');
-const execa = require('execa');
+const cp = require('child_process');
 const uuid = require('uuid/v4');
 
 const cmd = 'node detect.v2beta1.js';
@@ -28,11 +28,13 @@ const testDocName = 'TestDoc';
 const testDocumentPath = 'https://cloud.google.com/storage/docs/faq';
 
 const exec = async cmd => {
-  const res = await execa.shell(cmd, {cwd});
-  if (res.stderr) {
-    throw new Error(res.stderr);
+  cp.cwd = cwd;
+  try {
+    const res = cp.execSync(cmd, {stdio: 'pipe'});
+    return res.toString('utf-8');
+  } catch (err) {
+    throw new Error(err.message);
   }
-  return res.stdout;
 };
 
 describe('v2beta1 detection', () => {
