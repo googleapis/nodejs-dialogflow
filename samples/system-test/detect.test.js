@@ -33,29 +33,29 @@ const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('basic detection', () => {
   it('should detect text queries', async () => {
-    const stdout = await exec(`${cmd} text -q "hello"`);
+    const stdout = exec(`${cmd} text -q "hello"`);
     assert.include(stdout, 'Detected intent');
   });
 
   it('should detect event query', async () => {
-    const stdout = await exec(`${cmd} event WELCOME`);
+    const stdout = exec(`${cmd} event WELCOME`);
     assert.include(stdout, 'Query: WELCOME');
   });
 
   it('should detect audio query', async () => {
-    const stdout = await exec(
+    const stdout = exec(
       `${cmd} audio ${audioFilepathBookARoom} -r 16000`);
     assert.include(stdout, 'Detected intent');
   });
 
   it('should detect audio query in streaming fashion', async () => {
-    const stdout = await exec(
+    const stdout = exec(
       `${cmd} stream ${audioFilepathBookARoom} -r 16000`);
     assert.include(stdout, 'Detected intent');
   });
 
   it('should detect Intent with Text to Speech Response', async () => {
-    const stdout = await exec(
+    const stdout = exec(
       `${cmd_tts} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US' './resources/output.wav'`);
     assert.include(
       stdout,
@@ -64,7 +64,7 @@ describe('basic detection', () => {
   });
 
   it('should detect sentiment with intent', async () => {
-    const stdout = await exec(
+    const stdout = exec(
       `${cmd_sentiment} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US'`
     );
     assert.include(stdout, 'Detected sentiment');

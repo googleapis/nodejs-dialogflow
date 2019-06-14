@@ -33,11 +33,11 @@ describe('v2beta1 detection', () => {
 
   it('should create a knowledge base', async () => {
     // Check that the knowledge base does not yet exist
-    let output = await exec(`${cmd} listKnowledgeBases`);
+    let output = exec(`${cmd} listKnowledgeBases`);
     assert.notInclude(output, testKnowledgeBaseName);
 
     // Creates a knowledge base
-    output = await exec(
+    output = exec(
       `${cmd} createKnowledgeBase -k ${testKnowledgeBaseName}`
     );
     assert.include(output, `displayName: ${testKnowledgeBaseName}`);
@@ -53,58 +53,58 @@ describe('v2beta1 detection', () => {
   });
 
   it('should list the knowledge bases', async () => {
-    const output = await exec(`${cmd} listKnowledgeBases`);
+    const output = exec(`${cmd} listKnowledgeBases`);
     assert.include(output, testKnowledgeBaseName);
   });
 
   it('should get a knowledge base', async () => {
-    const output = await exec(`${cmd} getKnowledgeBase -b "${knowbaseId}"`);
+    const output = exec(`${cmd} getKnowledgeBase -b "${knowbaseId}"`);
     assert.include(output, `displayName: ${testKnowledgeBaseName}`);
     assert.include(output, `name: ${knowbaseFullName}`);
   });
 
   it('should create a document', async () => {
-    const output = await exec(
+    const output = exec(
       `${cmd} createDocument -n "${knowbaseFullName}" -z "${testDocumentPath}" -m "${testDocName}"`
     );
     assert.include(output, 'Document created');
   });
 
   it('should list documents', async () => {
-    const output = await exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
+    const output = exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
     const parsedOut = output.split('\n');
     documentFullPath = parsedOut[parsedOut.length - 1].split(':')[1];
     assert.include(output, `There are 1 documents in ${knowbaseFullName}`);
   });
 
   it('should detect intent with a knowledge base', async () => {
-    const output = await exec(
+    const output = exec(
       `${cmd} detectIntentKnowledge -q "${testQuery}" -n "${knowbaseId}"`
     );
     assert.include(output, 'Detected Intent:');
   });
 
   it('should delete a document', async () => {
-    const output = await exec(`${cmd} deleteDocument -d ${documentFullPath}`);
+    const output = exec(`${cmd} deleteDocument -d ${documentFullPath}`);
     assert.include(output, 'document deleted');
   });
 
   it('should list the document', async () => {
-    const output = await exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
+    const output = exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
     assert.notInclude(output, documentFullPath);
   });
 
   it('should delete the Knowledge Base', async () => {
-    await exec(`${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`);
+    exec(`${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`);
   });
 
   it('should list the Knowledge Base', async () => {
-    const output = await exec(`${cmd} listKnowledgeBases`);
+    const output = exec(`${cmd} listKnowledgeBases`);
     assert.notInclude(output, testKnowledgeBaseName);
   });
 
   it('should detect Intent with Model Selection', async () => {
-    const output = await exec(`${cmd} detectIntentwithModelSelection`);
+    const output = exec(`${cmd} detectIntentwithModelSelection`);
     assert.include(
       output,
       'Response: I can help with that. Where would you like to reserve a room?'
@@ -112,7 +112,7 @@ describe('v2beta1 detection', () => {
   });
 
   it('should detect Intent with Text to Speech Response', async () => {
-    const output = await exec(
+    const output = exec(
       `${cmd} detectIntentwithTexttoSpeechResponse -q "${testQuery}"`
     );
     assert.include(
@@ -122,7 +122,7 @@ describe('v2beta1 detection', () => {
   });
 
   it('should detect sentiment with intent', async () => {
-    const output = await exec(
+    const output = exec(
       `${cmd} detectIntentandSentiment -q "${testQuery}"`
     );
     assert.include(output, 'Detected sentiment');
