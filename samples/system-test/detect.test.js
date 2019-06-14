@@ -17,12 +17,10 @@
 
 const path = require('path');
 const {assert} = require('chai');
-const cp = require('child_process');
+const execSync = require('child_process').execSync;
 const cmd = 'node detect.js';
 const cmd_tts = 'node detect-intent-TTS-response.v2.js';
 const cmd_sentiment = 'node detect-intent-sentiment.v2.js';
-const cwd = path.join(__dirname, '..');
-cp.cwd = cwd;
 const projectId =
   process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
 const testQuery = 'Where is my data stored?';
@@ -31,38 +29,34 @@ const audioFilepathBookARoom = path
   .join(__dirname, '../resources/book_a_room.wav')
   .replace(/(\s+)/g, '\\$1');
 
+const exec = cmd => execSync(cmd, {encoding: 'utf8'});
+
 describe('basic detection', () => {
   it('should detect text queries', async () => {
-    const stdout = cp.execSync(`${cmd} text -q "hello"`, {stdio: 'pipe'});
+    const stdout = await exec(`${cmd} text -q "hello"`);
     assert.include(stdout, 'Detected intent');
   });
 
   it('should detect event query', async () => {
-    const stdout = cp.execSync(`${cmd} event WELCOME`, {stdio: 'pipe'});
+    const stdout = await exec(`${cmd} event WELCOME`);
     assert.include(stdout, 'Query: WELCOME');
   });
 
   it('should detect audio query', async () => {
-    const stdout = cp.execSync(
-      `${cmd} audio ${audioFilepathBookARoom} -r 16000`,
-      {cwd}
-    );
+    const stdout = await exec(
+      `${cmd} audio ${audioFilepathBookARoom} -r 16000`);
     assert.include(stdout, 'Detected intent');
   });
 
   it('should detect audio query in streaming fashion', async () => {
-    const stdout = cp.execSync(
-      `${cmd} stream ${audioFilepathBookARoom} -r 16000`,
-      {cwd}
-    );
+    const stdout = await exec(
+      `${cmd} stream ${audioFilepathBookARoom} -r 16000`);
     assert.include(stdout, 'Detected intent');
   });
 
   it('should detect Intent with Text to Speech Response', async () => {
-    const stdout = cp.execSync(
-      `${cmd_tts} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US' './resources/output.wav'`,
-      {cwd}
-    );
+    const stdout = await exec(
+      `${cmd_tts} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US' './resources/output.wav'`);
     assert.include(
       stdout,
       'Audio content written to file: ./resources/output.wav'
@@ -70,9 +64,8 @@ describe('basic detection', () => {
   });
 
   it('should detect sentiment with intent', async () => {
-    const stdout = cp.execSync(
-      `${cmd_sentiment} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US'`,
-      {cwd}
+    const stdout = await exec(
+      `${cmd_sentiment} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US'`
     );
     assert.include(stdout, 'Detected sentiment');
   });

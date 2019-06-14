@@ -15,19 +15,16 @@
 
 'use strict';
 
-const path = require('path');
 const {assert} = require('chai');
-const cp = require('child_process');
+const execSync = require('child_process').execSync;
 const uuid = require('uuid/v4');
-
 const cmd = 'node detect.v2beta1.js';
-const {cwd} = path.join(__dirname, '..');
 const testQuery = 'Where is my data stored?';
 const testKnowledgeBaseName = `${uuid().split('-')[0]}-TestKnowledgeBase`;
 const testDocName = 'TestDoc';
 const testDocumentPath = 'https://cloud.google.com/storage/docs/faq';
 
-const exec = async cmd => cp.execSync(cmd, {encoding: 'utf-8'});
+const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('v2beta1 detection', () => {
   let knowbaseFullName;

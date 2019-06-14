@@ -15,13 +15,10 @@
 
 'use strict';
 
-const path = require('path');
 const {assert} = require('chai');
-const cp = require('child_process');
+const execSync = require('child_process').execSync;
 const uuid = require('uuid');
-
-const cwd = path.join(__dirname, '..');
-const exec = async cmd => cp.execSync(cmd, {encoding: 'utf-8'});
+const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('resources', () => {
   const cmd = 'node resource.js';
