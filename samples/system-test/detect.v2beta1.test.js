@@ -27,15 +27,7 @@ const testKnowledgeBaseName = `${uuid().split('-')[0]}-TestKnowledgeBase`;
 const testDocName = 'TestDoc';
 const testDocumentPath = 'https://cloud.google.com/storage/docs/faq';
 
-const exec = async cmd => {
-  cp.cwd = cwd;
-  try {
-    const res = cp.execSync(cmd, {stdio: 'pipe'});
-    return res.toString('utf-8');
-  } catch (err) {
-    throw new Error(err.message);
-  }
-};
+const exec = async cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 
 describe('v2beta1 detection', () => {
   let knowbaseFullName;

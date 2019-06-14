@@ -21,15 +21,7 @@ const cp = require('child_process');
 const uuid = require('uuid');
 
 const cwd = path.join(__dirname, '..');
-const exec = async cmd => {
-  cp.cwd = cwd;
-  try {
-    const res = cp.execSync(cmd, {stdio: 'pipe'});
-    return res.toString('utf-8');
-  } catch (err) {
-    throw new Error(err.message);
-  }
-};
+const exec = async cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 
 describe('resources', () => {
   const cmd = 'node resource.js';
