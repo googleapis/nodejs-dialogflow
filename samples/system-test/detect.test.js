@@ -17,12 +17,12 @@
 
 const path = require('path');
 const {assert} = require('chai');
-const cp = require('child_process');
+const execa = require('execa');
+
 const cmd = 'node detect.js';
 const cmd_tts = 'node detect-intent-TTS-response.v2.js';
 const cmd_sentiment = 'node detect-intent-sentiment.v2.js';
 const cwd = path.join(__dirname, '..');
-cp.cwd = cwd;
 const projectId =
   process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
 const testQuery = 'Where is my data stored?';
@@ -33,17 +33,17 @@ const audioFilepathBookARoom = path
 
 describe('basic detection', () => {
   it('should detect text queries', async () => {
-    const stdout = cp.execSync(`${cmd} text -q "hello"`, {stdio: 'pipe'});
+    const {stdout} = await execa.shell(`${cmd} text -q "hello"`, {cwd});
     assert.include(stdout, 'Detected intent');
   });
 
   it('should detect event query', async () => {
-    const stdout = cp.execSync(`${cmd} event WELCOME`, {stdio: 'pipe'});
+    const {stdout} = await execa.shell(`${cmd} event WELCOME`, {cwd});
     assert.include(stdout, 'Query: WELCOME');
   });
 
   it('should detect audio query', async () => {
-    const stdout = cp.execSync(
+    const {stdout} = await execa.shell(
       `${cmd} audio ${audioFilepathBookARoom} -r 16000`,
       {cwd}
     );
@@ -51,7 +51,7 @@ describe('basic detection', () => {
   });
 
   it('should detect audio query in streaming fashion', async () => {
-    const stdout = cp.execSync(
+    const {stdout} = await execa.shell(
       `${cmd} stream ${audioFilepathBookARoom} -r 16000`,
       {cwd}
     );
@@ -59,7 +59,7 @@ describe('basic detection', () => {
   });
 
   it('should detect Intent with Text to Speech Response', async () => {
-    const stdout = cp.execSync(
+    const {stdout} = await execa.shell(
       `${cmd_tts} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US' './resources/output.wav'`,
       {cwd}
     );
@@ -70,7 +70,7 @@ describe('basic detection', () => {
   });
 
   it('should detect sentiment with intent', async () => {
-    const stdout = cp.execSync(
+    const {stdout} = await execa.shell(
       `${cmd_sentiment} ${projectId} 'SESSION_ID' '${testQuery}' 'en-US'`,
       {cwd}
     );
