@@ -991,7 +991,7 @@ const Intent = {
  *   Optional. The language to list training phrases, parameters and rich
  *   messages for. If not specified, the agent's default language is used.
  *   [Many
- *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
  *   are supported. Note: languages must be enabled in the agent before they can
  *   be used.
  *
@@ -1047,7 +1047,7 @@ const ListIntentsResponse = {
  *   Optional. The language to retrieve training phrases, parameters and rich
  *   messages for. If not specified, the agent's default language is used.
  *   [Many
- *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
  *   are supported. Note: languages must be enabled in the agent before they can
  *   be used.
  *
@@ -1080,7 +1080,7 @@ const GetIntentRequest = {
  *   Optional. The language of training phrases, parameters and rich messages
  *   defined in `intent`. If not specified, the agent's default language is
  *   used. [Many
- *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
  *   are supported. Note: languages must be enabled in the agent before they can
  *   be used.
  *
@@ -1109,7 +1109,7 @@ const CreateIntentRequest = {
  *   Optional. The language of training phrases, parameters and rich messages
  *   defined in `intent`. If not specified, the agent's default language is
  *   used. [Many
- *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
  *   are supported. Note: languages must be enabled in the agent before they can
  *   be used.
  *
@@ -1169,7 +1169,7 @@ const DeleteIntentRequest = {
  *   Optional. The language of training phrases, parameters and rich messages
  *   defined in `intents`. If not specified, the agent's default language is
  *   used. [Many
- *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
  *   are supported. Note: languages must be enabled in the agent before they can
  *   be used.
  *

@@ -202,7 +202,7 @@ const QueryInput = {
  * @property {string} languageCode
  *   The language that was triggered during intent detection.
  *   See [Language
- *   Support](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   Support](https://cloud.google.com/dialogflow/docs/reference/language)
  *   for a list of the currently supported language codes.
  *
  * @property {number} speechRecognitionConfidence
@@ -309,7 +309,7 @@ const QueryResult = {
  * @property {string} session
  *   Required. The name of the session the query is sent to.
  *   Format of the session name:
- *   `projects/<Project ID>/agent/sessions/<Session ID>`. It’s up to the API
+ *   `projects/<Project ID>/agent/sessions/<Session ID>`. It's up to the API
  *   caller to choose an appropriate `Session ID`. It can be a random number or
  *   some type of user identifier (preferably hashed). The length of the session
  *   ID must not exceed 36 characters.
@@ -396,11 +396,14 @@ const StreamingDetectIntentRequest = {
  *
  * @property {Buffer} outputAudio
  *   The audio data bytes encoded as specified in the request.
+ *   Note: The output audio is generated based on the values of default platform
+ *   text responses found in the `query_result.fulfillment_messages` field. If
+ *   multiple default text responses exist, they will be concatenated when
+ *   generating audio. If no default platform text responses exist, the
+ *   generated audio content will be empty.
  *
  * @property {Object} outputAudioConfig
- *   Instructs the speech synthesizer how to generate the output audio. This
- *   field is populated from the agent-level speech synthesizer configuration,
- *   if enabled.
+ *   The config used by the speech synthesizer to generate the output audio.
  *
  *   This object should have the same structure as [OutputAudioConfig]{@link google.cloud.dialogflow.v2.OutputAudioConfig}
  *
@@ -498,12 +501,12 @@ const StreamingRecognitionResult = {
 
     /**
      * Event indicates that the server has detected the end of the user's speech
-     * utterance and expects no additional speech. Therefore, the server will
-     * not process additional audio (although it may subsequently return
-     * additional results). The client should stop sending additional audio
-     * data, half-close the gRPC connection, and wait for any additional results
-     * until the server closes the gRPC connection. This message is only sent if
-     * `single_utterance` was set to `true`, and is not used otherwise.
+     * utterance and expects no additional inputs.
+     * Therefore, the server will not process additional audio (although it may subsequently return additional results). The
+     * client should stop sending additional audio data, half-close the gRPC
+     * connection, and wait for any additional results until the server closes
+     * the gRPC connection. This message is only sent if `single_utterance` was
+     * set to `true`, and is not used otherwise.
      */
     END_OF_SINGLE_UTTERANCE: 2
   }
@@ -518,7 +521,7 @@ const StreamingRecognitionResult = {
  *
  * @property {string} languageCode
  *   Required. The language of this conversational query. See [Language
- *   Support](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   Support](https://cloud.google.com/dialogflow/docs/reference/language)
  *   for a list of the currently supported language codes. Note that queries in
  *   the same session do not necessarily need to specify the same language.
  *
@@ -547,7 +550,7 @@ const TextInput = {
  *
  * @property {string} languageCode
  *   Required. The language of this query. See [Language
- *   Support](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+ *   Support](https://cloud.google.com/dialogflow/docs/reference/language)
  *   for a list of the currently supported language codes. Note that queries in
  *   the same session do not necessarily need to specify the same language.
  *

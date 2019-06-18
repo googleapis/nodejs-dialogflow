@@ -309,7 +309,9 @@ async function detectIntentandSentiment(
       `  Score: ${result.sentimentAnalysisResult.queryTextSentiment.score}`
     );
     console.log(
-      `  Magnitude: ${result.sentimentAnalysisResult.queryTextSentiment.magnitude}`
+      `  Magnitude: ${
+        result.sentimentAnalysisResult.queryTextSentiment.magnitude
+      }`
     );
   } else {
     console.log(`No sentiment Analysis Found`);
