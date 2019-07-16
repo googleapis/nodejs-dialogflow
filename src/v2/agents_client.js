@@ -35,7 +35,7 @@ const VERSION = require('../../package.json').version;
  * You can create an agent using both Dialogflow Standard Edition and
  * Dialogflow Enterprise Edition. For details, see
  * [Dialogflow
- * Editions](https://cloud.google.com/dialogflow-enterprise/docs/editions).
+ * Editions](https://cloud.google.com/dialogflow/docs/editions).
  *
  * You can save your agent for backup or versioning by exporting the agent by
  * using the ExportAgent method. You can import a saved
@@ -43,13 +43,13 @@ const VERSION = require('../../package.json').version;
  *
  * Dialogflow provides several
  * [prebuilt
- * agents](https://cloud.google.com/dialogflow-enterprise/docs/agents-prebuilt)
+ * agents](https://cloud.google.com/dialogflow/docs/agents-prebuilt)
  * for common conversation scenarios such as determining a date and time,
  * converting currency, and so on.
  *
  * For more information about agents, see the
  * [Dialogflow
- * documentation](https://cloud.google.com/dialogflow-enterprise/docs/agents-overview).
+ * documentation](https://cloud.google.com/dialogflow/docs/agents-overview).
  *
  * @class
  * @memberof v2
@@ -220,6 +220,8 @@ class AgentsClient {
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
     const agentsStubMethods = [
+      'setAgent',
+      'deleteAgent',
       'getAgent',
       'searchAgents',
       'trainAgent',
@@ -292,6 +294,111 @@ class AgentsClient {
   // -------------------
   // -- Service calls --
   // -------------------
+
+  /**
+   * Creates/updates the specified agent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {Object} request.agent
+   *   Required. The agent to update.
+   *
+   *   This object should have the same structure as [Agent]{@link google.cloud.dialogflow.v2.Agent}
+   * @param {Object} [request.updateMask]
+   *   Optional. The mask to control which fields get updated.
+   *
+   *   This object should have the same structure as [FieldMask]{@link google.protobuf.FieldMask}
+   * @param {Object} [options]
+   *   Optional parameters. You can override the default settings for this call, e.g, timeout,
+   *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/interfaces/CallOptions.html} for the details.
+   * @param {function(?Error, ?Object)} [callback]
+   *   The function which will be called with the result of the API call.
+   *
+   *   The second parameter to the callback is an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent}.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   *
+   * @example
+   *
+   * const dialogflow = require('dialogflow');
+   *
+   * const client = new dialogflow.v2.AgentsClient({
+   *   // optional auth parameters.
+   * });
+   *
+   * const agent = {};
+   * client.setAgent({agent: agent})
+   *   .then(responses => {
+   *     const response = responses[0];
+   *     // doThingsWith(response)
+   *   })
+   *   .catch(err => {
+   *     console.error(err);
+   *   });
+   */
+  setAgent(request, options, callback) {
+    if (options instanceof Function && callback === undefined) {
+      callback = options;
+      options = {};
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      'agent.parent': request.agent.parent,
+    });
+
+    return this._innerApiCalls.setAgent(request, options, callback);
+  }
+
+  /**
+   * Deletes the specified agent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project that the agent to delete is associated with.
+   *   Format: `projects/<Project ID>`.
+   * @param {Object} [options]
+   *   Optional parameters. You can override the default settings for this call, e.g, timeout,
+   *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/interfaces/CallOptions.html} for the details.
+   * @param {function(?Error)} [callback]
+   *   The function which will be called with the result of the API call.
+   * @returns {Promise} - The promise which resolves when API call finishes.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   *
+   * @example
+   *
+   * const dialogflow = require('dialogflow');
+   *
+   * const client = new dialogflow.v2.AgentsClient({
+   *   // optional auth parameters.
+   * });
+   *
+   * const formattedParent = client.projectPath('[PROJECT]');
+   * client.deleteAgent({parent: formattedParent}).catch(err => {
+   *   console.error(err);
+   * });
+   */
+  deleteAgent(request, options, callback) {
+    if (options instanceof Function && callback === undefined) {
+      callback = options;
+      options = {};
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      parent: request.parent,
+    });
+
+    return this._innerApiCalls.deleteAgent(request, options, callback);
+  }
 
   /**
    * Retrieves the specified agent.
