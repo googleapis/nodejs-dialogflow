@@ -19,7 +19,7 @@ const util = require('util');
 const fs = require('fs');
 const {struct} = require('pb-util');
 const pump = require('pump');
-const through2 = require('through2');
+const {PassThrough} = require('stream');
 
 function detectTextIntent(projectId, sessionId, queries, languageCode) {
   // [START dialogflow_detect_intent_text]
@@ -230,8 +230,11 @@ function streamingDetectIntent(
   pump(
     fs.createReadStream(filename),
     // Format the audio stream into the request format.
-    through2.obj((obj, _, next) => {
-      next(null, {inputAudio: obj});
+    new PassThrough({
+      objectMode: true,
+      tranform: (obj, _, next) => {
+        next(null, {inputAudio: obj});
+      }
     }),
     detectStream
   );
