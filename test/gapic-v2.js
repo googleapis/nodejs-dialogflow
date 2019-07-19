@@ -2827,7 +2827,7 @@ function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
         } else {
           callback(null, response);
         }
-      }
+      },
     });
     return mockStream;
   };

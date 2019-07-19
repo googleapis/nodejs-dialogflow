@@ -234,7 +234,7 @@ function streamingDetectIntent(
       objectMode: true,
       tranform: (obj, _, next) => {
         next(null, {inputAudio: obj});
-      }
+      },
     }),
     detectStream
   );
