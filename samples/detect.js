@@ -18,8 +18,9 @@
 const util = require('util');
 const fs = require('fs');
 const {struct} = require('pb-util');
-const pump = require('pump');
-const {PassThrough} = require('stream');
+const {Transform, pipeline} = require('stream');
+
+const pump = util.promisify(pipeline);
 
 function detectTextIntent(projectId, sessionId, queries, languageCode) {
   // [START dialogflow_detect_intent_text]
@@ -164,7 +165,7 @@ async function detectAudioIntent(
   // [END dialogflow_detect_intent_audio]
 }
 
-function streamingDetectIntent(
+async function streamingDetectIntent(
   projectId,
   sessionId,
   filename,
@@ -227,14 +228,14 @@ function streamingDetectIntent(
 
   // Stream an audio file from disk to the Conversation API, e.g.
   // "./resources/audio.raw"
-  pump(
+  await pump(
     fs.createReadStream(filename),
     // Format the audio stream into the request format.
-    new PassThrough({
+    new Transform({
       objectMode: true,
-      tranform: (obj, _, next) => {
+      transform: (obj, _, next) => {
         next(null, {inputAudio: obj});
-      },
+      }
     }),
     detectStream
   );
