@@ -235,7 +235,7 @@ async function streamingDetectIntent(
       objectMode: true,
       transform: (obj, _, next) => {
         next(null, {inputAudio: obj});
-      }
+      },
     }),
     detectStream
   );
