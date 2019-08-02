@@ -33,7 +33,7 @@ const VERSION = require('../../package.json').version;
  *
  * For more information about entity types, see the
  * [Dialogflow
- * documentation](https://cloud.google.com/dialogflow-enterprise/docs/entities-overview).
+ * documentation](https://cloud.google.com/dialogflow/docs/entities-overview).
  *
  * @class
  * @memberof v2
@@ -315,6 +315,7 @@ class SessionEntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -430,6 +431,7 @@ class SessionEntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -496,6 +498,7 @@ class SessionEntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -561,6 +564,7 @@ class SessionEntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -612,6 +616,7 @@ class SessionEntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};

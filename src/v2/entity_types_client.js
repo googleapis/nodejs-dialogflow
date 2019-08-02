@@ -49,7 +49,7 @@ const VERSION = require('../../package.json').version;
  *
  * For more information about entity types, see the
  * [Dialogflow
- * documentation](https://cloud.google.com/dialogflow-enterprise/docs/entities-overview).
+ * documentation](https://cloud.google.com/dialogflow/docs/entities-overview).
  *
  * @class
  * @memberof v2
@@ -345,7 +345,7 @@ class EntityTypesClient {
    *   Optional. The language to list entity synonyms for. If not specified,
    *   the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {number} [request.pageSize]
@@ -430,6 +430,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -464,7 +465,7 @@ class EntityTypesClient {
    *   Optional. The language to list entity synonyms for. If not specified,
    *   the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {number} [request.pageSize]
@@ -517,7 +518,7 @@ class EntityTypesClient {
    *   Optional. The language to retrieve entity synonyms for. If not specified,
    *   the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [options]
@@ -554,6 +555,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -582,7 +584,7 @@ class EntityTypesClient {
    *   Optional. The language of entity synonyms defined in `entity_type`. If not
    *   specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [options]
@@ -624,6 +626,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -649,7 +652,7 @@ class EntityTypesClient {
    *   Optional. The language of entity synonyms defined in `entity_type`. If not
    *   specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [request.updateMask]
@@ -690,6 +693,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -736,6 +740,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -771,7 +776,7 @@ class EntityTypesClient {
    *   Optional. The language of entity synonyms defined in `entity_types`. If not
    *   specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [request.updateMask]
@@ -856,6 +861,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -978,6 +984,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -1012,7 +1019,7 @@ class EntityTypesClient {
    *   Optional. The language of entity synonyms defined in `entities`. If not
    *   specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [options]
@@ -1108,6 +1115,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -1140,7 +1148,7 @@ class EntityTypesClient {
    *   Optional. The language of entity synonyms defined in `entities`. If not
    *   specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [request.updateMask]
@@ -1240,6 +1248,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -1270,7 +1279,7 @@ class EntityTypesClient {
    *   Optional. The language of entity synonyms defined in `entities`. If not
    *   specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [options]
@@ -1366,6 +1375,7 @@ class EntityTypesClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};

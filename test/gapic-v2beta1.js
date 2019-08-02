@@ -45,6 +45,129 @@ describe('AgentsClient', () => {
     assert(client);
   });
 
+  describe('setAgent', () => {
+    it('invokes setAgent without error', done => {
+      const client = new dialogflowModule.v2beta1.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const agent = {};
+      const request = {
+        agent: agent,
+      };
+
+      // Mock response
+      const parent = 'parent-995424086';
+      const displayName = 'displayName1615086568';
+      const defaultLanguageCode = 'defaultLanguageCode856575222';
+      const timeZone = 'timeZone36848094';
+      const description = 'description-1724546052';
+      const avatarUri = 'avatarUri-402824826';
+      const enableLogging = false;
+      const classificationThreshold = 1.11581064e8;
+      const expectedResponse = {
+        parent: parent,
+        displayName: displayName,
+        defaultLanguageCode: defaultLanguageCode,
+        timeZone: timeZone,
+        description: description,
+        avatarUri: avatarUri,
+        enableLogging: enableLogging,
+        classificationThreshold: classificationThreshold,
+      };
+
+      // Mock Grpc layer
+      client._innerApiCalls.setAgent = mockSimpleGrpcMethod(
+        request,
+        expectedResponse
+      );
+
+      client.setAgent(request, (err, response) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
+
+    it('invokes setAgent with error', done => {
+      const client = new dialogflowModule.v2beta1.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const agent = {};
+      const request = {
+        agent: agent,
+      };
+
+      // Mock Grpc layer
+      client._innerApiCalls.setAgent = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+
+      client.setAgent(request, (err, response) => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
+    });
+  });
+
+  describe('deleteAgent', () => {
+    it('invokes deleteAgent without error', done => {
+      const client = new dialogflowModule.v2beta1.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const formattedParent = client.projectPath('[PROJECT]');
+      const request = {
+        parent: formattedParent,
+      };
+
+      // Mock Grpc layer
+      client._innerApiCalls.deleteAgent = mockSimpleGrpcMethod(request);
+
+      client.deleteAgent(request, err => {
+        assert.ifError(err);
+        done();
+      });
+    });
+
+    it('invokes deleteAgent with error', done => {
+      const client = new dialogflowModule.v2beta1.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const formattedParent = client.projectPath('[PROJECT]');
+      const request = {
+        parent: formattedParent,
+      };
+
+      // Mock Grpc layer
+      client._innerApiCalls.deleteAgent = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+
+      client.deleteAgent(request, err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
+    });
+  });
+
   describe('getAgent', () => {
     it('invokes getAgent without error', done => {
       const client = new dialogflowModule.v2beta1.AgentsClient({

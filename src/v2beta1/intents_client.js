@@ -53,7 +53,7 @@ const VERSION = require('../../package.json').version;
  *
  * For more information about intents, see the
  * [Dialogflow
- * documentation](https://cloud.google.com/dialogflow-enterprise/docs/intents-overview).
+ * documentation](https://cloud.google.com/dialogflow/docs/intents-overview).
  *
  * @class
  * @memberof v2beta1
@@ -305,7 +305,7 @@ class IntentsClient {
    *   Optional. The language to list training phrases, parameters and rich
    *   messages for. If not specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {number} [request.intentView]
@@ -394,6 +394,7 @@ class IntentsClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -428,7 +429,7 @@ class IntentsClient {
    *   Optional. The language to list training phrases, parameters and rich
    *   messages for. If not specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {number} [request.intentView]
@@ -485,7 +486,7 @@ class IntentsClient {
    *   Optional. The language to retrieve training phrases, parameters and rich
    *   messages for. If not specified, the agent's default language is used.
    *   [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {number} [request.intentView]
@@ -526,6 +527,7 @@ class IntentsClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -554,7 +556,7 @@ class IntentsClient {
    *   Optional. The language of training phrases, parameters and rich messages
    *   defined in `intent`. If not specified, the agent's default language is
    *   used. [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {number} [request.intentView]
@@ -600,6 +602,7 @@ class IntentsClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -625,7 +628,7 @@ class IntentsClient {
    *   Optional. The language of training phrases, parameters and rich messages
    *   defined in `intent`. If not specified, the agent's default language is
    *   used. [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {Object} [request.updateMask]
@@ -675,6 +678,7 @@ class IntentsClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -723,6 +727,7 @@ class IntentsClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -749,7 +754,7 @@ class IntentsClient {
    *   Optional. The language of training phrases, parameters and rich messages
    *   defined in `intents`. If not specified, the agent's default language is
    *   used. [Many
-   *   languages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
    *   are supported. Note: languages must be enabled in the agent before they can
    *   be used.
    * @param {string} [request.intentBatchUri]
@@ -861,6 +866,7 @@ class IntentsClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
@@ -981,6 +987,7 @@ class IntentsClient {
       callback = options;
       options = {};
     }
+    request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
