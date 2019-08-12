@@ -17,13 +17,12 @@
 
 const util = require('util');
 const fs = require('fs');
-const { struct } = require('pb-util');
-const { Transform, pipeline } = require('stream');
+const {struct} = require('pb-util');
+const {Transform, pipeline} = require('stream');
 
 const pump = util.promisify(pipeline);
 
 function detectTextIntent() {
-
   // [START dialogflow_detect_intent_text]
 
   /**
@@ -38,7 +37,13 @@ function detectTextIntent() {
   // Instantiates a session client
   const sessionClient = new dialogflow.SessionsClient();
 
-  async function detectIntent(projectId, sessionId, query, contexts, languageCode = "en") {
+  async function detectIntent(
+    projectId,
+    sessionId,
+    query,
+    contexts,
+    languageCode = 'en'
+  ) {
     // The path to identify the agent that owns the created intent.
     const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
@@ -60,7 +65,7 @@ function detectTextIntent() {
       };
     }
 
-    responses = await sessionClient.detectIntent(request);
+    const responses = await sessionClient.detectIntent(request);
     return responses[0];
   }
 
@@ -73,9 +78,11 @@ function detectTextIntent() {
         'Reserve a meeting room in Toronto office, there will be 5 of us'
       );
       console.log(`Query: ${intentResponse.queryResult.queryText}`);
-      console.log(`Bot Response: ${intentResponse.queryResult.fulfillmentText}`);
+      console.log(
+        `Bot Response: ${intentResponse.queryResult.fulfillmentText}`
+      );
 
-      // Follow up with the bot to provide more information about the room 
+      // Follow up with the bot to provide more information about the room
       intentResponse = await detectIntent(
         projectId,
         sessionId,
@@ -83,7 +90,9 @@ function detectTextIntent() {
         intentResponse.queryResult.outputContexts // Add context from previous interaction
       );
       console.log(`Query: ${intentResponse.queryResult.queryText}`);
-      console.log(`Bot Response: ${intentResponse.queryResult.fulfillmentText}`);
+      console.log(
+        `Bot Response: ${intentResponse.queryResult.fulfillmentText}`
+      );
 
       intentResponse = await detectIntent(
         projectId,
@@ -92,7 +101,9 @@ function detectTextIntent() {
         intentResponse.queryResult.outputContexts // Add context from previous interaction
       );
       console.log(`Query: ${intentResponse.queryResult.queryText}`);
-      console.log(`Bot Response: ${intentResponse.queryResult.fulfillmentText}`);
+      console.log(
+        `Bot Response: ${intentResponse.queryResult.fulfillmentText}`
+      );
 
       console.log('Detected intent');
     } catch (error) {
@@ -101,7 +112,7 @@ function detectTextIntent() {
   }
 
   // Rerve a room using API
-  reserveRoom(PROJECT_ID, SESSION_ID)
+  reserveRoom(PROJECT_ID, SESSION_ID);
   // [END dialogflow_detect_intent_text]
 }
 
@@ -126,7 +137,7 @@ async function detectEventIntent(
     queryInput: {
       event: {
         name: eventName,
-        parameters: struct.encode({ foo: 'bar' }),
+        parameters: struct.encode({foo: 'bar'}),
         languageCode: languageCode,
       },
     },
@@ -247,7 +258,7 @@ async function streamingDetectIntent(
     new Transform({
       objectMode: true,
       transform: (obj, _, next) => {
-        next(null, { inputAudio: obj });
+        next(null, {inputAudio: obj});
       },
     }),
     detectStream
@@ -389,7 +400,7 @@ const cli = require(`yargs`)
   .command(
     `stream <filename>`,
     `Detects the intent in a local audio file by streaming it to the ` +
-    `Conversation API.`,
+      `Conversation API.`,
     {},
     opts =>
       streamingDetectIntent(
@@ -403,7 +414,7 @@ const cli = require(`yargs`)
   )
   .example(
     `node $0 text -q "hello" "book a room" "Mountain View" ` +
-    `"today" "230pm" "half an hour" "two people" "A" "yes"`
+      `"today" "230pm" "half an hour" "two people" "A" "yes"`
   )
   .example(`node $0 event order_pizza`)
   .example(`node $0 audio resources/book_a_room.wav -r 16000`)
