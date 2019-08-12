@@ -23,24 +23,25 @@ const {Transform, pipeline} = require('stream');
 const pump = util.promisify(pipeline);
 
 function detectTextIntent(projectId, sessionId, queries, languageCode) {
+
   // [START dialogflow_detect_intent_text]
+
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
+  // const PROJECT_ID = 'PROJECT_ID';
+  // const SESSION_ID = String(Date.now()); // sessionId can be a random number or some type of user identifier (preferably hashed)
+
   // Imports the Dialogflow library
   const dialogflow = require('dialogflow');
 
   // Instantiates a session client
   const sessionClient = new dialogflow.SessionsClient();
 
-  if (!queries || !queries.length) {
-    return;
-  }
+  async function detectIntent(projectId, sessionId, query, contexts, languageCode = "en") {
+    // The path to identify the agent that owns the created intent.
+    const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
-  // The path to identify the agent that owns the created intent.
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
-
-  let promise;
-
-  // Detects the intent of the queries.
-  for (const query of queries) {
     // The text query request.
     const request = {
       session: sessionPath,
@@ -52,43 +53,53 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
       },
     };
 
-    if (!promise) {
-      // First query.
-      console.log(`Sending query "${query}"`);
-      promise = sessionClient.detectIntent(request);
-    } else {
-      promise = promise.then(responses => {
-        console.log('Detected intent');
-        const response = responses[0];
-        logQueryResult(sessionClient, response.queryResult);
+    // If we have contexts from previous interactions with the bot add them here
+    if (contexts && contexts.length > 0) {
+      request.queryParams = {
+        contexts: contexts,
+      };
+    }
 
-        // Use output contexts as input contexts for the next query.
-        response.queryResult.outputContexts.forEach(context => {
-          // There is a bug in gRPC that the returned google.protobuf.Struct
-          // value contains fields with value of null, which causes error
-          // when encoding it back. Converting to JSON and back to proto
-          // removes those values.
-          context.parameters = struct.encode(struct.decode(context.parameters));
-        });
-        request.queryParams = {
-          contexts: response.queryResult.outputContexts,
-        };
+    responses = await sessionClient.detectIntent(request);
+    return responses[0];
+  }
 
-        console.log(`Sending query "${query}"`);
-        return sessionClient.detectIntent(request);
-      });
+  async function reserveRoom(projectId, sessionId) {
+    try {
+      // Initial request to book a room
+      let intentResponse = await detectIntent(
+        projectId,
+        sessionId,
+        'Reserve a meeting room in Toronto office, there will be 5 of us'
+      );
+      console.log(`Query: ${intentResponse.queryResult.queryText}`);
+      console.log(`Bot Response: ${intentResponse.queryResult.fulfillmentText}`);
+
+      // Follow up with the bot to provide more information about the room 
+      intentResponse = await detectIntent(
+        projectId,
+        sessionId,
+        'Next monday at 3pm for 1 hour, please', // Tell the bot when the meeting is taking place
+        intentResponse.queryResult.outputContexts // Add context from previous interaction
+      );
+      console.log(`Query: ${intentResponse.queryResult.queryText}`);
+      console.log(`Bot Response: ${intentResponse.queryResult.fulfillmentText}`);
+
+      intentResponse = await detectIntent(
+        projectId,
+        sessionId,
+        'B', // Rooms are defined on the Dialogflow agent, default options are A, B, or C
+        intentResponse.queryResult.outputContexts // Add context from previous interaction
+      );
+      console.log(`Query: ${intentResponse.queryResult.queryText}`);
+      console.log(`Bot Response: ${intentResponse.queryResult.fulfillmentText}`);
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  promise
-    .then(responses => {
-      console.log('Detected intent');
-      logQueryResult(sessionClient, responses[0].queryResult);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
-
+  // Rerve a room using API
+  reserveRoom(PROJECT_ID, SESSION_ID)
   // [END dialogflow_detect_intent_text]
 }
 
