@@ -27,10 +27,10 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
   // [START dialogflow_detect_intent_text]
 
   /**
-   * TODO(developer): Uncomment these variables before running the sample.
+   * TODO(developer): UPDATE these variables before running the sample.
    */
-  // const PROJECT_ID = 'PROJECT_ID';
-  // const SESSION_ID = String(Date.now()); // sessionId can be a random number or some type of user identifier (preferably hashed)
+  const PROJECT_ID = 'PROJECT_ID';
+  const SESSION_ID = String(Date.now()); // sessionId can be a random number or some type of user identifier (preferably hashed)
 
   // Imports the Dialogflow library
   const dialogflow = require('dialogflow');
