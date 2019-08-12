@@ -22,7 +22,7 @@ const {Transform, pipeline} = require('stream');
 
 const pump = util.promisify(pipeline);
 
-function detectTextIntent(projectId, sessionId, queries, languageCode) {
+function detectTextIntent() {
 
   // [START dialogflow_detect_intent_text]
 
