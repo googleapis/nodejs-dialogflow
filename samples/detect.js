@@ -25,7 +25,7 @@ const pump = util.promisify(pipeline);
 function detectTextIntent(projectId, sessionId, queries, languageCode) {
   const PROJECT_ID = projectId;
   const SESSION_ID = sessionId;
-  const QUERIES = queries;
+  const QUERY_TEXTS = queries;
   const LANGUAGE_CODE = languageCode;
   // [START dialogflow_detect_intent_text]
 
@@ -33,8 +33,8 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
    * TODO(developer): UPDATE these variables before running the sample.
    */
   // const PROJECT_ID = 'PROJECT_ID';
-  // const SESSION_ID = String(Date.now()); // sessionId can be a random number or some type of user identifier (preferably hashed)
-  // const QUERIES = [
+  // const SESSION_ID = 123456;  // Random number or hashed user identifier
+  // const QUERY_TEXTS = [
   //   'Reserve a meeting room in Toronto office, there will be 5 of us',
   //   'Next monday at 3pm for 1 hour, please', // Tell the bot when the meeting is taking place
   //   'B'  // Rooms are defined on the Dialogflow agent, default options are A, B, or C
@@ -68,7 +68,6 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
       },
     };
 
-    // If we have contexts from previous interactions with the bot add them here
     if (contexts && contexts.length > 0) {
       request.queryParams = {
         contexts: contexts,
@@ -83,7 +82,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
     // Keeping the context across queries let's us simulate an ongoing conversation with the bot
     let context;
     let intentResponse;
-    for (const query in queries) {
+    for (const query of queries) {
       try {
         console.log(`Sending Query: ${query}`);
         intentResponse = await detectIntent(
@@ -95,7 +94,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
         );
         console.log('Detected intent');
         console.log(
-          `Bot Response: ${intentResponse.queryResult.fulfillmentText}`
+          `Fulfillment Text: ${intentResponse.queryResult.fulfillmentText}`
         );
         // Use the context from this response for next queries
         context = intentResponse.queryResult.outputContexts;
