@@ -226,6 +226,8 @@ class AgentsClient {
       'exportAgent',
       'importAgent',
       'restoreAgent',
+      'setAgent',
+      'deleteAgent',
     ];
     for (const methodName of agentsStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
@@ -958,6 +960,40 @@ class AgentsClient {
     });
 
     return this._innerApiCalls.restoreAgent(request, options, callback);
+  }
+
+  setAgent(request, options, callback) {
+    if (options instanceof Function && callback === undefined) {
+      callback = options;
+      options = {};
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      parent: request.parent,
+    });
+
+    return this._innerApiCalls.setAgent(request, options, callback);
+  }
+
+  deleteAgent(request, options, callback) {
+    if (options instanceof Function && callback === undefined) {
+      callback = options;
+      options = {};
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      parent: request.parent,
+    });
+
+    return this._innerApiCalls.deleteAgent(request, options, callback);
   }
 
   // --------------------
