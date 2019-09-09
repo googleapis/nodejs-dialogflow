@@ -195,9 +195,6 @@ async function streamingDetectIntent(
 
   const initialStreamRequest = {
     session: sessionPath,
-    queryParams: {
-      session: sessionClient.sessionPath(projectId, sessionId),
-    },
     queryInput: {
       audioConfig: {
         audioEncoding: encoding,
