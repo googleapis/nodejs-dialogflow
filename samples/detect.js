@@ -17,8 +17,8 @@
 
 const util = require('util');
 const fs = require('fs');
-const { struct } = require('pb-util');
-const { Transform, pipeline } = require('stream');
+const {struct} = require('pb-util');
+const {Transform, pipeline} = require('stream');
 
 const pump = util.promisify(pipeline);
 
@@ -32,7 +32,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
   // const projectId = 'PROJECT_ID';
   // sessionId: Random number or hashed user identifier
   // const sessionId = 123456;
-  // queries: A set of sequential queries to be send to Dialogflow agent for Intent Detection 
+  // queries: A set of sequential queries to be send to Dialogflow agent for Intent Detection
   // const queries = [
   //   'Reserve a meeting room in Toronto office, there will be 5 of us',
   //   'Next monday at 3pm for 1 hour, please', // Tell the bot when the meeting is taking place
@@ -128,7 +128,7 @@ async function detectEventIntent(
     queryInput: {
       event: {
         name: eventName,
-        parameters: struct.encode({ foo: 'bar' }),
+        parameters: struct.encode({foo: 'bar'}),
         languageCode: languageCode,
       },
     },
@@ -249,7 +249,7 @@ async function streamingDetectIntent(
     new Transform({
       objectMode: true,
       transform: (obj, _, next) => {
-        next(null, { inputAudio: obj });
+        next(null, {inputAudio: obj});
       },
     }),
     detectStream
@@ -391,7 +391,7 @@ const cli = require(`yargs`)
   .command(
     `stream <filename>`,
     `Detects the intent in a local audio file by streaming it to the ` +
-    `Conversation API.`,
+      `Conversation API.`,
     {},
     opts =>
       streamingDetectIntent(
@@ -405,7 +405,7 @@ const cli = require(`yargs`)
   )
   .example(
     `node $0 text -q "hello" "book a room" "Mountain View" ` +
-    `"today" "230pm" "half an hour" "two people" "A" "yes"`
+      `"today" "230pm" "half an hour" "two people" "A" "yes"`
   )
   .example(`node $0 event order_pizza`)
   .example(`node $0 audio resources/book_a_room.wav -r 16000`)
