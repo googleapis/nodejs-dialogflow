@@ -71,7 +71,9 @@ class KnowledgeBasesClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -112,15 +114,11 @@ class KnowledgeBasesClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -130,7 +128,9 @@ class KnowledgeBasesClient {
       knowledgeBasePathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/knowledgeBases/{knowledge_base}'
       ),
-      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -160,9 +160,9 @@ class KnowledgeBasesClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.KnowledgeBases.
     const knowledgeBasesStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2beta1.KnowledgeBases')
-        : protos.google.cloud.dialogflow.v2beta1.KnowledgeBases,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2beta1.KnowledgeBases') :
+        protos.google.cloud.dialogflow.v2beta1.KnowledgeBases,
       opts
     );
 
@@ -335,11 +335,10 @@ class KnowledgeBasesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.listKnowledgeBases(request, options, callback);
   }
@@ -398,7 +397,7 @@ class KnowledgeBasesClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified knowledge base.
@@ -449,11 +448,10 @@ class KnowledgeBasesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getKnowledgeBase(request, options, callback);
   }
@@ -516,11 +514,10 @@ class KnowledgeBasesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.createKnowledgeBase(request, options, callback);
   }
@@ -569,11 +566,10 @@ class KnowledgeBasesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.deleteKnowledgeBase(request, options, callback);
   }
@@ -634,11 +630,10 @@ class KnowledgeBasesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'knowledge_base.name': request.knowledgeBase.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'knowledge_base.name': request.knowledgeBase.name
+      });
 
     return this._innerApiCalls.updateKnowledgeBase(request, options, callback);
   }
@@ -681,9 +676,9 @@ class KnowledgeBasesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromKnowledgeBaseName(knowledgeBaseName) {
-    return this._pathTemplates.knowledgeBasePathTemplate.match(
-      knowledgeBaseName
-    ).project;
+    return this._pathTemplates.knowledgeBasePathTemplate
+      .match(knowledgeBaseName)
+      .project;
   }
 
   /**
@@ -694,9 +689,9 @@ class KnowledgeBasesClient {
    * @returns {String} - A string representing the knowledge_base.
    */
   matchKnowledgeBaseFromKnowledgeBaseName(knowledgeBaseName) {
-    return this._pathTemplates.knowledgeBasePathTemplate.match(
-      knowledgeBaseName
-    ).knowledge_base;
+    return this._pathTemplates.knowledgeBasePathTemplate
+      .match(knowledgeBaseName)
+      .knowledge_base;
   }
 
   /**
@@ -707,8 +702,11 @@ class KnowledgeBasesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 }
+
 
 module.exports = KnowledgeBasesClient;

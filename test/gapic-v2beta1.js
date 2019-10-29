@@ -71,7 +71,7 @@ describe('AgentsClient', () => {
       const description = 'description-1724546052';
       const avatarUri = 'avatarUri-402824826';
       const enableLogging = false;
-      const classificationThreshold = 1.11581064e8;
+      const classificationThreshold = 1.11581064E8;
       const expectedResponse = {
         parent: parent,
         displayName: displayName,
@@ -194,7 +194,7 @@ describe('AgentsClient', () => {
       const description = 'description-1724546052';
       const avatarUri = 'avatarUri-402824826';
       const enableLogging = false;
-      const classificationThreshold = 1.11581064e8;
+      const classificationThreshold = 1.11581064E8;
       const expectedResponse = {
         parent: parent2,
         displayName: displayName,
@@ -270,11 +270,7 @@ describe('AgentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.searchAgents = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.searchAgents = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.agents);
       };
@@ -331,24 +327,17 @@ describe('AgentsClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .trainAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.trainAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes trainAgent with error', done => {
@@ -364,26 +353,18 @@ describe('AgentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .trainAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.trainAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -391,14 +372,8 @@ describe('AgentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.trainAgent.responseDecoder instanceof
-          Function
-      );
-      assert(
-        client._descriptors.longrunning.trainAgent.metadataDecoder instanceof
-          Function
-      );
+      assert(client._descriptors.longrunning.trainAgent.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.trainAgent.metadataDecoder instanceof Function);
     });
   });
 
@@ -422,24 +397,17 @@ describe('AgentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .exportAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.exportAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes exportAgent with error', done => {
@@ -455,26 +423,18 @@ describe('AgentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .exportAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.exportAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -482,14 +442,8 @@ describe('AgentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.exportAgent.responseDecoder instanceof
-          Function
-      );
-      assert(
-        client._descriptors.longrunning.exportAgent.metadataDecoder instanceof
-          Function
-      );
+      assert(client._descriptors.longrunning.exportAgent.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.exportAgent.metadataDecoder instanceof Function);
     });
   });
 
@@ -510,24 +464,17 @@ describe('AgentsClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .importAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.importAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes importAgent with error', done => {
@@ -543,26 +490,18 @@ describe('AgentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .importAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.importAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -570,14 +509,8 @@ describe('AgentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.importAgent.responseDecoder instanceof
-          Function
-      );
-      assert(
-        client._descriptors.longrunning.importAgent.metadataDecoder instanceof
-          Function
-      );
+      assert(client._descriptors.longrunning.importAgent.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.importAgent.metadataDecoder instanceof Function);
     });
   });
 
@@ -598,24 +531,17 @@ describe('AgentsClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .restoreAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.restoreAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes restoreAgent with error', done => {
@@ -631,26 +557,18 @@ describe('AgentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .restoreAgent(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.restoreAgent(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -658,14 +576,8 @@ describe('AgentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.restoreAgent.responseDecoder instanceof
-          Function
-      );
-      assert(
-        client._descriptors.longrunning.restoreAgent.metadataDecoder instanceof
-          Function
-      );
+      assert(client._descriptors.longrunning.restoreAgent.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.restoreAgent.metadataDecoder instanceof Function);
     });
   });
 
@@ -719,6 +631,7 @@ describe('AgentsClient', () => {
       });
     });
   });
+
 });
 describe('ContextsClient', () => {
   it('has servicePath', () => {
@@ -743,9 +656,7 @@ describe('ContextsClient', () => {
   });
 
   it('should create a client with gRPC fallback', () => {
-    const client = new dialogflowModule.v2beta1.ContextsClient({
-      fallback: true,
-    });
+    const client = new dialogflowModule.v2beta1.ContextsClient({fallback: true});
     assert(client);
   });
 
@@ -772,11 +683,7 @@ describe('ContextsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listContexts = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listContexts = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.contexts);
       };
@@ -824,11 +731,7 @@ describe('ContextsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.contextPath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[CONTEXT]'
-      );
+      const formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
       const request = {
         name: formattedName,
       };
@@ -861,11 +764,7 @@ describe('ContextsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.contextPath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[CONTEXT]'
-      );
+      const formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
       const request = {
         name: formattedName,
       };
@@ -1022,11 +921,7 @@ describe('ContextsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.contextPath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[CONTEXT]'
-      );
+      const formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
       const request = {
         name: formattedName,
       };
@@ -1047,11 +942,7 @@ describe('ContextsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.contextPath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[CONTEXT]'
-      );
+      const formattedName = client.contextPath('[PROJECT]', '[SESSION]', '[CONTEXT]');
       const request = {
         name: formattedName,
       };
@@ -1119,6 +1010,7 @@ describe('ContextsClient', () => {
       });
     });
   });
+
 });
 describe('DocumentsClient', () => {
   it('has servicePath', () => {
@@ -1143,9 +1035,7 @@ describe('DocumentsClient', () => {
   });
 
   it('should create a client with gRPC fallback', () => {
-    const client = new dialogflowModule.v2beta1.DocumentsClient({
-      fallback: true,
-    });
+    const client = new dialogflowModule.v2beta1.DocumentsClient({fallback: true});
     assert(client);
   });
 
@@ -1157,10 +1047,7 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedParent = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const request = {
         parent: formattedParent,
       };
@@ -1175,11 +1062,7 @@ describe('DocumentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listDocuments = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listDocuments = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.documents);
       };
@@ -1198,10 +1081,7 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedParent = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const request = {
         parent: formattedParent,
       };
@@ -1230,11 +1110,7 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.documentPath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]',
-        '[DOCUMENT]'
-      );
+      const formattedName = client.documentPath('[PROJECT]', '[KNOWLEDGE_BASE]', '[DOCUMENT]');
       const request = {
         name: formattedName,
       };
@@ -1271,11 +1147,7 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.documentPath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]',
-        '[DOCUMENT]'
-      );
+      const formattedName = client.documentPath('[PROJECT]', '[KNOWLEDGE_BASE]', '[DOCUMENT]');
       const request = {
         name: formattedName,
       };
@@ -1304,10 +1176,7 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedParent = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const document = {};
       const request = {
         parent: formattedParent,
@@ -1327,24 +1196,17 @@ describe('DocumentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.createDocument = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.createDocument = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .createDocument(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.createDocument(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes createDocument with error', done => {
@@ -1354,10 +1216,7 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedParent = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const document = {};
       const request = {
         parent: formattedParent,
@@ -1365,26 +1224,18 @@ describe('DocumentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.createDocument = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.createDocument = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .createDocument(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.createDocument(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -1392,14 +1243,8 @@ describe('DocumentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.createDocument
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.createDocument
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.createDocument.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.createDocument.metadataDecoder instanceof Function);
     });
   });
 
@@ -1411,11 +1256,7 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.documentPath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]',
-        '[DOCUMENT]'
-      );
+      const formattedName = client.documentPath('[PROJECT]', '[KNOWLEDGE_BASE]', '[DOCUMENT]');
       const request = {
         name: formattedName,
       };
@@ -1424,24 +1265,17 @@ describe('DocumentsClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.deleteDocument = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.deleteDocument = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .deleteDocument(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.deleteDocument(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes deleteDocument with error', done => {
@@ -1451,36 +1285,24 @@ describe('DocumentsClient', () => {
       });
 
       // Mock request
-      const formattedName = client.documentPath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]',
-        '[DOCUMENT]'
-      );
+      const formattedName = client.documentPath('[PROJECT]', '[KNOWLEDGE_BASE]', '[DOCUMENT]');
       const request = {
         name: formattedName,
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.deleteDocument = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.deleteDocument = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .deleteDocument(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.deleteDocument(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -1488,14 +1310,8 @@ describe('DocumentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.deleteDocument
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.deleteDocument
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.deleteDocument.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.deleteDocument.metadataDecoder instanceof Function);
     });
   });
 
@@ -1525,24 +1341,17 @@ describe('DocumentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.updateDocument = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.updateDocument = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .updateDocument(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.updateDocument(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes updateDocument with error', done => {
@@ -1558,26 +1367,18 @@ describe('DocumentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.updateDocument = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.updateDocument = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .updateDocument(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.updateDocument(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -1585,14 +1386,8 @@ describe('DocumentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.updateDocument
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.updateDocument
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.updateDocument.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.updateDocument.metadataDecoder instanceof Function);
     });
   });
 
@@ -1651,6 +1446,7 @@ describe('DocumentsClient', () => {
       });
     });
   });
+
 });
 describe('EntityTypesClient', () => {
   it('has servicePath', () => {
@@ -1675,9 +1471,7 @@ describe('EntityTypesClient', () => {
   });
 
   it('should create a client with gRPC fallback', () => {
-    const client = new dialogflowModule.v2beta1.EntityTypesClient({
-      fallback: true,
-    });
+    const client = new dialogflowModule.v2beta1.EntityTypesClient({fallback: true});
     assert(client);
   });
 
@@ -1704,11 +1498,7 @@ describe('EntityTypesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listEntityTypes = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listEntityTypes = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.entityTypes);
       };
@@ -2010,24 +1800,17 @@ describe('EntityTypesClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.batchUpdateEntityTypes = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.batchUpdateEntityTypes = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .batchUpdateEntityTypes(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.batchUpdateEntityTypes(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes batchUpdateEntityTypes with error', done => {
@@ -2043,26 +1826,18 @@ describe('EntityTypesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.batchUpdateEntityTypes = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.batchUpdateEntityTypes = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .batchUpdateEntityTypes(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.batchUpdateEntityTypes(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -2070,14 +1845,8 @@ describe('EntityTypesClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.batchUpdateEntityTypes
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.batchUpdateEntityTypes
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.batchUpdateEntityTypes.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.batchUpdateEntityTypes.metadataDecoder instanceof Function);
     });
   });
 
@@ -2100,24 +1869,17 @@ describe('EntityTypesClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.batchDeleteEntityTypes = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.batchDeleteEntityTypes = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .batchDeleteEntityTypes(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.batchDeleteEntityTypes(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes batchDeleteEntityTypes with error', done => {
@@ -2135,26 +1897,18 @@ describe('EntityTypesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.batchDeleteEntityTypes = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.batchDeleteEntityTypes = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .batchDeleteEntityTypes(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.batchDeleteEntityTypes(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -2162,14 +1916,8 @@ describe('EntityTypesClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.batchDeleteEntityTypes
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.batchDeleteEntityTypes
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.batchDeleteEntityTypes.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.batchDeleteEntityTypes.metadataDecoder instanceof Function);
     });
   });
 
@@ -2181,10 +1929,7 @@ describe('EntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.entityTypePath(
-        '[PROJECT]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedParent = client.entityTypePath('[PROJECT]', '[ENTITY_TYPE]');
       const entities = [];
       const request = {
         parent: formattedParent,
@@ -2195,24 +1940,17 @@ describe('EntityTypesClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.batchCreateEntities = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.batchCreateEntities = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .batchCreateEntities(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.batchCreateEntities(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes batchCreateEntities with error', done => {
@@ -2222,10 +1960,7 @@ describe('EntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.entityTypePath(
-        '[PROJECT]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedParent = client.entityTypePath('[PROJECT]', '[ENTITY_TYPE]');
       const entities = [];
       const request = {
         parent: formattedParent,
@@ -2233,26 +1968,18 @@ describe('EntityTypesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.batchCreateEntities = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.batchCreateEntities = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .batchCreateEntities(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.batchCreateEntities(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -2260,14 +1987,8 @@ describe('EntityTypesClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.batchCreateEntities
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.batchCreateEntities
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.batchCreateEntities.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.batchCreateEntities.metadataDecoder instanceof Function);
     });
   });
 
@@ -2279,10 +2000,7 @@ describe('EntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.entityTypePath(
-        '[PROJECT]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedParent = client.entityTypePath('[PROJECT]', '[ENTITY_TYPE]');
       const entities = [];
       const request = {
         parent: formattedParent,
@@ -2293,24 +2011,17 @@ describe('EntityTypesClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.batchUpdateEntities = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.batchUpdateEntities = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .batchUpdateEntities(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.batchUpdateEntities(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes batchUpdateEntities with error', done => {
@@ -2320,10 +2031,7 @@ describe('EntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.entityTypePath(
-        '[PROJECT]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedParent = client.entityTypePath('[PROJECT]', '[ENTITY_TYPE]');
       const entities = [];
       const request = {
         parent: formattedParent,
@@ -2331,26 +2039,18 @@ describe('EntityTypesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.batchUpdateEntities = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.batchUpdateEntities = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .batchUpdateEntities(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.batchUpdateEntities(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -2358,14 +2058,8 @@ describe('EntityTypesClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.batchUpdateEntities
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.batchUpdateEntities
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.batchUpdateEntities.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.batchUpdateEntities.metadataDecoder instanceof Function);
     });
   });
 
@@ -2377,10 +2071,7 @@ describe('EntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.entityTypePath(
-        '[PROJECT]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedParent = client.entityTypePath('[PROJECT]', '[ENTITY_TYPE]');
       const entityValues = [];
       const request = {
         parent: formattedParent,
@@ -2391,24 +2082,17 @@ describe('EntityTypesClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.batchDeleteEntities = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.batchDeleteEntities = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .batchDeleteEntities(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.batchDeleteEntities(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes batchDeleteEntities with error', done => {
@@ -2418,10 +2102,7 @@ describe('EntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedParent = client.entityTypePath(
-        '[PROJECT]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedParent = client.entityTypePath('[PROJECT]', '[ENTITY_TYPE]');
       const entityValues = [];
       const request = {
         parent: formattedParent,
@@ -2429,26 +2110,18 @@ describe('EntityTypesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.batchDeleteEntities = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.batchDeleteEntities = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .batchDeleteEntities(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.batchDeleteEntities(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -2456,16 +2129,11 @@ describe('EntityTypesClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.batchDeleteEntities
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.batchDeleteEntities
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.batchDeleteEntities.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.batchDeleteEntities.metadataDecoder instanceof Function);
     });
   });
+
 });
 describe('IntentsClient', () => {
   it('has servicePath', () => {
@@ -2517,11 +2185,7 @@ describe('IntentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listIntents = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listIntents = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.intents);
       };
@@ -2877,24 +2541,17 @@ describe('IntentsClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.batchUpdateIntents = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.batchUpdateIntents = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .batchUpdateIntents(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.batchUpdateIntents(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes batchUpdateIntents with error', done => {
@@ -2912,26 +2569,18 @@ describe('IntentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.batchUpdateIntents = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.batchUpdateIntents = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .batchUpdateIntents(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.batchUpdateIntents(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -2939,14 +2588,8 @@ describe('IntentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.batchUpdateIntents
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.batchUpdateIntents
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.batchUpdateIntents.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.batchUpdateIntents.metadataDecoder instanceof Function);
     });
   });
 
@@ -2969,24 +2612,17 @@ describe('IntentsClient', () => {
       const expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.batchDeleteIntents = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.batchDeleteIntents = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .batchDeleteIntents(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.batchDeleteIntents(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes batchDeleteIntents with error', done => {
@@ -3004,26 +2640,18 @@ describe('IntentsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.batchDeleteIntents = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.batchDeleteIntents = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .batchDeleteIntents(request)
-        .then(responses => {
-          const operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.batchDeleteIntents(request).then(responses => {
+        const operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -3031,27 +2659,20 @@ describe('IntentsClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.batchDeleteIntents
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.batchDeleteIntents
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.batchDeleteIntents.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.batchDeleteIntents.metadataDecoder instanceof Function);
     });
   });
+
 });
 describe('KnowledgeBasesClient', () => {
   it('has servicePath', () => {
-    const servicePath =
-      dialogflowModule.v2beta1.KnowledgeBasesClient.servicePath;
+    const servicePath = dialogflowModule.v2beta1.KnowledgeBasesClient.servicePath;
     assert(servicePath);
   });
 
   it('has apiEndpoint', () => {
-    const apiEndpoint =
-      dialogflowModule.v2beta1.KnowledgeBasesClient.apiEndpoint;
+    const apiEndpoint = dialogflowModule.v2beta1.KnowledgeBasesClient.apiEndpoint;
     assert(apiEndpoint);
   });
 
@@ -3067,9 +2688,7 @@ describe('KnowledgeBasesClient', () => {
   });
 
   it('should create a client with gRPC fallback', () => {
-    const client = new dialogflowModule.v2beta1.KnowledgeBasesClient({
-      fallback: true,
-    });
+    const client = new dialogflowModule.v2beta1.KnowledgeBasesClient({fallback: true});
     assert(client);
   });
 
@@ -3096,11 +2715,7 @@ describe('KnowledgeBasesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listKnowledgeBases = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listKnowledgeBases = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.knowledgeBases);
       };
@@ -3148,10 +2763,7 @@ describe('KnowledgeBasesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedName = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const request = {
         name: formattedName,
       };
@@ -3186,10 +2798,7 @@ describe('KnowledgeBasesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedName = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const request = {
         name: formattedName,
       };
@@ -3286,10 +2895,7 @@ describe('KnowledgeBasesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedName = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const request = {
         name: formattedName,
       };
@@ -3310,10 +2916,7 @@ describe('KnowledgeBasesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.knowledgeBasePath(
-        '[PROJECT]',
-        '[KNOWLEDGE_BASE]'
-      );
+      const formattedName = client.knowledgeBasePath('[PROJECT]', '[KNOWLEDGE_BASE]');
       const request = {
         name: formattedName,
       };
@@ -3396,17 +2999,16 @@ describe('KnowledgeBasesClient', () => {
       });
     });
   });
+
 });
 describe('SessionEntityTypesClient', () => {
   it('has servicePath', () => {
-    const servicePath =
-      dialogflowModule.v2beta1.SessionEntityTypesClient.servicePath;
+    const servicePath = dialogflowModule.v2beta1.SessionEntityTypesClient.servicePath;
     assert(servicePath);
   });
 
   it('has apiEndpoint', () => {
-    const apiEndpoint =
-      dialogflowModule.v2beta1.SessionEntityTypesClient.apiEndpoint;
+    const apiEndpoint = dialogflowModule.v2beta1.SessionEntityTypesClient.apiEndpoint;
     assert(apiEndpoint);
   });
 
@@ -3422,9 +3024,7 @@ describe('SessionEntityTypesClient', () => {
   });
 
   it('should create a client with gRPC fallback', () => {
-    const client = new dialogflowModule.v2beta1.SessionEntityTypesClient({
-      fallback: true,
-    });
+    const client = new dialogflowModule.v2beta1.SessionEntityTypesClient({fallback: true});
     assert(client);
   });
 
@@ -3451,11 +3051,7 @@ describe('SessionEntityTypesClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listSessionEntityTypes = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listSessionEntityTypes = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.sessionEntityTypes);
       };
@@ -3503,11 +3099,7 @@ describe('SessionEntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.sessionEntityTypePath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedName = client.sessionEntityTypePath('[PROJECT]', '[SESSION]', '[ENTITY_TYPE]');
       const request = {
         name: formattedName,
       };
@@ -3538,11 +3130,7 @@ describe('SessionEntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.sessionEntityTypePath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedName = client.sessionEntityTypePath('[PROJECT]', '[SESSION]', '[ENTITY_TYPE]');
       const request = {
         name: formattedName,
       };
@@ -3695,19 +3283,13 @@ describe('SessionEntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.sessionEntityTypePath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedName = client.sessionEntityTypePath('[PROJECT]', '[SESSION]', '[ENTITY_TYPE]');
       const request = {
         name: formattedName,
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.deleteSessionEntityType = mockSimpleGrpcMethod(
-        request
-      );
+      client._innerApiCalls.deleteSessionEntityType = mockSimpleGrpcMethod(request);
 
       client.deleteSessionEntityType(request, err => {
         assert.ifError(err);
@@ -3722,11 +3304,7 @@ describe('SessionEntityTypesClient', () => {
       });
 
       // Mock request
-      const formattedName = client.sessionEntityTypePath(
-        '[PROJECT]',
-        '[SESSION]',
-        '[ENTITY_TYPE]'
-      );
+      const formattedName = client.sessionEntityTypePath('[PROJECT]', '[SESSION]', '[ENTITY_TYPE]');
       const request = {
         name: formattedName,
       };
@@ -3745,6 +3323,7 @@ describe('SessionEntityTypesClient', () => {
       });
     });
   });
+
 });
 describe('SessionsClient', () => {
   it('has servicePath', () => {
@@ -3769,9 +3348,7 @@ describe('SessionsClient', () => {
   });
 
   it('should create a client with gRPC fallback', () => {
-    const client = new dialogflowModule.v2beta1.SessionsClient({
-      fallback: true,
-    });
+    const client = new dialogflowModule.v2beta1.SessionsClient({fallback: true});
     assert(client);
   });
 
@@ -3865,20 +3442,14 @@ describe('SessionsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.streamingDetectIntent = mockBidiStreamingGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.streamingDetectIntent = mockBidiStreamingGrpcMethod(request, expectedResponse);
 
-      const stream = client
-        .streamingDetectIntent()
-        .on('data', response => {
-          assert.deepStrictEqual(response, expectedResponse);
-          done();
-        })
-        .on('error', err => {
-          done(err);
-        });
+      const stream = client.streamingDetectIntent().on('data', response => {
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      }).on('error', err => {
+        done(err);
+      });
 
       stream.write(request);
     });
@@ -3898,26 +3469,20 @@ describe('SessionsClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.streamingDetectIntent = mockBidiStreamingGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.streamingDetectIntent = mockBidiStreamingGrpcMethod(request, null, error);
 
-      const stream = client
-        .streamingDetectIntent()
-        .on('data', () => {
-          assert.fail();
-        })
-        .on('error', err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      const stream = client.streamingDetectIntent().on('data', () => {
+        assert.fail();
+      }).on('error', err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
 
       stream.write(request);
     });
   });
+
 });
 
 function mockSimpleGrpcMethod(expectedRequest, response, error) {
@@ -3941,13 +3506,14 @@ function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
         assert.deepStrictEqual(chunk, expectedRequest);
         if (error) {
           callback(error);
-        } else {
+        }
+        else {
           callback(null, response);
         }
-      },
+      }
     });
     return mockStream;
-  };
+  }
 }
 
 function mockLongRunningGrpcMethod(expectedRequest, response, error) {
@@ -3958,11 +3524,12 @@ function mockLongRunningGrpcMethod(expectedRequest, response, error) {
         return new Promise((resolve, reject) => {
           if (error) {
             reject(error);
-          } else {
+          }
+          else {
             resolve([response]);
           }
         });
-      },
+      }
     };
     return Promise.resolve([mockOperation]);
   };

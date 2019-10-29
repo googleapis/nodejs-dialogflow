@@ -72,7 +72,9 @@ class SessionsClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -113,15 +115,11 @@ class SessionsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -136,9 +134,7 @@ class SessionsClient {
     // Some of the methods on this service provide streaming responses.
     // Provide descriptors for these.
     this._descriptors.stream = {
-      streamingDetectIntent: new gaxModule.StreamDescriptor(
-        gax.StreamType.BIDI_STREAMING
-      ),
+      streamingDetectIntent: new gaxModule.StreamDescriptor(gax.StreamType.BIDI_STREAMING),
     };
 
     // Put together the default options sent with requests.
@@ -157,15 +153,18 @@ class SessionsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.Sessions.
     const sessionsStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2.Sessions')
-        : protos.google.cloud.dialogflow.v2.Sessions,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2.Sessions') :
+        protos.google.cloud.dialogflow.v2.Sessions,
       opts
     );
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const sessionsStubMethods = ['detectIntent', 'streamingDetectIntent'];
+    const sessionsStubMethods = [
+      'detectIntent',
+      'streamingDetectIntent',
+    ];
     for (const methodName of sessionsStubMethods) {
       const innerCallPromise = sessionsStub.then(
         stub => (...args) => {
@@ -311,11 +310,10 @@ class SessionsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      session: request.session,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'session': request.session
+      });
 
     return this._innerApiCalls.detectIntent(request, options, callback);
   }
@@ -385,7 +383,9 @@ class SessionsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .project;
   }
 
   /**
@@ -396,8 +396,11 @@ class SessionsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .session;
   }
 }
+
 
 module.exports = SessionsClient;

@@ -69,7 +69,9 @@ class DocumentsClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -110,15 +112,11 @@ class DocumentsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -144,9 +142,9 @@ class DocumentsClient {
       ),
     };
 
-    const protoFilesRoot = opts.fallback
-      ? gaxModule.protobuf.Root.fromJSON(require('../../protos/protos.json'))
-      : gaxModule.protobuf.loadSync(nodejsProtoPath);
+    const protoFilesRoot = opts.fallback ?
+      gaxModule.protobuf.Root.fromJSON(require("../../protos/protos.json")) :
+      gaxModule.protobuf.loadSync(nodejsProtoPath);
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -209,9 +207,9 @@ class DocumentsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Documents.
     const documentsStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2beta1.Documents')
-        : protos.google.cloud.dialogflow.v2beta1.Documents,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2beta1.Documents') :
+        protos.google.cloud.dialogflow.v2beta1.Documents,
       opts
     );
 
@@ -237,8 +235,7 @@ class DocumentsClient {
       this._innerApiCalls[methodName] = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
-        this._descriptors.page[methodName] ||
-          this._descriptors.longrunning[methodName]
+        this._descriptors.page[methodName] || this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -386,11 +383,10 @@ class DocumentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.listDocuments(request, options, callback);
   }
@@ -449,7 +445,7 @@ class DocumentsClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified document.
@@ -501,11 +497,10 @@ class DocumentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getDocument(request, options, callback);
   }
@@ -625,11 +620,10 @@ class DocumentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.createDocument(request, options, callback);
   }
@@ -731,11 +725,10 @@ class DocumentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.deleteDocument(request, options, callback);
   }
@@ -843,11 +836,10 @@ class DocumentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'document.name': request.document.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'document.name': request.document.name
+      });
 
     return this._innerApiCalls.updateDocument(request, options, callback);
   }
@@ -912,11 +904,10 @@ class DocumentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.reloadDocument(request, options, callback);
   }
@@ -963,7 +954,9 @@ class DocumentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromDocumentName(documentName) {
-    return this._pathTemplates.documentPathTemplate.match(documentName).project;
+    return this._pathTemplates.documentPathTemplate
+      .match(documentName)
+      .project;
   }
 
   /**
@@ -974,7 +967,8 @@ class DocumentsClient {
    * @returns {String} - A string representing the knowledge_base.
    */
   matchKnowledgeBaseFromDocumentName(documentName) {
-    return this._pathTemplates.documentPathTemplate.match(documentName)
+    return this._pathTemplates.documentPathTemplate
+      .match(documentName)
       .knowledge_base;
   }
 
@@ -986,7 +980,8 @@ class DocumentsClient {
    * @returns {String} - A string representing the document.
    */
   matchDocumentFromDocumentName(documentName) {
-    return this._pathTemplates.documentPathTemplate.match(documentName)
+    return this._pathTemplates.documentPathTemplate
+      .match(documentName)
       .document;
   }
 
@@ -998,9 +993,9 @@ class DocumentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromKnowledgeBaseName(knowledgeBaseName) {
-    return this._pathTemplates.knowledgeBasePathTemplate.match(
-      knowledgeBaseName
-    ).project;
+    return this._pathTemplates.knowledgeBasePathTemplate
+      .match(knowledgeBaseName)
+      .project;
   }
 
   /**
@@ -1011,10 +1006,11 @@ class DocumentsClient {
    * @returns {String} - A string representing the knowledge_base.
    */
   matchKnowledgeBaseFromKnowledgeBaseName(knowledgeBaseName) {
-    return this._pathTemplates.knowledgeBasePathTemplate.match(
-      knowledgeBaseName
-    ).knowledge_base;
+    return this._pathTemplates.knowledgeBasePathTemplate
+      .match(knowledgeBaseName)
+      .knowledge_base;
   }
 }
+
 
 module.exports = DocumentsClient;

@@ -96,7 +96,9 @@ class AgentsClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -137,22 +139,20 @@ class AgentsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -166,9 +166,9 @@ class AgentsClient {
       ),
     };
 
-    const protoFilesRoot = opts.fallback
-      ? gaxModule.protobuf.Root.fromJSON(require('../../protos/protos.json'))
-      : gaxModule.protobuf.loadSync(nodejsProtoPath);
+    const protoFilesRoot = opts.fallback ?
+      gaxModule.protobuf.Root.fromJSON(require("../../protos/protos.json")) :
+      gaxModule.protobuf.loadSync(nodejsProtoPath);
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -178,15 +178,27 @@ class AgentsClient {
       grpc: gaxGrpc.grpc,
     }).operationsClient(opts);
 
-    const trainAgentResponse = protoFilesRoot.lookup('google.protobuf.Empty');
-    const trainAgentMetadata = protoFilesRoot.lookup('google.protobuf.Struct');
+    const trainAgentResponse = protoFilesRoot.lookup(
+      'google.protobuf.Empty'
+    );
+    const trainAgentMetadata = protoFilesRoot.lookup(
+      'google.protobuf.Struct'
+    );
     const exportAgentResponse = protoFilesRoot.lookup(
       'google.cloud.dialogflow.v2beta1.ExportAgentResponse'
     );
-    const exportAgentMetadata = protoFilesRoot.lookup('google.protobuf.Struct');
-    const importAgentResponse = protoFilesRoot.lookup('google.protobuf.Empty');
-    const importAgentMetadata = protoFilesRoot.lookup('google.protobuf.Struct');
-    const restoreAgentResponse = protoFilesRoot.lookup('google.protobuf.Empty');
+    const exportAgentMetadata = protoFilesRoot.lookup(
+      'google.protobuf.Struct'
+    );
+    const importAgentResponse = protoFilesRoot.lookup(
+      'google.protobuf.Empty'
+    );
+    const importAgentMetadata = protoFilesRoot.lookup(
+      'google.protobuf.Struct'
+    );
+    const restoreAgentResponse = protoFilesRoot.lookup(
+      'google.protobuf.Empty'
+    );
     const restoreAgentMetadata = protoFilesRoot.lookup(
       'google.protobuf.Struct'
     );
@@ -230,9 +242,9 @@ class AgentsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Agents.
     const agentsStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2beta1.Agents')
-        : protos.google.cloud.dialogflow.v2beta1.Agents,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2beta1.Agents') :
+        protos.google.cloud.dialogflow.v2beta1.Agents,
       opts
     );
 
@@ -261,8 +273,7 @@ class AgentsClient {
       this._innerApiCalls[methodName] = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
-        this._descriptors.page[methodName] ||
-          this._descriptors.longrunning[methodName]
+        this._descriptors.page[methodName] || this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -364,11 +375,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'agent.parent': request.agent.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'agent.parent': request.agent.parent
+      });
 
     return this._innerApiCalls.setAgent(request, options, callback);
   }
@@ -411,11 +421,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.deleteAgent(request, options, callback);
   }
@@ -466,11 +475,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.getAgent(request, options, callback);
   }
@@ -575,11 +583,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.searchAgents(request, options, callback);
   }
@@ -638,7 +645,7 @@ class AgentsClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Trains the specified agent.
@@ -733,11 +740,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.trainAgent(request, options, callback);
   }
@@ -841,11 +847,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.exportAgent(request, options, callback);
   }
@@ -952,11 +957,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.importAgent(request, options, callback);
   }
@@ -1062,11 +1066,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.restoreAgent(request, options, callback);
   }
@@ -1124,11 +1127,10 @@ class AgentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.getValidationResult(request, options, callback);
   }
@@ -1157,8 +1159,11 @@ class AgentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 }
+
 
 module.exports = AgentsClient;

@@ -100,7 +100,9 @@ class IntentsClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -141,15 +143,11 @@ class IntentsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -178,9 +176,9 @@ class IntentsClient {
       ),
     };
 
-    const protoFilesRoot = opts.fallback
-      ? gaxModule.protobuf.Root.fromJSON(require('../../protos/protos.json'))
-      : gaxModule.protobuf.loadSync(nodejsProtoPath);
+    const protoFilesRoot = opts.fallback ?
+      gaxModule.protobuf.Root.fromJSON(require("../../protos/protos.json")) :
+      gaxModule.protobuf.loadSync(nodejsProtoPath);
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -232,9 +230,9 @@ class IntentsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.Intents.
     const intentsStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2.Intents')
-        : protos.google.cloud.dialogflow.v2.Intents,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2.Intents') :
+        protos.google.cloud.dialogflow.v2.Intents,
       opts
     );
 
@@ -261,8 +259,7 @@ class IntentsClient {
       this._innerApiCalls[methodName] = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
-        this._descriptors.page[methodName] ||
-          this._descriptors.longrunning[methodName]
+        this._descriptors.page[methodName] || this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -418,11 +415,10 @@ class IntentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.listIntents(request, options, callback);
   }
@@ -492,7 +488,7 @@ class IntentsClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified intent.
@@ -551,11 +547,10 @@ class IntentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getIntent(request, options, callback);
   }
@@ -626,11 +621,10 @@ class IntentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.createIntent(request, options, callback);
   }
@@ -702,11 +696,10 @@ class IntentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'intent.name': request.intent.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'intent.name': request.intent.name
+      });
 
     return this._innerApiCalls.updateIntent(request, options, callback);
   }
@@ -750,11 +743,10 @@ class IntentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.deleteIntent(request, options, callback);
   }
@@ -889,11 +881,10 @@ class IntentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.batchUpdateIntents(request, options, callback);
   }
@@ -1010,11 +1001,10 @@ class IntentsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.batchDeleteIntents(request, options, callback);
   }
@@ -1071,7 +1061,9 @@ class IntentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromAgentName(agentName) {
-    return this._pathTemplates.agentPathTemplate.match(agentName).project;
+    return this._pathTemplates.agentPathTemplate
+      .match(agentName)
+      .project;
   }
 
   /**
@@ -1082,7 +1074,9 @@ class IntentsClient {
    * @returns {String} - A string representing the agent.
    */
   matchAgentFromAgentName(agentName) {
-    return this._pathTemplates.agentPathTemplate.match(agentName).agent;
+    return this._pathTemplates.agentPathTemplate
+      .match(agentName)
+      .agent;
   }
 
   /**
@@ -1093,7 +1087,9 @@ class IntentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromIntentName(intentName) {
-    return this._pathTemplates.intentPathTemplate.match(intentName).project;
+    return this._pathTemplates.intentPathTemplate
+      .match(intentName)
+      .project;
   }
 
   /**
@@ -1104,7 +1100,9 @@ class IntentsClient {
    * @returns {String} - A string representing the intent.
    */
   matchIntentFromIntentName(intentName) {
-    return this._pathTemplates.intentPathTemplate.match(intentName).intent;
+    return this._pathTemplates.intentPathTemplate
+      .match(intentName)
+      .intent;
   }
 
   /**
@@ -1115,9 +1113,11 @@ class IntentsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectAgentName(projectAgentName) {
-    return this._pathTemplates.projectAgentPathTemplate.match(projectAgentName)
+    return this._pathTemplates.projectAgentPathTemplate
+      .match(projectAgentName)
       .project;
   }
 }
+
 
 module.exports = IntentsClient;

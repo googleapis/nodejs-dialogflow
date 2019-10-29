@@ -85,7 +85,9 @@ class SessionEntityTypesClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -126,15 +128,11 @@ class SessionEntityTypesClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -176,9 +174,9 @@ class SessionEntityTypesClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.SessionEntityTypes.
     const sessionEntityTypesStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2.SessionEntityTypes')
-        : protos.google.cloud.dialogflow.v2.SessionEntityTypes,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2.SessionEntityTypes') :
+        protos.google.cloud.dialogflow.v2.SessionEntityTypes,
       opts
     );
 
@@ -352,17 +350,12 @@ class SessionEntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
-    return this._innerApiCalls.listSessionEntityTypes(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listSessionEntityTypes(request, options, callback);
   }
 
   /**
@@ -419,7 +412,7 @@ class SessionEntityTypesClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified session entity type.
@@ -472,11 +465,10 @@ class SessionEntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getSessionEntityType(request, options, callback);
   }
@@ -543,17 +535,12 @@ class SessionEntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
-    return this._innerApiCalls.createSessionEntityType(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.createSessionEntityType(request, options, callback);
   }
 
   /**
@@ -613,17 +600,12 @@ class SessionEntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'session_entity_type.name': request.sessionEntityType.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'session_entity_type.name': request.sessionEntityType.name
+      });
 
-    return this._innerApiCalls.updateSessionEntityType(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.updateSessionEntityType(request, options, callback);
   }
 
   /**
@@ -669,17 +651,12 @@ class SessionEntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.deleteSessionEntityType(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.deleteSessionEntityType(request, options, callback);
   }
 
   // --------------------
@@ -724,7 +701,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .project;
   }
 
   /**
@@ -735,7 +714,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .session;
   }
 
   /**
@@ -746,9 +727,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionEntityTypeName(sessionEntityTypeName) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(
-      sessionEntityTypeName
-    ).project;
+    return this._pathTemplates.sessionEntityTypePathTemplate
+      .match(sessionEntityTypeName)
+      .project;
   }
 
   /**
@@ -759,9 +740,9 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionEntityTypeName(sessionEntityTypeName) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(
-      sessionEntityTypeName
-    ).session;
+    return this._pathTemplates.sessionEntityTypePathTemplate
+      .match(sessionEntityTypeName)
+      .session;
   }
 
   /**
@@ -772,10 +753,11 @@ class SessionEntityTypesClient {
    * @returns {String} - A string representing the entity_type.
    */
   matchEntityTypeFromSessionEntityTypeName(sessionEntityTypeName) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(
-      sessionEntityTypeName
-    ).entity_type;
+    return this._pathTemplates.sessionEntityTypePathTemplate
+      .match(sessionEntityTypeName)
+      .entity_type;
   }
 }
+
 
 module.exports = SessionEntityTypesClient;

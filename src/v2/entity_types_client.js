@@ -96,7 +96,9 @@ class EntityTypesClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -137,15 +139,11 @@ class EntityTypesClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -171,9 +169,9 @@ class EntityTypesClient {
       ),
     };
 
-    const protoFilesRoot = opts.fallback
-      ? gaxModule.protobuf.Root.fromJSON(require('../../protos/protos.json'))
-      : gaxModule.protobuf.loadSync(nodejsProtoPath);
+    const protoFilesRoot = opts.fallback ?
+      gaxModule.protobuf.Root.fromJSON(require("../../protos/protos.json")) :
+      gaxModule.protobuf.loadSync(nodejsProtoPath);
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -217,21 +215,13 @@ class EntityTypesClient {
     this._descriptors.longrunning = {
       batchUpdateEntityTypes: new gaxModule.LongrunningDescriptor(
         this.operationsClient,
-        batchUpdateEntityTypesResponse.decode.bind(
-          batchUpdateEntityTypesResponse
-        ),
-        batchUpdateEntityTypesMetadata.decode.bind(
-          batchUpdateEntityTypesMetadata
-        )
+        batchUpdateEntityTypesResponse.decode.bind(batchUpdateEntityTypesResponse),
+        batchUpdateEntityTypesMetadata.decode.bind(batchUpdateEntityTypesMetadata)
       ),
       batchDeleteEntityTypes: new gaxModule.LongrunningDescriptor(
         this.operationsClient,
-        batchDeleteEntityTypesResponse.decode.bind(
-          batchDeleteEntityTypesResponse
-        ),
-        batchDeleteEntityTypesMetadata.decode.bind(
-          batchDeleteEntityTypesMetadata
-        )
+        batchDeleteEntityTypesResponse.decode.bind(batchDeleteEntityTypesResponse),
+        batchDeleteEntityTypesMetadata.decode.bind(batchDeleteEntityTypesMetadata)
       ),
       batchCreateEntities: new gaxModule.LongrunningDescriptor(
         this.operationsClient,
@@ -266,9 +256,9 @@ class EntityTypesClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.EntityTypes.
     const entityTypesStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2.EntityTypes')
-        : protos.google.cloud.dialogflow.v2.EntityTypes,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2.EntityTypes') :
+        protos.google.cloud.dialogflow.v2.EntityTypes,
       opts
     );
 
@@ -298,8 +288,7 @@ class EntityTypesClient {
       this._innerApiCalls[methodName] = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
-        this._descriptors.page[methodName] ||
-          this._descriptors.longrunning[methodName]
+        this._descriptors.page[methodName] || this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -451,11 +440,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.listEntityTypes(request, options, callback);
   }
@@ -521,7 +509,7 @@ class EntityTypesClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified entity type.
@@ -576,11 +564,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getEntityType(request, options, callback);
   }
@@ -647,11 +634,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.createEntityType(request, options, callback);
   }
@@ -714,11 +700,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'entity_type.name': request.entityType.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'entity_type.name': request.entityType.name
+      });
 
     return this._innerApiCalls.updateEntityType(request, options, callback);
   }
@@ -761,11 +746,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.deleteEntityType(request, options, callback);
   }
@@ -882,17 +866,12 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
-    return this._innerApiCalls.batchUpdateEntityTypes(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.batchUpdateEntityTypes(request, options, callback);
   }
 
   /**
@@ -1005,17 +984,12 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
-    return this._innerApiCalls.batchDeleteEntityTypes(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.batchDeleteEntityTypes(request, options, callback);
   }
 
   /**
@@ -1136,11 +1110,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.batchCreateEntities(request, options, callback);
   }
@@ -1269,11 +1242,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.batchUpdateEntities(request, options, callback);
   }
@@ -1396,11 +1368,10 @@ class EntityTypesClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.batchDeleteEntities(request, options, callback);
   }
@@ -1443,7 +1414,8 @@ class EntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromEntityTypeName(entityTypeName) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+    return this._pathTemplates.entityTypePathTemplate
+      .match(entityTypeName)
       .project;
   }
 
@@ -1455,7 +1427,8 @@ class EntityTypesClient {
    * @returns {String} - A string representing the entity_type.
    */
   matchEntityTypeFromEntityTypeName(entityTypeName) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+    return this._pathTemplates.entityTypePathTemplate
+      .match(entityTypeName)
       .entity_type;
   }
 
@@ -1467,9 +1440,11 @@ class EntityTypesClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectAgentName(projectAgentName) {
-    return this._pathTemplates.projectAgentPathTemplate.match(projectAgentName)
+    return this._pathTemplates.projectAgentPathTemplate
+      .match(projectAgentName)
       .project;
   }
 }
+
 
 module.exports = EntityTypesClient;

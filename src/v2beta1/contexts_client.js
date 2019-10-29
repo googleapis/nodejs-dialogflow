@@ -86,7 +86,9 @@ class ContextsClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -127,15 +129,11 @@ class ContextsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -183,9 +181,9 @@ class ContextsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Contexts.
     const contextsStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.dialogflow.v2beta1.Contexts')
-        : protos.google.cloud.dialogflow.v2beta1.Contexts,
+      opts.fallback ?
+        protos.lookupService('google.cloud.dialogflow.v2beta1.Contexts') :
+        protos.google.cloud.dialogflow.v2beta1.Contexts,
       opts
     );
 
@@ -360,11 +358,10 @@ class ContextsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.listContexts(request, options, callback);
   }
@@ -427,7 +424,7 @@ class ContextsClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Retrieves the specified context.
@@ -479,11 +476,10 @@ class ContextsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getContext(request, options, callback);
   }
@@ -549,11 +545,10 @@ class ContextsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.createContext(request, options, callback);
   }
@@ -609,11 +604,10 @@ class ContextsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'context.name': request.context.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'context.name': request.context.name
+      });
 
     return this._innerApiCalls.updateContext(request, options, callback);
   }
@@ -660,11 +654,10 @@ class ContextsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.deleteContext(request, options, callback);
   }
@@ -710,11 +703,10 @@ class ContextsClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
     return this._innerApiCalls.deleteAllContexts(request, options, callback);
   }
@@ -799,7 +791,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).project;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .project;
   }
 
   /**
@@ -810,7 +804,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).session;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .session;
   }
 
   /**
@@ -821,7 +817,9 @@ class ContextsClient {
    * @returns {String} - A string representing the context.
    */
   matchContextFromContextName(contextName) {
-    return this._pathTemplates.contextPathTemplate.match(contextName).context;
+    return this._pathTemplates.contextPathTemplate
+      .match(contextName)
+      .context;
   }
 
   /**
@@ -832,9 +830,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate.match(
-      environmentContextName
-    ).project;
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .project;
   }
 
   /**
@@ -845,9 +843,9 @@ class ContextsClient {
    * @returns {String} - A string representing the environment.
    */
   matchEnvironmentFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate.match(
-      environmentContextName
-    ).environment;
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .environment;
   }
 
   /**
@@ -858,9 +856,9 @@ class ContextsClient {
    * @returns {String} - A string representing the user.
    */
   matchUserFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate.match(
-      environmentContextName
-    ).user;
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .user;
   }
 
   /**
@@ -871,9 +869,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate.match(
-      environmentContextName
-    ).session;
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .session;
   }
 
   /**
@@ -884,9 +882,9 @@ class ContextsClient {
    * @returns {String} - A string representing the context.
    */
   matchContextFromEnvironmentContextName(environmentContextName) {
-    return this._pathTemplates.environmentContextPathTemplate.match(
-      environmentContextName
-    ).context;
+    return this._pathTemplates.environmentContextPathTemplate
+      .match(environmentContextName)
+      .context;
   }
 
   /**
@@ -897,9 +895,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate.match(
-      environmentSessionName
-    ).project;
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .project;
   }
 
   /**
@@ -910,9 +908,9 @@ class ContextsClient {
    * @returns {String} - A string representing the environment.
    */
   matchEnvironmentFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate.match(
-      environmentSessionName
-    ).environment;
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .environment;
   }
 
   /**
@@ -923,9 +921,9 @@ class ContextsClient {
    * @returns {String} - A string representing the user.
    */
   matchUserFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate.match(
-      environmentSessionName
-    ).user;
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .user;
   }
 
   /**
@@ -936,9 +934,9 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromEnvironmentSessionName(environmentSessionName) {
-    return this._pathTemplates.environmentSessionPathTemplate.match(
-      environmentSessionName
-    ).session;
+    return this._pathTemplates.environmentSessionPathTemplate
+      .match(environmentSessionName)
+      .session;
   }
 
   /**
@@ -949,7 +947,9 @@ class ContextsClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).project;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .project;
   }
 
   /**
@@ -960,8 +960,11 @@ class ContextsClient {
    * @returns {String} - A string representing the session.
    */
   matchSessionFromSessionName(sessionName) {
-    return this._pathTemplates.sessionPathTemplate.match(sessionName).session;
+    return this._pathTemplates.sessionPathTemplate
+      .match(sessionName)
+      .session;
   }
 }
+
 
 module.exports = ContextsClient;
