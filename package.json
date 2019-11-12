@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "google-gax": "^1.7.5",
+    "jsdoc-region-tag": "^1.0.2",
     "protobufjs": "^6.8.0"
   },
   "devDependencies": {
