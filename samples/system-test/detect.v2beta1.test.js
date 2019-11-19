@@ -1,5 +1,5 @@
 /**
- * Copyright 2018, Google, LLC.
+ * Copyright 2018 Google LLC
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -105,10 +105,7 @@ describe('v2beta1 detection', () => {
 
   it('should detect Intent with Model Selection', () => {
     const output = exec(`${cmd} detectIntentwithModelSelection`);
-    assert.include(
-      output,
-      'Response: How many guests will be attending?'
-    );
+    assert.include(output, 'Response: How many guests will be attending?');
   });
 
   it('should detect Intent with Text to Speech Response', () => {

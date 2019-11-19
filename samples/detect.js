@@ -300,7 +300,9 @@ async function streamingDetectIntent(
         if (result.outputContexts && result.outputContexts.length) {
           console.log(`  Output contexts:`);
           result.outputContexts.forEach(context => {
-            const contextId = contextClient.matchContextFromContextName(context.name);
+            const contextId = contextClient.matchContextFromContextName(
+              context.name
+            );
             const contextParameters = JSON.stringify(
               struct.decode(context.parameters)
             );
