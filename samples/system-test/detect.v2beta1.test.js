@@ -107,7 +107,7 @@ describe('v2beta1 detection', () => {
     const output = exec(`${cmd} detectIntentwithModelSelection`);
     assert.include(
       output,
-      'Response: I can help with that. Where would you like to reserve a room?'
+      'Response: How many guests will be attending?'
     );
   });
 
