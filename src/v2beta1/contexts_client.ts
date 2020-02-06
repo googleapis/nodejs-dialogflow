@@ -159,17 +159,17 @@ export class ContextsClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectIntentPathTemplate: new gaxModule.PathTemplate(
-        'projects/{project}/agent/intents/{intent}'
-      ),
-      projectLocationIntentPathTemplate: new gaxModule.PathTemplate(
-        'projects/{project}/locations/{location}/agent/intents/{intent}'
-      ),
       projectPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/agent'
       ),
+      projectIntentPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}/agent/intents/{intent}'
+      ),
       projectLocationPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/locations/{location}/agent'
+      ),
+      projectLocationIntentPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/agent/intents/{intent}'
       ),
     };
 
@@ -873,6 +873,29 @@ export class ContextsClient {
   // --------------------
 
   /**
+   * Return a fully-qualified project resource name string.
+   *
+   * @param {string} project
+   * @returns {string} Resource name string.
+   */
+  projectPath(project: string) {
+    return this._pathTemplates.projectPathTemplate.render({
+      project,
+    });
+  }
+
+  /**
+   * Parse the project from Project resource.
+   *
+   * @param {string} projectName
+   *   A fully-qualified path representing project resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectName(projectName: string) {
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+  }
+
+  /**
    * Return a fully-qualified projectIntent resource name string.
    *
    * @param {string} project
@@ -910,6 +933,46 @@ export class ContextsClient {
     return this._pathTemplates.projectIntentPathTemplate.match(
       projectIntentName
     ).intent;
+  }
+
+  /**
+   * Return a fully-qualified projectLocation resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @returns {string} Resource name string.
+   */
+  projectLocationPath(project: string, location: string) {
+    return this._pathTemplates.projectLocationPathTemplate.render({
+      project,
+      location,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocation resource.
+   *
+   * @param {string} projectLocationName
+   *   A fully-qualified path representing project_location resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationName(projectLocationName: string) {
+    return this._pathTemplates.projectLocationPathTemplate.match(
+      projectLocationName
+    ).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocation resource.
+   *
+   * @param {string} projectLocationName
+   *   A fully-qualified path representing project_location resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationName(projectLocationName: string) {
+    return this._pathTemplates.projectLocationPathTemplate.match(
+      projectLocationName
+    ).location;
   }
 
   /**
@@ -967,69 +1030,6 @@ export class ContextsClient {
     return this._pathTemplates.projectLocationIntentPathTemplate.match(
       projectLocationIntentName
     ).intent;
-  }
-
-  /**
-   * Return a fully-qualified project resource name string.
-   *
-   * @param {string} project
-   * @returns {string} Resource name string.
-   */
-  projectPath(project: string) {
-    return this._pathTemplates.projectPathTemplate.render({
-      project,
-    });
-  }
-
-  /**
-   * Parse the project from Project resource.
-   *
-   * @param {string} projectName
-   *   A fully-qualified path representing project resource.
-   * @returns {string} A string representing the project.
-   */
-  matchProjectFromProjectName(projectName: string) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
-  }
-
-  /**
-   * Return a fully-qualified projectLocation resource name string.
-   *
-   * @param {string} project
-   * @param {string} location
-   * @returns {string} Resource name string.
-   */
-  projectLocationPath(project: string, location: string) {
-    return this._pathTemplates.projectLocationPathTemplate.render({
-      project,
-      location,
-    });
-  }
-
-  /**
-   * Parse the project from ProjectLocation resource.
-   *
-   * @param {string} projectLocationName
-   *   A fully-qualified path representing project_location resource.
-   * @returns {string} A string representing the project.
-   */
-  matchProjectFromProjectLocationName(projectLocationName: string) {
-    return this._pathTemplates.projectLocationPathTemplate.match(
-      projectLocationName
-    ).project;
-  }
-
-  /**
-   * Parse the location from ProjectLocation resource.
-   *
-   * @param {string} projectLocationName
-   *   A fully-qualified path representing project_location resource.
-   * @returns {string} A string representing the location.
-   */
-  matchLocationFromProjectLocationName(projectLocationName: string) {
-    return this._pathTemplates.projectLocationPathTemplate.match(
-      projectLocationName
-    ).location;
   }
 
   /**

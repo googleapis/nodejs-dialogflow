@@ -175,19 +175,19 @@ export class IntentsClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
+      agentPathTemplate: new gaxModule.PathTemplate('projects/{project}/agent'),
       contextPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/agent/sessions/{session}/contexts/{context}'
       ),
       entityTypePathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/agent/entityTypes/{entity_type}'
       ),
-      sessionEntityTypePathTemplate: new gaxModule.PathTemplate(
-        'projects/{project}/agent/sessions/{session}/entityTypes/{entity_type}'
-      ),
       intentPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/agent/intents/{intent}'
       ),
-      agentPathTemplate: new gaxModule.PathTemplate('projects/{project}/agent'),
+      sessionEntityTypePathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}/agent/sessions/{session}/entityTypes/{entity_type}'
+      ),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -1035,6 +1035,29 @@ export class IntentsClient {
   // --------------------
 
   /**
+   * Return a fully-qualified agent resource name string.
+   *
+   * @param {string} project
+   * @returns {string} Resource name string.
+   */
+  agentPath(project: string) {
+    return this._pathTemplates.agentPathTemplate.render({
+      project,
+    });
+  }
+
+  /**
+   * Parse the project from Agent resource.
+   *
+   * @param {string} agentName
+   *   A fully-qualified path representing Agent resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromAgentName(agentName: string) {
+    return this._pathTemplates.agentPathTemplate.match(agentName).project;
+  }
+
+  /**
    * Return a fully-qualified context resource name string.
    *
    * @param {string} project
@@ -1122,6 +1145,42 @@ export class IntentsClient {
   }
 
   /**
+   * Return a fully-qualified intent resource name string.
+   *
+   * @param {string} project
+   * @param {string} intent
+   * @returns {string} Resource name string.
+   */
+  intentPath(project: string, intent: string) {
+    return this._pathTemplates.intentPathTemplate.render({
+      project,
+      intent,
+    });
+  }
+
+  /**
+   * Parse the project from Intent resource.
+   *
+   * @param {string} intentName
+   *   A fully-qualified path representing Intent resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromIntentName(intentName: string) {
+    return this._pathTemplates.intentPathTemplate.match(intentName).project;
+  }
+
+  /**
+   * Parse the intent from Intent resource.
+   *
+   * @param {string} intentName
+   *   A fully-qualified path representing Intent resource.
+   * @returns {string} A string representing the intent.
+   */
+  matchIntentFromIntentName(intentName: string) {
+    return this._pathTemplates.intentPathTemplate.match(intentName).intent;
+  }
+
+  /**
    * Return a fully-qualified sessionEntityType resource name string.
    *
    * @param {string} project
@@ -1174,65 +1233,6 @@ export class IntentsClient {
     return this._pathTemplates.sessionEntityTypePathTemplate.match(
       sessionEntityTypeName
     ).entity_type;
-  }
-
-  /**
-   * Return a fully-qualified intent resource name string.
-   *
-   * @param {string} project
-   * @param {string} intent
-   * @returns {string} Resource name string.
-   */
-  intentPath(project: string, intent: string) {
-    return this._pathTemplates.intentPathTemplate.render({
-      project,
-      intent,
-    });
-  }
-
-  /**
-   * Parse the project from Intent resource.
-   *
-   * @param {string} intentName
-   *   A fully-qualified path representing Intent resource.
-   * @returns {string} A string representing the project.
-   */
-  matchProjectFromIntentName(intentName: string) {
-    return this._pathTemplates.intentPathTemplate.match(intentName).project;
-  }
-
-  /**
-   * Parse the intent from Intent resource.
-   *
-   * @param {string} intentName
-   *   A fully-qualified path representing Intent resource.
-   * @returns {string} A string representing the intent.
-   */
-  matchIntentFromIntentName(intentName: string) {
-    return this._pathTemplates.intentPathTemplate.match(intentName).intent;
-  }
-
-  /**
-   * Return a fully-qualified agent resource name string.
-   *
-   * @param {string} project
-   * @returns {string} Resource name string.
-   */
-  agentPath(project: string) {
-    return this._pathTemplates.agentPathTemplate.render({
-      project,
-    });
-  }
-
-  /**
-   * Parse the project from Agent resource.
-   *
-   * @param {string} agentName
-   *   A fully-qualified path representing Agent resource.
-   * @returns {string} A string representing the project.
-   */
-  matchProjectFromAgentName(agentName: string) {
-    return this._pathTemplates.agentPathTemplate.match(agentName).project;
   }
 
   /**
