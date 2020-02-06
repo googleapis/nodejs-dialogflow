@@ -17,8 +17,8 @@ const path = require('path');
 module.exports = {
   entry: './src/index.ts',
   output: {
-    library: 'Agents',
-    filename: './agents.js',
+    library: 'dialogflow',
+    filename: './dialogflow.js',
   },
   node: {
     child_process: 'empty',
