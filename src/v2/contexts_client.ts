@@ -803,9 +803,17 @@ export class ContextsClient {
    */
   listContextsStream(
     request?: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
-    options?: gax.CallOptions | {}
+    options?: gax.CallOptions
   ): Transform {
     request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      parent: request.parent || '',
+    });
     const callSettings = new gax.CallSettings(options);
     return this._descriptors.page.listContexts.createStream(
       this._innerApiCalls.listContexts as gax.GaxCall,

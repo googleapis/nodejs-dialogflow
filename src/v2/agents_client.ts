@@ -1104,9 +1104,17 @@ export class AgentsClient {
    */
   searchAgentsStream(
     request?: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
-    options?: gax.CallOptions | {}
+    options?: gax.CallOptions
   ): Transform {
     request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      parent: request.parent || '',
+    });
     const callSettings = new gax.CallSettings(options);
     return this._descriptors.page.searchAgents.createStream(
       this._innerApiCalls.searchAgents as gax.GaxCall,

@@ -1383,9 +1383,17 @@ export class EntityTypesClient {
    */
   listEntityTypesStream(
     request?: protosTypes.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-    options?: gax.CallOptions | {}
+    options?: gax.CallOptions
   ): Transform {
     request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      parent: request.parent || '',
+    });
     const callSettings = new gax.CallSettings(options);
     return this._descriptors.page.listEntityTypes.createStream(
       this._innerApiCalls.listEntityTypes as gax.GaxCall,

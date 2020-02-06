@@ -1020,9 +1020,17 @@ export class IntentsClient {
    */
   listIntentsStream(
     request?: protosTypes.google.cloud.dialogflow.v2.IListIntentsRequest,
-    options?: gax.CallOptions | {}
+    options?: gax.CallOptions
   ): Transform {
     request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers[
+      'x-goog-request-params'
+    ] = gax.routingHeader.fromParams({
+      parent: request.parent || '',
+    });
     const callSettings = new gax.CallSettings(options);
     return this._descriptors.page.listIntents.createStream(
       this._innerApiCalls.listIntents as gax.GaxCall,
