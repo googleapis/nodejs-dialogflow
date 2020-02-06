@@ -28,7 +28,7 @@ function main() {
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
   const sessionsClient = new dialogflow.SessionsClient();
   const documentsClient = new dialogflow.DocumentsClient();
-  const knowledgeBasesClient = new dialogflow.knowledgeBasesClient();
+  const knowledgeBasesClient = new dialogflow.KnowledgeBasesClient();
 }
 
 main();
