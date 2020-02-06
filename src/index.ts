@@ -26,8 +26,30 @@ const SessionEntityTypesClient = v2.SessionEntityTypesClient;
 const SessionsClient = v2.SessionsClient;
 
 const DocumentsClient = v2beta1.DocumentsClient;
-const KnowledgeBasesClient  = v2beta1.KnowledgeBasesClient;
-export {v2, v2beta1, AgentsClient, ContextsClient, EntityTypesClient, IntentsClient, SessionEntityTypesClient, SessionsClient, DocumentsClient, KnowledgeBasesClient};
+const KnowledgeBasesClient = v2beta1.KnowledgeBasesClient;
+export {
+  v2,
+  v2beta1,
+  AgentsClient,
+  ContextsClient,
+  EntityTypesClient,
+  IntentsClient,
+  SessionEntityTypesClient,
+  SessionsClient,
+  DocumentsClient,
+  KnowledgeBasesClient,
+};
 // For compatibility with JavaScript libraries we need to provide this default export:
 // tslint:disable-next-line no-default-export
-export default {v2, v2beta1, AgentsClient, ContextsClient, EntityTypesClient, IntentsClient, SessionEntityTypesClient, SessionsClient, DocumentsClient, KnowledgeBasesClient};
+export default {
+  v2,
+  v2beta1,
+  AgentsClient,
+  ContextsClient,
+  EntityTypesClient,
+  IntentsClient,
+  SessionEntityTypesClient,
+  SessionsClient,
+  DocumentsClient,
+  KnowledgeBasesClient,
+};

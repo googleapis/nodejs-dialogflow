@@ -17,10 +17,18 @@
 // ** All changes to this file may be overwritten. **
 
 import * as gax from 'google-gax';
-import {APICallback, Callback, CallOptions, Descriptors, ClientOptions, PaginationCallback, PaginationResponse} from 'google-gax';
+import {
+  APICallback,
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+  PaginationCallback,
+  PaginationResponse,
+} from 'google-gax';
 import * as path from 'path';
 
-import { Transform } from 'stream';
+import {Transform} from 'stream';
 import * as protosTypes from '../../protos/protos';
 import * as gapicConfig from './intents_client_config.json';
 
@@ -101,10 +109,12 @@ export class IntentsClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include the service address and port.
     const staticMembers = this.constructor as typeof IntentsClient;
-    const servicePath = opts && opts.servicePath ?
-        opts.servicePath :
-        ((opts && opts.apiEndpoint) ? opts.apiEndpoint :
-                                      staticMembers.servicePath);
+    const servicePath =
+      opts && opts.servicePath
+        ? opts.servicePath
+        : opts && opts.apiEndpoint
+        ? opts.apiEndpoint
+        : staticMembers.servicePath;
     const port = opts && opts.port ? opts.port : staticMembers.port;
 
     if (!opts) {
@@ -114,8 +124,8 @@ export class IntentsClient {
     opts.port = opts.port || port;
     opts.clientConfig = opts.clientConfig || {};
 
-    const isBrowser = (typeof window !== 'undefined');
-    if (isBrowser){
+    const isBrowser = typeof window !== 'undefined';
+    if (isBrowser) {
       opts.fallback = true;
     }
     // If we are in browser, we are already using fallback because of the
@@ -129,13 +139,10 @@ export class IntentsClient {
     const gaxGrpc = new gaxModule.GrpcClient(opts);
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = gaxGrpc.auth as gax.GoogleAuth;
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -151,11 +158,15 @@ export class IntentsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
+    const nodejsProtoPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'protos',
+      'protos.json'
+    );
     const protos = gaxGrpc.loadProto(
-      opts.fallback ?
-        require("../../protos/protos.json") :
-        nodejsProtoPath
+      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -180,14 +191,20 @@ export class IntentsClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this._descriptors.page = {
-      listIntents:
-          new gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'intents')
+      listIntents: new gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'intents'
+      ),
     };
 
     // Put together the default options sent with requests.
     const defaults = gaxGrpc.constructSettings(
-        'google.cloud.dialogflow.v2beta1.Intents', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.cloud.dialogflow.v2beta1.Intents',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -197,16 +214,26 @@ export class IntentsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Intents.
     this.intentsStub = gaxGrpc.createStub(
-        opts.fallback ?
-          (protos as protobuf.Root).lookupService('google.cloud.dialogflow.v2beta1.Intents') :
-          // tslint:disable-next-line no-any
+      opts.fallback
+        ? (protos as protobuf.Root).lookupService(
+            'google.cloud.dialogflow.v2beta1.Intents'
+          )
+        : // tslint:disable-next-line no-any
           (protos as any).google.cloud.dialogflow.v2beta1.Intents,
-        opts) as Promise<{[method: string]: Function}>;
+      opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const intentsStubMethods =
-        ['listIntents', 'getIntent', 'createIntent', 'updateIntent', 'deleteIntent', 'batchUpdateIntents', 'batchDeleteIntents'];
+    const intentsStubMethods = [
+      'listIntents',
+      'getIntent',
+      'createIntent',
+      'updateIntent',
+      'deleteIntent',
+      'batchUpdateIntents',
+      'batchDeleteIntents',
+    ];
 
     for (const methodName of intentsStubMethods) {
       const innerCallPromise = this.intentsStub.then(
@@ -216,16 +243,17 @@ export class IntentsClient {
           }
           return stub[methodName].apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
       const apiCall = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
         this._descriptors.page[methodName] ||
-            this._descriptors.stream[methodName] ||
-            this._descriptors.longrunning[methodName]
+          this._descriptors.stream[methodName] ||
+          this._descriptors.longrunning[methodName]
       );
 
       this._innerApiCalls[methodName] = (
@@ -267,7 +295,7 @@ export class IntentsClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow'
+      'https://www.googleapis.com/auth/dialogflow',
     ];
   }
 
@@ -278,8 +306,9 @@ export class IntentsClient {
    * @param {function(Error, string)} callback - the callback to
    *   be called with the current project Id.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -291,62 +320,75 @@ export class IntentsClient {
   // -- Service calls --
   // -------------------
   getIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-        protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest | undefined,
+      {} | undefined
+    ]
+  >;
   getIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Retrieves the specified intent.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the intent.
- *   Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
- * @param {string} request.languageCode
- *   Optional. The language to retrieve training phrases, parameters and rich
- *   messages for. If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
- *   are supported. Note: languages must be enabled in the agent before they can
- *   be used.
- * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
- *   Optional. The resource view to apply to the returned intent.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Retrieves the specified intent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the intent.
+   *   Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
+   * @param {string} request.languageCode
+   *   Optional. The language to retrieve training phrases, parameters and rich
+   *   messages for. If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
+   *   are supported. Note: languages must be enabled in the agent before they can
+   *   be used.
+   * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
+   *   Optional. The resource view to apply to the returned intent.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   getIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-        protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      protosTypes.google.cloud.dialogflow.v2beta1.IGetIntentRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -355,69 +397,90 @@ export class IntentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     return this._innerApiCalls.getIntent(request, options, callback);
   }
   createIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-        protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   createIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Creates an intent in the specified agent.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The agent to create a intent for.
- *   Format: `projects/<Project ID>/agent`.
- * @param {google.cloud.dialogflow.v2beta1.Intent} request.intent
- *   Required. The intent to create.
- * @param {string} request.languageCode
- *   Optional. The language of training phrases, parameters and rich messages
- *   defined in `intent`. If not specified, the agent's default language is
- *   used. [Many
- *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
- *   are supported. Note: languages must be enabled in the agent before they can
- *   be used.
- * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
- *   Optional. The resource view to apply to the returned intent.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      | protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Creates an intent in the specified agent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The agent to create a intent for.
+   *   Format: `projects/<Project ID>/agent`.
+   * @param {google.cloud.dialogflow.v2beta1.Intent} request.intent
+   *   Required. The intent to create.
+   * @param {string} request.languageCode
+   *   Optional. The language of training phrases, parameters and rich messages
+   *   defined in `intent`. If not specified, the agent's default language is
+   *   used. [Many
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
+   *   are supported. Note: languages must be enabled in the agent before they can
+   *   be used.
+   * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
+   *   Optional. The resource view to apply to the returned intent.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   createIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-        protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      | protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.ICreateIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -426,68 +489,89 @@ export class IntentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.createIntent(request, options, callback);
   }
   updateIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-        protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   updateIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Updates the specified intent.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {google.cloud.dialogflow.v2beta1.Intent} request.intent
- *   Required. The intent to update.
- * @param {string} request.languageCode
- *   Optional. The language of training phrases, parameters and rich messages
- *   defined in `intent`. If not specified, the agent's default language is
- *   used. [Many
- *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
- *   are supported. Note: languages must be enabled in the agent before they can
- *   be used.
- * @param {google.protobuf.FieldMask} request.updateMask
- *   Optional. The mask to control which fields get updated.
- * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
- *   Optional. The resource view to apply to the returned intent.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Updates the specified intent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {google.cloud.dialogflow.v2beta1.Intent} request.intent
+   *   Required. The intent to update.
+   * @param {string} request.languageCode
+   *   Optional. The language of training phrases, parameters and rich messages
+   *   defined in `intent`. If not specified, the agent's default language is
+   *   used. [Many
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
+   *   are supported. Note: languages must be enabled in the agent before they can
+   *   be used.
+   * @param {google.protobuf.FieldMask} request.updateMask
+   *   Optional. The mask to control which fields get updated.
+   * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
+   *   Optional. The resource view to apply to the returned intent.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   updateIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-          protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
-        protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IUpdateIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -501,55 +585,76 @@ export class IntentsClient {
     return this._innerApiCalls.updateIntent(request, options, callback);
   }
   deleteIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   deleteIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Deletes the specified intent and its direct or indirect followup intents.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the intent to delete. If this intent has direct or
- *   indirect followup intents, we also delete them.
- *
- *   Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Deletes the specified intent and its direct or indirect followup intents.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the intent to delete. If this intent has direct or
+   *   indirect followup intents, we also delete them.
+   *
+   *   Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   deleteIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IDeleteIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -558,77 +663,98 @@ export class IntentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     return this._innerApiCalls.deleteIntent(request, options, callback);
   }
   batchUpdateIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.longrunning.IOperation,
-        protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.longrunning.IOperation,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   batchUpdateIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.longrunning.IOperation,
-          protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest|undefined,
-          {}|undefined>): void;
-/**
- * Updates/Creates multiple intents in the specified agent.
- *
- * Operation <response: [BatchUpdateIntentsResponse][google.cloud.dialogflow.v2beta1.BatchUpdateIntentsResponse]>
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The name of the agent to update or create intents in.
- *   Format: `projects/<Project ID>/agent`.
- * @param {string} request.intentBatchUri
- *   The URI to a Google Cloud Storage file containing intents to update or
- *   create. The file format can either be a serialized proto (of IntentBatch
- *   type) or JSON object. Note: The URI must start with "gs://".
- * @param {google.cloud.dialogflow.v2beta1.IntentBatch} request.intentBatchInline
- *   The collection of intents to update or create.
- * @param {string} request.languageCode
- *   Optional. The language of training phrases, parameters and rich messages
- *   defined in `intents`. If not specified, the agent's default language is
- *   used. [Many
- *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
- *   are supported. Note: languages must be enabled in the agent before they can
- *   be used.
- * @param {google.protobuf.FieldMask} request.updateMask
- *   Optional. The mask to control which fields get updated.
- * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
- *   Optional. The resource view to apply to the returned intent.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.longrunning.IOperation,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest
+      | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Updates/Creates multiple intents in the specified agent.
+   *
+   * Operation <response: [BatchUpdateIntentsResponse][google.cloud.dialogflow.v2beta1.BatchUpdateIntentsResponse]>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The name of the agent to update or create intents in.
+   *   Format: `projects/<Project ID>/agent`.
+   * @param {string} request.intentBatchUri
+   *   The URI to a Google Cloud Storage file containing intents to update or
+   *   create. The file format can either be a serialized proto (of IntentBatch
+   *   type) or JSON object. Note: The URI must start with "gs://".
+   * @param {google.cloud.dialogflow.v2beta1.IntentBatch} request.intentBatchInline
+   *   The collection of intents to update or create.
+   * @param {string} request.languageCode
+   *   Optional. The language of training phrases, parameters and rich messages
+   *   defined in `intents`. If not specified, the agent's default language is
+   *   used. [Many
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
+   *   are supported. Note: languages must be enabled in the agent before they can
+   *   be used.
+   * @param {google.protobuf.FieldMask} request.updateMask
+   *   Optional. The mask to control which fields get updated.
+   * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
+   *   Optional. The resource view to apply to the returned intent.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   batchUpdateIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.longrunning.IOperation,
-          protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.longrunning.IOperation,
-          protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.longrunning.IOperation,
-        protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.longrunning.IOperation,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest
+      | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.longrunning.IOperation,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -637,63 +763,84 @@ export class IntentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.batchUpdateIntents(request, options, callback);
   }
   batchDeleteIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.longrunning.IOperation,
-        protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.longrunning.IOperation,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   batchDeleteIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.longrunning.IOperation,
-          protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest|undefined,
-          {}|undefined>): void;
-/**
- * Deletes intents in the specified agent.
- *
- * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The name of the agent to delete all entities types for. Format:
- *   `projects/<Project ID>/agent`.
- * @param {number[]} request.intents
- *   Required. The collection of intents to delete. Only intent `name` must be
- *   filled in.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.longrunning.IOperation,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest
+      | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Deletes intents in the specified agent.
+   *
+   * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The name of the agent to delete all entities types for. Format:
+   *   `projects/<Project ID>/agent`.
+   * @param {number[]} request.intents
+   *   Required. The collection of intents to delete. Only intent `name` must be
+   *   filled in.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   batchDeleteIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.longrunning.IOperation,
-          protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.longrunning.IOperation,
-          protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.longrunning.IOperation,
-        protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.longrunning.IOperation,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest
+      | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.longrunning.IOperation,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -702,88 +849,97 @@ export class IntentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.batchDeleteIntents(request, options, callback);
   }
 
   listIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
-        protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest|null,
-        protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse
+    ]
+  >;
   listIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
-          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse>): void;
-/**
- * Returns the list of all intents in the specified agent.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The agent to list all intents from.
- *   Format: `projects/<Project ID>/agent`.
- * @param {string} request.languageCode
- *   Optional. The language to list training phrases, parameters and rich
- *   messages for. If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
- *   are supported. Note: languages must be enabled in the agent before they can
- *   be used.
- * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
- *   Optional. The resource view to apply to the returned intent.
- * @param {number} request.pageSize
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} request.pageToken
- *   Optional. The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
- *   The client library support auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *
- *   When autoPaginate: false is specified through options, the array has three elements.
- *   The first element is Array of [Intent]{@link google.cloud.dialogflow.v2beta1.Intent} that corresponds to
- *   the one page received from the API server.
- *   If the second element is not null it contains the request object of type [ListIntentsRequest]{@link google.cloud.dialogflow.v2beta1.ListIntentsRequest}
- *   that can be used to obtain the next page of the results.
- *   If it is null, the next page does not exist.
- *   The third element contains the raw response received from the API server. Its type is
- *   [ListIntentsResponse]{@link google.cloud.dialogflow.v2beta1.ListIntentsResponse}.
- *
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse
+    >
+  ): void;
+  /**
+   * Returns the list of all intents in the specified agent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The agent to list all intents from.
+   *   Format: `projects/<Project ID>/agent`.
+   * @param {string} request.languageCode
+   *   Optional. The language to list training phrases, parameters and rich
+   *   messages for. If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
+   *   are supported. Note: languages must be enabled in the agent before they can
+   *   be used.
+   * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
+   *   Optional. The resource view to apply to the returned intent.
+   * @param {number} request.pageSize
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} request.pageToken
+   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [Intent]{@link google.cloud.dialogflow.v2beta1.Intent}.
+   *   The client library support auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [Intent]{@link google.cloud.dialogflow.v2beta1.Intent} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListIntentsRequest]{@link google.cloud.dialogflow.v2beta1.ListIntentsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListIntentsResponse]{@link google.cloud.dialogflow.v2beta1.ListIntentsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   listIntents(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
-          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
-          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
-        protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest|null,
-        protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse
-      ]>|void {
+          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest | null,
+          protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IIntent[],
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsResponse
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -792,52 +948,52 @@ export class IntentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.listIntents(request, options, callback);
   }
 
-/**
- * Equivalent to {@link listIntents}, but returns a NodeJS Stream object.
- *
- * This fetches the paged responses for {@link listIntents} continuously
- * and invokes the callback registered for 'data' event for each element in the
- * responses.
- *
- * The returned object has 'end' method when no more elements are required.
- *
- * autoPaginate option will be ignored.
- *
- * @see {@link https://nodejs.org/api/stream.html}
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The agent to list all intents from.
- *   Format: `projects/<Project ID>/agent`.
- * @param {string} request.languageCode
- *   Optional. The language to list training phrases, parameters and rich
- *   messages for. If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
- *   are supported. Note: languages must be enabled in the agent before they can
- *   be used.
- * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
- *   Optional. The resource view to apply to the returned intent.
- * @param {number} request.pageSize
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} request.pageToken
- *   Optional. The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent} on 'data' event.
- */
+  /**
+   * Equivalent to {@link listIntents}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listIntents} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The agent to list all intents from.
+   *   Format: `projects/<Project ID>/agent`.
+   * @param {string} request.languageCode
+   *   Optional. The language to list training phrases, parameters and rich
+   *   messages for. If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
+   *   are supported. Note: languages must be enabled in the agent before they can
+   *   be used.
+   * @param {google.cloud.dialogflow.v2beta1.IntentView} request.intentView
+   *   Optional. The resource view to apply to the returned intent.
+   * @param {number} request.pageSize
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} request.pageToken
+   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [Intent]{@link google.cloud.dialogflow.v2beta1.Intent} on 'data' event.
+   */
   listIntentsStream(
-      request?: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
-      options?: gax.CallOptions | {}):
-    Transform{
+    request?: protosTypes.google.cloud.dialogflow.v2beta1.IListIntentsRequest,
+    options?: gax.CallOptions | {}
+  ): Transform {
     request = request || {};
     const callSettings = new gax.CallSettings(options);
     return this._descriptors.page.listIntents.createStream(
@@ -857,10 +1013,10 @@ export class IntentsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  projectIntentPath(project:string,intent:string) {
+  projectIntentPath(project: string, intent: string) {
     return this._pathTemplates.projectIntentPathTemplate.render({
-      project: project,
-      intent: intent,
+      project,
+      intent,
     });
   }
 
@@ -872,7 +1028,9 @@ export class IntentsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectIntentName(projectIntentName: string) {
-    return this._pathTemplates.projectIntentPathTemplate.match(projectIntentName).project;
+    return this._pathTemplates.projectIntentPathTemplate.match(
+      projectIntentName
+    ).project;
   }
 
   /**
@@ -883,7 +1041,9 @@ export class IntentsClient {
    * @returns {string} A string representing the intent.
    */
   matchIntentFromProjectIntentName(projectIntentName: string) {
-    return this._pathTemplates.projectIntentPathTemplate.match(projectIntentName).intent;
+    return this._pathTemplates.projectIntentPathTemplate.match(
+      projectIntentName
+    ).intent;
   }
 
   /**
@@ -894,11 +1054,11 @@ export class IntentsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  projectLocationIntentPath(project:string,location:string,intent:string) {
+  projectLocationIntentPath(project: string, location: string, intent: string) {
     return this._pathTemplates.projectLocationIntentPathTemplate.render({
-      project: project,
-      location: location,
-      intent: intent,
+      project,
+      location,
+      intent,
     });
   }
 
@@ -910,7 +1070,9 @@ export class IntentsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectLocationIntentName(projectLocationIntentName: string) {
-    return this._pathTemplates.projectLocationIntentPathTemplate.match(projectLocationIntentName).project;
+    return this._pathTemplates.projectLocationIntentPathTemplate.match(
+      projectLocationIntentName
+    ).project;
   }
 
   /**
@@ -920,8 +1082,12 @@ export class IntentsClient {
    *   A fully-qualified path representing project_location_intent resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationIntentName(projectLocationIntentName: string) {
-    return this._pathTemplates.projectLocationIntentPathTemplate.match(projectLocationIntentName).location;
+  matchLocationFromProjectLocationIntentName(
+    projectLocationIntentName: string
+  ) {
+    return this._pathTemplates.projectLocationIntentPathTemplate.match(
+      projectLocationIntentName
+    ).location;
   }
 
   /**
@@ -932,7 +1098,9 @@ export class IntentsClient {
    * @returns {string} A string representing the intent.
    */
   matchIntentFromProjectLocationIntentName(projectLocationIntentName: string) {
-    return this._pathTemplates.projectLocationIntentPathTemplate.match(projectLocationIntentName).intent;
+    return this._pathTemplates.projectLocationIntentPathTemplate.match(
+      projectLocationIntentName
+    ).intent;
   }
 
   /**
@@ -941,9 +1109,9 @@ export class IntentsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project:string) {
+  projectPath(project: string) {
     return this._pathTemplates.projectPathTemplate.render({
-      project: project,
+      project,
     });
   }
 
@@ -965,10 +1133,10 @@ export class IntentsClient {
    * @param {string} location
    * @returns {string} Resource name string.
    */
-  projectLocationPath(project:string,location:string) {
+  projectLocationPath(project: string, location: string) {
     return this._pathTemplates.projectLocationPathTemplate.render({
-      project: project,
-      location: location,
+      project,
+      location,
     });
   }
 
@@ -980,7 +1148,9 @@ export class IntentsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectLocationName(projectLocationName: string) {
-    return this._pathTemplates.projectLocationPathTemplate.match(projectLocationName).project;
+    return this._pathTemplates.projectLocationPathTemplate.match(
+      projectLocationName
+    ).project;
   }
 
   /**
@@ -991,7 +1161,9 @@ export class IntentsClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromProjectLocationName(projectLocationName: string) {
-    return this._pathTemplates.projectLocationPathTemplate.match(projectLocationName).location;
+    return this._pathTemplates.projectLocationPathTemplate.match(
+      projectLocationName
+    ).location;
   }
 
   /**

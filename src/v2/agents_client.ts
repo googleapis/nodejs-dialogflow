@@ -17,10 +17,19 @@
 // ** All changes to this file may be overwritten. **
 
 import * as gax from 'google-gax';
-import {APICallback, Callback, CallOptions, Descriptors, ClientOptions, LROperation, PaginationCallback, PaginationResponse} from 'google-gax';
+import {
+  APICallback,
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+  LROperation,
+  PaginationCallback,
+  PaginationResponse,
+} from 'google-gax';
 import * as path from 'path';
 
-import { Transform } from 'stream';
+import {Transform} from 'stream';
 import * as protosTypes from '../../protos/protos';
 import * as gapicConfig from './agents_client_config.json';
 
@@ -98,10 +107,12 @@ export class AgentsClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include the service address and port.
     const staticMembers = this.constructor as typeof AgentsClient;
-    const servicePath = opts && opts.servicePath ?
-        opts.servicePath :
-        ((opts && opts.apiEndpoint) ? opts.apiEndpoint :
-                                      staticMembers.servicePath);
+    const servicePath =
+      opts && opts.servicePath
+        ? opts.servicePath
+        : opts && opts.apiEndpoint
+        ? opts.apiEndpoint
+        : staticMembers.servicePath;
     const port = opts && opts.port ? opts.port : staticMembers.port;
 
     if (!opts) {
@@ -111,8 +122,8 @@ export class AgentsClient {
     opts.port = opts.port || port;
     opts.clientConfig = opts.clientConfig || {};
 
-    const isBrowser = (typeof window !== 'undefined');
-    if (isBrowser){
+    const isBrowser = typeof window !== 'undefined';
+    if (isBrowser) {
       opts.fallback = true;
     }
     // If we are in browser, we are already using fallback because of the
@@ -126,13 +137,10 @@ export class AgentsClient {
     const gaxGrpc = new gaxModule.GrpcClient(opts);
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = gaxGrpc.auth as gax.GoogleAuth;
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -148,11 +156,15 @@ export class AgentsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
+    const nodejsProtoPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'protos',
+      'protos.json'
+    );
     const protos = gaxGrpc.loadProto(
-      opts.fallback ?
-        require("../../protos/protos.json") :
-        nodejsProtoPath
+      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -171,73 +183,89 @@ export class AgentsClient {
       intentPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/agent/intents/{intent}'
       ),
-      agentPathTemplate: new gaxModule.PathTemplate(
-        'projects/{project}/agent'
-      ),
-      projectPathTemplate: new gaxModule.PathTemplate(
-        'projects/{project}'
-      ),
+      agentPathTemplate: new gaxModule.PathTemplate('projects/{project}/agent'),
+      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
     };
 
     // Some of the methods on this service return "paged" results,
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this._descriptors.page = {
-      searchAgents:
-          new gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'agents')
+      searchAgents: new gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'agents'
+      ),
     };
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
     // rather than holding a request open.
-    const protoFilesRoot = opts.fallback?
-      gaxModule.protobuf.Root.fromJSON(require("../../protos/protos.json")) :
-      gaxModule.protobuf.loadSync(nodejsProtoPath);
+    const protoFilesRoot = opts.fallback
+      ? gaxModule.protobuf.Root.fromJSON(require('../../protos/protos.json'))
+      : gaxModule.protobuf.loadSync(nodejsProtoPath);
 
-    this.operationsClient = gaxModule.lro({
-      auth: this.auth,
-      grpc: 'grpc' in gaxGrpc ? gaxGrpc.grpc : undefined
-    }).operationsClient(opts);
+    this.operationsClient = gaxModule
+      .lro({
+        auth: this.auth,
+        grpc: 'grpc' in gaxGrpc ? gaxGrpc.grpc : undefined,
+      })
+      .operationsClient(opts);
     const trainAgentResponse = protoFilesRoot.lookup(
-      '.google.protobuf.Empty') as gax.protobuf.Type;
+      '.google.protobuf.Empty'
+    ) as gax.protobuf.Type;
     const trainAgentMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct') as gax.protobuf.Type;
+      '.google.protobuf.Struct'
+    ) as gax.protobuf.Type;
     const exportAgentResponse = protoFilesRoot.lookup(
-      '.google.cloud.dialogflow.v2.ExportAgentResponse') as gax.protobuf.Type;
+      '.google.cloud.dialogflow.v2.ExportAgentResponse'
+    ) as gax.protobuf.Type;
     const exportAgentMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct') as gax.protobuf.Type;
+      '.google.protobuf.Struct'
+    ) as gax.protobuf.Type;
     const importAgentResponse = protoFilesRoot.lookup(
-      '.google.protobuf.Empty') as gax.protobuf.Type;
+      '.google.protobuf.Empty'
+    ) as gax.protobuf.Type;
     const importAgentMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct') as gax.protobuf.Type;
+      '.google.protobuf.Struct'
+    ) as gax.protobuf.Type;
     const restoreAgentResponse = protoFilesRoot.lookup(
-      '.google.protobuf.Empty') as gax.protobuf.Type;
+      '.google.protobuf.Empty'
+    ) as gax.protobuf.Type;
     const restoreAgentMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct') as gax.protobuf.Type;
+      '.google.protobuf.Struct'
+    ) as gax.protobuf.Type;
 
     this._descriptors.longrunning = {
       trainAgent: new gaxModule.LongrunningDescriptor(
         this.operationsClient,
         trainAgentResponse.decode.bind(trainAgentResponse),
-        trainAgentMetadata.decode.bind(trainAgentMetadata)),
+        trainAgentMetadata.decode.bind(trainAgentMetadata)
+      ),
       exportAgent: new gaxModule.LongrunningDescriptor(
         this.operationsClient,
         exportAgentResponse.decode.bind(exportAgentResponse),
-        exportAgentMetadata.decode.bind(exportAgentMetadata)),
+        exportAgentMetadata.decode.bind(exportAgentMetadata)
+      ),
       importAgent: new gaxModule.LongrunningDescriptor(
         this.operationsClient,
         importAgentResponse.decode.bind(importAgentResponse),
-        importAgentMetadata.decode.bind(importAgentMetadata)),
+        importAgentMetadata.decode.bind(importAgentMetadata)
+      ),
       restoreAgent: new gaxModule.LongrunningDescriptor(
         this.operationsClient,
         restoreAgentResponse.decode.bind(restoreAgentResponse),
-        restoreAgentMetadata.decode.bind(restoreAgentMetadata))
+        restoreAgentMetadata.decode.bind(restoreAgentMetadata)
+      ),
     };
 
     // Put together the default options sent with requests.
     const defaults = gaxGrpc.constructSettings(
-        'google.cloud.dialogflow.v2.Agents', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.cloud.dialogflow.v2.Agents',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -247,16 +275,27 @@ export class AgentsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.Agents.
     this.agentsStub = gaxGrpc.createStub(
-        opts.fallback ?
-          (protos as protobuf.Root).lookupService('google.cloud.dialogflow.v2.Agents') :
-          // tslint:disable-next-line no-any
+      opts.fallback
+        ? (protos as protobuf.Root).lookupService(
+            'google.cloud.dialogflow.v2.Agents'
+          )
+        : // tslint:disable-next-line no-any
           (protos as any).google.cloud.dialogflow.v2.Agents,
-        opts) as Promise<{[method: string]: Function}>;
+      opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const agentsStubMethods =
-        ['getAgent', 'setAgent', 'deleteAgent', 'searchAgents', 'trainAgent', 'exportAgent', 'importAgent', 'restoreAgent'];
+    const agentsStubMethods = [
+      'getAgent',
+      'setAgent',
+      'deleteAgent',
+      'searchAgents',
+      'trainAgent',
+      'exportAgent',
+      'importAgent',
+      'restoreAgent',
+    ];
 
     for (const methodName of agentsStubMethods) {
       const innerCallPromise = this.agentsStub.then(
@@ -266,16 +305,17 @@ export class AgentsClient {
           }
           return stub[methodName].apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
       const apiCall = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
         this._descriptors.page[methodName] ||
-            this._descriptors.stream[methodName] ||
-            this._descriptors.longrunning[methodName]
+          this._descriptors.stream[methodName] ||
+          this._descriptors.longrunning[methodName]
       );
 
       this._innerApiCalls[methodName] = (
@@ -317,7 +357,7 @@ export class AgentsClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow'
+      'https://www.googleapis.com/auth/dialogflow',
     ];
   }
 
@@ -328,8 +368,9 @@ export class AgentsClient {
    * @param {function(Error, string)} callback - the callback to
    *   be called with the current project Id.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -341,53 +382,65 @@ export class AgentsClient {
   // -- Service calls --
   // -------------------
   getAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IAgent,
-        protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest | undefined,
+      {} | undefined
+    ]
+  >;
   getAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IAgent,
-          protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Retrieves the specified agent.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project that the agent to fetch is associated with.
- *   Format: `projects/<Project ID>`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Retrieves the specified agent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project that the agent to fetch is associated with.
+   *   Format: `projects/<Project ID>`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   getAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2.IAgent,
-          protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IAgent,
-          protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IAgent,
-        protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest|undefined, {}|undefined
-      ]>|void {
+          protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -396,59 +449,71 @@ export class AgentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.getAgent(request, options, callback);
   }
   setAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IAgent,
-        protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest | undefined,
+      {} | undefined
+    ]
+  >;
   setAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IAgent,
-          protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Creates/updates the specified agent.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {google.cloud.dialogflow.v2.Agent} request.agent
- *   Required. The agent to update.
- * @param {google.protobuf.FieldMask} [request.updateMask]
- *   Optional. The mask to control which fields get updated.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Creates/updates the specified agent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {google.cloud.dialogflow.v2.Agent} request.agent
+   *   Required. The agent to update.
+   * @param {google.protobuf.FieldMask} [request.updateMask]
+   *   Optional. The mask to control which fields get updated.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   setAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2.IAgent,
-          protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IAgent,
-          protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IAgent,
-        protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest|undefined, {}|undefined
-      ]>|void {
+          protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IAgent,
+      protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -462,53 +527,66 @@ export class AgentsClient {
     return this._innerApiCalls.setAgent(request, options, callback);
   }
   deleteAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest | undefined,
+      {} | undefined
+    ]
+  >;
   deleteAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Deletes the specified agent.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project that the agent to delete is associated with.
- *   Format: `projects/<Project ID>`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Deletes the specified agent.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project that the agent to delete is associated with.
+   *   Format: `projects/<Project ID>`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   deleteAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -517,61 +595,88 @@ export class AgentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.deleteAgent(request, options, callback);
   }
 
   trainAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  >;
   trainAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>): void;
-/**
- * Trains the specified agent.
- *
- * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project that the agent to train is associated with.
- *   Format: `projects/<Project ID>`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Trains the specified agent.
+   *
+   * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project that the agent to train is associated with.
+   *   Format: `projects/<Project ID>`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   trainAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined, {}|undefined>,
-      callback?: Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>):
-      Promise<[
-        LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>|void {
+    request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
+          LROperation<
+            protosTypes.google.protobuf.IEmpty,
+            protosTypes.google.protobuf.IStruct
+          >,
+          protosTypes.google.longrunning.IOperation | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -580,65 +685,92 @@ export class AgentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.trainAgent(request, options, callback);
   }
   exportAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        LROperation<protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  >;
   exportAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          LROperation<protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>): void;
-/**
- * Exports the specified agent to a ZIP file.
- *
- * Operation <response: [ExportAgentResponse][google.cloud.dialogflow.v2.ExportAgentResponse]>
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project that the agent to export is associated with.
- *   Format: `projects/<Project ID>`.
- * @param {string} request.agentUri
- *   Required. The [Google Cloud Storage](https://cloud.google.com/storage/docs/)
- *   URI to export the agent to.
- *   The format of this URI must be `gs://<bucket-name>/<object-name>`.
- *   If left unspecified, the serialized agent is returned inline.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      LROperation<
+        protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Exports the specified agent to a ZIP file.
+   *
+   * Operation <response: [ExportAgentResponse][google.cloud.dialogflow.v2.ExportAgentResponse]>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project that the agent to export is associated with.
+   *   Format: `projects/<Project ID>`.
+   * @param {string} request.agentUri
+   *   Required. The [Google Cloud Storage](https://cloud.google.com/storage/docs/)
+   *   URI to export the agent to.
+   *   The format of this URI must be `gs://<bucket-name>/<object-name>`.
+   *   If left unspecified, the serialized agent is returned inline.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   exportAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
-          LROperation<protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined, {}|undefined>,
-      callback?: Callback<
-          LROperation<protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>):
-      Promise<[
-        LROperation<protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>|void {
+    request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
+          LROperation<
+            protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse,
+            protosTypes.google.protobuf.IStruct
+          >,
+          protosTypes.google.longrunning.IOperation | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      LROperation<
+        protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.cloud.dialogflow.v2.IExportAgentResponse,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -647,69 +779,96 @@ export class AgentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.exportAgent(request, options, callback);
   }
   importAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  >;
   importAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>): void;
-/**
- * Imports the specified agent from a ZIP file.
- *
- * Uploads new intents and entity types without deleting the existing ones.
- * Intents and entity types with the same name are replaced with the new
- * versions from ImportAgentRequest.
- *
- * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project that the agent to import is associated with.
- *   Format: `projects/<Project ID>`.
- * @param {string} request.agentUri
- *   The URI to a Google Cloud Storage file containing the agent to import.
- *   Note: The URI must start with "gs://".
- * @param {Buffer} request.agentContent
- *   Zip compressed raw byte content for agent.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Imports the specified agent from a ZIP file.
+   *
+   * Uploads new intents and entity types without deleting the existing ones.
+   * Intents and entity types with the same name are replaced with the new
+   * versions from ImportAgentRequest.
+   *
+   * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project that the agent to import is associated with.
+   *   Format: `projects/<Project ID>`.
+   * @param {string} request.agentUri
+   *   The URI to a Google Cloud Storage file containing the agent to import.
+   *   Note: The URI must start with "gs://".
+   * @param {Buffer} request.agentContent
+   *   Zip compressed raw byte content for agent.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   importAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined, {}|undefined>,
-      callback?: Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>):
-      Promise<[
-        LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>|void {
+    request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
+          LROperation<
+            protosTypes.google.protobuf.IEmpty,
+            protosTypes.google.protobuf.IStruct
+          >,
+          protosTypes.google.longrunning.IOperation | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -718,68 +877,95 @@ export class AgentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.importAgent(request, options, callback);
   }
   restoreAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  >;
   restoreAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>): void;
-/**
- * Restores the specified agent from a ZIP file.
- *
- * Replaces the current agent version with a new one. All the intents and
- * entity types in the older version are deleted.
- *
- * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project that the agent to restore is associated with.
- *   Format: `projects/<Project ID>`.
- * @param {string} request.agentUri
- *   The URI to a Google Cloud Storage file containing the agent to restore.
- *   Note: The URI must start with "gs://".
- * @param {Buffer} request.agentContent
- *   Zip compressed raw byte content for agent.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Restores the specified agent from a ZIP file.
+   *
+   * Replaces the current agent version with a new one. All the intents and
+   * entity types in the older version are deleted.
+   *
+   * Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project that the agent to restore is associated with.
+   *   Format: `projects/<Project ID>`.
+   * @param {string} request.agentUri
+   *   The URI to a Google Cloud Storage file containing the agent to restore.
+   *   Note: The URI must start with "gs://".
+   * @param {Buffer} request.agentContent
+   *   Zip compressed raw byte content for agent.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Operation]{@link google.longrunning.Operation}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   restoreAgent(
-      request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined, {}|undefined>,
-      callback?: Callback<
-          LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-          protosTypes.google.longrunning.IOperation|undefined,
-          {}|undefined>):
-      Promise<[
-        LROperation<protosTypes.google.protobuf.IEmpty, protosTypes.google.protobuf.IStruct>,
-        protosTypes.google.longrunning.IOperation|undefined, {}|undefined
-      ]>|void {
+    request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
+          LROperation<
+            protosTypes.google.protobuf.IEmpty,
+            protosTypes.google.protobuf.IStruct
+          >,
+          protosTypes.google.longrunning.IOperation | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      LROperation<
+        protosTypes.google.protobuf.IEmpty,
+        protosTypes.google.protobuf.IStruct
+      >,
+      protosTypes.google.longrunning.IOperation | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -788,84 +974,93 @@ export class AgentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.restoreAgent(request, options, callback);
   }
   searchAgents(
-      request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IAgent[],
-        protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest|null,
-        protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IAgent[],
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse
+    ]
+  >;
   searchAgents(
-      request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IAgent[],
-          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse>): void;
-/**
- * Returns the list of agents.
- *
- * Since there is at most one conversational agent per project, this method is
- * useful primarily for listing all agents across projects the caller has
- * access to. One can achieve that with a wildcard project collection id "-".
- * Refer to [List
- * Sub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project to list agents from.
- *   Format: `projects/<Project ID or '-'>`.
- * @param {number} [request.pageSize]
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} request.pageToken
- *   The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [Agent]{@link google.cloud.dialogflow.v2.Agent}.
- *   The client library support auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *
- *   When autoPaginate: false is specified through options, the array has three elements.
- *   The first element is Array of [Agent]{@link google.cloud.dialogflow.v2.Agent} that corresponds to
- *   the one page received from the API server.
- *   If the second element is not null it contains the request object of type [SearchAgentsRequest]{@link google.cloud.dialogflow.v2.SearchAgentsRequest}
- *   that can be used to obtain the next page of the results.
- *   If it is null, the next page does not exist.
- *   The third element contains the raw response received from the API server. Its type is
- *   [SearchAgentsResponse]{@link google.cloud.dialogflow.v2.SearchAgentsResponse}.
- *
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IAgent[],
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse
+    >
+  ): void;
+  /**
+   * Returns the list of agents.
+   *
+   * Since there is at most one conversational agent per project, this method is
+   * useful primarily for listing all agents across projects the caller has
+   * access to. One can achieve that with a wildcard project collection id "-".
+   * Refer to [List
+   * Sub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project to list agents from.
+   *   Format: `projects/<Project ID or '-'>`.
+   * @param {number} [request.pageSize]
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [Agent]{@link google.cloud.dialogflow.v2.Agent}.
+   *   The client library support auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [Agent]{@link google.cloud.dialogflow.v2.Agent} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [SearchAgentsRequest]{@link google.cloud.dialogflow.v2.SearchAgentsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [SearchAgentsResponse]{@link google.cloud.dialogflow.v2.SearchAgentsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   searchAgents(
-      request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2.IAgent[],
-          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IAgent[],
-          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IAgent[],
-        protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest|null,
-        protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse
-      ]>|void {
+          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest | null,
+          protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IAgent[],
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IAgent[],
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.ISearchAgentsResponse
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -874,43 +1069,43 @@ export class AgentsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.searchAgents(request, options, callback);
   }
 
-/**
- * Equivalent to {@link searchAgents}, but returns a NodeJS Stream object.
- *
- * This fetches the paged responses for {@link searchAgents} continuously
- * and invokes the callback registered for 'data' event for each element in the
- * responses.
- *
- * The returned object has 'end' method when no more elements are required.
- *
- * autoPaginate option will be ignored.
- *
- * @see {@link https://nodejs.org/api/stream.html}
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The project to list agents from.
- *   Format: `projects/<Project ID or '-'>`.
- * @param {number} [request.pageSize]
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} request.pageToken
- *   The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent} on 'data' event.
- */
+  /**
+   * Equivalent to {@link searchAgents}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link searchAgents} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The project to list agents from.
+   *   Format: `projects/<Project ID or '-'>`.
+   * @param {number} [request.pageSize]
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [Agent]{@link google.cloud.dialogflow.v2.Agent} on 'data' event.
+   */
   searchAgentsStream(
-      request?: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
-      options?: gax.CallOptions | {}):
-    Transform{
+    request?: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest,
+    options?: gax.CallOptions | {}
+  ): Transform {
     request = request || {};
     const callSettings = new gax.CallSettings(options);
     return this._descriptors.page.searchAgents.createStream(
@@ -931,11 +1126,11 @@ export class AgentsClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  contextPath(project:string,session:string,context:string) {
+  contextPath(project: string, session: string, context: string) {
     return this._pathTemplates.contextPathTemplate.render({
-      project: project,
-      session: session,
-      context: context,
+      project,
+      session,
+      context,
     });
   }
 
@@ -979,9 +1174,9 @@ export class AgentsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  entityTypePath(project:string,entityType:string) {
+  entityTypePath(project: string, entityType: string) {
     return this._pathTemplates.entityTypePathTemplate.render({
-      project: project,
+      project,
       entity_type: entityType,
     });
   }
@@ -994,7 +1189,8 @@ export class AgentsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEntityTypeName(entityTypeName: string) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName).project;
+    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .project;
   }
 
   /**
@@ -1005,7 +1201,8 @@ export class AgentsClient {
    * @returns {string} A string representing the entity_type.
    */
   matchEntityTypeFromEntityTypeName(entityTypeName: string) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName).entity_type;
+    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .entity_type;
   }
 
   /**
@@ -1016,10 +1213,10 @@ export class AgentsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  sessionEntityTypePath(project:string,session:string,entityType:string) {
+  sessionEntityTypePath(project: string, session: string, entityType: string) {
     return this._pathTemplates.sessionEntityTypePathTemplate.render({
-      project: project,
-      session: session,
+      project,
+      session,
       entity_type: entityType,
     });
   }
@@ -1032,7 +1229,9 @@ export class AgentsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromSessionEntityTypeName(sessionEntityTypeName: string) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(sessionEntityTypeName).project;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -1043,7 +1242,9 @@ export class AgentsClient {
    * @returns {string} A string representing the session.
    */
   matchSessionFromSessionEntityTypeName(sessionEntityTypeName: string) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(sessionEntityTypeName).session;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -1054,7 +1255,9 @@ export class AgentsClient {
    * @returns {string} A string representing the entity_type.
    */
   matchEntityTypeFromSessionEntityTypeName(sessionEntityTypeName: string) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(sessionEntityTypeName).entity_type;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -1064,10 +1267,10 @@ export class AgentsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  intentPath(project:string,intent:string) {
+  intentPath(project: string, intent: string) {
     return this._pathTemplates.intentPathTemplate.render({
-      project: project,
-      intent: intent,
+      project,
+      intent,
     });
   }
 
@@ -1099,9 +1302,9 @@ export class AgentsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  agentPath(project:string) {
+  agentPath(project: string) {
     return this._pathTemplates.agentPathTemplate.render({
-      project: project,
+      project,
     });
   }
 
@@ -1122,9 +1325,9 @@ export class AgentsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project:string) {
+  projectPath(project: string) {
     return this._pathTemplates.projectPathTemplate.render({
-      project: project,
+      project,
     });
   }
 

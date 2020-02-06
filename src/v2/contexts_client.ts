@@ -17,10 +17,18 @@
 // ** All changes to this file may be overwritten. **
 
 import * as gax from 'google-gax';
-import {APICallback, Callback, CallOptions, Descriptors, ClientOptions, PaginationCallback, PaginationResponse} from 'google-gax';
+import {
+  APICallback,
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+  PaginationCallback,
+  PaginationResponse,
+} from 'google-gax';
 import * as path from 'path';
 
-import { Transform } from 'stream';
+import {Transform} from 'stream';
 import * as protosTypes from '../../protos/protos';
 import * as gapicConfig from './contexts_client_config.json';
 
@@ -87,10 +95,12 @@ export class ContextsClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include the service address and port.
     const staticMembers = this.constructor as typeof ContextsClient;
-    const servicePath = opts && opts.servicePath ?
-        opts.servicePath :
-        ((opts && opts.apiEndpoint) ? opts.apiEndpoint :
-                                      staticMembers.servicePath);
+    const servicePath =
+      opts && opts.servicePath
+        ? opts.servicePath
+        : opts && opts.apiEndpoint
+        ? opts.apiEndpoint
+        : staticMembers.servicePath;
     const port = opts && opts.port ? opts.port : staticMembers.port;
 
     if (!opts) {
@@ -100,8 +110,8 @@ export class ContextsClient {
     opts.port = opts.port || port;
     opts.clientConfig = opts.clientConfig || {};
 
-    const isBrowser = (typeof window !== 'undefined');
-    if (isBrowser){
+    const isBrowser = typeof window !== 'undefined';
+    if (isBrowser) {
       opts.fallback = true;
     }
     // If we are in browser, we are already using fallback because of the
@@ -115,13 +125,10 @@ export class ContextsClient {
     const gaxGrpc = new gaxModule.GrpcClient(opts);
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = gaxGrpc.auth as gax.GoogleAuth;
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -137,11 +144,15 @@ export class ContextsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
+    const nodejsProtoPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'protos',
+      'protos.json'
+    );
     const protos = gaxGrpc.loadProto(
-      opts.fallback ?
-        require("../../protos/protos.json") :
-        nodejsProtoPath
+      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -160,23 +171,27 @@ export class ContextsClient {
       intentPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/agent/intents/{intent}'
       ),
-      agentPathTemplate: new gaxModule.PathTemplate(
-        'projects/{project}/agent'
-      ),
+      agentPathTemplate: new gaxModule.PathTemplate('projects/{project}/agent'),
     };
 
     // Some of the methods on this service return "paged" results,
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this._descriptors.page = {
-      listContexts:
-          new gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'contexts')
+      listContexts: new gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'contexts'
+      ),
     };
 
     // Put together the default options sent with requests.
     const defaults = gaxGrpc.constructSettings(
-        'google.cloud.dialogflow.v2.Contexts', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.cloud.dialogflow.v2.Contexts',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -186,16 +201,25 @@ export class ContextsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.Contexts.
     this.contextsStub = gaxGrpc.createStub(
-        opts.fallback ?
-          (protos as protobuf.Root).lookupService('google.cloud.dialogflow.v2.Contexts') :
-          // tslint:disable-next-line no-any
+      opts.fallback
+        ? (protos as protobuf.Root).lookupService(
+            'google.cloud.dialogflow.v2.Contexts'
+          )
+        : // tslint:disable-next-line no-any
           (protos as any).google.cloud.dialogflow.v2.Contexts,
-        opts) as Promise<{[method: string]: Function}>;
+      opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const contextsStubMethods =
-        ['listContexts', 'getContext', 'createContext', 'updateContext', 'deleteContext', 'deleteAllContexts'];
+    const contextsStubMethods = [
+      'listContexts',
+      'getContext',
+      'createContext',
+      'updateContext',
+      'deleteContext',
+      'deleteAllContexts',
+    ];
 
     for (const methodName of contextsStubMethods) {
       const innerCallPromise = this.contextsStub.then(
@@ -205,16 +229,17 @@ export class ContextsClient {
           }
           return stub[methodName].apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
       const apiCall = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
         this._descriptors.page[methodName] ||
-            this._descriptors.stream[methodName] ||
-            this._descriptors.longrunning[methodName]
+          this._descriptors.stream[methodName] ||
+          this._descriptors.longrunning[methodName]
       );
 
       this._innerApiCalls[methodName] = (
@@ -256,7 +281,7 @@ export class ContextsClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow'
+      'https://www.googleapis.com/auth/dialogflow',
     ];
   }
 
@@ -267,8 +292,9 @@ export class ContextsClient {
    * @param {function(Error, string)} callback - the callback to
    *   be called with the current project Id.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -280,53 +306,65 @@ export class ContextsClient {
   // -- Service calls --
   // -------------------
   getContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IGetContextRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext,
-        protosTypes.google.cloud.dialogflow.v2.IGetContextRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IGetContextRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IGetContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   getContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IGetContextRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.IGetContextRequest|undefined,
-          {}|undefined>): void;
-/**
- * Retrieves the specified context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the context. Format:
- *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2.Context}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IGetContextRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IGetContextRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Retrieves the specified context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the context. Format:
+   *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2.Context}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   getContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IGetContextRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.IGetContextRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.IGetContextRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.IGetContextRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext,
-        protosTypes.google.cloud.dialogflow.v2.IGetContextRequest|undefined, {}|undefined
-      ]>|void {
+          protosTypes.google.cloud.dialogflow.v2.IGetContextRequest | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IGetContextRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IGetContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -335,62 +373,75 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     return this._innerApiCalls.getContext(request, options, callback);
   }
   createContext(
-      request: protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext,
-        protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   createContext(
-      request: protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest|undefined,
-          {}|undefined>): void;
-/**
- * Creates a context.
- *
- * If the specified context already exists, overrides the context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The session to create a context for.
- *   Format: `projects/<Project ID>/agent/sessions/<Session ID>`.
- * @param {google.cloud.dialogflow.v2.Context} request.context
- *   Required. The context to create.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2.Context}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Creates a context.
+   *
+   * If the specified context already exists, overrides the context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The session to create a context for.
+   *   Format: `projects/<Project ID>/agent/sessions/<Session ID>`.
+   * @param {google.cloud.dialogflow.v2.Context} request.context
+   *   Required. The context to create.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2.Context}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   createContext(
-      request: protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext,
-        protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.ICreateContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -399,59 +450,72 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.createContext(request, options, callback);
   }
   updateContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext,
-        protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   updateContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest|undefined,
-          {}|undefined>): void;
-/**
- * Updates the specified context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {google.cloud.dialogflow.v2.Context} request.context
- *   Required. The context to update.
- * @param {google.protobuf.FieldMask} [request.updateMask]
- *   Optional. The mask to control which fields get updated.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2.Context}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Updates the specified context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {google.cloud.dialogflow.v2.Context} request.context
+   *   Required. The context to update.
+   * @param {google.protobuf.FieldMask} [request.updateMask]
+   *   Optional. The mask to control which fields get updated.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2.Context}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   updateContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext,
-          protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext,
-        protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext,
+      protosTypes.google.cloud.dialogflow.v2.IUpdateContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -465,53 +529,66 @@ export class ContextsClient {
     return this._innerApiCalls.updateContext(request, options, callback);
   }
   deleteContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   deleteContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest|undefined,
-          {}|undefined>): void;
-/**
- * Deletes the specified context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the context to delete. Format:
- *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Deletes the specified context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the context to delete. Format:
+   *   `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   deleteContext(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      protosTypes.google.cloud.dialogflow.v2.IDeleteContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -520,58 +597,79 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     return this._innerApiCalls.deleteContext(request, options, callback);
   }
   deleteAllContexts(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      (
+        | protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   deleteAllContexts(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest|undefined,
-          {}|undefined>): void;
-/**
- * Deletes all active contexts in the specified session.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The name of the session to delete all contexts from. Format:
- *   `projects/<Project ID>/agent/sessions/<Session ID>`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      | protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest
+      | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Deletes all active contexts in the specified session.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The name of the session to delete all contexts from. Format:
+   *   `projects/<Project ID>/agent/sessions/<Session ID>`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   deleteAllContexts(
-      request: protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.protobuf.IEmpty,
-          protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.protobuf.IEmpty,
-        protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.protobuf.IEmpty,
+      | protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest
+      | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.protobuf.IEmpty,
+      (
+        | protosTypes.google.cloud.dialogflow.v2.IDeleteAllContextsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -580,79 +678,88 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.deleteAllContexts(request, options, callback);
   }
 
   listContexts(
-      request: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext[],
-        protosTypes.google.cloud.dialogflow.v2.IListContextsRequest|null,
-        protosTypes.google.cloud.dialogflow.v2.IListContextsResponse
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext[],
+      protosTypes.google.cloud.dialogflow.v2.IListContextsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.IListContextsResponse
+    ]
+  >;
   listContexts(
-      request: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext[],
-          protosTypes.google.cloud.dialogflow.v2.IListContextsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2.IListContextsResponse>): void;
-/**
- * Returns the list of all contexts in the specified session.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The session to list all contexts from.
- *   Format: `projects/<Project ID>/agent/sessions/<Session ID>`.
- * @param {number} [request.pageSize]
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} [request.pageToken]
- *   Optional. The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [Context]{@link google.cloud.dialogflow.v2.Context}.
- *   The client library support auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *
- *   When autoPaginate: false is specified through options, the array has three elements.
- *   The first element is Array of [Context]{@link google.cloud.dialogflow.v2.Context} that corresponds to
- *   the one page received from the API server.
- *   If the second element is not null it contains the request object of type [ListContextsRequest]{@link google.cloud.dialogflow.v2.ListContextsRequest}
- *   that can be used to obtain the next page of the results.
- *   If it is null, the next page does not exist.
- *   The third element contains the raw response received from the API server. Its type is
- *   [ListContextsResponse]{@link google.cloud.dialogflow.v2.ListContextsResponse}.
- *
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext[],
+      protosTypes.google.cloud.dialogflow.v2.IListContextsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.IListContextsResponse
+    >
+  ): void;
+  /**
+   * Returns the list of all contexts in the specified session.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The session to list all contexts from.
+   *   Format: `projects/<Project ID>/agent/sessions/<Session ID>`.
+   * @param {number} [request.pageSize]
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} [request.pageToken]
+   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [Context]{@link google.cloud.dialogflow.v2.Context}.
+   *   The client library support auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [Context]{@link google.cloud.dialogflow.v2.Context} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListContextsRequest]{@link google.cloud.dialogflow.v2.ListContextsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListContextsResponse]{@link google.cloud.dialogflow.v2.ListContextsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   listContexts(
-      request: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2.IContext[],
-          protosTypes.google.cloud.dialogflow.v2.IListContextsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2.IListContextsResponse>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2.IContext[],
-          protosTypes.google.cloud.dialogflow.v2.IListContextsRequest|null,
-          protosTypes.google.cloud.dialogflow.v2.IListContextsResponse>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2.IContext[],
-        protosTypes.google.cloud.dialogflow.v2.IListContextsRequest|null,
-        protosTypes.google.cloud.dialogflow.v2.IListContextsResponse
-      ]>|void {
+          protosTypes.google.cloud.dialogflow.v2.IListContextsRequest | null,
+          protosTypes.google.cloud.dialogflow.v2.IListContextsResponse
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2.IContext[],
+      protosTypes.google.cloud.dialogflow.v2.IListContextsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.IListContextsResponse
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2.IContext[],
+      protosTypes.google.cloud.dialogflow.v2.IListContextsRequest | null,
+      protosTypes.google.cloud.dialogflow.v2.IListContextsResponse
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -661,43 +768,43 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     return this._innerApiCalls.listContexts(request, options, callback);
   }
 
-/**
- * Equivalent to {@link listContexts}, but returns a NodeJS Stream object.
- *
- * This fetches the paged responses for {@link listContexts} continuously
- * and invokes the callback registered for 'data' event for each element in the
- * responses.
- *
- * The returned object has 'end' method when no more elements are required.
- *
- * autoPaginate option will be ignored.
- *
- * @see {@link https://nodejs.org/api/stream.html}
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The session to list all contexts from.
- *   Format: `projects/<Project ID>/agent/sessions/<Session ID>`.
- * @param {number} [request.pageSize]
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} [request.pageToken]
- *   Optional. The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [Context]{@link google.cloud.dialogflow.v2.Context} on 'data' event.
- */
+  /**
+   * Equivalent to {@link listContexts}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listContexts} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The session to list all contexts from.
+   *   Format: `projects/<Project ID>/agent/sessions/<Session ID>`.
+   * @param {number} [request.pageSize]
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} [request.pageToken]
+   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [Context]{@link google.cloud.dialogflow.v2.Context} on 'data' event.
+   */
   listContextsStream(
-      request?: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
-      options?: gax.CallOptions | {}):
-    Transform{
+    request?: protosTypes.google.cloud.dialogflow.v2.IListContextsRequest,
+    options?: gax.CallOptions | {}
+  ): Transform {
     request = request || {};
     const callSettings = new gax.CallSettings(options);
     return this._descriptors.page.listContexts.createStream(
@@ -718,11 +825,11 @@ export class ContextsClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  contextPath(project:string,session:string,context:string) {
+  contextPath(project: string, session: string, context: string) {
     return this._pathTemplates.contextPathTemplate.render({
-      project: project,
-      session: session,
-      context: context,
+      project,
+      session,
+      context,
     });
   }
 
@@ -766,9 +873,9 @@ export class ContextsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  entityTypePath(project:string,entityType:string) {
+  entityTypePath(project: string, entityType: string) {
     return this._pathTemplates.entityTypePathTemplate.render({
-      project: project,
+      project,
       entity_type: entityType,
     });
   }
@@ -781,7 +888,8 @@ export class ContextsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEntityTypeName(entityTypeName: string) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName).project;
+    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .project;
   }
 
   /**
@@ -792,7 +900,8 @@ export class ContextsClient {
    * @returns {string} A string representing the entity_type.
    */
   matchEntityTypeFromEntityTypeName(entityTypeName: string) {
-    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName).entity_type;
+    return this._pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .entity_type;
   }
 
   /**
@@ -803,10 +912,10 @@ export class ContextsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  sessionEntityTypePath(project:string,session:string,entityType:string) {
+  sessionEntityTypePath(project: string, session: string, entityType: string) {
     return this._pathTemplates.sessionEntityTypePathTemplate.render({
-      project: project,
-      session: session,
+      project,
+      session,
       entity_type: entityType,
     });
   }
@@ -819,7 +928,9 @@ export class ContextsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromSessionEntityTypeName(sessionEntityTypeName: string) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(sessionEntityTypeName).project;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -830,7 +941,9 @@ export class ContextsClient {
    * @returns {string} A string representing the session.
    */
   matchSessionFromSessionEntityTypeName(sessionEntityTypeName: string) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(sessionEntityTypeName).session;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -841,7 +954,9 @@ export class ContextsClient {
    * @returns {string} A string representing the entity_type.
    */
   matchEntityTypeFromSessionEntityTypeName(sessionEntityTypeName: string) {
-    return this._pathTemplates.sessionEntityTypePathTemplate.match(sessionEntityTypeName).entity_type;
+    return this._pathTemplates.sessionEntityTypePathTemplate.match(
+      sessionEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -851,10 +966,10 @@ export class ContextsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  intentPath(project:string,intent:string) {
+  intentPath(project: string, intent: string) {
     return this._pathTemplates.intentPathTemplate.render({
-      project: project,
-      intent: intent,
+      project,
+      intent,
     });
   }
 
@@ -886,9 +1001,9 @@ export class ContextsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  agentPath(project:string) {
+  agentPath(project: string) {
     return this._pathTemplates.agentPathTemplate.render({
-      project: project,
+      project,
     });
   }
 

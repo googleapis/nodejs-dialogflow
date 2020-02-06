@@ -18,306 +18,322 @@
 
 import * as protosTypes from '../protos/protos';
 import * as assert from 'assert';
-import { describe, it } from 'mocha';
+import {describe, it} from 'mocha';
 const knowledgebasesModule = require('../src');
 
-
 const FAKE_STATUS_CODE = 1;
-class FakeError{
-    name: string;
-    message: string;
-    code: number;
-    constructor(n: number){
-        this.name = 'fakeName';
-        this.message = 'fake message';
-        this.code = n;
-    }
+class FakeError {
+  name: string;
+  message: string;
+  code: number;
+  constructor(n: number) {
+    this.name = 'fakeName';
+    this.message = 'fake message';
+    this.code = n;
+  }
 }
 const error = new FakeError(FAKE_STATUS_CODE);
 export interface Callback {
-  (err: FakeError|null, response?: {} | null): void;
+  (err: FakeError | null, response?: {} | null): void;
 }
 
-export class Operation{
-    constructor(){};
-    promise() {};
+export class Operation {
+  constructor() {}
+  promise() {}
 }
-function mockSimpleGrpcMethod(expectedRequest: {}, response: {} | null, error: FakeError | null) {
-    return (actualRequest: {}, options: {}, callback: Callback) => {
-        assert.deepStrictEqual(actualRequest, expectedRequest);
-        if (error) {
-            callback(error);
-        } else if (response) {
-            callback(null, response);
-        } else {
-            callback(null);
-        }
-    };
+function mockSimpleGrpcMethod(
+  expectedRequest: {},
+  response: {} | null,
+  error: FakeError | null
+) {
+  return (actualRequest: {}, options: {}, callback: Callback) => {
+    assert.deepStrictEqual(actualRequest, expectedRequest);
+    if (error) {
+      callback(error);
+    } else if (response) {
+      callback(null, response);
+    } else {
+      callback(null);
+    }
+  };
 }
 describe('v2beta1.KnowledgeBasesClient', () => {
-    it('has servicePath', () => {
-        const servicePath = knowledgebasesModule.v2beta1.KnowledgeBasesClient.servicePath;
-        assert(servicePath);
+  it('has servicePath', () => {
+    const servicePath =
+      knowledgebasesModule.v2beta1.KnowledgeBasesClient.servicePath;
+    assert(servicePath);
+  });
+  it('has apiEndpoint', () => {
+    const apiEndpoint =
+      knowledgebasesModule.v2beta1.KnowledgeBasesClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+  it('has port', () => {
+    const port = knowledgebasesModule.v2beta1.KnowledgeBasesClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+  it('should create a client with no option', () => {
+    const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient();
+    assert(client);
+  });
+  it('should create a client with gRPC fallback', () => {
+    const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+      fallback: true,
     });
-    it('has apiEndpoint', () => {
-        const apiEndpoint = knowledgebasesModule.v2beta1.KnowledgeBasesClient.apiEndpoint;
-        assert(apiEndpoint);
+    assert(client);
+  });
+  describe('getKnowledgeBase', () => {
+    it('invokes getKnowledgeBase without error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetKnowledgeBaseRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.getKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.getKnowledgeBase(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
     });
-    it('has port', () => {
-        const port = knowledgebasesModule.v2beta1.KnowledgeBasesClient.port;
-        assert(port);
-        assert(typeof port === 'number');
-    });
-    it('should create a client with no option', () => {
-        const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient();
-        assert(client);
-    });
-    it('should create a client with gRPC fallback', () => {
-        const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-            fallback: true,
-        });
-        assert(client);
-    });
-    describe('getKnowledgeBase', () => {
-        it('invokes getKnowledgeBase without error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetKnowledgeBaseRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.getKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.getKnowledgeBase(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
 
-        it('invokes getKnowledgeBase with error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetKnowledgeBaseRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.getKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.getKnowledgeBase(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes getKnowledgeBase with error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetKnowledgeBaseRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.getKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.getKnowledgeBase(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('createKnowledgeBase', () => {
-        it('invokes createKnowledgeBase without error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateKnowledgeBaseRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.createKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.createKnowledgeBase(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('createKnowledgeBase', () => {
+    it('invokes createKnowledgeBase without error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateKnowledgeBaseRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.createKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.createKnowledgeBase(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes createKnowledgeBase with error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateKnowledgeBaseRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.createKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.createKnowledgeBase(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes createKnowledgeBase with error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateKnowledgeBaseRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.createKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.createKnowledgeBase(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('deleteKnowledgeBase', () => {
-        it('invokes deleteKnowledgeBase without error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteKnowledgeBaseRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.deleteKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.deleteKnowledgeBase(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('deleteKnowledgeBase', () => {
+    it('invokes deleteKnowledgeBase without error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteKnowledgeBaseRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.deleteKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.deleteKnowledgeBase(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes deleteKnowledgeBase with error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteKnowledgeBaseRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.deleteKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.deleteKnowledgeBase(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes deleteKnowledgeBase with error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteKnowledgeBaseRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.deleteKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.deleteKnowledgeBase(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('updateKnowledgeBase', () => {
-        it('invokes updateKnowledgeBase without error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateKnowledgeBaseRequest = {};
-            request.knowledgeBase = {};
-            request.knowledgeBase.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.updateKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.updateKnowledgeBase(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('updateKnowledgeBase', () => {
+    it('invokes updateKnowledgeBase without error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateKnowledgeBaseRequest = {};
+      request.knowledgeBase = {};
+      request.knowledgeBase.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.updateKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.updateKnowledgeBase(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes updateKnowledgeBase with error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateKnowledgeBaseRequest = {};
-            request.knowledgeBase = {};
-            request.knowledgeBase.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.updateKnowledgeBase = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.updateKnowledgeBase(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes updateKnowledgeBase with error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateKnowledgeBaseRequest = {};
+      request.knowledgeBase = {};
+      request.knowledgeBase.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.updateKnowledgeBase = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.updateKnowledgeBase(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('listKnowledgeBases', () => {
-        it('invokes listKnowledgeBases without error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IListKnowledgeBasesRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock Grpc layer
-            client._innerApiCalls.listKnowledgeBases = (actualRequest: {}, options: {}, callback: Callback) => {
-                assert.deepStrictEqual(actualRequest, request);
-                callback(null, expectedResponse);
-            };
-            client.listKnowledgeBases(request, (err: FakeError, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            });
-        });
+  });
+  describe('listKnowledgeBases', () => {
+    it('invokes listKnowledgeBases without error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IListKnowledgeBasesRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock Grpc layer
+      client._innerApiCalls.listKnowledgeBases = (
+        actualRequest: {},
+        options: {},
+        callback: Callback
+      ) => {
+        assert.deepStrictEqual(actualRequest, request);
+        callback(null, expectedResponse);
+      };
+      client.listKnowledgeBases(request, (err: FakeError, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
     });
-    describe('listKnowledgeBasesStream', () => {
-        it('invokes listKnowledgeBasesStream without error', done => {
-            const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IListKnowledgeBasesRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {response: 'data'};
-            // Mock Grpc layer
-            client._innerApiCalls.listKnowledgeBases = (actualRequest: {}, options: {}, callback: Callback) => {
-                assert.deepStrictEqual(actualRequest, request);
-                callback(null, expectedResponse);
-            };
-            const stream = client.listKnowledgeBasesStream(request, {}).on('data', (response: {}) =>{
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            }).on('error', (err: FakeError) => {
-                done(err);
-            });
-            stream.write(expectedResponse);
+  });
+  describe('listKnowledgeBasesStream', () => {
+    it('invokes listKnowledgeBasesStream without error', done => {
+      const client = new knowledgebasesModule.v2beta1.KnowledgeBasesClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IListKnowledgeBasesRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {response: 'data'};
+      // Mock Grpc layer
+      client._innerApiCalls.listKnowledgeBases = (
+        actualRequest: {},
+        options: {},
+        callback: Callback
+      ) => {
+        assert.deepStrictEqual(actualRequest, request);
+        callback(null, expectedResponse);
+      };
+      const stream = client
+        .listKnowledgeBasesStream(request, {})
+        .on('data', (response: {}) => {
+          assert.deepStrictEqual(response, expectedResponse);
+          done();
+        })
+        .on('error', (err: FakeError) => {
+          done(err);
         });
+      stream.write(expectedResponse);
     });
+  });
 });

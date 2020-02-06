@@ -17,7 +17,13 @@
 // ** All changes to this file may be overwritten. **
 
 import * as gax from 'google-gax';
-import {APICallback, Callback, CallOptions, Descriptors, ClientOptions} from 'google-gax';
+import {
+  APICallback,
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+} from 'google-gax';
 import * as path from 'path';
 
 import * as protosTypes from '../../protos/protos';
@@ -72,10 +78,12 @@ export class SessionsClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include the service address and port.
     const staticMembers = this.constructor as typeof SessionsClient;
-    const servicePath = opts && opts.servicePath ?
-        opts.servicePath :
-        ((opts && opts.apiEndpoint) ? opts.apiEndpoint :
-                                      staticMembers.servicePath);
+    const servicePath =
+      opts && opts.servicePath
+        ? opts.servicePath
+        : opts && opts.apiEndpoint
+        ? opts.apiEndpoint
+        : staticMembers.servicePath;
     const port = opts && opts.port ? opts.port : staticMembers.port;
 
     if (!opts) {
@@ -85,8 +93,8 @@ export class SessionsClient {
     opts.port = opts.port || port;
     opts.clientConfig = opts.clientConfig || {};
 
-    const isBrowser = (typeof window !== 'undefined');
-    if (isBrowser){
+    const isBrowser = typeof window !== 'undefined';
+    if (isBrowser) {
       opts.fallback = true;
     }
     // If we are in browser, we are already using fallback because of the
@@ -100,13 +108,10 @@ export class SessionsClient {
     const gaxGrpc = new gaxModule.GrpcClient(opts);
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = gaxGrpc.auth as gax.GoogleAuth;
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -122,11 +127,15 @@ export class SessionsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
+    const nodejsProtoPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'protos',
+      'protos.json'
+    );
     const protos = gaxGrpc.loadProto(
-      opts.fallback ?
-        require("../../protos/protos.json") :
-        nodejsProtoPath
+      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -156,13 +165,18 @@ export class SessionsClient {
     // Some of the methods on this service provide streaming responses.
     // Provide descriptors for these.
     this._descriptors.stream = {
-      streamingDetectIntent: new gaxModule.StreamDescriptor(gax.StreamType.BIDI_STREAMING)
+      streamingDetectIntent: new gaxModule.StreamDescriptor(
+        gax.StreamType.BIDI_STREAMING
+      ),
     };
 
     // Put together the default options sent with requests.
     const defaults = gaxGrpc.constructSettings(
-        'google.cloud.dialogflow.v2beta1.Sessions', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.cloud.dialogflow.v2beta1.Sessions',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -172,16 +186,18 @@ export class SessionsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Sessions.
     this.sessionsStub = gaxGrpc.createStub(
-        opts.fallback ?
-          (protos as protobuf.Root).lookupService('google.cloud.dialogflow.v2beta1.Sessions') :
-          // tslint:disable-next-line no-any
+      opts.fallback
+        ? (protos as protobuf.Root).lookupService(
+            'google.cloud.dialogflow.v2beta1.Sessions'
+          )
+        : // tslint:disable-next-line no-any
           (protos as any).google.cloud.dialogflow.v2beta1.Sessions,
-        opts) as Promise<{[method: string]: Function}>;
+      opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const sessionsStubMethods =
-        ['detectIntent', 'streamingDetectIntent'];
+    const sessionsStubMethods = ['detectIntent', 'streamingDetectIntent'];
 
     for (const methodName of sessionsStubMethods) {
       const innerCallPromise = this.sessionsStub.then(
@@ -191,16 +207,17 @@ export class SessionsClient {
           }
           return stub[methodName].apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
       const apiCall = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
         this._descriptors.page[methodName] ||
-            this._descriptors.stream[methodName] ||
-            this._descriptors.longrunning[methodName]
+          this._descriptors.stream[methodName] ||
+          this._descriptors.longrunning[methodName]
       );
 
       this._innerApiCalls[methodName] = (
@@ -242,7 +259,7 @@ export class SessionsClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow'
+      'https://www.googleapis.com/auth/dialogflow',
     ];
   }
 
@@ -253,8 +270,9 @@ export class SessionsClient {
    * @param {function(Error, string)} callback - the callback to
    *   be called with the current project Id.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -266,82 +284,103 @@ export class SessionsClient {
   // -- Service calls --
   // -------------------
   detectIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
-        protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest|undefined, {}|undefined
-      ]>;
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   detectIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
-          protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest|undefined,
-          {}|undefined>): void;
-/**
- * Processes a natural language query and returns structured, actionable data
- * as a result. This method is not idempotent, because it may cause contexts
- * and session entity types to be updated, which in turn might affect
- * results of future queries.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.session
- *   Required. The name of the session this query is sent to. Format:
- *   `projects/<Project ID>/agent/sessions/<Session ID>`, or
- *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
- *   default 'draft' environment. If `User ID` is not specified, we are using
- *   "-". It's up to the API caller to choose an appropriate `Session ID` and
- *   `User Id`. They can be a random number or some type of user and session
- *   identifiers (preferably hashed). The length of the `Session ID` and
- *   `User ID` must not exceed 36 characters.
- * @param {google.cloud.dialogflow.v2beta1.QueryParameters} request.queryParams
- *   Optional. The parameters of this query.
- * @param {google.cloud.dialogflow.v2beta1.QueryInput} request.queryInput
- *   Required. The input specification. It can be set to:
- *
- *   1.  an audio config
- *       which instructs the speech recognizer how to process the speech audio,
- *
- *   2.  a conversational query in the form of text, or
- *
- *   3.  an event that specifies which intent to trigger.
- * @param {google.cloud.dialogflow.v2beta1.OutputAudioConfig} request.outputAudioConfig
- *   Optional. Instructs the speech synthesizer how to generate the output
- *   audio. If this field is not set and agent-level speech synthesizer is not
- *   configured, no output audio is generated.
- * @param {Buffer} request.inputAudio
- *   Optional. The natural language speech audio to be processed. This field
- *   should be populated iff `query_input` is set to an input audio config.
- *   A single request can contain up to 1 minute of speech audio data.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [DetectIntentResponse]{@link google.cloud.dialogflow.v2beta1.DetectIntentResponse}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): void;
+  /**
+   * Processes a natural language query and returns structured, actionable data
+   * as a result. This method is not idempotent, because it may cause contexts
+   * and session entity types to be updated, which in turn might affect
+   * results of future queries.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.session
+   *   Required. The name of the session this query is sent to. Format:
+   *   `projects/<Project ID>/agent/sessions/<Session ID>`, or
+   *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+   *   default 'draft' environment. If `User ID` is not specified, we are using
+   *   "-". It's up to the API caller to choose an appropriate `Session ID` and
+   *   `User Id`. They can be a random number or some type of user and session
+   *   identifiers (preferably hashed). The length of the `Session ID` and
+   *   `User ID` must not exceed 36 characters.
+   * @param {google.cloud.dialogflow.v2beta1.QueryParameters} request.queryParams
+   *   Optional. The parameters of this query.
+   * @param {google.cloud.dialogflow.v2beta1.QueryInput} request.queryInput
+   *   Required. The input specification. It can be set to:
+   *
+   *   1.  an audio config
+   *       which instructs the speech recognizer how to process the speech audio,
+   *
+   *   2.  a conversational query in the form of text, or
+   *
+   *   3.  an event that specifies which intent to trigger.
+   * @param {google.cloud.dialogflow.v2beta1.OutputAudioConfig} request.outputAudioConfig
+   *   Optional. Instructs the speech synthesizer how to generate the output
+   *   audio. If this field is not set and agent-level speech synthesizer is not
+   *   configured, no output audio is generated.
+   * @param {Buffer} request.inputAudio
+   *   Optional. The natural language speech audio to be processed. This field
+   *   should be populated iff `query_input` is set to an input audio config.
+   *   A single request can contain up to 1 minute of speech audio data.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DetectIntentResponse]{@link google.cloud.dialogflow.v2beta1.DetectIntentResponse}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   detectIntent(
-      request: protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
-          protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest|undefined, {}|undefined>,
-      callback?: Callback<
-          protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
-          protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest|undefined,
-          {}|undefined>):
-      Promise<[
-        protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
-        protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest|undefined, {}|undefined
-      ]>|void {
+          | protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest
+          | undefined,
+          {} | undefined
+        >,
+    callback?: Callback<
+      protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
+      | protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest
+      | undefined,
+      {} | undefined
+    >
+  ): Promise<
+    [
+      protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentResponse,
+      (
+        | protosTypes.google.cloud.dialogflow.v2beta1.IDetectIntentRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -350,26 +389,24 @@ export class SessionsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'session': request.session || '',
+      session: request.session || '',
     });
     return this._innerApiCalls.detectIntent(request, options, callback);
   }
 
-/**
- * Processes a natural language query in audio format in a streaming fashion
- * and returns structured, actionable data as a result. This method is only
- * available via the gRPC API (not REST).
- *
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which is both readable and writable. It accepts objects
- *   representing [StreamingDetectIntentRequest]{@link google.cloud.dialogflow.v2beta1.StreamingDetectIntentRequest} for write() method, and
- *   will emit objects representing [StreamingDetectIntentResponse]{@link google.cloud.dialogflow.v2beta1.StreamingDetectIntentResponse} on 'data' event asynchronously.
- */
-  streamingDetectIntent(
-      options?: gax.CallOptions):
-    gax.CancellableStream{
+  /**
+   * Processes a natural language query in audio format in a streaming fashion
+   * and returns structured, actionable data as a result. This method is only
+   * available via the gRPC API (not REST).
+   *
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which is both readable and writable. It accepts objects
+   *   representing [StreamingDetectIntentRequest]{@link google.cloud.dialogflow.v2beta1.StreamingDetectIntentRequest} for write() method, and
+   *   will emit objects representing [StreamingDetectIntentResponse]{@link google.cloud.dialogflow.v2beta1.StreamingDetectIntentResponse} on 'data' event asynchronously.
+   */
+  streamingDetectIntent(options?: gax.CallOptions): gax.CancellableStream {
     options = options || {};
     return this._innerApiCalls.streamingDetectIntent(options);
   }
@@ -385,10 +422,10 @@ export class SessionsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  projectIntentPath(project:string,intent:string) {
+  projectIntentPath(project: string, intent: string) {
     return this._pathTemplates.projectIntentPathTemplate.render({
-      project: project,
-      intent: intent,
+      project,
+      intent,
     });
   }
 
@@ -400,7 +437,9 @@ export class SessionsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectIntentName(projectIntentName: string) {
-    return this._pathTemplates.projectIntentPathTemplate.match(projectIntentName).project;
+    return this._pathTemplates.projectIntentPathTemplate.match(
+      projectIntentName
+    ).project;
   }
 
   /**
@@ -411,7 +450,9 @@ export class SessionsClient {
    * @returns {string} A string representing the intent.
    */
   matchIntentFromProjectIntentName(projectIntentName: string) {
-    return this._pathTemplates.projectIntentPathTemplate.match(projectIntentName).intent;
+    return this._pathTemplates.projectIntentPathTemplate.match(
+      projectIntentName
+    ).intent;
   }
 
   /**
@@ -422,11 +463,11 @@ export class SessionsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  projectLocationIntentPath(project:string,location:string,intent:string) {
+  projectLocationIntentPath(project: string, location: string, intent: string) {
     return this._pathTemplates.projectLocationIntentPathTemplate.render({
-      project: project,
-      location: location,
-      intent: intent,
+      project,
+      location,
+      intent,
     });
   }
 
@@ -438,7 +479,9 @@ export class SessionsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectLocationIntentName(projectLocationIntentName: string) {
-    return this._pathTemplates.projectLocationIntentPathTemplate.match(projectLocationIntentName).project;
+    return this._pathTemplates.projectLocationIntentPathTemplate.match(
+      projectLocationIntentName
+    ).project;
   }
 
   /**
@@ -448,8 +491,12 @@ export class SessionsClient {
    *   A fully-qualified path representing project_location_intent resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationIntentName(projectLocationIntentName: string) {
-    return this._pathTemplates.projectLocationIntentPathTemplate.match(projectLocationIntentName).location;
+  matchLocationFromProjectLocationIntentName(
+    projectLocationIntentName: string
+  ) {
+    return this._pathTemplates.projectLocationIntentPathTemplate.match(
+      projectLocationIntentName
+    ).location;
   }
 
   /**
@@ -460,7 +507,9 @@ export class SessionsClient {
    * @returns {string} A string representing the intent.
    */
   matchIntentFromProjectLocationIntentName(projectLocationIntentName: string) {
-    return this._pathTemplates.projectLocationIntentPathTemplate.match(projectLocationIntentName).intent;
+    return this._pathTemplates.projectLocationIntentPathTemplate.match(
+      projectLocationIntentName
+    ).intent;
   }
 
   /**
@@ -469,9 +518,9 @@ export class SessionsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project:string) {
+  projectPath(project: string) {
     return this._pathTemplates.projectPathTemplate.render({
-      project: project,
+      project,
     });
   }
 
@@ -493,10 +542,10 @@ export class SessionsClient {
    * @param {string} location
    * @returns {string} Resource name string.
    */
-  projectLocationPath(project:string,location:string) {
+  projectLocationPath(project: string, location: string) {
     return this._pathTemplates.projectLocationPathTemplate.render({
-      project: project,
-      location: location,
+      project,
+      location,
     });
   }
 
@@ -508,7 +557,9 @@ export class SessionsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectLocationName(projectLocationName: string) {
-    return this._pathTemplates.projectLocationPathTemplate.match(projectLocationName).project;
+    return this._pathTemplates.projectLocationPathTemplate.match(
+      projectLocationName
+    ).project;
   }
 
   /**
@@ -519,7 +570,9 @@ export class SessionsClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromProjectLocationName(projectLocationName: string) {
-    return this._pathTemplates.projectLocationPathTemplate.match(projectLocationName).location;
+    return this._pathTemplates.projectLocationPathTemplate.match(
+      projectLocationName
+    ).location;
   }
 
   /**
@@ -530,11 +583,15 @@ export class SessionsClient {
    * @param {string} session
    * @returns {string} Resource name string.
    */
-  projectLocationSessionPath(project:string,location:string,session:string) {
+  projectLocationSessionPath(
+    project: string,
+    location: string,
+    session: string
+  ) {
     return this._pathTemplates.projectLocationSessionPathTemplate.render({
-      project: project,
-      location: location,
-      session: session,
+      project,
+      location,
+      session,
     });
   }
 
@@ -545,8 +602,12 @@ export class SessionsClient {
    *   A fully-qualified path representing project_location_session resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationSessionName(projectLocationSessionName: string) {
-    return this._pathTemplates.projectLocationSessionPathTemplate.match(projectLocationSessionName).project;
+  matchProjectFromProjectLocationSessionName(
+    projectLocationSessionName: string
+  ) {
+    return this._pathTemplates.projectLocationSessionPathTemplate.match(
+      projectLocationSessionName
+    ).project;
   }
 
   /**
@@ -556,8 +617,12 @@ export class SessionsClient {
    *   A fully-qualified path representing project_location_session resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationSessionName(projectLocationSessionName: string) {
-    return this._pathTemplates.projectLocationSessionPathTemplate.match(projectLocationSessionName).location;
+  matchLocationFromProjectLocationSessionName(
+    projectLocationSessionName: string
+  ) {
+    return this._pathTemplates.projectLocationSessionPathTemplate.match(
+      projectLocationSessionName
+    ).location;
   }
 
   /**
@@ -567,8 +632,12 @@ export class SessionsClient {
    *   A fully-qualified path representing project_location_session resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectLocationSessionName(projectLocationSessionName: string) {
-    return this._pathTemplates.projectLocationSessionPathTemplate.match(projectLocationSessionName).session;
+  matchSessionFromProjectLocationSessionName(
+    projectLocationSessionName: string
+  ) {
+    return this._pathTemplates.projectLocationSessionPathTemplate.match(
+      projectLocationSessionName
+    ).session;
   }
 
   /**
@@ -578,10 +647,10 @@ export class SessionsClient {
    * @param {string} session
    * @returns {string} Resource name string.
    */
-  projectSessionPath(project:string,session:string) {
+  projectSessionPath(project: string, session: string) {
     return this._pathTemplates.projectSessionPathTemplate.render({
-      project: project,
-      session: session,
+      project,
+      session,
     });
   }
 
@@ -593,7 +662,9 @@ export class SessionsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectSessionName(projectSessionName: string) {
-    return this._pathTemplates.projectSessionPathTemplate.match(projectSessionName).project;
+    return this._pathTemplates.projectSessionPathTemplate.match(
+      projectSessionName
+    ).project;
   }
 
   /**
@@ -604,7 +675,9 @@ export class SessionsClient {
    * @returns {string} A string representing the session.
    */
   matchSessionFromProjectSessionName(projectSessionName: string) {
-    return this._pathTemplates.projectSessionPathTemplate.match(projectSessionName).session;
+    return this._pathTemplates.projectSessionPathTemplate.match(
+      projectSessionName
+    ).session;
   }
 
   /**

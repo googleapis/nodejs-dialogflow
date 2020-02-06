@@ -18,354 +18,368 @@
 
 import * as protosTypes from '../protos/protos';
 import * as assert from 'assert';
-import { describe, it } from 'mocha';
+import {describe, it} from 'mocha';
 const documentsModule = require('../src');
 
-
 const FAKE_STATUS_CODE = 1;
-class FakeError{
-    name: string;
-    message: string;
-    code: number;
-    constructor(n: number){
-        this.name = 'fakeName';
-        this.message = 'fake message';
-        this.code = n;
-    }
+class FakeError {
+  name: string;
+  message: string;
+  code: number;
+  constructor(n: number) {
+    this.name = 'fakeName';
+    this.message = 'fake message';
+    this.code = n;
+  }
 }
 const error = new FakeError(FAKE_STATUS_CODE);
 export interface Callback {
-  (err: FakeError|null, response?: {} | null): void;
+  (err: FakeError | null, response?: {} | null): void;
 }
 
-export class Operation{
-    constructor(){};
-    promise() {};
+export class Operation {
+  constructor() {}
+  promise() {}
 }
-function mockSimpleGrpcMethod(expectedRequest: {}, response: {} | null, error: FakeError | null) {
-    return (actualRequest: {}, options: {}, callback: Callback) => {
-        assert.deepStrictEqual(actualRequest, expectedRequest);
-        if (error) {
-            callback(error);
-        } else if (response) {
-            callback(null, response);
-        } else {
-            callback(null);
-        }
-    };
+function mockSimpleGrpcMethod(
+  expectedRequest: {},
+  response: {} | null,
+  error: FakeError | null
+) {
+  return (actualRequest: {}, options: {}, callback: Callback) => {
+    assert.deepStrictEqual(actualRequest, expectedRequest);
+    if (error) {
+      callback(error);
+    } else if (response) {
+      callback(null, response);
+    } else {
+      callback(null);
+    }
+  };
 }
 describe('v2beta1.DocumentsClient', () => {
-    it('has servicePath', () => {
-        const servicePath = documentsModule.v2beta1.DocumentsClient.servicePath;
-        assert(servicePath);
+  it('has servicePath', () => {
+    const servicePath = documentsModule.v2beta1.DocumentsClient.servicePath;
+    assert(servicePath);
+  });
+  it('has apiEndpoint', () => {
+    const apiEndpoint = documentsModule.v2beta1.DocumentsClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+  it('has port', () => {
+    const port = documentsModule.v2beta1.DocumentsClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+  it('should create a client with no option', () => {
+    const client = new documentsModule.v2beta1.DocumentsClient();
+    assert(client);
+  });
+  it('should create a client with gRPC fallback', () => {
+    const client = new documentsModule.v2beta1.DocumentsClient({
+      fallback: true,
     });
-    it('has apiEndpoint', () => {
-        const apiEndpoint = documentsModule.v2beta1.DocumentsClient.apiEndpoint;
-        assert(apiEndpoint);
+    assert(client);
+  });
+  describe('getDocument', () => {
+    it('invokes getDocument without error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetDocumentRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.getDocument = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.getDocument(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
     });
-    it('has port', () => {
-        const port = documentsModule.v2beta1.DocumentsClient.port;
-        assert(port);
-        assert(typeof port === 'number');
-    });
-    it('should create a client with no option', () => {
-        const client = new documentsModule.v2beta1.DocumentsClient();
-        assert(client);
-    });
-    it('should create a client with gRPC fallback', () => {
-        const client = new documentsModule.v2beta1.DocumentsClient({
-            fallback: true,
-        });
-        assert(client);
-    });
-    describe('getDocument', () => {
-        it('invokes getDocument without error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetDocumentRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.getDocument = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.getDocument(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
 
-        it('invokes getDocument with error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetDocumentRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.getDocument = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.getDocument(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes getDocument with error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IGetDocumentRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.getDocument = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.getDocument(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('createDocument', () => {
-        it('invokes createDocument without error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.createDocument = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.createDocument(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('createDocument', () => {
+    it('invokes createDocument without error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.createDocument = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.createDocument(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes createDocument with error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.createDocument = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.createDocument(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes createDocument with error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.createDocument = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.createDocument(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('deleteDocument', () => {
-        it('invokes deleteDocument without error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.deleteDocument = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.deleteDocument(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('deleteDocument', () => {
+    it('invokes deleteDocument without error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.deleteDocument = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.deleteDocument(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes deleteDocument with error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.deleteDocument = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.deleteDocument(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes deleteDocument with error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.deleteDocument = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.deleteDocument(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('updateDocument', () => {
-        it('invokes updateDocument without error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest = {};
-            request.document = {};
-            request.document.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.updateDocument(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('updateDocument', () => {
+    it('invokes updateDocument without error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest = {};
+      request.document = {};
+      request.document.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.updateDocument(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes updateDocument with error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest = {};
-            request.document = {};
-            request.document.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.updateDocument(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes updateDocument with error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest = {};
+      request.document = {};
+      request.document.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.updateDocument = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.updateDocument(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('reloadDocument', () => {
-        it('invokes reloadDocument without error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.reloadDocument = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.reloadDocument(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('reloadDocument', () => {
+    it('invokes reloadDocument without error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.reloadDocument = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.reloadDocument(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes reloadDocument with error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest = {};
-            request.name = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.reloadDocument = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.reloadDocument(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes reloadDocument with error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest = {};
+      request.name = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.reloadDocument = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.reloadDocument(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('listDocuments', () => {
-        it('invokes listDocuments without error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IListDocumentsRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock Grpc layer
-            client._innerApiCalls.listDocuments = (actualRequest: {}, options: {}, callback: Callback) => {
-                assert.deepStrictEqual(actualRequest, request);
-                callback(null, expectedResponse);
-            };
-            client.listDocuments(request, (err: FakeError, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            });
-        });
+  });
+  describe('listDocuments', () => {
+    it('invokes listDocuments without error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IListDocumentsRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock Grpc layer
+      client._innerApiCalls.listDocuments = (
+        actualRequest: {},
+        options: {},
+        callback: Callback
+      ) => {
+        assert.deepStrictEqual(actualRequest, request);
+        callback(null, expectedResponse);
+      };
+      client.listDocuments(request, (err: FakeError, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
     });
-    describe('listDocumentsStream', () => {
-        it('invokes listDocumentsStream without error', done => {
-            const client = new documentsModule.v2beta1.DocumentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2beta1.IListDocumentsRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {response: 'data'};
-            // Mock Grpc layer
-            client._innerApiCalls.listDocuments = (actualRequest: {}, options: {}, callback: Callback) => {
-                assert.deepStrictEqual(actualRequest, request);
-                callback(null, expectedResponse);
-            };
-            const stream = client.listDocumentsStream(request, {}).on('data', (response: {}) =>{
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            }).on('error', (err: FakeError) => {
-                done(err);
-            });
-            stream.write(expectedResponse);
+  });
+  describe('listDocumentsStream', () => {
+    it('invokes listDocumentsStream without error', done => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2beta1.IListDocumentsRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {response: 'data'};
+      // Mock Grpc layer
+      client._innerApiCalls.listDocuments = (
+        actualRequest: {},
+        options: {},
+        callback: Callback
+      ) => {
+        assert.deepStrictEqual(actualRequest, request);
+        callback(null, expectedResponse);
+      };
+      const stream = client
+        .listDocumentsStream(request, {})
+        .on('data', (response: {}) => {
+          assert.deepStrictEqual(response, expectedResponse);
+          done();
+        })
+        .on('error', (err: FakeError) => {
+          done(err);
         });
+      stream.write(expectedResponse);
     });
+  });
 });

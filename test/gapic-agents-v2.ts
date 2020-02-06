@@ -18,496 +18,545 @@
 
 import * as protosTypes from '../protos/protos';
 import * as assert from 'assert';
-import { describe, it } from 'mocha';
+import {describe, it} from 'mocha';
 const agentsModule = require('../src');
 
-
 const FAKE_STATUS_CODE = 1;
-class FakeError{
-    name: string;
-    message: string;
-    code: number;
-    constructor(n: number){
-        this.name = 'fakeName';
-        this.message = 'fake message';
-        this.code = n;
-    }
+class FakeError {
+  name: string;
+  message: string;
+  code: number;
+  constructor(n: number) {
+    this.name = 'fakeName';
+    this.message = 'fake message';
+    this.code = n;
+  }
 }
 const error = new FakeError(FAKE_STATUS_CODE);
 export interface Callback {
-  (err: FakeError|null, response?: {} | null): void;
+  (err: FakeError | null, response?: {} | null): void;
 }
 
-export class Operation{
-    constructor(){};
-    promise() {};
+export class Operation {
+  constructor() {}
+  promise() {}
 }
-function mockSimpleGrpcMethod(expectedRequest: {}, response: {} | null, error: FakeError | null) {
-    return (actualRequest: {}, options: {}, callback: Callback) => {
-        assert.deepStrictEqual(actualRequest, expectedRequest);
-        if (error) {
-            callback(error);
-        } else if (response) {
-            callback(null, response);
-        } else {
-            callback(null);
-        }
-    };
+function mockSimpleGrpcMethod(
+  expectedRequest: {},
+  response: {} | null,
+  error: FakeError | null
+) {
+  return (actualRequest: {}, options: {}, callback: Callback) => {
+    assert.deepStrictEqual(actualRequest, expectedRequest);
+    if (error) {
+      callback(error);
+    } else if (response) {
+      callback(null, response);
+    } else {
+      callback(null);
+    }
+  };
 }
-function mockLongRunningGrpcMethod(expectedRequest: {}, response: {} | null, error?: {} | null) {
-    return (request: {}) => {
-        assert.deepStrictEqual(request, expectedRequest);
-        const mockOperation = {
-          promise: function() {
-            return new Promise((resolve, reject) => {
-              if (error) {
-                reject(error);
-              }
-              else {
-                resolve([response]);
-              }
-            });
+function mockLongRunningGrpcMethod(
+  expectedRequest: {},
+  response: {} | null,
+  error?: {} | null
+) {
+  return (request: {}) => {
+    assert.deepStrictEqual(request, expectedRequest);
+    const mockOperation = {
+      promise() {
+        return new Promise((resolve, reject) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve([response]);
           }
-        };
-        return Promise.resolve([mockOperation]);
+        });
+      },
     };
+    return Promise.resolve([mockOperation]);
+  };
 }
 describe('v2.AgentsClient', () => {
-    it('has servicePath', () => {
-        const servicePath = agentsModule.v2.AgentsClient.servicePath;
-        assert(servicePath);
+  it('has servicePath', () => {
+    const servicePath = agentsModule.v2.AgentsClient.servicePath;
+    assert(servicePath);
+  });
+  it('has apiEndpoint', () => {
+    const apiEndpoint = agentsModule.v2.AgentsClient.apiEndpoint;
+    assert(apiEndpoint);
+  });
+  it('has port', () => {
+    const port = agentsModule.v2.AgentsClient.port;
+    assert(port);
+    assert(typeof port === 'number');
+  });
+  it('should create a client with no option', () => {
+    const client = new agentsModule.v2.AgentsClient();
+    assert(client);
+  });
+  it('should create a client with gRPC fallback', () => {
+    const client = new agentsModule.v2.AgentsClient({
+      fallback: true,
     });
-    it('has apiEndpoint', () => {
-        const apiEndpoint = agentsModule.v2.AgentsClient.apiEndpoint;
-        assert(apiEndpoint);
+    assert(client);
+  });
+  describe('getAgent', () => {
+    it('invokes getAgent without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.getAgent = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.getAgent(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
     });
-    it('has port', () => {
-        const port = agentsModule.v2.AgentsClient.port;
-        assert(port);
-        assert(typeof port === 'number');
-    });
-    it('should create a client with no option', () => {
-        const client = new agentsModule.v2.AgentsClient();
-        assert(client);
-    });
-    it('should create a client with gRPC fallback', () => {
-        const client = new agentsModule.v2.AgentsClient({
-            fallback: true,
-        });
-        assert(client);
-    });
-    describe('getAgent', () => {
-        it('invokes getAgent without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.getAgent = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.getAgent(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
 
-        it('invokes getAgent with error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.getAgent = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.getAgent(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes getAgent with error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IGetAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.getAgent = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.getAgent(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('setAgent', () => {
-        it('invokes setAgent without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest = {};
-            request.agent = {};
-            request.agent.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.setAgent = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.setAgent(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('setAgent', () => {
+    it('invokes setAgent without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest = {};
+      request.agent = {};
+      request.agent.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.setAgent = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.setAgent(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes setAgent with error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest = {};
-            request.agent = {};
-            request.agent.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.setAgent = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.setAgent(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
-        });
+    it('invokes setAgent with error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.ISetAgentRequest = {};
+      request.agent = {};
+      request.agent.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.setAgent = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.setAgent(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
     });
-    describe('deleteAgent', () => {
-        it('invokes deleteAgent without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.deleteAgent = mockSimpleGrpcMethod(
-                request,
-                expectedResponse,
-                null
-            );
-            client.deleteAgent(request, (err: {}, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            })
-        });
+  });
+  describe('deleteAgent', () => {
+    it('invokes deleteAgent without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.deleteAgent = mockSimpleGrpcMethod(
+        request,
+        expectedResponse,
+        null
+      );
+      client.deleteAgent(request, (err: {}, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
+    });
 
-        it('invokes deleteAgent with error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.deleteAgent = mockSimpleGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.deleteAgent(request, (err: FakeError, response: {}) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                assert(typeof response === 'undefined');
-                done();
-            })
+    it('invokes deleteAgent with error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IDeleteAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.deleteAgent = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client.deleteAgent(request, (err: FakeError, response: {}) => {
+        assert(err instanceof FakeError);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
+        done();
+      });
+    });
+  });
+  describe('trainAgent', () => {
+    it('invokes trainAgent without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(
+        request,
+        expectedResponse
+      );
+      client
+        .trainAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then((responses: [Operation]) => {
+          assert.deepStrictEqual(responses[0], expectedResponse);
+          done();
+        })
+        .catch((err: {}) => {
+          done(err);
         });
     });
-    describe('trainAgent', () => {
-        it('invokes trainAgent without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(
-                request,
-                expectedResponse
-            );
-            client.trainAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then((responses: [Operation]) => {
-                assert.deepStrictEqual(responses[0], expectedResponse);
-                done();
-            }).catch((err: {}) => {
-                done(err);
-            });
-        });
 
-        it('invokes trainAgent with error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.trainAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then(() => {
-                assert.fail();
-            }).catch((err: FakeError) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                done();
-            });
+    it('invokes trainAgent with error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.ITrainAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.trainAgent = mockLongRunningGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client
+        .trainAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then(() => {
+          assert.fail();
+        })
+        .catch((err: FakeError) => {
+          assert(err instanceof FakeError);
+          assert.strictEqual(err.code, FAKE_STATUS_CODE);
+          done();
         });
     });
-    describe('exportAgent', () => {
-        it('invokes exportAgent without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(
-                request,
-                expectedResponse
-            );
-            client.exportAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then((responses: [Operation]) => {
-                assert.deepStrictEqual(responses[0], expectedResponse);
-                done();
-            }).catch((err: {}) => {
-                done(err);
-            });
+  });
+  describe('exportAgent', () => {
+    it('invokes exportAgent without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(
+        request,
+        expectedResponse
+      );
+      client
+        .exportAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then((responses: [Operation]) => {
+          assert.deepStrictEqual(responses[0], expectedResponse);
+          done();
+        })
+        .catch((err: {}) => {
+          done(err);
         });
+    });
 
-        it('invokes exportAgent with error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.exportAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then(() => {
-                assert.fail();
-            }).catch((err: FakeError) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                done();
-            });
+    it('invokes exportAgent with error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IExportAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.exportAgent = mockLongRunningGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client
+        .exportAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then(() => {
+          assert.fail();
+        })
+        .catch((err: FakeError) => {
+          assert(err instanceof FakeError);
+          assert.strictEqual(err.code, FAKE_STATUS_CODE);
+          done();
         });
     });
-    describe('importAgent', () => {
-        it('invokes importAgent without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(
-                request,
-                expectedResponse
-            );
-            client.importAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then((responses: [Operation]) => {
-                assert.deepStrictEqual(responses[0], expectedResponse);
-                done();
-            }).catch((err: {}) => {
-                done(err);
-            });
+  });
+  describe('importAgent', () => {
+    it('invokes importAgent without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(
+        request,
+        expectedResponse
+      );
+      client
+        .importAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then((responses: [Operation]) => {
+          assert.deepStrictEqual(responses[0], expectedResponse);
+          done();
+        })
+        .catch((err: {}) => {
+          done(err);
         });
+    });
 
-        it('invokes importAgent with error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.importAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then(() => {
-                assert.fail();
-            }).catch((err: FakeError) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                done();
-            });
+    it('invokes importAgent with error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IImportAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.importAgent = mockLongRunningGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client
+        .importAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then(() => {
+          assert.fail();
+        })
+        .catch((err: FakeError) => {
+          assert(err instanceof FakeError);
+          assert.strictEqual(err.code, FAKE_STATUS_CODE);
+          done();
         });
     });
-    describe('restoreAgent', () => {
-        it('invokes restoreAgent without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(
-                request,
-                expectedResponse
-            );
-            client.restoreAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then((responses: [Operation]) => {
-                assert.deepStrictEqual(responses[0], expectedResponse);
-                done();
-            }).catch((err: {}) => {
-                done(err);
-            });
+  });
+  describe('restoreAgent', () => {
+    it('invokes restoreAgent without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(
+        request,
+        expectedResponse
+      );
+      client
+        .restoreAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then((responses: [Operation]) => {
+          assert.deepStrictEqual(responses[0], expectedResponse);
+          done();
+        })
+        .catch((err: {}) => {
+          done(err);
         });
+    });
 
-        it('invokes restoreAgent with error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock gRPC layer
-            client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(
-                request,
-                null,
-                error
-            );
-            client.restoreAgent(request).then((responses: [Operation]) => {
-                const operation = responses[0];
-                return operation? operation.promise() : {};
-            }).then(() => {
-                assert.fail();
-            }).catch((err: FakeError) => {
-                assert(err instanceof FakeError);
-                assert.strictEqual(err.code, FAKE_STATUS_CODE);
-                done();
-            });
+    it('invokes restoreAgent with error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.IRestoreAgentRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock gRPC layer
+      client._innerApiCalls.restoreAgent = mockLongRunningGrpcMethod(
+        request,
+        null,
+        error
+      );
+      client
+        .restoreAgent(request)
+        .then((responses: [Operation]) => {
+          const operation = responses[0];
+          return operation ? operation.promise() : {};
+        })
+        .then(() => {
+          assert.fail();
+        })
+        .catch((err: FakeError) => {
+          assert(err instanceof FakeError);
+          assert.strictEqual(err.code, FAKE_STATUS_CODE);
+          done();
         });
     });
-    describe('searchAgents', () => {
-        it('invokes searchAgents without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {};
-            // Mock Grpc layer
-            client._innerApiCalls.searchAgents = (actualRequest: {}, options: {}, callback: Callback) => {
-                assert.deepStrictEqual(actualRequest, request);
-                callback(null, expectedResponse);
-            };
-            client.searchAgents(request, (err: FakeError, response: {}) => {
-                assert.ifError(err);
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            });
-        });
+  });
+  describe('searchAgents', () => {
+    it('invokes searchAgents without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {};
+      // Mock Grpc layer
+      client._innerApiCalls.searchAgents = (
+        actualRequest: {},
+        options: {},
+        callback: Callback
+      ) => {
+        assert.deepStrictEqual(actualRequest, request);
+        callback(null, expectedResponse);
+      };
+      client.searchAgents(request, (err: FakeError, response: {}) => {
+        assert.ifError(err);
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      });
     });
-    describe('searchAgentsStream', () => {
-        it('invokes searchAgentsStream without error', done => {
-            const client = new agentsModule.v2.AgentsClient({
-                credentials: {client_email: 'bogus', private_key: 'bogus'},
-                projectId: 'bogus',
-            });
-            // Mock request
-            const request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest = {};
-            request.parent = '';
-            // Mock response
-            const expectedResponse = {response: 'data'};
-            // Mock Grpc layer
-            client._innerApiCalls.searchAgents = (actualRequest: {}, options: {}, callback: Callback) => {
-                assert.deepStrictEqual(actualRequest, request);
-                callback(null, expectedResponse);
-            };
-            const stream = client.searchAgentsStream(request, {}).on('data', (response: {}) =>{
-                assert.deepStrictEqual(response, expectedResponse);
-                done();
-            }).on('error', (err: FakeError) => {
-                done(err);
-            });
-            stream.write(expectedResponse);
+  });
+  describe('searchAgentsStream', () => {
+    it('invokes searchAgentsStream without error', done => {
+      const client = new agentsModule.v2.AgentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      // Mock request
+      const request: protosTypes.google.cloud.dialogflow.v2.ISearchAgentsRequest = {};
+      request.parent = '';
+      // Mock response
+      const expectedResponse = {response: 'data'};
+      // Mock Grpc layer
+      client._innerApiCalls.searchAgents = (
+        actualRequest: {},
+        options: {},
+        callback: Callback
+      ) => {
+        assert.deepStrictEqual(actualRequest, request);
+        callback(null, expectedResponse);
+      };
+      const stream = client
+        .searchAgentsStream(request, {})
+        .on('data', (response: {}) => {
+          assert.deepStrictEqual(response, expectedResponse);
+          done();
+        })
+        .on('error', (err: FakeError) => {
+          done(err);
         });
+      stream.write(expectedResponse);
     });
+  });
 });
