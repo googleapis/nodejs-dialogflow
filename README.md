@@ -11,9 +11,7 @@
 ### **_IMPORTANT NOTE_**
 **This repository is _RENAMED_ from version 1.2.0 `dialogflow` towards v2.0.0 `@google-cloud/dialogflow`.**
 
-
-Dialogflow API client for Node.js
-
+ Dialogflow API client for Node.js
 
 * [Dialogflow API Node.js Client API Reference][client-docs]
 * [Dialogflow API Documentation][product-docs]
