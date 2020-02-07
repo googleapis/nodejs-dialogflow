@@ -9,11 +9,6 @@
 [![codecov](https://img.shields.io/codecov/c/github/googleapis/nodejs-dialogflow/master.svg?style=flat)](https://codecov.io/gh/googleapis/nodejs-dialogflow)
 
 
-### **_IMPORTANT NOTE_**
-
-**This repository is to be considered _DEPRECATED_ and version 1.x.x `dialogflow` was moved towards v0.1.0 `@google-cloud/dialogflow`.**
-
-
 Dialogflow API client for Node.js
 
 * [Dialogflow API Node.js Client API Reference][client-docs]
