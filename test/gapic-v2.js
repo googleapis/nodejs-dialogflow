@@ -2140,10 +2140,8 @@ describe('IntentsClient', () => {
 
       // Mock request
       const intent = {};
-      const languageCode = 'languageCode-412800396';
       const request = {
         intent: intent,
-        languageCode: languageCode,
       };
 
       // Mock response
@@ -2189,10 +2187,8 @@ describe('IntentsClient', () => {
 
       // Mock request
       const intent = {};
-      const languageCode = 'languageCode-412800396';
       const request = {
         intent: intent,
-        languageCode: languageCode,
       };
 
       // Mock Grpc layer
@@ -2269,10 +2265,8 @@ describe('IntentsClient', () => {
 
       // Mock request
       const formattedParent = client.projectAgentPath('[PROJECT]');
-      const languageCode = 'languageCode-412800396';
       const request = {
         parent: formattedParent,
-        languageCode: languageCode,
       };
 
       // Mock response
@@ -2307,10 +2301,8 @@ describe('IntentsClient', () => {
 
       // Mock request
       const formattedParent = client.projectAgentPath('[PROJECT]');
-      const languageCode = 'languageCode-412800396';
       const request = {
         parent: formattedParent,
-        languageCode: languageCode,
       };
 
       // Mock Grpc layer

@@ -644,7 +644,7 @@ class IntentsClient {
    *   Required. The intent to update.
    *
    *   This object should have the same structure as [Intent]{@link google.cloud.dialogflow.v2.Intent}
-   * @param {string} request.languageCode
+   * @param {string} [request.languageCode]
    *   Optional. The language of training phrases, parameters and rich messages
    *   defined in `intent`. If not specified, the agent's default language is
    *   used. [Many
@@ -679,12 +679,7 @@ class IntentsClient {
    * });
    *
    * const intent = {};
-   * const languageCode = '';
-   * const request = {
-   *   intent: intent,
-   *   languageCode: languageCode,
-   * };
-   * client.updateIntent(request)
+   * client.updateIntent({intent: intent})
    *   .then(responses => {
    *     const response = responses[0];
    *     // doThingsWith(response)
@@ -769,13 +764,6 @@ class IntentsClient {
    * @param {string} request.parent
    *   Required. The name of the agent to update or create intents in.
    *   Format: `projects/<Project ID>/agent`.
-   * @param {string} request.languageCode
-   *   Optional. The language of training phrases, parameters and rich messages
-   *   defined in `intents`. If not specified, the agent's default language is
-   *   used. [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
    * @param {string} [request.intentBatchUri]
    *   The URI to a Google Cloud Storage file containing intents to update or
    *   create. The file format can either be a serialized proto (of IntentBatch
@@ -784,6 +772,13 @@ class IntentsClient {
    *   The collection of intents to update or create.
    *
    *   This object should have the same structure as [IntentBatch]{@link google.cloud.dialogflow.v2.IntentBatch}
+   * @param {string} [request.languageCode]
+   *   Optional. The language of training phrases, parameters and rich messages
+   *   defined in `intents`. If not specified, the agent's default language is
+   *   used. [Many
+   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
+   *   are supported. Note: languages must be enabled in the agent before they can
+   *   be used.
    * @param {Object} [request.updateMask]
    *   Optional. The mask to control which fields get updated.
    *
@@ -812,14 +807,9 @@ class IntentsClient {
    * });
    *
    * const formattedParent = client.projectAgentPath('[PROJECT]');
-   * const languageCode = '';
-   * const request = {
-   *   parent: formattedParent,
-   *   languageCode: languageCode,
-   * };
    *
    * // Handle the operation using the promise pattern.
-   * client.batchUpdateIntents(request)
+   * client.batchUpdateIntents({parent: formattedParent})
    *   .then(responses => {
    *     const [operation, initialApiResponse] = responses;
    *
@@ -836,14 +826,9 @@ class IntentsClient {
    *   });
    *
    * const formattedParent = client.projectAgentPath('[PROJECT]');
-   * const languageCode = '';
-   * const request = {
-   *   parent: formattedParent,
-   *   languageCode: languageCode,
-   * };
    *
    * // Handle the operation using the event emitter pattern.
-   * client.batchUpdateIntents(request)
+   * client.batchUpdateIntents({parent: formattedParent})
    *   .then(responses => {
    *     const [operation, initialApiResponse] = responses;
    *
@@ -869,14 +854,9 @@ class IntentsClient {
    *   });
    *
    * const formattedParent = client.projectAgentPath('[PROJECT]');
-   * const languageCode = '';
-   * const request = {
-   *   parent: formattedParent,
-   *   languageCode: languageCode,
-   * };
    *
    * // Handle the operation using the await pattern.
-   * const [operation] = await client.batchUpdateIntents(request);
+   * const [operation] = await client.batchUpdateIntents({parent: formattedParent});
    *
    * const [response] = await operation.promise();
    */
