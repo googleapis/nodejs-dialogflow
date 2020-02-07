@@ -30,10 +30,6 @@ common_templates = gcp.CommonTemplates()
 templates = common_templates.node_library()
 s.copy(templates, excludes=["README.md", "samples/README.md"])
 
-with open('.readme-partial.json', 'r+') as f: 
-    deprecation_msg=json.load(f)
-    s.replace('README.md', 'Dialogflow API client for Node.js', json.dumps(deprecation_msg, indent=2) + 'Dialogflow API client for Node.js')
-
 # dialogflow publishes to npm with no scope.
 s.replace("src/**/*",
         "@google-cloud\/dialogflow",
