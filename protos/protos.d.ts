@@ -12885,6 +12885,102 @@ export namespace google {
                     public toJSON(): { [k: string]: any };
                 }
 
+                /** Properties of a SubAgent. */
+                interface ISubAgent {
+
+                    /** SubAgent project */
+                    project?: (string|null);
+
+                    /** SubAgent environment */
+                    environment?: (string|null);
+                }
+
+                /** Represents a SubAgent. */
+                class SubAgent implements ISubAgent {
+
+                    /**
+                     * Constructs a new SubAgent.
+                     * @param [properties] Properties to set
+                     */
+                    constructor(properties?: google.cloud.dialogflow.v2beta1.ISubAgent);
+
+                    /** SubAgent project. */
+                    public project: string;
+
+                    /** SubAgent environment. */
+                    public environment: string;
+
+                    /**
+                     * Creates a new SubAgent instance using the specified properties.
+                     * @param [properties] Properties to set
+                     * @returns SubAgent instance
+                     */
+                    public static create(properties?: google.cloud.dialogflow.v2beta1.ISubAgent): google.cloud.dialogflow.v2beta1.SubAgent;
+
+                    /**
+                     * Encodes the specified SubAgent message. Does not implicitly {@link google.cloud.dialogflow.v2beta1.SubAgent.verify|verify} messages.
+                     * @param message SubAgent message or plain object to encode
+                     * @param [writer] Writer to encode to
+                     * @returns Writer
+                     */
+                    public static encode(message: google.cloud.dialogflow.v2beta1.ISubAgent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                    /**
+                     * Encodes the specified SubAgent message, length delimited. Does not implicitly {@link google.cloud.dialogflow.v2beta1.SubAgent.verify|verify} messages.
+                     * @param message SubAgent message or plain object to encode
+                     * @param [writer] Writer to encode to
+                     * @returns Writer
+                     */
+                    public static encodeDelimited(message: google.cloud.dialogflow.v2beta1.ISubAgent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                    /**
+                     * Decodes a SubAgent message from the specified reader or buffer.
+                     * @param reader Reader or buffer to decode from
+                     * @param [length] Message length if known beforehand
+                     * @returns SubAgent
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): google.cloud.dialogflow.v2beta1.SubAgent;
+
+                    /**
+                     * Decodes a SubAgent message from the specified reader or buffer, length delimited.
+                     * @param reader Reader or buffer to decode from
+                     * @returns SubAgent
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): google.cloud.dialogflow.v2beta1.SubAgent;
+
+                    /**
+                     * Verifies a SubAgent message.
+                     * @param message Plain object to verify
+                     * @returns `null` if valid, otherwise the reason why it is not
+                     */
+                    public static verify(message: { [k: string]: any }): (string|null);
+
+                    /**
+                     * Creates a SubAgent message from a plain object. Also converts values to their respective internal types.
+                     * @param object Plain object
+                     * @returns SubAgent
+                     */
+                    public static fromObject(object: { [k: string]: any }): google.cloud.dialogflow.v2beta1.SubAgent;
+
+                    /**
+                     * Creates a plain object from a SubAgent message. Also converts values to other types if specified.
+                     * @param message SubAgent
+                     * @param [options] Conversion options
+                     * @returns Plain object
+                     */
+                    public static toObject(message: google.cloud.dialogflow.v2beta1.SubAgent, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                    /**
+                     * Converts this SubAgent to JSON.
+                     * @returns JSON object
+                     */
+                    public toJSON(): { [k: string]: any };
+                }
+
                 /** Properties of a SearchAgentsRequest. */
                 interface ISearchAgentsRequest {
 
@@ -25518,6 +25614,9 @@ export namespace google {
                     /** DetectIntentRequest outputAudioConfig */
                     outputAudioConfig?: (google.cloud.dialogflow.v2beta1.IOutputAudioConfig|null);
 
+                    /** DetectIntentRequest outputAudioConfigMask */
+                    outputAudioConfigMask?: (google.protobuf.IFieldMask|null);
+
                     /** DetectIntentRequest inputAudio */
                     inputAudio?: (Uint8Array|string|null);
                 }
@@ -25542,6 +25641,9 @@ export namespace google {
 
                     /** DetectIntentRequest outputAudioConfig. */
                     public outputAudioConfig?: (google.cloud.dialogflow.v2beta1.IOutputAudioConfig|null);
+
+                    /** DetectIntentRequest outputAudioConfigMask. */
+                    public outputAudioConfigMask?: (google.protobuf.IFieldMask|null);
 
                     /** DetectIntentRequest inputAudio. */
                     public inputAudio: (Uint8Array|string);
@@ -25764,6 +25866,9 @@ export namespace google {
                     /** QueryParameters sentimentAnalysisRequestConfig */
                     sentimentAnalysisRequestConfig?: (google.cloud.dialogflow.v2beta1.ISentimentAnalysisRequestConfig|null);
 
+                    /** QueryParameters subAgents */
+                    subAgents?: (google.cloud.dialogflow.v2beta1.ISubAgent[]|null);
+
                     /** QueryParameters webhookHeaders */
                     webhookHeaders?: ({ [k: string]: string }|null);
                 }
@@ -25800,6 +25905,9 @@ export namespace google {
 
                     /** QueryParameters sentimentAnalysisRequestConfig. */
                     public sentimentAnalysisRequestConfig?: (google.cloud.dialogflow.v2beta1.ISentimentAnalysisRequestConfig|null);
+
+                    /** QueryParameters subAgents. */
+                    public subAgents: google.cloud.dialogflow.v2beta1.ISubAgent[];
 
                     /** QueryParameters webhookHeaders. */
                     public webhookHeaders: { [k: string]: string };
@@ -26396,6 +26504,9 @@ export namespace google {
                     /** StreamingDetectIntentRequest outputAudioConfig */
                     outputAudioConfig?: (google.cloud.dialogflow.v2beta1.IOutputAudioConfig|null);
 
+                    /** StreamingDetectIntentRequest outputAudioConfigMask */
+                    outputAudioConfigMask?: (google.protobuf.IFieldMask|null);
+
                     /** StreamingDetectIntentRequest inputAudio */
                     inputAudio?: (Uint8Array|string|null);
                 }
@@ -26423,6 +26534,9 @@ export namespace google {
 
                     /** StreamingDetectIntentRequest outputAudioConfig. */
                     public outputAudioConfig?: (google.cloud.dialogflow.v2beta1.IOutputAudioConfig|null);
+
+                    /** StreamingDetectIntentRequest outputAudioConfigMask. */
+                    public outputAudioConfigMask?: (google.protobuf.IFieldMask|null);
 
                     /** StreamingDetectIntentRequest inputAudio. */
                     public inputAudio: (Uint8Array|string);
