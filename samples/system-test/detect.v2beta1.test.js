@@ -17,7 +17,7 @@
 const {assert} = require('chai');
 const {describe, it} = require('mocha');
 const {execSync} = require('child_process');
-const uuid = require('uuid/v4');
+const {uuid} = require('uuid');
 
 const cmd = 'node detect.v2beta1.js';
 const testQuery = 'Where is my data stored?';
