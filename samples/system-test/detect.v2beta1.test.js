@@ -17,11 +17,11 @@
 const {assert} = require('chai');
 const {describe, it} = require('mocha');
 const {execSync} = require('child_process');
-const {uuid} = require('uuid');
+const uuid = require('uuid');
 
 const cmd = 'node detect.v2beta1.js';
 const testQuery = 'Where is my data stored?';
-const testKnowledgeBaseName = `${uuid().split('-')[0]}-TestKnowledgeBase`;
+const testKnowledgeBaseName = `${uuid.v4().split('-')[0]}-TestKnowledgeBase`;
 const testDocName = 'TestDoc';
 const testDocumentPath = 'https://cloud.google.com/storage/docs/faq';
 
