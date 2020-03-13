@@ -126,39 +126,6 @@ async function createDocument(
   // [END dialogflow_create_document]
 }
 
-async function listDocuments(projectId, knowledgeBaseFullName) {
-  // [START dialogflow_list_document]
-  // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
-
-  // Instantiate a DialogFlow Documents client.
-  const client = new dialogflow.DocumentsClient({
-    projectId: projectId,
-  });
-
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
-  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-
-  const [resources] = await client.listDocuments({
-    parent: knowledgeBaseFullName,
-  });
-  console.log(
-    `There are ${resources.length} documents in ${knowledgeBaseFullName}`
-  );
-  resources.forEach(resource => {
-    console.log(`KnowledgeType: ${resource.knowledgeType}`);
-    console.log(`displayName: ${resource.displayName}`);
-    console.log(`mimeType: ${resource.mimeType}`);
-    console.log(`contentUri: ${resource.contentUri}`);
-    console.log(`source: ${resource.source}`);
-    console.log(`name: ${resource.name}`);
-  });
-  // [END dialogflow_list_document]
-}
-
 async function detectIntentandSentiment(
   projectId,
   sessionId,
