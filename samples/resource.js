@@ -18,32 +18,6 @@
 // Operations for entity types.
 // /////////////////////////////////////////////////////////////////////////////
 
-async function createEntityType(projectId, displayName, kind) {
-  // [START dialogflow_create_entity_type]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-
-  // The path to the agent the created entity type belongs to.
-  const agentPath = entityTypesClient.projectAgentPath(projectId);
-
-  const createEntityTypeRequest = {
-    parent: agentPath,
-    entityType: {
-      displayName: displayName,
-      kind: kind,
-    },
-  };
-
-  const responses = await entityTypesClient.createEntityType(
-    createEntityTypeRequest
-  );
-  console.log(`Created ${responses[0].name} entity type`);
-  // [END dialogflow_create_entity_type]
-}
-
 async function listEntityTypes(projectId) {
   // [START dialogflow_list_entity_types]
   // Imports the Dialogflow library
@@ -97,64 +71,6 @@ async function deleteEntityType(projectId, entityTypeId) {
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for entities.
 // /////////////////////////////////////////////////////////////////////////////
-
-async function createEntity(projectId, entityTypeId, entityValue, synonyms) {
-  // [START dialogflow_create_entity]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-
-  // The path to the agent the created entity belongs to.
-  const agentPath = entityTypesClient.entityTypePath(projectId, entityTypeId);
-
-  const entity = {
-    value: entityValue,
-    synonyms: synonyms,
-  };
-
-  const createEntitiesRequest = {
-    parent: agentPath,
-    entities: [entity],
-  };
-
-  const [response] = await entityTypesClient.batchCreateEntities(
-    createEntitiesRequest
-  );
-  console.log('Created entity type:');
-  console.log(response);
-  // [END dialogflow_create_entity]
-}
-
-async function listEntities(projectId, entityTypeId) {
-  // [START dialogflow_create_entity]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-
-  // The path to the agent the entity types belong to.
-  const entityTypePath = entityTypesClient.entityTypePath(
-    projectId,
-    entityTypeId
-  );
-
-  // The request.
-  const request = {
-    name: entityTypePath,
-  };
-
-  // Call the client library to retrieve a list of all existing entity types.
-  const [response] = await entityTypesClient.getEntityType(request);
-  response.entities.forEach(entity => {
-    console.log(`Entity value: ${entity.value}`);
-    console.log(`Entity synonyms: ${entity.synonyms}`);
-  });
-  return response;
-  // [END dialogflow_create_entity]
-}
 
 async function deleteEntity(projectId, entityTypeId, entityValue) {
   // [START dialogflow_delete_entity]
@@ -304,34 +220,6 @@ async function deleteIntent(projectId, intentId) {
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for contexts
 // /////////////////////////////////////////////////////////////////////////////
-
-async function createContext(projectId, sessionId, contextId, lifespanCount) {
-  // [START dialogflow_create_context]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
-
-  const sessionPath = contextsClient.sessionPath(projectId, sessionId);
-  const contextPath = contextsClient.contextPath(
-    projectId,
-    sessionId,
-    contextId
-  );
-
-  const createContextRequest = {
-    parent: sessionPath,
-    context: {
-      name: contextPath,
-      lifespanCount: lifespanCount,
-    },
-  };
-
-  const responses = await contextsClient.createContext(createContextRequest);
-  console.log(`Created ${responses[0].name} context`);
-  // [END dialogflow_create_context]
-}
 
 async function listContexts(projectId, sessionId) {
   // [START dialogflow_list_contexts]
