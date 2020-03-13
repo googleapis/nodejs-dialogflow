@@ -44,58 +44,9 @@ async function listEntityTypes(projectId) {
   // [END dialogflow_list_entity_types]
 }
 
-async function deleteEntityType(projectId, entityTypeId) {
-  // [START dialogflow_delete_entity_type]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-
-  const entityTypePath = entityTypesClient.entityTypePath(
-    projectId,
-    entityTypeId
-  );
-
-  const request = {
-    name: entityTypePath,
-  };
-
-  // Call the client library to delete the entity type.
-  const response = await entityTypesClient.deleteEntityType(request);
-  console.log(`Entity type ${entityTypePath} deleted`);
-  return response;
-  // [END dialogflow_delete_entity_type]
-}
-
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for entities.
 // /////////////////////////////////////////////////////////////////////////////
-
-async function deleteEntity(projectId, entityTypeId, entityValue) {
-  // [START dialogflow_delete_entity]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-
-  // The path to the agent the entity types belong to.
-  const entityTypePath = entityTypesClient.entityTypePath(
-    projectId,
-    entityTypeId
-  );
-
-  const request = {
-    parent: entityTypePath,
-    entityValues: [entityValue],
-  };
-
-  // Call the client library to delete the entity type.
-  await entityTypesClient.batchDeleteEntities(request);
-  console.log(`Entity Value ${entityValue} deleted`);
-  // [END dialogflow_delete_entity]
-}
 
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for intents
@@ -250,31 +201,6 @@ async function listContexts(projectId, sessionId) {
   });
   return response;
   // [END dialogflow_list_contexts]
-}
-
-async function deleteContext(projectId, sessionId, contextId) {
-  // [START dialogflow_delete_context]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
-
-  const contextPath = contextsClient.contextPath(
-    projectId,
-    sessionId,
-    contextId
-  );
-
-  const request = {
-    name: contextPath,
-  };
-
-  // Send the request for retrieving the context.
-  const result = await contextsClient.deleteContext(request);
-  console.log(`Context ${contextPath} deleted`);
-  return result;
-  // [END dialogflow_delete_context]
 }
 
 // /////////////////////////////////////////////////////////////////////////////
