@@ -18,32 +18,6 @@
 // Operations for entity types.
 // /////////////////////////////////////////////////////////////////////////////
 
-async function listEntityTypes(projectId) {
-  // [START dialogflow_list_entity_types]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-
-  // The path to the agent the entity types belong to.
-  const agentPath = entityTypesClient.projectAgentPath(projectId);
-
-  const request = {
-    parent: agentPath,
-  };
-
-  // Call the client library to retrieve a list of all existing entity types.
-  const [response] = await entityTypesClient.listEntityTypes(request);
-  response.forEach(entityType => {
-    console.log(`Entity type name: ${entityType.name}`);
-    console.log(`Entity type display name: ${entityType.displayName}`);
-    console.log(`Number of entities: ${entityType.entities.length}\n`);
-  });
-  return response;
-  // [END dialogflow_list_entity_types]
-}
-
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for entities.
 // /////////////////////////////////////////////////////////////////////////////
@@ -171,37 +145,6 @@ async function deleteIntent(projectId, intentId) {
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for contexts
 // /////////////////////////////////////////////////////////////////////////////
-
-async function listContexts(projectId, sessionId) {
-  // [START dialogflow_list_contexts]
-  // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
-
-  // Instantiates clients
-  const contextsClient = new dialogflow.ContextsClient();
-
-  // The path to identify the agent that owns the contexts.
-  const sessionPath = contextsClient.sessionPath(projectId, sessionId);
-
-  const request = {
-    parent: sessionPath,
-  };
-
-  // Send the request for listing contexts.
-  const [response] = await contextsClient.listContexts(request);
-  response.forEach(context => {
-    console.log(`Context name: ${context.name}`);
-    console.log(`Lifespan count: ${context.lifespanCount}`);
-    console.log('Fields:');
-    if (context.parameters !== null) {
-      context.parameters.fields.forEach(field => {
-        console.log(`\t${field.field}: ${field.value}`);
-      });
-    }
-  });
-  return response;
-  // [END dialogflow_list_contexts]
-}
 
 // /////////////////////////////////////////////////////////////////////////////
 // Operations for session entity type
