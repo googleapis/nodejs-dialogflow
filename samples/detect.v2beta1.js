@@ -99,28 +99,6 @@ async function listKnowledgeBases(projectId) {
   // [END dialogflow_list_knowledge_base]
 }
 
-async function deleteKnowledgeBase(projectId, knowledgeBaseFullName) {
-  // [START dialogflow_delete_knowledge_base]
-  // Instantiate a DialogFlow client.
-  const dialogflow = require('dialogflow').v2beta1;
-
-  // Instantiate a DialogFlow KnowledgeBasesClient.
-  const client = new dialogflow.KnowledgeBasesClient();
-
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
-  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-
-  const [result] = await client.deleteKnowledgeBase({
-    name: knowledgeBaseFullName,
-  });
-
-  if (result.name === 'undefined') console.log(`Knowledge Base deleted`);
-  // [END dialogflow_delete_knowledge_base]
-}
-
 async function createDocument(
   projectId,
   knowledgeBaseFullName,
