@@ -182,31 +182,6 @@ async function listDocuments(projectId, knowledgeBaseFullName) {
   // [END dialogflow_list_document]
 }
 
-async function getDocument(documentId) {
-  // [START dialogflow_get_document]
-  // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
-
-  // Instantiate a DialogFlow Documents client.
-  const client = new dialogflow.DocumentsClient({
-    projectId: projectId,
-  });
-
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
-
-  const [r] = await client.getDocument({name: documentId});
-  console.log(` KnowledgeType: ${r.knowledgeType}`);
-  console.log(` displayName: ${r.displayName}`);
-  console.log(` mimeType: ${r.mimeType}`);
-  console.log(` contentUri: ${r.contentUri}`);
-  console.log(` source: ${r.source}`);
-  console.log(` name: ${r.name}`);
-  // [END dialogflow_get_document]
-}
-
 async function detectIntentandSentiment(
   projectId,
   sessionId,
