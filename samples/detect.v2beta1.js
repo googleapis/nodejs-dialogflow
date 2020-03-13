@@ -229,28 +229,6 @@ async function getDocument(documentId) {
   // [END dialogflow_get_document]
 }
 
-async function deleteDocument(projectId, documentId) {
-  // [START dialogflow_delete_document]
-  // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
-
-  // Instantiate a DialogFlow Documents client.
-  const client = new dialogflow.DocumentsClient({
-    projectId: projectId,
-  });
-
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
-  // const documentId = `full path to document in knowledge base, e.g. myKnowledgeBase/documents/myDoc`;
-
-  const [operation] = await client.deleteDocument({name: documentId});
-  const responses = await operation.promise();
-  if (responses[2].done === true) console.log(`document deleted`);
-  // [END dialogflow_delete_document]
-}
-
 async function detectIntentandSentiment(
   projectId,
   sessionId,
