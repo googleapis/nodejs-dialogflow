@@ -279,13 +279,6 @@ async function detectIntentKnowledge(
 const cli = require(`yargs`)
   .demand(1)
   .options({
-    audioFilePath: {
-      alias: `i`,
-      type: `string`,
-      default: `./resources/book_a_room.wav`,
-      requiresArg: true,
-      description: `Audio File to send to Detect Intent with Model Selection`,
-    },
     documentId: {
       alias: `d`,
       type: `string`,
@@ -305,21 +298,6 @@ const cli = require(`yargs`)
       requiresArg: true,
       description: `uri of document to be added`,
     },
-    encoding: {
-      alias: 'e',
-      default: 'AUDIO_ENCODING_LINEAR_16',
-      choices: [
-        'AUDIO_ENCODING_LINEAR_16',
-        'AUDIO_ENCODING_FLAC',
-        'AUDIO_ENCODING_MULAW',
-        'AUDIO_ENCODING_AMR',
-        'AUDIO_ENCODING_AMR_WB',
-        'AUDIO_ENCODING_OGG_OPUS',
-        'AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE',
-      ],
-      requiresArg: true,
-      description: 'The encoding of the input audio.',
-    },
     knowledgeBaseName: {
       alias: `k`,
       default: `TestKnowledgeBase`,
@@ -332,12 +310,6 @@ const cli = require(`yargs`)
       type: `string`,
       requiresArg: true,
       description: `full path knowledge base`,
-    },
-    knowledgeBaseId: {
-      alias: `b`,
-      type: `string`,
-      requiresArg: `true`,
-      description: `specific Id string for knowledge base`,
     },
     knowledgeTypes: {
       alias: `t`,
@@ -359,13 +331,6 @@ const cli = require(`yargs`)
       type: `string`,
       requiresArg: true,
       description: `The mime_type of the Document`,
-    },
-    model: {
-      alias: `o`,
-      default: `phone_call`,
-      type: `string`,
-      requiresArg: true,
-      description: `The Speech model to return response: possible models- 'video', 'phone_call', 'command_and_search', 'default'`,
     },
     outputFile: {
       alias: `f`,
@@ -392,14 +357,6 @@ const cli = require(`yargs`)
       description: 'An array of text queries',
       default: `Where is my data stored?`,
     },
-    sampleRateHertz: {
-      alias: 'r',
-      type: 'number',
-      default: 16000,
-      description:
-        'The sample rate in Hz of the input audio. Only ' +
-        'required if the input audio is in raw format.',
-    },
     sessionId: {
       alias: 's',
       default: sessionId,
@@ -411,21 +368,6 @@ const cli = require(`yargs`)
   })
   .command(`createKnowledgeBase`, `Creates a new knowledge base`, {}, opts =>
     createKnowledgeBase(opts.projectId, opts.knowledgeBaseName)
-  )
-  .command(
-    `getKnowledgeBase`,
-    `Gets Knowledge base by Knowledge Base Name`,
-    {},
-    opts => getKnowledgeBase(opts.projectId, opts.knowledgeBaseId)
-  )
-  .command(
-    `listKnowledgeBases`,
-    `Lists all knowledge bases present by ProjectId`,
-    {},
-    opts => listKnowledgeBases(opts.projectId)
-  )
-  .command(`deleteKnowledgeBase`, `Deletes a knowledge base`, {}, opts =>
-    deleteKnowledgeBase(opts.projectId, opts.knowledgeBaseFullName)
   )
   .command(
     `createDocument`,
@@ -440,24 +382,6 @@ const cli = require(`yargs`)
         opts.knowledgeTypes,
         opts.mimeType
       )
-  )
-  .command(
-    `getDocument`,
-    `Gets a specific document from the knowledge base`,
-    {},
-    opts => getDocument(opts.documentId)
-  )
-  .command(
-    `listDocuments`,
-    `Lists all the documents belonging to a knowledge base`,
-    {},
-    opts => listDocuments(opts.projectId, opts.knowledgeBaseFullName)
-  )
-  .command(
-    `deleteDocument`,
-    `Deletes a specific document from a knowledge base`,
-    {},
-    opts => deleteDocument(opts.projectId, opts.documentId)
   )
   .command(
     `detectIntentwithTexttoSpeechResponse`,
@@ -497,36 +421,15 @@ const cli = require(`yargs`)
         opts.languageCode
       )
   )
-  .command(
-    `detectIntentwithModelSelection`,
-    `Returns result of detect intent with model selection on an audio file as input`,
-    {},
-    opts =>
-      detectIntentwithModelSelection(
-        opts.projectId,
-        opts.sessionId,
-        opts.audioFilePath,
-        opts.languageCode,
-        opts.model
-      )
-  )
+  
   .example(`node $0 createKnowledgeBase -k "newTestKnowledgeBase"`)
-  .example(`node $0 getKnowledgeBase -n "KNOWLEDGEBASEFULLNAME"`)
-  .example(`node $0 listKnowledgeBases`)
-  .example(`node $0 deleteKnowledgeBase -n "KNOWLEDGEBASEFULLNAME"`)
   .example(
     `node $0 createDocument -n "KNOWLEDGEBASEFULLNAME" -p "URIHTMLPATHTODOC" -m "MyDoc"`
   )
-  .example(`node $0 getDocument -d "FULLDOCUMENTID"`)
-  .example(`node $0 listDocuments -n "KNOWLEDGEBASEFULLNAME"`)
-  .example(`node $0 deleteDocument -d "FULLDOCUMENTID"`)
   .example(`node $0 detectIntentwithTexttoSpeechResponse "How do I sign up?"`)
   .example(`node $0 detectIntentKnowledge -q "how do i sign up?"`)
   .example(
     `node $0 detectIntentandSentiment "Book a great room for six great folks!"`
-  )
-  .example(
-    `node $0 detectIntentwithModelSelection -i "./resources/book_a_room.wav" -l "en-US" -o "phone_call"`
   )
   .wrap(120)
   .recommendCommands()
