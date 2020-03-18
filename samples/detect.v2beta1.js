@@ -14,8 +14,6 @@
 
 'use strict';
 
-const projectId = process.env.GCLOUD_PROJECT;
-const {struct} = require('pb-util');
 const sessionId = require('uuid/v1')();
 const util = require('util');
 
