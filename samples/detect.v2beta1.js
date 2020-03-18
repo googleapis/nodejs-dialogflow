@@ -421,7 +421,6 @@ const cli = require(`yargs`)
         opts.languageCode
       )
   )
-  
   .example(`node $0 createKnowledgeBase -k "newTestKnowledgeBase"`)
   .example(
     `node $0 createDocument -n "KNOWLEDGEBASEFULLNAME" -p "URIHTMLPATHTODOC" -m "MyDoc"`
