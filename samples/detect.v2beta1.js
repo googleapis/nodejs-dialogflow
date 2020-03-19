@@ -15,7 +15,7 @@
 'use strict';
 
 const projectId = process.env.GCLOUD_PROJECT;
-const {struct} = require('pb-util');
+const { struct } = require('pb-util');
 const sessionId = require('uuid/v1')();
 const util = require('util');
 
@@ -413,21 +413,6 @@ const cli = require(`yargs`)
     createKnowledgeBase(opts.projectId, opts.knowledgeBaseName)
   )
   .command(
-    `getKnowledgeBase`,
-    `Gets Knowledge base by Knowledge Base Name`,
-    {},
-    opts => getKnowledgeBase(opts.projectId, opts.knowledgeBaseId)
-  )
-  .command(
-    `listKnowledgeBases`,
-    `Lists all knowledge bases present by ProjectId`,
-    {},
-    opts => listKnowledgeBases(opts.projectId)
-  )
-  .command(`deleteKnowledgeBase`, `Deletes a knowledge base`, {}, opts =>
-    deleteKnowledgeBase(opts.projectId, opts.knowledgeBaseFullName)
-  )
-  .command(
     `createDocument`,
     `Creates a new document for this knowledge base`,
     {},
@@ -440,24 +425,6 @@ const cli = require(`yargs`)
         opts.knowledgeTypes,
         opts.mimeType
       )
-  )
-  .command(
-    `getDocument`,
-    `Gets a specific document from the knowledge base`,
-    {},
-    opts => getDocument(opts.documentId)
-  )
-  .command(
-    `listDocuments`,
-    `Lists all the documents belonging to a knowledge base`,
-    {},
-    opts => listDocuments(opts.projectId, opts.knowledgeBaseFullName)
-  )
-  .command(
-    `deleteDocument`,
-    `Deletes a specific document from a knowledge base`,
-    {},
-    opts => deleteDocument(opts.projectId, opts.documentId)
   )
   .command(
     `detectIntentwithTexttoSpeechResponse`,
@@ -497,36 +464,14 @@ const cli = require(`yargs`)
         opts.languageCode
       )
   )
-  .command(
-    `detectIntentwithModelSelection`,
-    `Returns result of detect intent with model selection on an audio file as input`,
-    {},
-    opts =>
-      detectIntentwithModelSelection(
-        opts.projectId,
-        opts.sessionId,
-        opts.audioFilePath,
-        opts.languageCode,
-        opts.model
-      )
-  )
   .example(`node $0 createKnowledgeBase -k "newTestKnowledgeBase"`)
-  .example(`node $0 getKnowledgeBase -n "KNOWLEDGEBASEFULLNAME"`)
-  .example(`node $0 listKnowledgeBases`)
-  .example(`node $0 deleteKnowledgeBase -n "KNOWLEDGEBASEFULLNAME"`)
   .example(
     `node $0 createDocument -n "KNOWLEDGEBASEFULLNAME" -p "URIHTMLPATHTODOC" -m "MyDoc"`
   )
-  .example(`node $0 getDocument -d "FULLDOCUMENTID"`)
-  .example(`node $0 listDocuments -n "KNOWLEDGEBASEFULLNAME"`)
-  .example(`node $0 deleteDocument -d "FULLDOCUMENTID"`)
   .example(`node $0 detectIntentwithTexttoSpeechResponse "How do I sign up?"`)
   .example(`node $0 detectIntentKnowledge -q "how do i sign up?"`)
   .example(
     `node $0 detectIntentandSentiment "Book a great room for six great folks!"`
-  )
-  .example(
-    `node $0 detectIntentwithModelSelection -i "./resources/book_a_room.wav" -l "en-US" -o "phone_call"`
   )
   .wrap(120)
   .recommendCommands()
