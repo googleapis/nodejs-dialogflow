@@ -51,30 +51,11 @@ describe('v2beta1 detection', () => {
       .trim();
   });
 
-  it('should list the knowledge bases', () => {
-    const output = exec(`${cmd} listKnowledgeBases`);
-    assert.include(output, testKnowledgeBaseName);
-  });
-
-  it('should get a knowledge base', () => {
-    const output = exec(`${cmd} getKnowledgeBase -b "${knowbaseId}"`);
-    assert.include(output, `displayName: ${testKnowledgeBaseName}`);
-    assert.include(output, `name: ${knowbaseFullName}`);
-  });
-
   it('should create a document', () => {
     const output = exec(
       `${cmd} createDocument -n "${knowbaseFullName}" -z "${testDocumentPath}" -m "${testDocName}"`
     );
     assert.include(output, 'Document created');
-  });
-
-  it('should list documents', () => {
-    const output = exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
-    const parsedOut = output.split('\n').filter(x => !!x.trim());
-    documentFullPath = parsedOut[parsedOut.length - 1].split(':')[1];
-    assert.isDefined(documentFullPath);
-    assert.include(output, `There are 1 documents in ${knowbaseFullName}`);
   });
 
   it('should detect intent with a knowledge base', () => {
@@ -89,26 +70,8 @@ describe('v2beta1 detection', () => {
     assert.include(output, 'document deleted');
   });
 
-  it('should list the document', () => {
-    const output = exec(`${cmd} listDocuments -n "${knowbaseFullName}"`);
-    assert.notInclude(output, documentFullPath);
-  });
-
   it('should delete the Knowledge Base', () => {
     exec(`${cmd} deleteKnowledgeBase -n "${knowbaseFullName}"`);
-  });
-
-  it('should list the Knowledge Base', () => {
-    const output = exec(`${cmd} listKnowledgeBases`);
-    assert.notInclude(output, testKnowledgeBaseName);
-  });
-
-  it('should detect Intent with Model Selection', () => {
-    const output = exec(`${cmd} detectIntentwithModelSelection`);
-    assert.include(
-      output,
-      'Response: I can help with that. Where would you like to reserve a room?'
-    );
   });
 
   it('should detect Intent with Text to Speech Response', () => {

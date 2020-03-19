@@ -14,8 +14,6 @@
 
 'use strict';
 
-const projectId = process.env.GCLOUD_PROJECT;
-const { struct } = require('pb-util');
 const sessionId = require('uuid/v1')();
 const util = require('util');
 
@@ -279,13 +277,6 @@ async function detectIntentKnowledge(
 const cli = require(`yargs`)
   .demand(1)
   .options({
-    audioFilePath: {
-      alias: `i`,
-      type: `string`,
-      default: `./resources/book_a_room.wav`,
-      requiresArg: true,
-      description: `Audio File to send to Detect Intent with Model Selection`,
-    },
     documentId: {
       alias: `d`,
       type: `string`,
@@ -305,21 +296,6 @@ const cli = require(`yargs`)
       requiresArg: true,
       description: `uri of document to be added`,
     },
-    encoding: {
-      alias: 'e',
-      default: 'AUDIO_ENCODING_LINEAR_16',
-      choices: [
-        'AUDIO_ENCODING_LINEAR_16',
-        'AUDIO_ENCODING_FLAC',
-        'AUDIO_ENCODING_MULAW',
-        'AUDIO_ENCODING_AMR',
-        'AUDIO_ENCODING_AMR_WB',
-        'AUDIO_ENCODING_OGG_OPUS',
-        'AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE',
-      ],
-      requiresArg: true,
-      description: 'The encoding of the input audio.',
-    },
     knowledgeBaseName: {
       alias: `k`,
       default: `TestKnowledgeBase`,
@@ -332,12 +308,6 @@ const cli = require(`yargs`)
       type: `string`,
       requiresArg: true,
       description: `full path knowledge base`,
-    },
-    knowledgeBaseId: {
-      alias: `b`,
-      type: `string`,
-      requiresArg: `true`,
-      description: `specific Id string for knowledge base`,
     },
     knowledgeTypes: {
       alias: `t`,
@@ -359,13 +329,6 @@ const cli = require(`yargs`)
       type: `string`,
       requiresArg: true,
       description: `The mime_type of the Document`,
-    },
-    model: {
-      alias: `o`,
-      default: `phone_call`,
-      type: `string`,
-      requiresArg: true,
-      description: `The Speech model to return response: possible models- 'video', 'phone_call', 'command_and_search', 'default'`,
     },
     outputFile: {
       alias: `f`,
@@ -391,14 +354,6 @@ const cli = require(`yargs`)
       requiresArg: true,
       description: 'An array of text queries',
       default: `Where is my data stored?`,
-    },
-    sampleRateHertz: {
-      alias: 'r',
-      type: 'number',
-      default: 16000,
-      description:
-        'The sample rate in Hz of the input audio. Only ' +
-        'required if the input audio is in raw format.',
     },
     sessionId: {
       alias: 's',

@@ -399,19 +399,6 @@ const cli = require(`yargs`)
         opts.entityTypeDisplayName
       )
   )
-  .example(`node $0 setup-agent`)
-  .example(`node $0 show-agent`)
-  .example(`node $0 clear-agent`)
-  .example(`node $0 update-entity-type "my-entity-type-id"`)
-  .example(`node $0 update-intent "my-intent-id"`)
-  .example(`node $0 setup-session "my-session-id"`)
-  .example(`node $0 show-session "my-session-id"`)
-  .example(`node $0 clear-session "my-session-id"`)
-  .example(`node $0 update-context "my-session-id" "my-context-id"`)
-  .example(
-    `node $0 update-session-entity-type "my-session-id" ` +
-      `"my-entity-type-name"`
-  )
   .wrap(120)
   .recommendCommands()
   .epilogue(
