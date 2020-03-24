@@ -47,7 +47,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
     languageCode
   ) {
     // The path to identify the agent that owns the created intent.
-    const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+    const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
 
     // The text query request.
     const request = {
@@ -108,13 +108,13 @@ async function detectEventIntent(
   const {struct} = require('pb-util');
 
   // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a session client
   const sessionClient = new dialogflow.SessionsClient();
 
   // The path to identify the agent that owns the created intent.
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
 
   // The text query request.
   const request = {
@@ -170,13 +170,13 @@ async function detectAudioIntent(
   const util = require('util');
   const {struct} = require('pb-util');
   // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a session client
   const sessionClient = new dialogflow.SessionsClient();
 
   // The path to identify the agent that owns the created intent.
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
 
   // Read the content of the audio file and send it as part of the request.
   const readFile = util.promisify(fs.readFile);
@@ -241,7 +241,7 @@ async function streamingDetectIntent(
 
   const pump = util.promisify(pipeline);
   // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a session client
   const sessionClient = new dialogflow.SessionsClient();
@@ -257,7 +257,7 @@ async function streamingDetectIntent(
 
   // The BCP-47 language code to use, e.g. 'en-US'
   // const languageCode = 'en-US';
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
 
   const initialStreamRequest = {
     session: sessionPath,

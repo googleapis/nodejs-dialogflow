@@ -35,7 +35,7 @@ async function main(
   // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   // Define session path
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
 
   async function detectIntentandSentiment() {
     // The text query request.

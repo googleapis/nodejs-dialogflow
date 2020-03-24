@@ -259,7 +259,7 @@ async function detectIntentandSentiment(
 ) {
   // [START dialogflow_detect_intent_with_sentiment_analysis]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
@@ -273,7 +273,7 @@ async function detectIntentandSentiment(
   // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   // Define session path
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
 
   // The text query request.
   const request = {
@@ -340,7 +340,7 @@ async function detectIntentwithTexttoSpeechResponse(
   // const outputFile = `path for audio output file, e.g. ./resources/myOutput.wav`;
 
   // Define session path
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
   const fs = require(`fs`);
 
   // The audio query request
@@ -389,7 +389,7 @@ async function detectIntentKnowledge(
   // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
 
   // Define session path
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
   const knowbase = new dialogflow.KnowledgeBasesClient();
   const knowledgeBasePath = knowbase.knowledgeBasePath(
     projectId,
@@ -454,7 +454,7 @@ async function detectIntentwithModelSelection(
   // const model = `speech mode selected for given request, e.g. video, phone_call, command_and_search, default`;
 
   // Define session path
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
   // Read the content of the audio file and send it as part of the request.
   const readFile = util.promisify(fs.readFile);
   const inputAudio = await readFile(audioFilePath);

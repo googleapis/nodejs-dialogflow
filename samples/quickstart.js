@@ -29,7 +29,7 @@ async function runSample(projectId = 'your-project-id') {
 
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient();
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
 
   // The text query request.
   const request = {
