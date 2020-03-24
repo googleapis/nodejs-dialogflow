@@ -52,7 +52,7 @@ async function createKnowledgeBase(projectId, displayName) {
 async function getKnowledgeBase(projectId, knowledgeBaseId) {
   // [START dialogflow_get_knowledge_base]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
   const client = new dialogflow.KnowledgeBasesClient({
@@ -75,7 +75,7 @@ async function getKnowledgeBase(projectId, knowledgeBaseId) {
 async function listKnowledgeBases(projectId) {
   // [START dialogflow_list_knowledge_base]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow KnowledgeBasesClient.
   const client = new dialogflow.KnowledgeBasesClient({
@@ -102,7 +102,7 @@ async function listKnowledgeBases(projectId) {
 async function deleteKnowledgeBase(projectId, knowledgeBaseFullName) {
   // [START dialogflow_delete_knowledge_base]
   // Instantiate a DialogFlow client.
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow KnowledgeBasesClient.
   const client = new dialogflow.KnowledgeBasesClient();
@@ -131,7 +131,7 @@ async function createDocument(
 ) {
   // [START dialogflow_create_document]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
   const client = new dialogflow.DocumentsClient({
@@ -174,7 +174,7 @@ async function createDocument(
 async function listDocuments(projectId, knowledgeBaseFullName) {
   // [START dialogflow_list_document]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
   const client = new dialogflow.DocumentsClient({
@@ -207,7 +207,7 @@ async function listDocuments(projectId, knowledgeBaseFullName) {
 async function getDocument(documentId) {
   // [START dialogflow_get_document]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
   const client = new dialogflow.DocumentsClient({
@@ -232,7 +232,7 @@ async function getDocument(documentId) {
 async function deleteDocument(projectId, documentId) {
   // [START dialogflow_delete_document]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow Documents client.
   const client = new dialogflow.DocumentsClient({
@@ -325,7 +325,7 @@ async function detectIntentwithTexttoSpeechResponse(
 ) {
   // [START dialogflow_detect_intent_with_texttospeech_response]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
@@ -374,7 +374,7 @@ async function detectIntentKnowledge(
 ) {
   // [START dialogflow_detect_intent_knowledge]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
@@ -439,7 +439,7 @@ async function detectIntentwithModelSelection(
   const fs = require('fs');
 
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();

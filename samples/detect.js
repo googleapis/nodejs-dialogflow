@@ -22,7 +22,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
    */
   // projectId: ID of the GCP project where Dialogflow agent is deployed
   // const projectId = 'PROJECT_ID';
-  // sessionId: String representing a random number or hashed user identifier 
+  // sessionId: String representing a random number or hashed user identifier
   // const sessionId = '123456';
   // queries: A set of sequential queries to be send to Dialogflow agent for Intent Detection
   // const queries = [
