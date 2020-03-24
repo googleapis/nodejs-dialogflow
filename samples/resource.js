@@ -21,7 +21,7 @@
 async function createEntityType(projectId, displayName, kind) {
   // [START dialogflow_create_entity_type]
   // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates clients
   const entityTypesClient = new dialogflow.EntityTypesClient();

@@ -22,7 +22,7 @@ const util = require('util');
 async function createKnowledgeBase(projectId, displayName) {
   // [START dialogflow_create_knowledge_base]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2beta1;
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
   // Instantiate a DialogFlow client.
   const client = new dialogflow.KnowledgeBasesClient();

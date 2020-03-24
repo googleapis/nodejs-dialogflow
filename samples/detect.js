@@ -34,7 +34,7 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
   // const languageCode = 'en';
 
   // Imports the Dialogflow library
-  const dialogflow = require('dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow');
 
   // Instantiates a session client
   const sessionClient = new dialogflow.SessionsClient();

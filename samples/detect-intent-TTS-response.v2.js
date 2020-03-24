@@ -22,7 +22,7 @@ async function main(
 ) {
   // [START dialogflow_detect_intent_with_texttospeech_response]
   // Imports the Dialogflow client library
-  const dialogflow = require('dialogflow').v2;
+  const dialogflow = require('@google-cloud/dialogflow').v2;
 
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();

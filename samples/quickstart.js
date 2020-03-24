@@ -16,7 +16,7 @@
 
 // [START dialogflow_quickstart]
 
-const dialogflow = require('dialogflow');
+const dialogflow = require('@google-cloud/dialogflow');
 const uuid = require('uuid');
 
 /**
