@@ -215,7 +215,7 @@ async function detectIntentKnowledge(
   projectId,
   sessionId,
   languageCode,
-  knowledgeBaseFullName,
+  knowledgeBaseId,
   query
 ) {
   // [START dialogflow_detect_intent_knowledge]
@@ -231,7 +231,7 @@ async function detectIntentKnowledge(
   // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const sessionId = `user specific ID of session, e.g. 12345`;
   // const languageCode = 'BCP-47 language code, e.g. en-US';
-  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+  // const knowledgeBaseId = `the ID of your KnowledgeBase`;
   // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
 
   // Define session path
@@ -239,7 +239,7 @@ async function detectIntentKnowledge(
   const knowbase = new dialogflow.KnowledgeBasesClient();
   const knowledgeBasePath = knowbase.knowledgeBasePath(
     projectId,
-    knowledgeBaseFullName
+    knowledgeBaseId
   );
 
   // The audio query request
