@@ -25,14 +25,12 @@ const testQuery = 'Where is my data stored?';
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('v2beta1 detection', () => {
-
   it('should detect intent with a knowledge base', () => {
     const output = exec(
       `${cmd} detectIntentKnowledge -q "${testQuery}" -n "OTAxMTY2MTA3MjkyNjUwNzAwOA"`
     );
     assert.include(output, 'Detected Intent:');
   });
-
 
   it('should detect Intent with Text to Speech Response', () => {
     const output = exec(

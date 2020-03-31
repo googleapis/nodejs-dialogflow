@@ -1,4 +1,4 @@
- // Copyright 2020 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,10 +40,8 @@ describe('create session entity type', () => {
       },
     };
 
-    const responses = await client.createEntityType(
-      createEntityTypeRequest
-    );
-    entityTypeId = responses[0].name.split('/')[4]
+    const responses = await client.createEntityType(createEntityTypeRequest);
+    entityTypeId = responses[0].name.split('/')[4];
   });
 
   it('should Create a Session Entity Type', async () => {

@@ -45,7 +45,9 @@ describe('create a document', () => {
   });
 
   it('should create a document', () => {
-    const output = exec(`${cmd} -n "${knowledgeBaseName}" -z "${testDocumentPath}" -m "${testDocName}"`);
+    const output = exec(
+      `${cmd} -n "${knowledgeBaseName}" -z "${testDocumentPath}" -m "${testDocName}"`
+    );
     assert.include(output, 'Document created');
   });
 
