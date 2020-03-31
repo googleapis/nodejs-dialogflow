@@ -27,8 +27,6 @@ describe('delete session entity types', () => {
   const cmd = 'node resource.js';
   const sessionId = uuid.v1();
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
-  const synonym1 = 'synonym_1';
-  const synonym2 = 'synonym_2';
   let entityTypeId;
 
   before('create a session entity type', async () => {
@@ -63,9 +61,7 @@ describe('delete session entity types', () => {
         ],
       },
     };
-    const [response] = await sessionClient.createSessionEntityType(
-      sessionEntityTypeRequest
-    );
+    await sessionClient.createSessionEntityType(sessionEntityTypeRequest);
   });
 
   it('should Delete the Session Entity Type', async () => {
@@ -80,6 +76,6 @@ describe('delete session entity types', () => {
     const request = {
       name: client.entityTypePath(projectId, entityTypeId),
     };
-    const response = await client.deleteEntityType(request);
+    await client.deleteEntityType(request);
   });
 });

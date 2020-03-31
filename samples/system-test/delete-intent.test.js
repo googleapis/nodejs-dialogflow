@@ -26,8 +26,6 @@ describe('delete intent', () => {
   const client = new dialogflow.IntentsClient();
   const cmd = 'node resource.js';
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
-  const message1 = 'message_1';
-  const message2 = 'message_2';
   let intentId;
 
   before('create the intent', async () => {

@@ -15,7 +15,7 @@
 'use strict';
 
 const {assert} = require('chai');
-const {describe, it} = require('mocha');
+const {after, before, describe, it} = require('mocha');
 const execSync = require('child_process').execSync;
 const uuid = require('uuid');
 const dialogflow = require('dialogflow');
@@ -59,6 +59,6 @@ describe('create session entity type', () => {
     const request = {
       name: client.entityTypePath(projectId, entityTypeId),
     };
-    const response = await client.deleteEntityType(request);
+    await client.deleteEntityType(request);
   });
 });
