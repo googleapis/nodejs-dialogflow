@@ -22,8 +22,7 @@ const dialogflow = require('@google-cloud/dialogflow');
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('delete session entity types', () => {
-  const client = new dialogflow.EntityTypesClient();
-  const sessionClient = new dialogflow.SessionEntityTypesClient();
+  const client = new dialogflow.SessionEntityTypesClient();
   const cmd = 'node resource.js';
   const sessionId = uuid.v1();
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
@@ -47,7 +46,7 @@ describe('delete session entity types', () => {
     const sessionEntityTypeRequest = {
       parent: 'projects/{' + projectId + '}/agent/sessions/{' + sessionId + '}',
       sessionEntityType: {
-        name: sessionClient.sessionEntityTypePath(
+        name: client.projectAgentSessionEntityTypePath(
           projectId,
           sessionId,
           displayName
@@ -61,7 +60,7 @@ describe('delete session entity types', () => {
         ],
       },
     };
-    await sessionClient.createSessionEntityType(sessionEntityTypeRequest);
+    await client.createSessionEntityType(sessionEntityTypeRequest);
   });
 
   it('should Delete the Session Entity Type', async () => {

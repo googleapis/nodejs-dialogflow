@@ -158,6 +158,9 @@ export class KnowledgeBasesClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this.pathTemplates = {
+      projectPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
       projectAgentPathTemplate: new this._gaxModule.PathTemplate(
         'projects/{project}/agent'
       ),
@@ -922,7 +925,17 @@ export class KnowledgeBasesClient {
   // --------------------
   // -- Path templates --
   // --------------------
-
+  /**
+   * Return a fully-qualified projectAgent resource name string.
+   *
+   * @param {string} project
+   * @returns {string} Resource name string.
+   */
+  projectPath(project: string) {
+    return this.pathTemplates.projectPathTemplate.render({
+      project: project,
+    });
+  }
   /**
    * Return a fully-qualified projectAgent resource name string.
    *

@@ -150,13 +150,12 @@ async function createSessionEntityType(
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
-  const sessionClient = new dialogflow.SessionsClient();
 
-  const sessionPath = sessionClient.projectAgentSessionPath(
+  const sessionPath = sessionEntityTypesClient.projectAgentSessionPath(
     projectId,
     sessionId
   );
-  const sessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
+  const sessionEntityTypePath = sessionEntityTypesClient.projectAgentSessionEntityTypePath(
     projectId,
     sessionId,
     entityTypeDisplayName
@@ -193,8 +192,7 @@ async function listSessionEntityTypes(projectId, sessionId) {
 
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
-  const sessionClient = new dialogflow.SessionsClient();
-  const sessionPath = sessionClient.projectAgentSessionPath(
+  const sessionPath = sessionEntityTypesClient.projectAgentSessionPath(
     projectId,
     sessionId
   );
@@ -225,7 +223,7 @@ async function deleteSessionEntityType(
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
 
   // The path to identify the sessionEntityType to be deleted.
-  const sessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
+  const sessionEntityTypePath = sessionEntityTypesClient.projectAgentSessionEntityTypePath(
     projectId,
     sessionId,
     entityTypeDisplayName
