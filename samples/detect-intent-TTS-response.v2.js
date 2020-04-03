@@ -37,7 +37,10 @@ async function main(
   // const outputFile = `path for audio output file, e.g. ./resources/myOutput.wav`;
 
   // Define session path
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
   const fs = require('fs');
   const util = require('util');
 

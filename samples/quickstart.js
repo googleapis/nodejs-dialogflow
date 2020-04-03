@@ -29,7 +29,10 @@ async function runSample(projectId = 'your-project-id') {
 
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient();
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
 
   // The text query request.
   const request = {
@@ -53,7 +56,7 @@ async function runSample(projectId = 'your-project-id') {
   if (result.intent) {
     console.log(`  Intent: ${result.intent.displayName}`);
   } else {
-    console.log(`  No intent matched.`);
+    console.log('  No intent matched.');
   }
 }
 // [END dialogflow_quickstart]

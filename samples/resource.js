@@ -152,7 +152,10 @@ async function createSessionEntityType(
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
   const sessionClient = new dialogflow.SessionsClient();
 
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
   const sessionEntityTypePath = sessionEntityTypesClient.sessionEntityTypePath(
     projectId,
     sessionId,
@@ -191,7 +194,10 @@ async function listSessionEntityTypes(projectId, sessionId) {
   // Instantiates clients
   const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
   const sessionClient = new dialogflow.SessionsClient();
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
 
   const request = {
     parent: sessionPath,

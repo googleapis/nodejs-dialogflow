@@ -31,7 +31,7 @@ async function createKnowledgeBase(projectId, displayName) {
   // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const displayName = `your knowledge base display name, e.g. myKnowledgeBase`;
 
-  const formattedParent = client.projectPath(projectId);
+  const formattedParent = 'projects/{' + projectId + '}';
   const knowledgeBase = {
     displayName: displayName,
   };
@@ -119,7 +119,10 @@ async function detectIntentandSentiment(
   // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   // Define session path
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
 
   // The text query request.
   const request = {
@@ -186,8 +189,11 @@ async function detectIntentwithTexttoSpeechResponse(
   // const outputFile = `path for audio output file, e.g. ./resources/myOutput.wav`;
 
   // Define session path
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
-  const fs = require(`fs`);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
+  const fs = require('fs');
 
   // The audio query request
   const request = {
@@ -235,12 +241,12 @@ async function detectIntentKnowledge(
   // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
 
   // Define session path
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
-  const knowbase = new dialogflow.KnowledgeBasesClient();
-  const knowledgeBasePath = knowbase.knowledgeBasePath(
+  const sessionPath = sessionClient.projectAgentSessionPath(
     projectId,
-    knowledgeBaseId
+    sessionId
   );
+  const knowledgeBasePath =
+    'projects/{' + projectId + '}/knowledgeBases/{' + knowledgeBaseId + '}';
 
   // The audio query request
   const request = {

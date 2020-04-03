@@ -47,7 +47,10 @@ function detectTextIntent(projectId, sessionId, queries, languageCode) {
     languageCode
   ) {
     // The path to identify the agent that owns the created intent.
-    const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+    const sessionPath = sessionClient.projectAgentSessionPath(
+      projectId,
+      sessionId
+    );
 
     // The text query request.
     const request = {
@@ -114,7 +117,10 @@ async function detectEventIntent(
   const sessionClient = new dialogflow.SessionsClient();
 
   // The path to identify the agent that owns the created intent.
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
 
   // The text query request.
   const request = {
@@ -176,7 +182,10 @@ async function detectAudioIntent(
   const sessionClient = new dialogflow.SessionsClient();
 
   // The path to identify the agent that owns the created intent.
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
 
   // Read the content of the audio file and send it as part of the request.
   const readFile = util.promisify(fs.readFile);
@@ -257,7 +266,10 @@ async function streamingDetectIntent(
 
   // The BCP-47 language code to use, e.g. 'en-US'
   // const languageCode = 'en-US';
-  const sessionPath = sessionClient.projectSessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.projectAgentSessionPath(
+    projectId,
+    sessionId
+  );
 
   const initialStreamRequest = {
     session: sessionPath,
