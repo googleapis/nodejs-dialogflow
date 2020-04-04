@@ -247,7 +247,7 @@ async function detectIntentKnowledge(
     sessionId
   );
   const knowledgeBasePath =
-    'projects/{' + projectId + '}/knowledgeBases/{' + knowledgeBaseId + '}';
+    'projects/' + projectId + '/knowledgeBases/' + knowledgeBaseId + '';
 
   // The audio query request
   const request = {
