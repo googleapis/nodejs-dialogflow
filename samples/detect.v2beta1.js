@@ -31,7 +31,7 @@ async function createKnowledgeBase(projectId, displayName) {
   // const projectId = 'ID of GCP project associated with your Dialogflow agent';
   // const displayName = `your knowledge base display name, e.g. myKnowledgeBase`;
 
-  const formattedParent = client.projectPath(projectId);
+  const formattedParent = 'projects/' + projectId;
   const knowledgeBase = {
     displayName: displayName,
   };
@@ -86,10 +86,7 @@ async function createDocument(
   };
 
   const [operation] = await client.createDocument(request);
-  console.warn('--> debug here: operation is: ', operation);
-
   const [response] = await operation.promise();
-  console.warn('--> debug here: response is: ', response);
 
   console.log('Document created');
   console.log(`Content URI...${response.contentUri}`);
@@ -374,20 +371,25 @@ const cli = require('yargs')
   .command('createKnowledgeBase', 'Creates a new knowledge base', {}, opts =>
     createKnowledgeBase(opts.projectId, opts.knowledgeBaseName)
   )
-  .command(
-    'createDocument',
-    'Creates a new document for this knowledge base',
-    {},
-    opts =>
-      createDocument(
-        opts.projectId,
-        opts.knowledgeBaseFullName,
-        opts.documentPath,
-        opts.documentName,
-        opts.knowledgeTypes,
-        opts.mimeType
-      )
-  )
+  /**
+   * TODO(developer): Uncomment the following lines until proto updates for dialogflow/v2beta1 is complete.
+   * This method should be annotated with (google.longrunning.operationInfo) to generate LRO methods.
+   * Now it's a simple method, without proper LRO response, so it fails because `promise() is not a function`.
+   */
+  // .command(
+  //   'createDocument',
+  //   'Creates a new document for this knowledge base',
+  //   {},
+  //   opts =>
+  //     createDocument(
+  //       opts.projectId,
+  //       opts.knowledgeBaseFullName,
+  //       opts.documentPath,
+  //       opts.documentName,
+  //       opts.knowledgeTypes,
+  //       opts.mimeType
+  //     )
+  // )
   .command(
     'detectIntentwithTexttoSpeechResponse',
     'Detects the intent of text input, outputs .wav file to target location',
