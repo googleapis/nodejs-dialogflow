@@ -85,9 +85,11 @@ async function createDocument(
     },
   };
 
-  const [operation] = await client.createDocument(request);
+  const [operation, rawResponse] = await client.createDocument(request);
   console.warn('--> debug here: operation is: ', operation);
-  const response = operation.response;
+  console.warn('--> debug here: response is: ', rawResponse);
+
+  const response = rawResponse.document;
   console.log('Document created');
   console.log(`Content URI...${response.contentUri}`);
   console.log(`displayName...${response.displayName}`);
@@ -108,7 +110,7 @@ async function detectIntentandSentiment(
   // Imports the Dialogflow client library
   const dialogflow = require('@google-cloud/dialogflow');
   // Instantiate a DialogFlow client.
-  const sessionClient = dialogflow.SessionsClient();
+  const sessionClient = new dialogflow.SessionsClient();
 
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
@@ -176,7 +178,7 @@ async function detectIntentwithTexttoSpeechResponse(
   // Imports the Dialogflow client library
   const dialogflow = require('@google-cloud/dialogflow');
   // Instantiate a DialogFlow client.
-  const sessionClient = dialogflow.SessionsClient();
+  const sessionClient = new dialogflow.SessionsClient();
 
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
