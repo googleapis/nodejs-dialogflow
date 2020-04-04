@@ -88,7 +88,9 @@ async function createDocument(
   const [operation] = await client.createDocument(request);
   console.warn('--> debug here: operation is: ', operation);
 
-  const response = await operation.promise();
+  const [response] = await operation.promise();
+  console.warn('--> debug here: response is: ', response);
+
   console.log('Document created');
   console.log(`Content URI...${response.contentUri}`);
   console.log(`displayName...${response.displayName}`);
@@ -107,7 +109,7 @@ async function detectIntentandSentiment(
 ) {
   // [START dialogflow_detect_intent_with_sentiment_analysis]
   // Imports the Dialogflow client library
-  const dialogflow = require('@google-cloud/dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
 
@@ -175,7 +177,7 @@ async function detectIntentwithTexttoSpeechResponse(
 ) {
   // [START dialogflow_detect_intent_with_texttospeech_response]
   // Imports the Dialogflow client library
-  const dialogflow = require('@google-cloud/dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
 
@@ -226,7 +228,7 @@ async function detectIntentKnowledge(
 ) {
   // [START dialogflow_detect_intent_knowledge]
   // Imports the Dialogflow client library
-  const dialogflow = require('@google-cloud/dialogflow');
+  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
   // Instantiate a DialogFlow client.
   const sessionClient = new dialogflow.SessionsClient();
 
