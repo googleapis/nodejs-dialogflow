@@ -86,7 +86,8 @@ async function createDocument(
   };
 
   const [operation] = await client.createDocument(request);
-  const [response] = await operation.promise();
+  console.warn('--> debug here: operation is: ', operation);
+  const response = operation.response;
   console.log('Document created');
   console.log(`Content URI...${response.contentUri}`);
   console.log(`displayName...${response.displayName}`);
@@ -106,9 +107,8 @@ async function detectIntentandSentiment(
   // [START dialogflow_detect_intent_with_sentiment_analysis]
   // Imports the Dialogflow client library
   const dialogflow = require('@google-cloud/dialogflow');
-  const dialogflowV2beta1 = require('@google-cloud/dialogflow').v2beta1;
   // Instantiate a DialogFlow client.
-  const sessionClient = new dialogflowV2beta1.SessionsClient();
+  const sessionClient = dialogflow.SessionsClient();
 
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
@@ -119,7 +119,7 @@ async function detectIntentandSentiment(
   // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   // Define session path
-  const sessionPath = new dialogflow.SessionsClient().projectAgentSessionPath(
+  const sessionPath = sessionClient.projectAgentSessionPath(
     projectId,
     sessionId
   );
@@ -175,9 +175,8 @@ async function detectIntentwithTexttoSpeechResponse(
   // [START dialogflow_detect_intent_with_texttospeech_response]
   // Imports the Dialogflow client library
   const dialogflow = require('@google-cloud/dialogflow');
-  const dialogflowV2beta1 = require('@google-cloud/dialogflow').v2beta1;
   // Instantiate a DialogFlow client.
-  const sessionClient = new dialogflowV2beta1.SessionsClient();
+  const sessionClient = dialogflow.SessionsClient();
 
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
@@ -189,7 +188,7 @@ async function detectIntentwithTexttoSpeechResponse(
   // const outputFile = `path for audio output file, e.g. ./resources/myOutput.wav`;
 
   // Define session path
-  const sessionPath = new dialogflow.SessionsClient().projectAgentSessionPath(
+  const sessionPath = sessionClient.projectAgentSessionPath(
     projectId,
     sessionId
   );
@@ -227,9 +226,8 @@ async function detectIntentKnowledge(
   // [START dialogflow_detect_intent_knowledge]
   // Imports the Dialogflow client library
   const dialogflow = require('@google-cloud/dialogflow');
-  const dialogflowV2beta1 = require('@google-cloud/dialogflow').v2beta1;
   // Instantiate a DialogFlow client.
-  const sessionClient = new dialogflowV2beta1.SessionsClient();
+  const sessionClient = new dialogflow.SessionsClient();
 
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
@@ -241,7 +239,7 @@ async function detectIntentKnowledge(
   // const query = `phrase(s) to pass to detect, e.g. I'd like to reserve a room for six people`;
 
   // Define session path
-  const sessionPath = new dialogflow.SessionsClient().projectAgentSessionPath(
+  const sessionPath = sessionClient.projectAgentSessionPath(
     projectId,
     sessionId
   );

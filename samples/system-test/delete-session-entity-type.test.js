@@ -39,7 +39,9 @@ describe('delete session entity types', () => {
       },
     };
 
-    const responses = await client.createEntityType(createEntityTypeRequest);
+    const responses = await new dialogflow.EntityTypesClient().createEntityType(
+      createEntityTypeRequest
+    );
     entityTypeId = responses[0].name.split('/')[4];
 
     // Create the session entity type
@@ -75,6 +77,6 @@ describe('delete session entity types', () => {
     const request = {
       name: client.entityTypePath(projectId, entityTypeId),
     };
-    await client.deleteEntityType(request);
+    await new dialogflow.EntityTypesClient().deleteEntityType(request);
   });
 });
