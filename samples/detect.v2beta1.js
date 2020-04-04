@@ -85,11 +85,10 @@ async function createDocument(
     },
   };
 
-  const [operation, rawResponse] = await client.createDocument(request);
+  const [operation] = await client.createDocument(request);
   console.warn('--> debug here: operation is: ', operation);
-  console.warn('--> debug here: response is: ', rawResponse);
 
-  const response = rawResponse.document;
+  const response = await operation.promise();
   console.log('Document created');
   console.log(`Content URI...${response.contentUri}`);
   console.log(`displayName...${response.displayName}`);
