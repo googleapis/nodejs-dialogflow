@@ -47,56 +47,59 @@ async function createKnowledgeBase(projectId, displayName) {
   // [END dialogflow_create_knowledge_base]
 }
 
-async function createDocument(
-  projectId,
-  knowledgeBaseFullName,
-  documentPath,
-  documentName,
-  knowledgeTypes,
-  mimeType
-) {
-  // [START dialogflow_create_document]
-  // Imports the Dialogflow client library
-  const dialogflow = require('@google-cloud/dialogflow').v2beta1;
+/*
+ *This test is commented until the proto change for dialogflow/v2beta1 is finished.
+ */
+// async function createDocument(
+//   projectId,
+//   knowledgeBaseFullName,
+//   documentPath,
+//   documentName,
+//   knowledgeTypes,
+//   mimeType
+// ) {
+//   // [START dialogflow_create_document]
+//   // Imports the Dialogflow client library
+//   const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
-  // Instantiate a DialogFlow Documents client.
-  const client = new dialogflow.DocumentsClient({
-    projectId: projectId,
-  });
+//   // Instantiate a DialogFlow Documents client.
+//   const client = new dialogflow.DocumentsClient({
+//     projectId: projectId,
+//   });
 
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // const projectId = 'ID of GCP project associated with your Dialogflow agent';
-  // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
-  // const documentPath = `path of the document you'd like to add, e.g. https://dialogflow.com/docs/knowledge-connectors`;
-  // const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
-  // const knowledgeTypes = `The Knowledge type of the Document. e.g. FAQ`;
-  // const mimeType = `The mime_type of the Document. e.g. text/csv, text/html,text/plain, text/pdf etc.`;
+//   /**
+//    * TODO(developer): Uncomment the following lines before running the sample.
+//    */
+//   // const projectId = 'ID of GCP project associated with your Dialogflow agent';
+//   // const knowledgeBaseFullName = `the full path of your knowledge base, e.g my-Gcloud-project/myKnowledgeBase`;
+//   // const documentPath = `path of the document you'd like to add, e.g. https://dialogflow.com/docs/knowledge-connectors`;
+//   // const documentName = `displayed name of your document in knowledge base, e.g. myDoc`;
+//   // const knowledgeTypes = `The Knowledge type of the Document. e.g. FAQ`;
+//   // const mimeType = `The mime_type of the Document. e.g. text/csv, text/html,text/plain, text/pdf etc.`;
 
-  const request = {
-    parent: knowledgeBaseFullName,
-    document: {
-      knowledgeTypes: [knowledgeTypes],
-      displayName: documentName,
-      contentUri: documentPath,
-      source: 'contentUri',
-      mimeType: mimeType,
-    },
-  };
+//   const request = {
+//     parent: knowledgeBaseFullName,
+//     document: {
+//       knowledgeTypes: [knowledgeTypes],
+//       displayName: documentName,
+//       contentUri: documentPath,
+//       source: 'contentUri',
+//       mimeType: mimeType,
+//     },
+//   };
 
-  const [operation] = await client.createDocument(request);
-  const [response] = await operation.promise();
+//   const [operation] = await client.createDocument(request);
+//   const [response] = await operation.promise();
 
-  console.log('Document created');
-  console.log(`Content URI...${response.contentUri}`);
-  console.log(`displayName...${response.displayName}`);
-  console.log(`mimeType...${response.mimeType}`);
-  console.log(`name...${response.name}`);
-  console.log(`source...${response.source}`);
+//   console.log('Document created');
+//   console.log(`Content URI...${response.contentUri}`);
+//   console.log(`displayName...${response.displayName}`);
+//   console.log(`mimeType...${response.mimeType}`);
+//   console.log(`name...${response.name}`);
+//   console.log(`source...${response.source}`);
 
-  // [END dialogflow_create_document]
-}
+//   // [END dialogflow_create_document]
+// }
 
 async function detectIntentandSentiment(
   projectId,

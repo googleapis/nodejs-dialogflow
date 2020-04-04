@@ -33,7 +33,7 @@ describe('create a document', () => {
   before('create a knowledge base for the document', async () => {
     const projectId = await client.getProjectId();
     const request = {
-      parent: client.projectPath(projectId),
+      parent: 'projects/' + projectId,
       knowledgeBase: {
         displayName: `${uuid().split('-')[0]}-TestKnowledgeBase`,
       },
