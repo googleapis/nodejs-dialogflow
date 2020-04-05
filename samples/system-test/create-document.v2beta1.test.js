@@ -13,10 +13,12 @@
 // limitations under the License.
 
 'use strict';
-
+/**
+ * TODO(developer): Uncomment the following lines until proto updates for dialogflow/v2beta1 is complete.
+ */
 // const {assert} = require('chai');
 const {describe, after, before} = require('mocha');
-const {execSync} = require('child_process');
+// const {execSync} = require('child_process');
 const uuid = require('uuid/v4');
 const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 
@@ -24,7 +26,7 @@ const dialogflow = require('@google-cloud/dialogflow').v2beta1;
 // const testDocName = 'TestDoc';
 // const testDocumentPath = 'https://cloud.google.com/storage/docs/faq';
 
-const exec = cmd => execSync(cmd, {encoding: 'utf8'});
+// const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('create a document', () => {
   const client = new dialogflow.KnowledgeBasesClient();
