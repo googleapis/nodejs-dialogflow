@@ -47,7 +47,7 @@ describe('list session entity types', () => {
     const sessionEntityTypeRequest = {
       parent: sessionClient.projectAgentSessionPath(projectId, sessionId),
       sessionEntityType: {
-        name: sessionClient.sessionEntityTypePath(
+        name: sessionClient.projectAgentSessionEntityTypePath(
           projectId,
           sessionId,
           displayName
