@@ -590,12 +590,7 @@ export class SessionEntityTypesClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {google.cloud.dialogflow.v2beta1.SessionEntityType} request.sessionEntityType
-   *   Required. The entity type to update. Format:
-   *   `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type
-   *   Display Name>` or `projects/<Project ID>/agent/environments/<Environment
-   *   ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display
-   *   Name>`. If `Environment ID` is not specified, we assume default 'draft'
-   *   environment. If `User ID` is not specified, we assume default '-' user.
+   *   Required. The session entity type to update.
    * @param {google.protobuf.FieldMask} request.updateMask
    *   Optional. The mask to control which fields get updated.
    * @param {object} [options]

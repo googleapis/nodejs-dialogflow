@@ -385,13 +385,12 @@ export class EntityTypesClient {
    * @param {string} request.name
    *   Required. The name of the entity type.
    *   Format: `projects/<Project ID>/agent/entityTypes/<EntityType ID>`.
-   * @param {string} request.languageCode
-   *   Optional. The language to retrieve entity synonyms for. If not specified,
-   *   the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -486,13 +485,12 @@ export class EntityTypesClient {
    *   Format: `projects/<Project ID>/agent`.
    * @param {google.cloud.dialogflow.v2beta1.EntityType} request.entityType
    *   Required. The entity type to create.
-   * @param {string} request.languageCode
-   *   Optional. The language of entity synonyms defined in `entity_type`. If not
-   *   specified, the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -587,13 +585,12 @@ export class EntityTypesClient {
    *   The request object that will be sent.
    * @param {google.cloud.dialogflow.v2beta1.EntityType} request.entityType
    *   Required. The entity type to update.
-   * @param {string} request.languageCode
-   *   Optional. The language of entity synonyms defined in `entity_type`. If not
-   *   specified, the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {google.protobuf.FieldMask} request.updateMask
    *   Optional. The mask to control which fields get updated.
    * @param {object} [options]
@@ -795,13 +792,12 @@ export class EntityTypesClient {
    *   "gs://".
    * @param {google.cloud.dialogflow.v2beta1.EntityTypeBatch} request.entityTypeBatchInline
    *   The collection of entity types to update or create.
-   * @param {string} request.languageCode
-   *   Optional. The language of entity synonyms defined in `entity_types`. If not
-   *   specified, the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {google.protobuf.FieldMask} request.updateMask
    *   Optional. The mask to control which fields get updated.
    * @param {object} [options]
@@ -1011,13 +1007,12 @@ export class EntityTypesClient {
    *   `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
    * @param {number[]} request.entities
    *   Required. The entities to create.
-   * @param {string} request.languageCode
-   *   Optional. The language of entity synonyms defined in `entities`. If not
-   *   specified, the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -1119,13 +1114,12 @@ export class EntityTypesClient {
    *   Format: `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
    * @param {number[]} request.entities
    *   Required. The entities to update or create.
-   * @param {string} request.languageCode
-   *   Optional. The language of entity synonyms defined in `entities`. If not
-   *   specified, the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {google.protobuf.FieldMask} request.updateMask
    *   Optional. The mask to control which fields get updated.
    * @param {object} [options]
@@ -1229,13 +1223,12 @@ export class EntityTypesClient {
    *   Required. The reference `values` of the entities to delete. Note that
    *   these are not fully-qualified names, i.e. they don't start with
    *   `projects/<Project ID>`.
-   * @param {string} request.languageCode
-   *   Optional. The language of entity synonyms defined in `entities`. If not
-   *   specified, the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -1329,13 +1322,12 @@ export class EntityTypesClient {
    * @param {string} request.parent
    *   Required. The agent to list all entity types from.
    *   Format: `projects/<Project ID>/agent`.
-   * @param {string} request.languageCode
-   *   Optional. The language to list entity synonyms for. If not specified,
-   *   the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {number} request.pageSize
    *   Optional. The maximum number of items to return in a single page. By
    *   default 100 and at most 1000.
@@ -1422,13 +1414,12 @@ export class EntityTypesClient {
    * @param {string} request.parent
    *   Required. The agent to list all entity types from.
    *   Format: `projects/<Project ID>/agent`.
-   * @param {string} request.languageCode
-   *   Optional. The language to list entity synonyms for. If not specified,
-   *   the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {number} request.pageSize
    *   Optional. The maximum number of items to return in a single page. By
    *   default 100 and at most 1000.
@@ -1471,13 +1462,12 @@ export class EntityTypesClient {
    * @param {string} request.parent
    *   Required. The agent to list all entity types from.
    *   Format: `projects/<Project ID>/agent`.
-   * @param {string} request.languageCode
-   *   Optional. The language to list entity synonyms for. If not specified,
-   *   the agent's default language is used.
-   *   [Many
-   *   languages](https://cloud.google.com/dialogflow/docs/reference/language)
-   *   are supported. Note: languages must be enabled in the agent before they can
-   *   be used.
+   * @param {string} [request.languageCode]
+   *   Optional. The language used to access language-specific data.
+   *   If not specified, the agent's default language is used.
+   *   For more information, see
+   *   [Multilingual intent and entity
+   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
    * @param {number} request.pageSize
    *   Optional. The maximum number of items to return in a single page. By
    *   default 100 and at most 1000.

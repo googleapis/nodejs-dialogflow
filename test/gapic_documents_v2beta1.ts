@@ -25,7 +25,7 @@ import * as documentsModule from '../src';
 
 import {PassThrough} from 'stream';
 
-import {protobuf} from 'google-gax';
+import {protobuf, LROperation} from 'google-gax';
 
 function generateSampleMessage<T extends object>(instance: T) {
   const filledObject = (instance.constructor as typeof protobuf.Message).toObject(
@@ -50,6 +50,38 @@ function stubSimpleCallWithCallback<ResponseType>(
   return error
     ? sinon.stub().callsArgWith(2, error)
     : sinon.stub().callsArgWith(2, null, response);
+}
+
+function stubLongRunningCall<ResponseType>(
+  response?: ResponseType,
+  callError?: Error,
+  lroError?: Error
+) {
+  const innerStub = lroError
+    ? sinon.stub().rejects(lroError)
+    : sinon.stub().resolves([response]);
+  const mockOperation = {
+    promise: innerStub,
+  };
+  return callError
+    ? sinon.stub().rejects(callError)
+    : sinon.stub().resolves([mockOperation]);
+}
+
+function stubLongRunningCallWithCallback<ResponseType>(
+  response?: ResponseType,
+  callError?: Error,
+  lroError?: Error
+) {
+  const innerStub = lroError
+    ? sinon.stub().rejects(lroError)
+    : sinon.stub().resolves([response]);
+  const mockOperation = {
+    promise: innerStub,
+  };
+  return callError
+    ? sinon.stub().callsArgWith(2, callError)
+    : sinon.stub().callsArgWith(2, null, mockOperation);
 }
 
 function stubPageStreamingCall<ResponseType>(
@@ -330,8 +362,11 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.createDocument = stubSimpleCall(expectedResponse);
-      const [response] = await client.createDocument(request);
+      client.innerApiCalls.createDocument = stubLongRunningCall(
+        expectedResponse
+      );
+      const [operation] = await client.createDocument(request);
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.createDocument as SinonStub)
@@ -361,7 +396,7 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.createDocument = stubSimpleCallWithCallback(
+      client.innerApiCalls.createDocument = stubLongRunningCallWithCallback(
         expectedResponse
       );
       const promise = new Promise((resolve, reject) => {
@@ -369,7 +404,10 @@ describe('v2beta1.DocumentsClient', () => {
           request,
           (
             err?: Error | null,
-            result?: protos.google.longrunning.IOperation | null
+            result?: LROperation<
+              protos.google.cloud.dialogflow.v2beta1.IDocument,
+              protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+            > | null
           ) => {
             if (err) {
               reject(err);
@@ -379,7 +417,11 @@ describe('v2beta1.DocumentsClient', () => {
           }
         );
       });
-      const response = await promise;
+      const operation = (await promise) as LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >;
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.createDocument as SinonStub)
@@ -388,7 +430,7 @@ describe('v2beta1.DocumentsClient', () => {
       );
     });
 
-    it('invokes createDocument with error', async () => {
+    it('invokes createDocument with call error', async () => {
       const client = new documentsModule.v2beta1.DocumentsClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
@@ -407,12 +449,47 @@ describe('v2beta1.DocumentsClient', () => {
         },
       };
       const expectedError = new Error('expected');
-      client.innerApiCalls.createDocument = stubSimpleCall(
+      client.innerApiCalls.createDocument = stubLongRunningCall(
         undefined,
         expectedError
       );
       await assert.rejects(async () => {
         await client.createDocument(request);
+      }, expectedError);
+      assert(
+        (client.innerApiCalls.createDocument as SinonStub)
+          .getCall(0)
+          .calledWith(request, expectedOptions, undefined)
+      );
+    });
+
+    it('invokes createDocument with LRO error', async () => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.CreateDocumentRequest()
+      );
+      request.parent = '';
+      const expectedHeaderRequestParams = 'parent=';
+      const expectedOptions = {
+        otherArgs: {
+          headers: {
+            'x-goog-request-params': expectedHeaderRequestParams,
+          },
+        },
+      };
+      const expectedError = new Error('expected');
+      client.innerApiCalls.createDocument = stubLongRunningCall(
+        undefined,
+        undefined,
+        expectedError
+      );
+      const [operation] = await client.createDocument(request);
+      await assert.rejects(async () => {
+        await operation.promise();
       }, expectedError);
       assert(
         (client.innerApiCalls.createDocument as SinonStub)
@@ -444,8 +521,11 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.deleteDocument = stubSimpleCall(expectedResponse);
-      const [response] = await client.deleteDocument(request);
+      client.innerApiCalls.deleteDocument = stubLongRunningCall(
+        expectedResponse
+      );
+      const [operation] = await client.deleteDocument(request);
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.deleteDocument as SinonStub)
@@ -475,7 +555,7 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.deleteDocument = stubSimpleCallWithCallback(
+      client.innerApiCalls.deleteDocument = stubLongRunningCallWithCallback(
         expectedResponse
       );
       const promise = new Promise((resolve, reject) => {
@@ -483,7 +563,10 @@ describe('v2beta1.DocumentsClient', () => {
           request,
           (
             err?: Error | null,
-            result?: protos.google.longrunning.IOperation | null
+            result?: LROperation<
+              protos.google.protobuf.IEmpty,
+              protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+            > | null
           ) => {
             if (err) {
               reject(err);
@@ -493,7 +576,11 @@ describe('v2beta1.DocumentsClient', () => {
           }
         );
       });
-      const response = await promise;
+      const operation = (await promise) as LROperation<
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >;
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.deleteDocument as SinonStub)
@@ -502,7 +589,7 @@ describe('v2beta1.DocumentsClient', () => {
       );
     });
 
-    it('invokes deleteDocument with error', async () => {
+    it('invokes deleteDocument with call error', async () => {
       const client = new documentsModule.v2beta1.DocumentsClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
@@ -521,12 +608,47 @@ describe('v2beta1.DocumentsClient', () => {
         },
       };
       const expectedError = new Error('expected');
-      client.innerApiCalls.deleteDocument = stubSimpleCall(
+      client.innerApiCalls.deleteDocument = stubLongRunningCall(
         undefined,
         expectedError
       );
       await assert.rejects(async () => {
         await client.deleteDocument(request);
+      }, expectedError);
+      assert(
+        (client.innerApiCalls.deleteDocument as SinonStub)
+          .getCall(0)
+          .calledWith(request, expectedOptions, undefined)
+      );
+    });
+
+    it('invokes deleteDocument with LRO error', async () => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.DeleteDocumentRequest()
+      );
+      request.name = '';
+      const expectedHeaderRequestParams = 'name=';
+      const expectedOptions = {
+        otherArgs: {
+          headers: {
+            'x-goog-request-params': expectedHeaderRequestParams,
+          },
+        },
+      };
+      const expectedError = new Error('expected');
+      client.innerApiCalls.deleteDocument = stubLongRunningCall(
+        undefined,
+        undefined,
+        expectedError
+      );
+      const [operation] = await client.deleteDocument(request);
+      await assert.rejects(async () => {
+        await operation.promise();
       }, expectedError);
       assert(
         (client.innerApiCalls.deleteDocument as SinonStub)
@@ -559,8 +681,11 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.updateDocument = stubSimpleCall(expectedResponse);
-      const [response] = await client.updateDocument(request);
+      client.innerApiCalls.updateDocument = stubLongRunningCall(
+        expectedResponse
+      );
+      const [operation] = await client.updateDocument(request);
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.updateDocument as SinonStub)
@@ -591,7 +716,7 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.updateDocument = stubSimpleCallWithCallback(
+      client.innerApiCalls.updateDocument = stubLongRunningCallWithCallback(
         expectedResponse
       );
       const promise = new Promise((resolve, reject) => {
@@ -599,7 +724,10 @@ describe('v2beta1.DocumentsClient', () => {
           request,
           (
             err?: Error | null,
-            result?: protos.google.longrunning.IOperation | null
+            result?: LROperation<
+              protos.google.cloud.dialogflow.v2beta1.IDocument,
+              protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+            > | null
           ) => {
             if (err) {
               reject(err);
@@ -609,7 +737,11 @@ describe('v2beta1.DocumentsClient', () => {
           }
         );
       });
-      const response = await promise;
+      const operation = (await promise) as LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >;
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.updateDocument as SinonStub)
@@ -618,7 +750,7 @@ describe('v2beta1.DocumentsClient', () => {
       );
     });
 
-    it('invokes updateDocument with error', async () => {
+    it('invokes updateDocument with call error', async () => {
       const client = new documentsModule.v2beta1.DocumentsClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
@@ -638,12 +770,48 @@ describe('v2beta1.DocumentsClient', () => {
         },
       };
       const expectedError = new Error('expected');
-      client.innerApiCalls.updateDocument = stubSimpleCall(
+      client.innerApiCalls.updateDocument = stubLongRunningCall(
         undefined,
         expectedError
       );
       await assert.rejects(async () => {
         await client.updateDocument(request);
+      }, expectedError);
+      assert(
+        (client.innerApiCalls.updateDocument as SinonStub)
+          .getCall(0)
+          .calledWith(request, expectedOptions, undefined)
+      );
+    });
+
+    it('invokes updateDocument with LRO error', async () => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.UpdateDocumentRequest()
+      );
+      request.document = {};
+      request.document.name = '';
+      const expectedHeaderRequestParams = 'document.name=';
+      const expectedOptions = {
+        otherArgs: {
+          headers: {
+            'x-goog-request-params': expectedHeaderRequestParams,
+          },
+        },
+      };
+      const expectedError = new Error('expected');
+      client.innerApiCalls.updateDocument = stubLongRunningCall(
+        undefined,
+        undefined,
+        expectedError
+      );
+      const [operation] = await client.updateDocument(request);
+      await assert.rejects(async () => {
+        await operation.promise();
       }, expectedError);
       assert(
         (client.innerApiCalls.updateDocument as SinonStub)
@@ -675,8 +843,11 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.reloadDocument = stubSimpleCall(expectedResponse);
-      const [response] = await client.reloadDocument(request);
+      client.innerApiCalls.reloadDocument = stubLongRunningCall(
+        expectedResponse
+      );
+      const [operation] = await client.reloadDocument(request);
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.reloadDocument as SinonStub)
@@ -706,7 +877,7 @@ describe('v2beta1.DocumentsClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.longrunning.Operation()
       );
-      client.innerApiCalls.reloadDocument = stubSimpleCallWithCallback(
+      client.innerApiCalls.reloadDocument = stubLongRunningCallWithCallback(
         expectedResponse
       );
       const promise = new Promise((resolve, reject) => {
@@ -714,7 +885,10 @@ describe('v2beta1.DocumentsClient', () => {
           request,
           (
             err?: Error | null,
-            result?: protos.google.longrunning.IOperation | null
+            result?: LROperation<
+              protos.google.cloud.dialogflow.v2beta1.IDocument,
+              protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+            > | null
           ) => {
             if (err) {
               reject(err);
@@ -724,7 +898,11 @@ describe('v2beta1.DocumentsClient', () => {
           }
         );
       });
-      const response = await promise;
+      const operation = (await promise) as LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >;
+      const [response] = await operation.promise();
       assert.deepStrictEqual(response, expectedResponse);
       assert(
         (client.innerApiCalls.reloadDocument as SinonStub)
@@ -733,7 +911,7 @@ describe('v2beta1.DocumentsClient', () => {
       );
     });
 
-    it('invokes reloadDocument with error', async () => {
+    it('invokes reloadDocument with call error', async () => {
       const client = new documentsModule.v2beta1.DocumentsClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
@@ -752,12 +930,47 @@ describe('v2beta1.DocumentsClient', () => {
         },
       };
       const expectedError = new Error('expected');
-      client.innerApiCalls.reloadDocument = stubSimpleCall(
+      client.innerApiCalls.reloadDocument = stubLongRunningCall(
         undefined,
         expectedError
       );
       await assert.rejects(async () => {
         await client.reloadDocument(request);
+      }, expectedError);
+      assert(
+        (client.innerApiCalls.reloadDocument as SinonStub)
+          .getCall(0)
+          .calledWith(request, expectedOptions, undefined)
+      );
+    });
+
+    it('invokes reloadDocument with LRO error', async () => {
+      const client = new documentsModule.v2beta1.DocumentsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.ReloadDocumentRequest()
+      );
+      request.name = '';
+      const expectedHeaderRequestParams = 'name=';
+      const expectedOptions = {
+        otherArgs: {
+          headers: {
+            'x-goog-request-params': expectedHeaderRequestParams,
+          },
+        },
+      };
+      const expectedError = new Error('expected');
+      client.innerApiCalls.reloadDocument = stubLongRunningCall(
+        undefined,
+        undefined,
+        expectedError
+      );
+      const [operation] = await client.reloadDocument(request);
+      await assert.rejects(async () => {
+        await operation.promise();
       }, expectedError);
       assert(
         (client.innerApiCalls.reloadDocument as SinonStub)

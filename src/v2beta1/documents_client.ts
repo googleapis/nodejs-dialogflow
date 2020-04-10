@@ -22,6 +22,7 @@ import {
   CallOptions,
   Descriptors,
   ClientOptions,
+  LROperation,
   PaginationCallback,
   GaxCall,
 } from 'google-gax';
@@ -55,6 +56,7 @@ export class DocumentsClient {
   };
   innerApiCalls: {[name: string]: Function};
   pathTemplates: {[name: string]: gax.PathTemplate};
+  operationsClient: gax.OperationsClient;
   documentsStub?: Promise<{[name: string]: Function}>;
 
   /**
@@ -178,6 +180,70 @@ export class DocumentsClient {
         'pageToken',
         'nextPageToken',
         'documents'
+      ),
+    };
+
+    // This API contains "long-running operations", which return a
+    // an Operation object that allows for tracking of the operation,
+    // rather than holding a request open.
+    const protoFilesRoot = opts.fallback
+      ? this._gaxModule.protobuf.Root.fromJSON(
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          require('../../protos/protos.json')
+        )
+      : this._gaxModule.protobuf.loadSync(nodejsProtoPath);
+
+    this.operationsClient = this._gaxModule
+      .lro({
+        auth: this.auth,
+        grpc: 'grpc' in this._gaxGrpc ? this._gaxGrpc.grpc : undefined,
+      })
+      .operationsClient(opts);
+    const createDocumentResponse = protoFilesRoot.lookup(
+      '.google.cloud.dialogflow.v2beta1.Document'
+    ) as gax.protobuf.Type;
+    const createDocumentMetadata = protoFilesRoot.lookup(
+      '.google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata'
+    ) as gax.protobuf.Type;
+    const deleteDocumentResponse = protoFilesRoot.lookup(
+      '.google.protobuf.Empty'
+    ) as gax.protobuf.Type;
+    const deleteDocumentMetadata = protoFilesRoot.lookup(
+      '.google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata'
+    ) as gax.protobuf.Type;
+    const updateDocumentResponse = protoFilesRoot.lookup(
+      '.google.cloud.dialogflow.v2beta1.Document'
+    ) as gax.protobuf.Type;
+    const updateDocumentMetadata = protoFilesRoot.lookup(
+      '.google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata'
+    ) as gax.protobuf.Type;
+    const reloadDocumentResponse = protoFilesRoot.lookup(
+      '.google.cloud.dialogflow.v2beta1.Document'
+    ) as gax.protobuf.Type;
+    const reloadDocumentMetadata = protoFilesRoot.lookup(
+      '.google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata'
+    ) as gax.protobuf.Type;
+
+    this.descriptors.longrunning = {
+      createDocument: new this._gaxModule.LongrunningDescriptor(
+        this.operationsClient,
+        createDocumentResponse.decode.bind(createDocumentResponse),
+        createDocumentMetadata.decode.bind(createDocumentMetadata)
+      ),
+      deleteDocument: new this._gaxModule.LongrunningDescriptor(
+        this.operationsClient,
+        deleteDocumentResponse.decode.bind(deleteDocumentResponse),
+        deleteDocumentMetadata.decode.bind(deleteDocumentMetadata)
+      ),
+      updateDocument: new this._gaxModule.LongrunningDescriptor(
+        this.operationsClient,
+        updateDocumentResponse.decode.bind(updateDocumentResponse),
+        updateDocumentMetadata.decode.bind(updateDocumentMetadata)
+      ),
+      reloadDocument: new this._gaxModule.LongrunningDescriptor(
+        this.operationsClient,
+        reloadDocumentResponse.decode.bind(reloadDocumentResponse),
+        reloadDocumentMetadata.decode.bind(reloadDocumentMetadata)
       ),
     };
 
@@ -408,13 +474,17 @@ export class DocumentsClient {
     this.initialize();
     return this.innerApiCalls.getDocument(request, options, callback);
   }
+
   createDocument(
     request: protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest,
     options?: gax.CallOptions
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   >;
@@ -422,20 +492,22 @@ export class DocumentsClient {
     request: protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest,
     options: gax.CallOptions,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
   createDocument(
     request: protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
@@ -444,9 +516,6 @@ export class DocumentsClient {
    *
    * Note: The `projects.agent.knowledgeBases.documents` resource is deprecated;
    * only use `projects.knowledgeBases.documents`.
-   *
-   * Operation <response: {@link google.cloud.dialogflow.v2beta1.Document|Document},
-   *            metadata: {@link google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata|KnowledgeOperationMetadata}>
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -466,23 +535,28 @@ export class DocumentsClient {
     optionsOrCallback?:
       | gax.CallOptions
       | Callback<
-          protos.google.longrunning.IOperation,
-          | protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest
-          | null
-          | undefined,
+          LROperation<
+            protos.google.cloud.dialogflow.v2beta1.IDocument,
+            protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+          >,
+          protos.google.longrunning.IOperation | null | undefined,
           {} | null | undefined
         >,
     callback?: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.ICreateDocumentRequest | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   > | void {
@@ -510,8 +584,11 @@ export class DocumentsClient {
     options?: gax.CallOptions
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest | undefined,
+      LROperation<
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   >;
@@ -519,20 +596,22 @@ export class DocumentsClient {
     request: protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest,
     options: gax.CallOptions,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
   deleteDocument(
     request: protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
@@ -541,9 +620,6 @@ export class DocumentsClient {
    *
    * Note: The `projects.agent.knowledgeBases.documents` resource is deprecated;
    * only use `projects.knowledgeBases.documents`.
-   *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty},
-   *            metadata: {@link google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata|KnowledgeOperationMetadata}>
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -562,23 +638,28 @@ export class DocumentsClient {
     optionsOrCallback?:
       | gax.CallOptions
       | Callback<
-          protos.google.longrunning.IOperation,
-          | protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest
-          | null
-          | undefined,
+          LROperation<
+            protos.google.protobuf.IEmpty,
+            protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+          >,
+          protos.google.longrunning.IOperation | null | undefined,
           {} | null | undefined
         >,
     callback?: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest | undefined,
+      LROperation<
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   > | void {
@@ -606,8 +687,11 @@ export class DocumentsClient {
     options?: gax.CallOptions
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   >;
@@ -615,20 +699,22 @@ export class DocumentsClient {
     request: protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest,
     options: gax.CallOptions,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
   updateDocument(
     request: protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
@@ -637,9 +723,6 @@ export class DocumentsClient {
    *
    * Note: The `projects.agent.knowledgeBases.documents` resource is deprecated;
    * only use `projects.knowledgeBases.documents`.
-   *
-   * Operation <response: {@link google.cloud.dialogflow.v2beta1.Document|Document},
-   *            metadata: {@link google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata|KnowledgeOperationMetadata}>
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -660,23 +743,28 @@ export class DocumentsClient {
     optionsOrCallback?:
       | gax.CallOptions
       | Callback<
-          protos.google.longrunning.IOperation,
-          | protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest
-          | null
-          | undefined,
+          LROperation<
+            protos.google.cloud.dialogflow.v2beta1.IDocument,
+            protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+          >,
+          protos.google.longrunning.IOperation | null | undefined,
           {} | null | undefined
         >,
     callback?: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   > | void {
@@ -704,8 +792,11 @@ export class DocumentsClient {
     options?: gax.CallOptions
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   >;
@@ -713,20 +804,22 @@ export class DocumentsClient {
     request: protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest,
     options: gax.CallOptions,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
   reloadDocument(
     request: protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest,
     callback: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): void;
@@ -739,9 +832,6 @@ export class DocumentsClient {
    * Note: The `projects.agent.knowledgeBases.documents` resource is deprecated;
    * only use `projects.knowledgeBases.documents`.
    *
-   * Operation <response: {@link google.cloud.dialogflow.v2beta1.Document|Document},
-   *            metadata: {@link google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata|KnowledgeOperationMetadata}>
-   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
@@ -749,7 +839,8 @@ export class DocumentsClient {
    *   Format: `projects/<Project ID>/knowledgeBases/<Knowledge Base
    *   ID>/documents/<Document ID>`
    * @param {google.cloud.dialogflow.v2beta1.GcsSource} request.gcsSource
-   *   The path of gcs source file for reloading document content.
+   *   Optional. The path for a Cloud Storage source file for reloading document content.
+   *   If not provided, the Document's existing source will be reloaded.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -761,23 +852,28 @@ export class DocumentsClient {
     optionsOrCallback?:
       | gax.CallOptions
       | Callback<
-          protos.google.longrunning.IOperation,
-          | protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest
-          | null
-          | undefined,
+          LROperation<
+            protos.google.cloud.dialogflow.v2beta1.IDocument,
+            protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+          >,
+          protos.google.longrunning.IOperation | null | undefined,
           {} | null | undefined
         >,
     callback?: Callback<
-      protos.google.longrunning.IOperation,
-      | protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest
-      | null
-      | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | null | undefined,
       {} | null | undefined
     >
   ): Promise<
     [
-      protos.google.longrunning.IOperation,
-      protos.google.cloud.dialogflow.v2beta1.IReloadDocumentRequest | undefined,
+      LROperation<
+        protos.google.cloud.dialogflow.v2beta1.IDocument,
+        protos.google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata
+      >,
+      protos.google.longrunning.IOperation | undefined,
       {} | undefined
     ]
   > | void {
@@ -800,7 +896,6 @@ export class DocumentsClient {
     this.initialize();
     return this.innerApiCalls.reloadDocument(request, options, callback);
   }
-
   listDocuments(
     request: protos.google.cloud.dialogflow.v2beta1.IListDocumentsRequest,
     options?: gax.CallOptions
