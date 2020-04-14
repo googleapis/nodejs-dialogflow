@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/nodejs-dialogflow.git",
-        "sha": "b9a88cfb66e9908d57660e3b5168e50b2cae1b9a"
+        "sha": "d87e221ba9bb7231b4cb7ed989a7a7293133fcdb"
       }
     },
     {
@@ -19,7 +19,8 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "6f32150677c9784f3c3a7e1949472bd29c9d72c5"
+        "sha": "97c7ccfdceb927db1cbe6f3bb09616aa02bafd89",
+        "log": "97c7ccfdceb927db1cbe6f3bb09616aa02bafd89\ndoc: document context-aware commit flags (#481)\n\nAlso, delete obsolete blurb about cleaning up old, dead files.\n\nCo-authored-by: Jeff Ching <chingor@google.com>\n8eff3790f88b50706a0c4b6a20b385f24e9ac4e7\nfeat: common postprocessing for node libraries (#485)\n\nCo-authored-by: Justin Beckwith <justin.beckwith@gmail.com>\n21c3b57ae54ae9db6a3a6b48b31c970c6ab56f19\nbuild(nodejs): remove unused codecov config (#486)\n\n\n"
       }
     }
   ],
