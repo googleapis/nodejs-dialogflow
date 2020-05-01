@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/dialogflow?activeTab=versions
 
+### [2.0.1](https://www.github.com/googleapis/nodejs-dialogflow/compare/v2.0.0...v2.0.1) (2020-05-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to v8 ([#602](https://www.github.com/googleapis/nodejs-dialogflow/issues/602)) ([9cec1be](https://www.github.com/googleapis/nodejs-dialogflow/commit/9cec1beeace132829368b99701ce7c9970e4b126))
+
 ## [2.0.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v1.2.0...v2.0.0) (2020-04-23)
 
 
