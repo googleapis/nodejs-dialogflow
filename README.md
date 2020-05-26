@@ -55,7 +55,7 @@ npm install dialogflow
 
 ```javascript
 
-const dialogflow = require('dialogflow');
+const dialogflow = require('@google-cloud/dialogflow');
 const uuid = require('uuid');
 
 /**
