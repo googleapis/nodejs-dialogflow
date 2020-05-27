@@ -11,8 +11,15 @@
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "cd3ce2651c3921670217e664303976cdf76e9fe2",
-        "internalRef": "312123588"
+        "sha": "7a8875d4bcf51993f6f7aa181066cc5ec95539d5",
+        "internalRef": "312345206"
+      }
+    },
+    {
+      "git": {
+        "name": "synthtool",
+        "remote": "https://github.com/googleapis/synthtool.git",
+        "sha": "d2364eb80b840a36136c8ce12f1c6efabcc9600e"
       }
     }
   ],
@@ -22,6 +29,15 @@
         "source": "googleapis",
         "apiName": "dialogflow",
         "apiVersion": "v2",
+        "language": "typescript",
+        "generator": "gapic-generator-typescript"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "dialogflow",
+        "apiVersion": "v2beta1",
         "language": "typescript",
         "generator": "gapic-generator-typescript"
       }
