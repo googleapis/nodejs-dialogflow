@@ -51,4 +51,11 @@ templates = common_templates.node_library(
     source_location='build/src', versions=versions, default_version=default_version)
 s.copy(templates, excludes=["README.md", "samples/README.md"])
 
+# TODO: Remove the following replace once Datacatalog is ready to release a break change
+# Users should use beta Client with explicitly specify the beta version
+# Add beta version DocumentsClient, KnowledgeBasesClient to export
+s.replace('src/index.ts',
+          '\nexport \{v2\, v2beta1\, AgentsClient\, ContextsClient\, EntityTypesClient\, EnvironmentsClient\, IntentsClient\, SessionEntityTypesClient\, SessionsClient\}\;\nexport default \{v2\, v2beta1\, AgentsClient\, ContextsClient\, EntityTypesClient\, EnvironmentsClient\, IntentsClient\, SessionEntityTypesClient\, SessionsClient\}\;',
+          'const DocumentsClient = v2beta1.DocumentsClient;\nconst KnowledgeBasesClient = v2beta1.KnowledgeBasesClient;\n\nexport {v2, v2beta1, AgentsClient, ContextsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, SessionEntityTypesClient, SessionsClient, DocumentsClient, KnowledgeBasesClient};\nexport default {v2, v2beta1, AgentsClient, ContextsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, SessionEntityTypesClient, SessionsClient, DocumentsClient, KnowledgeBasesClient};')
+
 node.postprocess_gapic_library()

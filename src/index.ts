@@ -26,6 +26,8 @@ const EnvironmentsClient = v2.EnvironmentsClient;
 const IntentsClient = v2.IntentsClient;
 const SessionEntityTypesClient = v2.SessionEntityTypesClient;
 const SessionsClient = v2.SessionsClient;
+const DocumentsClient = v2beta1.DocumentsClient;
+const KnowledgeBasesClient = v2beta1.KnowledgeBasesClient;
 
 export {
   v2,
@@ -37,6 +39,8 @@ export {
   IntentsClient,
   SessionEntityTypesClient,
   SessionsClient,
+  DocumentsClient,
+  KnowledgeBasesClient,
 };
 export default {
   v2,
@@ -48,6 +52,8 @@ export default {
   IntentsClient,
   SessionEntityTypesClient,
   SessionsClient,
+  DocumentsClient,
+  KnowledgeBasesClient,
 };
 import * as protos from '../protos/protos';
 export {protos};
