@@ -260,9 +260,6 @@ const cli = require('yargs')
         opts.messageTexts
       )
   )
-  .command('list-intents', 'List Intent', {}, opts =>
-    listIntents(opts.projectId)
-  )
   .command(
     'delete-intent',
     'Delete Intent',

@@ -16,6 +16,10 @@
 
 // [START dialogflow_list_intents]
 
+/**
+ * List of all intents in the specified project.
+ * @param {string} projectId The project to be used
+ */
 async function listIntents(projectId) {
   // Imports the Dialogflow library
   const dialogflow = require('@google-cloud/dialogflow');
