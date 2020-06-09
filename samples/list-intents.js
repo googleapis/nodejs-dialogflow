@@ -18,7 +18,9 @@
  * List of all intents in the specified project.
  * @param {string} projectId The project to be used
  */
-function main(projectId) {
+function main(
+  projectId = process.env.GOOGLE_CLOUD_PROJECT || 'YOUR_PROJECT_ID'
+) {
   // [START dialogflow_list_intents]
 
   /**
