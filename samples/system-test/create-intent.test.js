@@ -18,6 +18,8 @@ const {assert} = require('chai');
 const {after, describe, it} = require('mocha');
 const execSync = require('child_process').execSync;
 const uuid = require('uuid');
+const projectId =
+  process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
 const dialogflow = require('@google-cloud/dialogflow');
 
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
@@ -29,7 +31,7 @@ describe('create intent', () => {
   let intentId;
 
   it('should create an intent', async () => {
-    const output = exec(`${cmd} ${displayName}`);
+    const output = exec(`${cmd} ${projectId} ${displayName}`);
     assert.include(output, 'intents');
     intentId = output.split(' ')[1].split('/')[4];
   });

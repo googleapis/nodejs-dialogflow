@@ -22,7 +22,7 @@
  * @param {string} messageTexts Message Texts
  */
 function main(
-  projectId = process.env.GOOGLE_CLOUD_PROJECT || 'YOUR_PROJECT_ID',
+  projectId = 'YOUR_PROJECT_ID',
   displayName = 'YOUR_INTENT_DISPLAY_NAME',
   trainingPhrasesParts = [
     'Hello, What is weather today?',
