@@ -1,6 +1,6 @@
 **/node_modules
-**/coverage
-test/fixtures
+**/.coverage
 build/
 docs/
 protos/
+system-test/
