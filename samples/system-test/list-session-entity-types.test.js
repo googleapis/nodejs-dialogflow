@@ -24,7 +24,7 @@ const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 describe('list session entity types', () => {
   const client = new dialogflow.EntityTypesClient();
   const sessionClient = new dialogflow.SessionEntityTypesClient();
-  const cmd = 'node resource.js';
+  const cmd = 'node list-session-entity-types.js';
   const sessionId = uuid.v1();
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
   let entityTypeId;
@@ -65,7 +65,8 @@ describe('list session entity types', () => {
   });
 
   it('should List the Session Entity Type', async () => {
-    const output = exec(`${cmd} list-session-entity-types -s ${sessionId}`);
+    const projectId = await client.getProjectId();
+    const output = exec(`${cmd} ${projectId} ${sessionId}`);
     assert.include(output, sessionId);
     assert.include(output, displayName);
     assert.include(output, 'Number of entities');

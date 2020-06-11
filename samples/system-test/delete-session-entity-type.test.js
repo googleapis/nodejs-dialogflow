@@ -24,7 +24,7 @@ const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 describe('delete session entity types', () => {
   const client = new dialogflow.EntityTypesClient();
   const sessionClient = new dialogflow.SessionEntityTypesClient();
-  const cmd = 'node resource.js';
+  const cmd = 'node delete-session-entity-type.js';
   const sessionId = uuid.v1();
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
   let entityTypeId;
@@ -65,9 +65,8 @@ describe('delete session entity types', () => {
   });
 
   it('should Delete the Session Entity Type', async () => {
-    const output = exec(
-      `${cmd} delete-session-entity-type -s ${sessionId} -d ${displayName}`
-    );
+    const projectId = await client.getProjectId();
+    const output = exec(`${cmd} ${projectId} ${sessionId} ${displayName}`);
     assert.include(output, displayName);
   });
 

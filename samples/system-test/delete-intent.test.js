@@ -18,13 +18,15 @@ const {assert} = require('chai');
 const {describe, before, it} = require('mocha');
 const execSync = require('child_process').execSync;
 const uuid = require('uuid');
+const projectId =
+  process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
 const dialogflow = require('@google-cloud/dialogflow');
 
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('delete intent', () => {
   const client = new dialogflow.IntentsClient();
-  const cmd = 'node resource.js';
+  const cmd = 'node delete-intent.js';
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
   let intentId;
 
@@ -59,7 +61,7 @@ describe('delete intent', () => {
   });
 
   it('should delete an intent', async () => {
-    const output = exec(`${cmd} delete-intent -i ${intentId}`);
+    const output = exec(`${cmd} ${projectId} ${intentId}`);
     assert.include(output, intentId);
   });
 });

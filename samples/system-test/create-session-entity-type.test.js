@@ -23,7 +23,7 @@ const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 describe('create session entity type', () => {
   const client = new dialogflow.EntityTypesClient();
-  const cmd = 'node resource.js';
+  const cmd = 'node create-session-entity-type.js';
   const sessionId = uuid.v1();
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
   const synonym1 = 'synonym_1';
@@ -45,8 +45,9 @@ describe('create session entity type', () => {
   });
 
   it('should Create a Session Entity Type', async () => {
+    const projectId = await client.getProjectId();
     const output = exec(
-      `${cmd} create-session-entity-type -s ${sessionId} -e ${synonym1} -e ${synonym2} -d ${displayName} -o ENTITY_OVERRIDE_MODE_OVERRIDE`
+      `${cmd} ${projectId} ${sessionId} ${synonym1} ${synonym2} ${displayName} ENTITY_OVERRIDE_MODE_OVERRIDE`
     );
     assert.include(output, sessionId);
     assert.include(output, displayName);
