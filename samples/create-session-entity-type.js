@@ -64,7 +64,9 @@ function main(
     console.log(response);
   }
 
-  createSessionEntityType();
+  createSessionEntityType().catch(err => {
+    console.error(err);
+  });
 }
 
 main(...process.argv.slice(2));
