@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// ML tests frequently run into concurrency and quota issues, for which
+// DialogFlow tests sometimes run into quota issues, for which
 // retrying with a backoff is a good strategy:
 module.exports = {
   async delay(test) {
