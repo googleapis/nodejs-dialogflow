@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/dialogflow?activeTab=versions
 
+## [2.1.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v2.0.0...v2.1.0) (2020-06-23)
+
+
+### Features
+
+* check status of long running operation by its name ([#606](https://www.github.com/googleapis/nodejs-dialogflow/issues/606)) ([77b28f1](https://www.github.com/googleapis/nodejs-dialogflow/commit/77b28f1fad846bf629fcbdccfb0b51771e2e9c76))
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to v8 ([#602](https://www.github.com/googleapis/nodejs-dialogflow/issues/602)) ([9cec1be](https://www.github.com/googleapis/nodejs-dialogflow/commit/9cec1beeace132829368b99701ce7c9970e4b126))
+* exception occurred in retry method ([#615](https://www.github.com/googleapis/nodejs-dialogflow/issues/615)) ([b8b2ccd](https://www.github.com/googleapis/nodejs-dialogflow/commit/b8b2ccdf2e0c236c515706ecc6b9759ed570cfc7))
+
 ## [2.0.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v1.2.0...v2.0.0) (2020-04-23)
 
 
