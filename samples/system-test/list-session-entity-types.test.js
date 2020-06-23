@@ -66,7 +66,7 @@ describe('list session entity types', () => {
     await sessionClient.createSessionEntityType(sessionEntityTypeRequest);
   });
 
-  it('should List the Session Entity Type', async () => {
+  it('should List the Session Entity Type', async function () {
     this.retries(5);
     await delay(this.test);
 
