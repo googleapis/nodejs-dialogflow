@@ -39,8 +39,7 @@ for version in versions:
         proto_path=f'/google/cloud/dialogflow/{version}',
         extra_proto_files=["google/cloud/common_resources.proto"]
     )
-    s.copy(library, excludes=['package.json',
-                              'README.md', 'system-test/fixtures/sample/src'])
+    s.copy(library, excludes=['package.json', 'README.md'])
 
 common_templates = gcp.CommonTemplates()
 templates = common_templates.node_library(
