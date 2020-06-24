@@ -27,7 +27,7 @@
     "Dialogflow API"
   ],
   "scripts": {
-    "test": "c8 mocha build/test",
+    "test": "c8 mocha build/test/*_v2.js && c8 mocha build/test/*_v2beta1.js",
     "samples-test": "cd samples/ && npm link ../ && npm install && npm test && cd ../",
     "system-test": "mocha build/system-test",
     "docs": "jsdoc -c .jsdoc.js",
@@ -57,7 +57,7 @@
     "jsdoc-fresh": "^1.0.2",
     "jsdoc-region-tag": "^1.0.4",
     "linkinator": "^2.0.6",
-    "mocha": "^7.1.1",
+    "mocha": "^8.0.0",
     "null-loader": "^4.0.0",
     "pack-n-play": "^1.0.0-2",
     "sinon": "^9.0.2",
