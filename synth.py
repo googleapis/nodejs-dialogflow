@@ -23,15 +23,11 @@ AUTOSYNTH_MULTIPLE_COMMITS = True
 
 
 gapic = gcp.GAPICMicrogenerator()
-versions = ['v2', 'v2beta1']
+# note: default version must be the last one to generate the correct system test
+versions = ['v2beta1', 'v2'] 
 default_version = 'v2'
 
-# Rearrange the default version to the last item in the array, to generate appropriate system-test
-order_versions = versions.copy()
-order_versions.append(order_versions.pop(
-    order_versions.index(default_version)))
-
-for version in order_versions:
+for version in versions:
     library = gapic.typescript_library(
         'dialogflow', version,
         generator_args={
@@ -50,12 +46,5 @@ common_templates = gcp.CommonTemplates()
 templates = common_templates.node_library(
     source_location='build/src', versions=versions, default_version=default_version)
 s.copy(templates, excludes=["README.md", "samples/README.md"])
-
-# TODO: Remove the following replace once Datacatalog is ready to release a break change
-# Users should use beta Client with explicitly specify the beta version
-# Add beta version DocumentsClient, KnowledgeBasesClient to export
-s.replace('src/index.ts',
-          '\nexport \{v2\, v2beta1\, AgentsClient\, ContextsClient\, EntityTypesClient\, EnvironmentsClient\, IntentsClient\, SessionEntityTypesClient\, SessionsClient\}\;\nexport default \{v2\, v2beta1\, AgentsClient\, ContextsClient\, EntityTypesClient\, EnvironmentsClient\, IntentsClient\, SessionEntityTypesClient\, SessionsClient\}\;',
-          'const DocumentsClient = v2beta1.DocumentsClient;\nconst KnowledgeBasesClient = v2beta1.KnowledgeBasesClient;\n\nexport {v2, v2beta1, AgentsClient, ContextsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, SessionEntityTypesClient, SessionsClient, DocumentsClient, KnowledgeBasesClient};\nexport default {v2, v2beta1, AgentsClient, ContextsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, SessionEntityTypesClient, SessionsClient, DocumentsClient, KnowledgeBasesClient};')
 
 node.postprocess_gapic_library()
