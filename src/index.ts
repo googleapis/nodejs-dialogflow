@@ -16,8 +16,8 @@
 // ** https://github.com/googleapis/synthtool **
 // ** All changes to this file may be overwritten. **
 
-import * as v2 from './v2';
 import * as v2beta1 from './v2beta1';
+import * as v2 from './v2';
 
 const AgentsClient = v2.AgentsClient;
 const ContextsClient = v2.ContextsClient;
@@ -26,12 +26,10 @@ const EnvironmentsClient = v2.EnvironmentsClient;
 const IntentsClient = v2.IntentsClient;
 const SessionEntityTypesClient = v2.SessionEntityTypesClient;
 const SessionsClient = v2.SessionsClient;
-const DocumentsClient = v2beta1.DocumentsClient;
-const KnowledgeBasesClient = v2beta1.KnowledgeBasesClient;
 
 export {
-  v2,
   v2beta1,
+  v2,
   AgentsClient,
   ContextsClient,
   EntityTypesClient,
@@ -39,12 +37,10 @@ export {
   IntentsClient,
   SessionEntityTypesClient,
   SessionsClient,
-  DocumentsClient,
-  KnowledgeBasesClient,
 };
 export default {
-  v2,
   v2beta1,
+  v2,
   AgentsClient,
   ContextsClient,
   EntityTypesClient,
@@ -52,8 +48,6 @@ export default {
   IntentsClient,
   SessionEntityTypesClient,
   SessionsClient,
-  DocumentsClient,
-  KnowledgeBasesClient,
 };
 import * as protos from '../protos/protos';
 export {protos};
