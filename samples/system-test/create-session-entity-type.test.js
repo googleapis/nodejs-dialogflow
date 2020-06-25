@@ -47,7 +47,7 @@ describe('create session entity type', () => {
   it('should Create a Session Entity Type', async () => {
     const projectId = await client.getProjectId();
     const output = exec(
-      `${cmd} ${projectId} ${sessionId} ${synonym1} ${synonym2} ${displayName} ENTITY_OVERRIDE_MODE_OVERRIDE`
+      `${cmd} create-session-entity-type -p ${projectId} -s ${sessionId} -e ${synonym1} ${synonym2} -d ${displayName} -o ENTITY_OVERRIDE_MODE_OVERRIDE`
     );
     assert.include(output, sessionId);
     assert.include(output, displayName);
