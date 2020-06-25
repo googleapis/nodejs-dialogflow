@@ -27,7 +27,7 @@
     "Dialogflow API"
   ],
   "scripts": {
-    "test": "c8 mocha build/test",
+    "test": "c8 mocha build/test/*_v2.js && c8 mocha build/test/*_v2beta1.js",
     "samples-test": "cd samples/ && npm link ../ && npm install && npm test && cd ../",
     "system-test": "mocha build/system-test",
     "docs": "jsdoc -c .jsdoc.js",
@@ -38,7 +38,7 @@
     "compile": "tsc -p . && cp -r protos build/",
     "compile-protos": "compileProtos src",
     "predocs-test": "npm run docs",
-    "prepare": "npm run compile",
+    "prepare": "npm run compile-protos && npm run compile",
     "prelint": "cd samples; npm link ../; npm install",
     "precompile": "gts clean"
   },
