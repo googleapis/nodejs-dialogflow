@@ -3,23 +3,16 @@
     {
       "git": {
         "name": ".",
-        "remote": "https://github.com/googleapis/nodejs-dialogflow.git",
-        "sha": "7af5e538bb8c442891af0ef5e85d84c5cefdbf5f"
+        "remote": "git@github.com:googleapis/nodejs-dialogflow.git",
+        "sha": "e77b19ed9fe0251aed71ed52304c75d3a18b30d4"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "94006b3cb8d2fb44703cf535da15608eed6bf7db",
-        "internalRef": "325949033"
-      }
-    },
-    {
-      "git": {
-        "name": "synthtool",
-        "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "5747555f7620113d9a2078a48f4c047a99d31b3e"
+        "sha": "3a54e988edcbdef1e47c6ac19d3074a87214f667",
+        "internalRef": "326582222"
       }
     }
   ],
@@ -38,6 +31,15 @@
         "source": "googleapis",
         "apiName": "dialogflow",
         "apiVersion": "v2",
+        "language": "nodejs",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "dialogflow",
+        "apiVersion": "v3beta1",
         "language": "nodejs",
         "generator": "bazel"
       }

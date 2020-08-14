@@ -30,10 +30,12 @@ default_version = 'v2'
 for version in versions:
     library = gapic.node_library('dialogflow', version)
     s.copy(library, excludes=['package.json', 'README.md'])
+library = gapic.node_library('dialogflow', 'v3beta1', bazel_target=f"//google/cloud/dialogflow/cx/v3beta1:dialogflow-cx-v3beta1-nodejs")
+s.copy(library, excludes=['package.json', 'README.md'])
 
 common_templates = gcp.CommonTemplates()
 templates = common_templates.node_library(
-    source_location='build/src', versions=versions, default_version=default_version)
+    source_location='build/src', versions=['v2beta1', 'v2', 'v3beta1'], default_version=default_version)
 s.copy(templates, excludes=["README.md", "samples/README.md"])
 
 node.postprocess_gapic_library()

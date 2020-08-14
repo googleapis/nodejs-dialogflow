@@ -18,22 +18,30 @@
 
 import {
   AgentsClient,
-  ContextsClient,
   EntityTypesClient,
   EnvironmentsClient,
+  FlowsClient,
   IntentsClient,
+  PagesClient,
   SessionEntityTypesClient,
   SessionsClient,
-} from '@google-cloud/dialogflow';
+  TransitionRouteGroupsClient,
+  VersionsClient,
+  WebhooksClient,
+} from 'cx';
 
 function main() {
   new AgentsClient();
-  new ContextsClient();
   new EntityTypesClient();
   new EnvironmentsClient();
+  new FlowsClient();
   new IntentsClient();
+  new PagesClient();
   new SessionEntityTypesClient();
   new SessionsClient();
+  new TransitionRouteGroupsClient();
+  new VersionsClient();
+  new WebhooksClient();
 }
 
 main();

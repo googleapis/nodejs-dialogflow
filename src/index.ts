@@ -18,6 +18,7 @@
 
 import * as v2beta1 from './v2beta1';
 import * as v2 from './v2';
+import * as v3beta1 from './v3beta1';
 
 const AgentsClient = v2.AgentsClient;
 const ContextsClient = v2.ContextsClient;
@@ -30,6 +31,7 @@ const SessionsClient = v2.SessionsClient;
 export {
   v2beta1,
   v2,
+  v3beta1,
   AgentsClient,
   ContextsClient,
   EntityTypesClient,
@@ -41,6 +43,7 @@ export {
 export default {
   v2beta1,
   v2,
+  v3beta1,
   AgentsClient,
   ContextsClient,
   EntityTypesClient,

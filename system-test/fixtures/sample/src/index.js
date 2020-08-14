@@ -17,16 +17,20 @@
 // ** All changes to this file may be overwritten. **
 
 /* eslint-disable node/no-missing-require, no-unused-vars */
-const dialogflow = require('@google-cloud/dialogflow');
+const cx = require('cx');
 
 function main() {
-  const agentsClient = new dialogflow.AgentsClient();
-  const contextsClient = new dialogflow.ContextsClient();
-  const entityTypesClient = new dialogflow.EntityTypesClient();
-  const environmentsClient = new dialogflow.EnvironmentsClient();
-  const intentsClient = new dialogflow.IntentsClient();
-  const sessionEntityTypesClient = new dialogflow.SessionEntityTypesClient();
-  const sessionsClient = new dialogflow.SessionsClient();
+  const agentsClient = new cx.AgentsClient();
+  const entityTypesClient = new cx.EntityTypesClient();
+  const environmentsClient = new cx.EnvironmentsClient();
+  const flowsClient = new cx.FlowsClient();
+  const intentsClient = new cx.IntentsClient();
+  const pagesClient = new cx.PagesClient();
+  const sessionEntityTypesClient = new cx.SessionEntityTypesClient();
+  const sessionsClient = new cx.SessionsClient();
+  const transitionRouteGroupsClient = new cx.TransitionRouteGroupsClient();
+  const versionsClient = new cx.VersionsClient();
+  const webhooksClient = new cx.WebhooksClient();
 }
 
 main();
