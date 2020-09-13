@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/dialogflow?activeTab=versions
 
+### [3.2.1](https://www.github.com/googleapis/nodejs-dialogflow/compare/v3.2.0...v3.2.1) (2020-09-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency yargs to v16 ([#676](https://www.github.com/googleapis/nodejs-dialogflow/issues/676)) ([217bb9c](https://www.github.com/googleapis/nodejs-dialogflow/commit/217bb9c209000d20157fc6478cd9a26369e8b106))
+
 ## [3.2.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v3.1.1...v3.2.0) (2020-07-29)
 
 
