@@ -32,23 +32,7 @@ option java_outer_classname = "SessionEntityTypeProto";
 option java_package = "com.google.cloud.dialogflow.v2beta1";
 option objc_class_prefix = "DF";
 
-// Entities are extracted from user input and represent parameters that are
-// meaningful to your application. For example, a date range, a proper name
-// such as a geographic location or landmark, and so on. Entities represent
-// actionable data for your application.
-//
-// Session entity types are referred to as **User** entity types and are
-// entities that are built for an individual user such as
-// favorites, preferences, playlists, and so on. You can redefine a session
-// entity type at the session level.
-//
-// Session entity methods do not work with Google Assistant integration.
-// Contact Dialogflow support if you need to use session entities
-// with Google Assistant integration.
-//
-// For more information about entity types, see the
-// [Dialogflow
-// documentation](https://cloud.google.com/dialogflow/docs/entities-overview).
+// Service for managing [SessionEntityTypes][google.cloud.dialogflow.v2beta1.SessionEntityType].
 service SessionEntityTypes {
   option (google.api.default_host) = "dialogflow.googleapis.com";
   option (google.api.oauth_scopes) =
@@ -173,13 +157,14 @@ service SessionEntityTypes {
   }
 }
 
-// Represents a session entity type.
+// A session represents a conversation between a Dialogflow agent and an
+// end-user. You can create special entities, called session entities, during a
+// session. Session entities can extend or replace custom entity types and only
+// exist during the session that they were created for. All session data,
+// including session entities, is stored by Dialogflow for 20 minutes.
 //
-// Extends or replaces a custom entity type at the user session level (we
-// refer to the entity types defined at the agent level as "custom entity
-// types").
-//
-// Note: session entity types apply to all queries, regardless of the language.
+// For more information, see the [session entity
+// guide](https://cloud.google.com/dialogflow/docs/entities-session).
 message SessionEntityType {
   option (google.api.resource) = {
     type: "dialogflow.googleapis.com/SessionEntityType"
@@ -209,14 +194,21 @@ message SessionEntityType {
     ENTITY_OVERRIDE_MODE_SUPPLEMENT = 2;
   }
 
-  // Required. The unique identifier of this session entity type. Format:
-  // `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type
-  // Display Name>`, or
-  // `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  // ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>`.
-  // If `Environment ID` is not specified, we assume default 'draft'
-  // environment. If `User ID` is not specified, we assume default '-' user.
+  // Required. The unique identifier of this session entity type. Supported
+  // formats:
+  // - `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity
+  //   Type Display Name>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+  //   ID>/entityTypes/<Entity Type Display Name>`
+  // - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  //   ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/environments/
+  //   <Environment ID>/users/<User ID>/sessions/<Session
+  //   ID>/entityTypes/<Entity Type Display Name>`
   //
+  // If `Location ID` is not specified we assume default 'us' location. If
+  // `Environment ID` is not specified, we assume default 'draft' environment.
+  // If `User ID` is not specified, we assume default '-' user.
   // `<Entity Type Display Name>` must be the display name of an existing entity
   // type in the same agent that will be overridden or supplemented.
   string name = 1;
@@ -233,11 +225,19 @@ message SessionEntityType {
 // The request message for [SessionEntityTypes.ListSessionEntityTypes][google.cloud.dialogflow.v2beta1.SessionEntityTypes.ListSessionEntityTypes].
 message ListSessionEntityTypesRequest {
   // Required. The session to list all session entity types from.
-  // Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-  // `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/
-  // sessions/<Session ID>`.
-  // If `Environment ID` is not specified, we assume default 'draft'
-  // environment. If `User ID` is not specified, we assume default '-' user.
+  // Supported formats:
+  // - `projects/<Project ID>/agent/sessions/<Session ID>,
+  // - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+  //   ID>`,
+  // - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  //   ID>/sessions/<Session ID>`,
+  // - `projects/<Project ID>/locations/<Location
+  //   ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+  //   ID>`,
+  //
+  // If `Location ID` is not specified we assume default 'us' location. If
+  // `Environment ID` is not specified, we assume default 'draft' environment.
+  // If `User ID` is not specified, we assume default '-' user.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -266,12 +266,20 @@ message ListSessionEntityTypesResponse {
 
 // The request message for [SessionEntityTypes.GetSessionEntityType][google.cloud.dialogflow.v2beta1.SessionEntityTypes.GetSessionEntityType].
 message GetSessionEntityTypeRequest {
-  // Required. The name of the session entity type. Format:
-  // `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type
-  // Display Name>` or `projects/<Project ID>/agent/environments/<Environment
-  // ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display
-  // Name>`. If `Environment ID` is not specified, we assume default 'draft'
-  // environment. If `User ID` is not specified, we assume default '-' user.
+  // Required. The name of the session entity type. Supported formats:
+  // - `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity
+  //   Type Display Name>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+  //   ID>/entityTypes/<Entity Type Display Name>`
+  // - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  //   ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/environments/
+  //   <Environment ID>/users/<User ID>/sessions/<Session
+  //   ID>/entityTypes/<Entity Type Display Name>`
+  //
+  // If `Location ID` is not specified we assume default 'us' location. If
+  // `Environment ID` is not specified, we assume default 'draft' environment.
+  // If `User ID` is not specified, we assume default '-' user.
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -283,11 +291,19 @@ message GetSessionEntityTypeRequest {
 // The request message for [SessionEntityTypes.CreateSessionEntityType][google.cloud.dialogflow.v2beta1.SessionEntityTypes.CreateSessionEntityType].
 message CreateSessionEntityTypeRequest {
   // Required. The session to create a session entity type for.
-  // Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-  // `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/
-  // sessions/<Session ID>`. If `Environment ID` is not specified, we assume
-  // default 'draft' environment. If `User ID` is not specified, we assume
-  // default '-' user.
+  // Supported formats:
+  // - `projects/<Project ID>/agent/sessions/<Session ID>,
+  // - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+  //   ID>`,
+  // - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  //   ID>/sessions/<Session ID>`,
+  // - `projects/<Project ID>/locations/<Location
+  //   ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+  //   ID>`,
+  //
+  // If `Location ID` is not specified we assume default 'us' location. If
+  // `Environment ID` is not specified, we assume default 'draft' environment.
+  // If `User ID` is not specified, we assume default '-' user.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -296,13 +312,13 @@ message CreateSessionEntityTypeRequest {
   ];
 
   // Required. The session entity type to create.
-  SessionEntityType session_entity_type = 2;
+  SessionEntityType session_entity_type = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // The request message for [SessionEntityTypes.UpdateSessionEntityType][google.cloud.dialogflow.v2beta1.SessionEntityTypes.UpdateSessionEntityType].
 message UpdateSessionEntityTypeRequest {
   // Required. The session entity type to update.
-  SessionEntityType session_entity_type = 1;
+  SessionEntityType session_entity_type = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. The mask to control which fields get updated.
   google.protobuf.FieldMask update_mask = 2;
@@ -310,12 +326,21 @@ message UpdateSessionEntityTypeRequest {
 
 // The request message for [SessionEntityTypes.DeleteSessionEntityType][google.cloud.dialogflow.v2beta1.SessionEntityTypes.DeleteSessionEntityType].
 message DeleteSessionEntityTypeRequest {
-  // Required. The name of the entity type to delete. Format:
-  // `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type
-  // Display Name>` or `projects/<Project ID>/agent/environments/<Environment
-  // ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display
-  // Name>`. If `Environment ID` is not specified, we assume default 'draft'
-  // environment. If `User ID` is not specified, we assume default '-' user.
+  // Required. The name of the entity type to delete.
+  // Supported formats:
+  // - `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity
+  //   Type Display Name>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+  //   ID>/entityTypes/<Entity Type Display Name>`
+  // - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  //   ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/environments/
+  //   <Environment ID>/users/<User ID>/sessions/<Session
+  //   ID>/entityTypes/<Entity Type Display Name>`
+  //
+  // If `Location ID` is not specified we assume default 'us' location. If
+  // `Environment ID` is not specified, we assume default 'draft' environment.
+  // If `User ID` is not specified, we assume default '-' user.
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {

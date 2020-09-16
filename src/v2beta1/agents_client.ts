@@ -36,34 +36,7 @@ import {operationsProtos} from 'google-gax';
 const version = require('../../../package.json').version;
 
 /**
- *  Agents are best described as Natural Language Understanding (NLU) modules
- *  that transform user requests into actionable data. You can include agents
- *  in your app, product, or service to determine user intent and respond to the
- *  user in a natural way.
- *
- *  After you create an agent, you can add {@link google.cloud.dialogflow.v2beta1.Intents|Intents}, {@link google.cloud.dialogflow.v2beta1.Contexts|Contexts},
- *  {@link google.cloud.dialogflow.v2beta1.EntityTypes|Entity Types}, {@link google.cloud.dialogflow.v2beta1.WebhookRequest|Webhooks}, and so on to
- *  manage the flow of a conversation and match user input to predefined intents
- *  and actions.
- *
- *  You can create an agent using both Dialogflow Standard Edition and
- *  Dialogflow Enterprise Edition. For details, see
- *  [Dialogflow
- *  Editions](https://cloud.google.com/dialogflow/docs/editions).
- *
- *  You can save your agent for backup or versioning by exporting the agent by
- *  using the {@link google.cloud.dialogflow.v2beta1.Agents.ExportAgent|ExportAgent} method. You can import a saved
- *  agent by using the {@link google.cloud.dialogflow.v2beta1.Agents.ImportAgent|ImportAgent} method.
- *
- *  Dialogflow provides several
- *  [prebuilt
- *  agents](https://cloud.google.com/dialogflow/docs/agents-prebuilt)
- *  for common conversation scenarios such as determining a date and time,
- *  converting currency, and so on.
- *
- *  For more information about agents, see the
- *  [Dialogflow
- *  documentation](https://cloud.google.com/dialogflow/docs/agents-overview).
+ *  Service for managing {@link google.cloud.dialogflow.v2beta1.Agent|Agents}.
  * @class
  * @memberof v2beta1
  */
@@ -387,12 +360,14 @@ export class AgentsClient {
         }
       );
 
+      const descriptor =
+        this.descriptors.page[methodName] ||
+        this.descriptors.longrunning[methodName] ||
+        undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        this.descriptors.page[methodName] ||
-          this.descriptors.stream[methodName] ||
-          this.descriptors.longrunning[methodName]
+        descriptor
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -492,7 +467,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project that the agent to fetch is associated with.
-   *   Format: `projects/<Project ID>`.
+   *   Format: `projects/<Project ID>` or
+   *           `projects/<Project ID>/locations/<Location ID>`.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -671,7 +647,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project that the agent to delete is associated with.
-   *   Format: `projects/<Project ID>`.
+   *   Format: `projects/<Project ID>` or
+   *           `projects/<Project ID>/locations/<Location ID>`.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -764,7 +741,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project that the agent is associated with.
-   *   Format: `projects/<Project ID>`.
+   *   Format: `projects/<Project ID>` or
+   *           `projects/<Project ID>/locations/<Location ID>`.
    * @param {string} [request.languageCode]
    *   Optional. The language for which you want a validation result. If not
    *   specified, the agent's default language is used. [Many
@@ -871,7 +849,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project that the agent to train is associated with.
-   *   Format: `projects/<Project ID>`.
+   *   Format: `projects/<Project ID>` or
+   *           `projects/<Project ID>/locations/<Location ID>`.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -1006,7 +985,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project that the agent to export is associated with.
-   *   Format: `projects/<Project ID>`.
+   *   Format: `projects/<Project ID>` or
+   *           `projects/<Project ID>/locations/<Location ID>`.
    * @param {string} request.agentUri
    *   Optional. The
    *   [Google Cloud Storage](https://cloud.google.com/storage/docs/)
@@ -1160,7 +1140,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project that the agent to import is associated with.
-   *   Format: `projects/<Project ID>`.
+   *   Format: `projects/<Project ID>` or
+   *           `projects/<Project ID>/locations/<Location ID>`.
    * @param {string} request.agentUri
    *   The URI to a Google Cloud Storage file containing the agent to import.
    *   Note: The URI must start with "gs://".
@@ -1309,7 +1290,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project that the agent to restore is associated with.
-   *   Format: `projects/<Project ID>`.
+   *   Format: `projects/<Project ID>` or
+   *           `projects/<Project ID>/locations/<Location ID>`.
    * @param {string} request.agentUri
    *   The URI to a Google Cloud Storage file containing the agent to restore.
    *   Note: The URI must start with "gs://".
@@ -1446,7 +1428,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project to list agents from.
-   *   Format: `projects/<Project ID or '-'>`.
+   *   Format: `projects/<Project ID or '-'>` or
+   *           `projects/<Project ID or '-'>/locations/<Location ID>`.
    * @param {number} request.pageSize
    *   Optional. The maximum number of items to return in a single page. By
    *   default 100 and at most 1000.
@@ -1532,7 +1515,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project to list agents from.
-   *   Format: `projects/<Project ID or '-'>`.
+   *   Format: `projects/<Project ID or '-'>` or
+   *           `projects/<Project ID or '-'>/locations/<Location ID>`.
    * @param {number} request.pageSize
    *   Optional. The maximum number of items to return in a single page. By
    *   default 100 and at most 1000.
@@ -1574,7 +1558,8 @@ export class AgentsClient {
    *   The request object that will be sent.
    * @param {string} request.parent
    *   Required. The project to list agents from.
-   *   Format: `projects/<Project ID or '-'>`.
+   *   Format: `projects/<Project ID or '-'>` or
+   *           `projects/<Project ID or '-'>/locations/<Location ID>`.
    * @param {number} request.pageSize
    *   Optional. The maximum number of items to return in a single page. By
    *   default 100 and at most 1000.

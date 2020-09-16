@@ -45,10 +45,10 @@ option (google.api.resource_definition) = {
   pattern: "projects/{project}/locations/{location}/agent/sessions/{session}"
 };
 
-// A session represents an interaction with a user. You retrieve user input
-// and pass it to the [DetectIntent][google.cloud.dialogflow.v2beta1.Sessions.DetectIntent] (or
-// [StreamingDetectIntent][google.cloud.dialogflow.v2beta1.Sessions.StreamingDetectIntent]) method to determine
-// user intent and respond.
+// A service used for session interactions.
+//
+// For more information, see the [API interactions
+// guide](https://cloud.google.com/dialogflow/docs/api-overview).
 service Sessions {
   option (google.api.default_host) = "dialogflow.googleapis.com";
   option (google.api.oauth_scopes) =
@@ -88,18 +88,30 @@ service Sessions {
 
 // The request to detect user's intent.
 message DetectIntentRequest {
-  // Required. The name of the session this query is sent to. Format:
-  // `projects/<Project ID>/agent/sessions/<Session ID>`, or
-  // `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  // ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
-  // default 'draft' environment. If `User ID` is not specified, we are using
-  // "-". It's up to the API caller to choose an appropriate `Session ID` and
-  // `User Id`. They can be a random number or some type of user and session
-  // identifiers (preferably hashed). The length of the `Session ID` and
-  // `User ID` must not exceed 36 characters.
-  string session = 1 [(google.api.resource_reference) = {
-                        type: "dialogflow.googleapis.com/Session"
-                      }];
+  // Required. The name of the session this query is sent to. Supported formats:
+  // - `projects/<Project ID>/agent/sessions/<Session ID>,
+  // - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+  //   ID>`,
+  // - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  //   ID>/sessions/<Session ID>`,
+  // - `projects/<Project ID>/locations/<Location
+  //   ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+  //   ID>`,
+  //
+  // If `Location ID` is not specified we assume default 'us' location. If
+  // `Environment ID` is not specified, we assume default 'draft' environment.
+  // If `User ID` is not specified, we are using "-". It's up to the API caller
+  // to choose an appropriate `Session ID` and `User Id`. They can be a random
+  // number or some type of user and session identifiers (preferably hashed).
+  // The length of the `Session ID` and `User ID` must not exceed 36 characters.
+  // For more information, see the [API interactions
+  // guide](https://cloud.google.com/dialogflow/docs/api-overview).
+  string session = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "dialogflow.googleapis.com/Session"
+    }
+  ];
 
   // The parameters of this query.
   QueryParameters query_params = 2;
@@ -112,7 +124,7 @@ message DetectIntentRequest {
   // 2.  a conversational query in the form of text, or
   //
   // 3.  an event that specifies which intent to trigger.
-  QueryInput query_input = 3;
+  QueryInput query_input = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Instructs the speech synthesizer how to generate the output
   // audio. If this field is not set and agent-level speech synthesizer is not
@@ -210,7 +222,7 @@ message QueryParameters {
 
   // Configures the type of sentiment analysis to perform. If not
   // provided, sentiment analysis is not performed.
-  // Note: Sentiment Analysis is only currently available for Enterprise Edition
+  // Note: Sentiment Analysis is only currently available for Essentials Edition
   // agents.
   SentimentAnalysisRequestConfig sentiment_analysis_request_config = 10;
 
@@ -455,16 +467,26 @@ message KnowledgeAnswers {
 // After you sent all input, you must half-close or abort the request stream.
 message StreamingDetectIntentRequest {
   // Required. The name of the session the query is sent to.
-  // Format of the session name:
-  // `projects/<Project ID>/agent/sessions/<Session ID>`, or
-  // `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  // ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
-  // default 'draft' environment. If `User ID` is not specified, we are using
-  // "-". It's up to the API caller to choose an appropriate `Session ID` and
-  // `User Id`. They can be a random number or some type of user and session
-  // identifiers (preferably hashed). The length of the `Session ID` and
-  // `User ID` must not exceed 36 characters.
-  string session = 1;
+  // Supported formats:
+  // - `projects/<Project ID>/agent/sessions/<Session ID>,
+  // - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+  //   ID>`,
+  // - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  //   ID>/sessions/<Session ID>`,
+  // - `projects/<Project ID>/locations/<Location
+  //   ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+  //   ID>`,
+  //
+  // If `Location ID` is not specified we assume default 'us' location. If
+  // `Environment ID` is not specified, we assume default 'draft' environment.
+  // If `User ID` is not specified, we are using "-". It's up to the API caller
+  // to choose an appropriate `Session ID` and `User Id`. They can be a random
+  // number or some type of user and session identifiers (preferably hashed).
+  // The length of the `Session ID` and `User ID` must not exceed 36 characters.
+  //
+  // For more information, see the [API interactions
+  // guide](https://cloud.google.com/dialogflow/docs/api-overview).
+  string session = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The parameters of this query.
   QueryParameters query_params = 2;
@@ -477,7 +499,7 @@ message StreamingDetectIntentRequest {
   // 2.  a conversational query in the form of text, or
   //
   // 3.  an event that specifies which intent to trigger.
-  QueryInput query_input = 3;
+  QueryInput query_input = 3 [(google.api.field_behavior) = REQUIRED];
 
   // DEPRECATED. Please use [InputAudioConfig.single_utterance][google.cloud.dialogflow.v2beta1.InputAudioConfig.single_utterance] instead.
   // If `false` (default), recognition does not cease until the
@@ -659,6 +681,9 @@ message StreamingRecognitionResult {
   // Time offset of the end of this Speech recognition result relative to the
   // beginning of the audio. Only populated for `message_type` = `TRANSCRIPT`.
   google.protobuf.Duration speech_end_offset = 8;
+
+  // DTMF digits. Populated if and only if `message_type` = `DTMF_DIGITS`.
+  TelephonyDtmfEvents dtmf_digits = 5;
 }
 
 // Represents the natural language text to be processed.
@@ -715,8 +740,16 @@ message SentimentAnalysisRequestConfig {
   bool analyze_query_text_sentiment = 1;
 }
 
-// The result of sentiment analysis as configured by
-// `sentiment_analysis_request_config`.
+// The result of sentiment analysis. Sentiment analysis inspects user input
+// and identifies the prevailing subjective opinion, especially to determine a
+// user's attitude as positive, negative, or neutral.
+// For [Participants.AnalyzeContent][google.cloud.dialogflow.v2beta1.Participants.AnalyzeContent], it needs to be configured in
+// [DetectIntentRequest.query_params][google.cloud.dialogflow.v2beta1.DetectIntentRequest.query_params]. For
+// [Participants.StreamingAnalyzeContent][google.cloud.dialogflow.v2beta1.Participants.StreamingAnalyzeContent], it needs to be configured in
+// [StreamingDetectIntentRequest.query_params][google.cloud.dialogflow.v2beta1.StreamingDetectIntentRequest.query_params].
+// And for [Participants.AnalyzeContent][google.cloud.dialogflow.v2beta1.Participants.AnalyzeContent] and
+// [Participants.StreamingAnalyzeContent][google.cloud.dialogflow.v2beta1.Participants.StreamingAnalyzeContent], it needs to be configured in
+// [ConversationProfile.human_agent_assistant_config][google.cloud.dialogflow.v2beta1.ConversationProfile.human_agent_assistant_config]
 message SentimentAnalysisResult {
   // The sentiment analysis result for `query_text`.
   Sentiment query_text_sentiment = 1;

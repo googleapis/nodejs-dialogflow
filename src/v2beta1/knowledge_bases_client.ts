@@ -35,9 +35,7 @@ import * as gapicConfig from './knowledge_bases_client_config.json';
 const version = require('../../../package.json').version;
 
 /**
- *  Manages knowledge bases.
- *
- *  Allows users to setup and maintain knowledge bases with their knowledge data.
+ *  Service for managing {@link google.cloud.dialogflow.v2beta1.KnowledgeBase|KnowledgeBases}.
  * @class
  * @memberof v2beta1
  */
@@ -292,12 +290,11 @@ export class KnowledgeBasesClient {
         }
       );
 
+      const descriptor = this.descriptors.page[methodName] || undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        this.descriptors.page[methodName] ||
-          this.descriptors.stream[methodName] ||
-          this.descriptors.longrunning[methodName]
+        descriptor
       );
 
       this.innerApiCalls[methodName] = apiCall;

@@ -36,38 +36,7 @@ option java_outer_classname = "IntentProto";
 option java_package = "com.google.cloud.dialogflow.v2beta1";
 option objc_class_prefix = "DF";
 
-// An intent represents a mapping between input from a user and an action to
-// be taken by your application. When you pass user input to the
-// [DetectIntent][google.cloud.dialogflow.v2beta1.Sessions.DetectIntent] (or
-// [StreamingDetectIntent][google.cloud.dialogflow.v2beta1.Sessions.StreamingDetectIntent]) method, the
-// Dialogflow API analyzes the input and searches
-// for a matching intent. If no match is found, the Dialogflow API returns a
-// fallback intent (`is_fallback` = true).
-//
-// You can provide additional information for the Dialogflow API to use to
-// match user input to an intent by adding the following to your intent.
-//
-// *   **Contexts** - provide additional context for intent analysis. For
-//     example, if an intent is related to an object in your application that
-//     plays music, you can provide a context to determine when to match the
-//     intent if the user input is "turn it off". You can include a context
-//     that matches the intent when there is previous user input of
-//     "play music", and not when there is previous user input of
-//     "turn on the light".
-//
-// *   **Events** - allow for matching an intent by using an event name
-//     instead of user input. Your application can provide an event name and
-//     related parameters to the Dialogflow API to match an intent. For
-//     example, when your application starts, you can send a welcome event
-//     with a user name parameter to the Dialogflow API to match an intent with
-//     a personalized welcome message for the user.
-//
-// *   **Training phrases** - provide examples of user input to train the
-//     Dialogflow API agent to better match intents.
-//
-// For more information about intents, see the
-// [Dialogflow
-// documentation](https://cloud.google.com/dialogflow/docs/intents-overview).
+// Service for managing [Intents][google.cloud.dialogflow.v2beta1.Intent].
 service Intents {
   option (google.api.default_host) = "dialogflow.googleapis.com";
   option (google.api.oauth_scopes) =
@@ -169,6 +138,7 @@ service Intents {
         body: "*"
       }
     };
+    option (google.api.method_signature) = "parent,intents";
     option (google.longrunning.operation_info) = {
       response_type: "google.protobuf.Empty"
       metadata_type: "google.protobuf.Struct"
@@ -176,9 +146,15 @@ service Intents {
   }
 }
 
-// Represents an intent.
-// Intents convert a number of user expressions or patterns into an action. An
-// action is an extraction of a user command or sentence semantics.
+// An intent categorizes an end-user's intention for one conversation turn. For
+// each agent, you define many intents, where your combined intents can handle a
+// complete conversation. When an end-user writes or says something, referred to
+// as an end-user expression or end-user input, Dialogflow matches the end-user
+// input to the best intent in your agent. Matching an intent is also known as
+// intent classification.
+//
+// For more information, see the [intent
+// guide](https://cloud.google.com/dialogflow/docs/intents-overview).
 message Intent {
   option (google.api.resource) = {
     type: "dialogflow.googleapis.com/Intent"
@@ -1088,7 +1064,10 @@ message Intent {
   // Optional. The unique identifier of this intent.
   // Required for [Intents.UpdateIntent][google.cloud.dialogflow.v2beta1.Intents.UpdateIntent] and [Intents.BatchUpdateIntents][google.cloud.dialogflow.v2beta1.Intents.BatchUpdateIntents]
   // methods.
-  // Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
+  // Supported formats:
+  //
+  // - `projects/<Project ID>/agent/intents/<Intent ID>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/intents/<Intent ID>`
   string name = 1 [(google.api.field_behavior) = OPTIONAL];
 
   // Required. The name of this intent.
@@ -1117,6 +1096,7 @@ message Intent {
   // DEPRECATED! Please use `ml_disabled` field instead.
   // NOTE: If both `ml_enabled` and `ml_disabled` are either not set or false,
   // then the default value is determined as follows:
+  //
   // - Before April 15th, 2018 the default is:
   //   ml_enabled = false / ml_disabled = true.
   // - After April 15th, 2018 the default is:
@@ -1139,7 +1119,11 @@ message Intent {
 
   // Optional. The list of context names required for this intent to be
   // triggered.
-  // Format: `projects/<Project ID>/agent/sessions/-/contexts/<Context ID>`.
+  // Formats:
+  //
+  // - `projects/<Project ID>/agent/sessions/-/contexts/<Context ID>`
+  // - `projects/<Project ID>/locations/<Location
+  //   ID>/agent/sessions/-/contexts/<Context ID>`
   repeated string input_context_names = 7 [(google.api.field_behavior) = OPTIONAL];
 
   // Optional. The collection of event names that trigger the intent.
@@ -1243,7 +1227,10 @@ message ListIntentsResponse {
 // The request message for [Intents.GetIntent][google.cloud.dialogflow.v2beta1.Intents.GetIntent].
 message GetIntentRequest {
   // Required. The name of the intent.
-  // Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
+  // Supported formats:
+  //
+  // - `projects/<Project ID>/agent/intents/<Intent ID>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/intents/<Intent ID>`
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -1265,7 +1252,10 @@ message GetIntentRequest {
 // The request message for [Intents.CreateIntent][google.cloud.dialogflow.v2beta1.Intents.CreateIntent].
 message CreateIntentRequest {
   // Required. The agent to create a intent for.
-  // Format: `projects/<Project ID>/agent`.
+  // Supported formats:
+  //
+  // - `projects/<Project ID>/agent`
+  // - `projects/<Project ID>/locations/<Location ID>/agent`
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -1274,7 +1264,7 @@ message CreateIntentRequest {
   ];
 
   // Required. The intent to create.
-  Intent intent = 2;
+  Intent intent = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. The language used to access language-specific data.
   // If not specified, the agent's default language is used.
@@ -1290,7 +1280,7 @@ message CreateIntentRequest {
 // The request message for [Intents.UpdateIntent][google.cloud.dialogflow.v2beta1.Intents.UpdateIntent].
 message UpdateIntentRequest {
   // Required. The intent to update.
-  Intent intent = 1;
+  Intent intent = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. The language used to access language-specific data.
   // If not specified, the agent's default language is used.
@@ -1311,7 +1301,10 @@ message DeleteIntentRequest {
   // Required. The name of the intent to delete. If this intent has direct or
   // indirect followup intents, we also delete them.
   //
-  // Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
+  // Supported formats:
+  //
+  // - `projects/<Project ID>/agent/intents/<Intent ID>`
+  // - `projects/<Project ID>/locations/<Location ID>/agent/intents/<Intent ID>`
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -1323,7 +1316,10 @@ message DeleteIntentRequest {
 // The request message for [Intents.BatchUpdateIntents][google.cloud.dialogflow.v2beta1.Intents.BatchUpdateIntents].
 message BatchUpdateIntentsRequest {
   // Required. The name of the agent to update or create intents in.
-  // Format: `projects/<Project ID>/agent`.
+  // Supported formats:
+  //
+  // - `projects/<Project ID>/agent`
+  // - `projects/<Project ID>/locations/<Location ID>/agent`
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -1369,8 +1365,11 @@ message BatchUpdateIntentsResponse {
 
 // The request message for [Intents.BatchDeleteIntents][google.cloud.dialogflow.v2beta1.Intents.BatchDeleteIntents].
 message BatchDeleteIntentsRequest {
-  // Required. The name of the agent to delete all entities types for. Format:
-  // `projects/<Project ID>/agent`.
+  // Required. The name of the agent to delete all entities types for.
+  // Supported formats:
+  //
+  // - `projects/<Project ID>/agent`
+  // - `projects/<Project ID>/locations/<Location ID>/agent`
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
@@ -1380,7 +1379,7 @@ message BatchDeleteIntentsRequest {
 
   // Required. The collection of intents to delete. Only intent `name` must be
   // filled in.
-  repeated Intent intents = 2;
+  repeated Intent intents = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // This message is a wrapper around a collection of intents.

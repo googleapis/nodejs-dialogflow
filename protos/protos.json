@@ -3514,7 +3514,8 @@
                           "requestType": "GetValidationResultRequest",
                           "responseType": "ValidationResult",
                           "options": {
-                            "(google.api.http).get": "/v2beta1/{parent=projects/*}/agent/validationResult"
+                            "(google.api.http).get": "/v2beta1/{parent=projects/*}/agent/validationResult",
+                            "(google.api.http).additional_bindings.get": "/v2beta1/{parent=projects/*/locations/*}/agent/validationResult"
                           }
                         }
                       }
@@ -3617,7 +3618,10 @@
                       "fields": {
                         "agent": {
                           "type": "Agent",
-                          "id": 1
+                          "id": 1,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "updateMask": {
                           "type": "google.protobuf.FieldMask",
@@ -3698,7 +3702,11 @@
                       "fields": {
                         "parent": {
                           "type": "string",
-                          "id": 1
+                          "id": 1,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED",
+                            "(google.api.resource_reference).child_type": "dialogflow.googleapis.com/Agent"
+                          }
                         },
                         "agentUri": {
                           "type": "string",
@@ -3812,7 +3820,8 @@
                           "responseType": "ListEnvironmentsResponse",
                           "options": {
                             "(google.api.http).get": "/v2beta1/{parent=projects/*/agent}/environments",
-                            "(google.api.http).additional_bindings.get": "/v2beta1/{parent=projects/*/locations/*/agent}/environments"
+                            "(google.api.http).additional_bindings.get": "/v2beta1/{parent=projects/*/locations/*/agent}/environments",
+                            "(google.api.method_signature)": "parent"
                           }
                         }
                       }
@@ -4079,6 +4088,36 @@
                         "OUTPUT_AUDIO_ENCODING_OGG_OPUS": 3
                       }
                     },
+                    "TelephonyDtmfEvents": {
+                      "fields": {
+                        "dtmfEvents": {
+                          "rule": "repeated",
+                          "type": "TelephonyDtmf",
+                          "id": 1
+                        }
+                      }
+                    },
+                    "TelephonyDtmf": {
+                      "values": {
+                        "TELEPHONY_DTMF_UNSPECIFIED": 0,
+                        "DTMF_ONE": 1,
+                        "DTMF_TWO": 2,
+                        "DTMF_THREE": 3,
+                        "DTMF_FOUR": 4,
+                        "DTMF_FIVE": 5,
+                        "DTMF_SIX": 6,
+                        "DTMF_SEVEN": 7,
+                        "DTMF_EIGHT": 8,
+                        "DTMF_NINE": 9,
+                        "DTMF_ZERO": 10,
+                        "DTMF_A": 11,
+                        "DTMF_B": 12,
+                        "DTMF_C": 13,
+                        "DTMF_D": 14,
+                        "DTMF_STAR": 15,
+                        "DTMF_POUND": 16
+                      }
+                    },
                     "ValidationError": {
                       "fields": {
                         "severity": {
@@ -4159,7 +4198,7 @@
                             "(google.api.http).body": "context",
                             "(google.api.http).additional_bindings.patch": "/v2beta1/{context.name=projects/*/locations/*/agent/environments/*/users/*/sessions/*/contexts/*}",
                             "(google.api.http).additional_bindings.body": "context",
-                            "(google.api.method_signature)": "context,update_mask"
+                            "(google.api.method_signature)": "context"
                           }
                         },
                         "DeleteContext": {
@@ -4364,7 +4403,7 @@
                             "(google.api.http).body": "document",
                             "(google.api.http).additional_bindings.patch": "/v2beta1/{document.name=projects/*/agent/knowledgeBases/*/documents/*}",
                             "(google.api.http).additional_bindings.body": "document",
-                            "(google.api.method_signature)": "document,update_mask",
+                            "(google.api.method_signature)": "document",
                             "(google.longrunning.operation_info).response_type": "Document",
                             "(google.longrunning.operation_info).metadata_type": "KnowledgeOperationMetadata"
                           }
@@ -4503,17 +4542,11 @@
                         },
                         "pageSize": {
                           "type": "int32",
-                          "id": 2,
-                          "options": {
-                            "(google.api.field_behavior)": "OPTIONAL"
-                          }
+                          "id": 2
                         },
                         "pageToken": {
                           "type": "string",
-                          "id": 3,
-                          "options": {
-                            "(google.api.field_behavior)": "OPTIONAL"
-                          }
+                          "id": 3
                         }
                       }
                     },
@@ -4623,6 +4656,22 @@
                         }
                       }
                     },
+                    "AutoApproveSmartMessagingEntriesResponse": {
+                      "fields": {
+                        "enabledCount": {
+                          "type": "int32",
+                          "id": 1
+                        },
+                        "disabledCount": {
+                          "type": "int32",
+                          "id": 2
+                        },
+                        "unreviewedCount": {
+                          "type": "int32",
+                          "id": 3
+                        }
+                      }
+                    },
                     "GcsSource": {
                       "fields": {
                         "uri": {
@@ -4719,6 +4768,7 @@
                             "(google.api.http).body": "*",
                             "(google.api.http).additional_bindings.post": "/v2beta1/{parent=projects/*/locations/*/agent/entityTypes/*}/entities:batchCreate",
                             "(google.api.http).additional_bindings.body": "*",
+                            "(google.api.method_signature)": "parent,entities,language_code",
                             "(google.longrunning.operation_info).response_type": "google.protobuf.Empty",
                             "(google.longrunning.operation_info).metadata_type": "google.protobuf.Struct"
                           }
@@ -5040,7 +5090,10 @@
                         "entities": {
                           "rule": "repeated",
                           "type": "EntityType.Entity",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "languageCode": {
                           "type": "string",
@@ -5064,7 +5117,10 @@
                         "entities": {
                           "rule": "repeated",
                           "type": "EntityType.Entity",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "languageCode": {
                           "type": "string",
@@ -5092,7 +5148,10 @@
                         "entityValues": {
                           "rule": "repeated",
                           "type": "string",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "languageCode": {
                           "type": "string",
@@ -5187,6 +5246,7 @@
                             "(google.api.http).body": "*",
                             "(google.api.http).additional_bindings.post": "/v2beta1/{parent=projects/*/locations/*/agent}/intents:batchDelete",
                             "(google.api.http).additional_bindings.body": "*",
+                            "(google.api.method_signature)": "parent,intents",
                             "(google.longrunning.operation_info).response_type": "google.protobuf.Empty",
                             "(google.longrunning.operation_info).metadata_type": "google.protobuf.Struct"
                           }
@@ -6371,7 +6431,10 @@
                         },
                         "intent": {
                           "type": "Intent",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "languageCode": {
                           "type": "string",
@@ -6390,7 +6453,10 @@
                       "fields": {
                         "intent": {
                           "type": "Intent",
-                          "id": 1
+                          "id": 1,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "languageCode": {
                           "type": "string",
@@ -6486,7 +6552,10 @@
                         "intents": {
                           "rule": "repeated",
                           "type": "Intent",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         }
                       }
                     },
@@ -6557,7 +6626,7 @@
                             "(google.api.http).body": "knowledge_base",
                             "(google.api.http).additional_bindings.patch": "/v2beta1/{knowledge_base.name=projects/*/agent/knowledgeBases/*}",
                             "(google.api.http).additional_bindings.body": "knowledge_base",
-                            "(google.api.method_signature)": "knowledge_base,update_mask"
+                            "(google.api.method_signature)": "knowledge_base"
                           }
                         }
                       }
@@ -6720,6 +6789,7 @@
                           "type": "string",
                           "id": 1,
                           "options": {
+                            "(google.api.field_behavior)": "REQUIRED",
                             "(google.api.resource_reference).type": "dialogflow.googleapis.com/Session"
                           }
                         },
@@ -6729,7 +6799,10 @@
                         },
                         "queryInput": {
                           "type": "QueryInput",
-                          "id": 3
+                          "id": 3,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "outputAudioConfig": {
                           "type": "OutputAudioConfig",
@@ -6970,7 +7043,10 @@
                       "fields": {
                         "session": {
                           "type": "string",
-                          "id": 1
+                          "id": 1,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "queryParams": {
                           "type": "QueryParameters",
@@ -6978,7 +7054,10 @@
                         },
                         "queryInput": {
                           "type": "QueryInput",
-                          "id": 3
+                          "id": 3,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "singleUtterance": {
                           "type": "bool",
@@ -7061,6 +7140,10 @@
                         "speechEndOffset": {
                           "type": "google.protobuf.Duration",
                           "id": 8
+                        },
+                        "dtmfDigits": {
+                          "type": "TelephonyDtmfEvents",
+                          "id": 5
                         }
                       },
                       "nested": {
@@ -7273,7 +7356,10 @@
                         },
                         "sessionEntityType": {
                           "type": "SessionEntityType",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         }
                       }
                     },
@@ -7281,7 +7367,10 @@
                       "fields": {
                         "sessionEntityType": {
                           "type": "SessionEntityType",
-                          "id": 1
+                          "id": 1,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "updateMask": {
                           "type": "google.protobuf.FieldMask",

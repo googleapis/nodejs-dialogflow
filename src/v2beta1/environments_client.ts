@@ -35,7 +35,7 @@ import * as gapicConfig from './environments_client_config.json';
 const version = require('../../../package.json').version;
 
 /**
- *  Manages agent environments.
+ *  Service for managing {@link google.cloud.dialogflow.v2beta1.Environment|Environments}.
  * @class
  * @memberof v2beta1
  */
@@ -284,12 +284,11 @@ export class EnvironmentsClient {
         }
       );
 
+      const descriptor = this.descriptors.page[methodName] || undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        this.descriptors.page[methodName] ||
-          this.descriptors.stream[methodName] ||
-          this.descriptors.longrunning[methodName]
+        descriptor
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -392,8 +391,7 @@ export class EnvironmentsClient {
    *   Required. The agent to list all environments from.
    *   Format:
    *   - `projects/<Project Number / ID>/agent`
-   *   - `projects/<Project Number / ID>/locations/<Location
-   *   ID>/agent
+   *   - `projects/<Project Number / ID>/locations/<Location ID>/agent`
    * @param {number} [request.pageSize]
    *   Optional. The maximum number of items to return in a single page. By default 100 and
    *   at most 1000.
@@ -481,8 +479,7 @@ export class EnvironmentsClient {
    *   Required. The agent to list all environments from.
    *   Format:
    *   - `projects/<Project Number / ID>/agent`
-   *   - `projects/<Project Number / ID>/locations/<Location
-   *   ID>/agent
+   *   - `projects/<Project Number / ID>/locations/<Location ID>/agent`
    * @param {number} [request.pageSize]
    *   Optional. The maximum number of items to return in a single page. By default 100 and
    *   at most 1000.
@@ -526,8 +523,7 @@ export class EnvironmentsClient {
    *   Required. The agent to list all environments from.
    *   Format:
    *   - `projects/<Project Number / ID>/agent`
-   *   - `projects/<Project Number / ID>/locations/<Location
-   *   ID>/agent
+   *   - `projects/<Project Number / ID>/locations/<Location ID>/agent`
    * @param {number} [request.pageSize]
    *   Optional. The maximum number of items to return in a single page. By default 100 and
    *   at most 1000.

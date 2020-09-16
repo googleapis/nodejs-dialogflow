@@ -35,7 +35,7 @@ import * as gapicConfig from './environments_client_config.json';
 const version = require('../../../package.json').version;
 
 /**
- *  Manages agent environments.
+ *  Service for managing {@link google.cloud.dialogflow.v2.Environment|Environments}.
  * @class
  * @memberof v2
  */
@@ -260,12 +260,11 @@ export class EnvironmentsClient {
         }
       );
 
+      const descriptor = this.descriptors.page[methodName] || undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        this.descriptors.page[methodName] ||
-          this.descriptors.stream[methodName] ||
-          this.descriptors.longrunning[methodName]
+        descriptor
       );
 
       this.innerApiCalls[methodName] = apiCall;

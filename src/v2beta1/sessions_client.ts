@@ -26,10 +26,10 @@ import * as gapicConfig from './sessions_client_config.json';
 const version = require('../../../package.json').version;
 
 /**
- *  A session represents an interaction with a user. You retrieve user input
- *  and pass it to the {@link google.cloud.dialogflow.v2beta1.Sessions.DetectIntent|DetectIntent} (or
- *  {@link google.cloud.dialogflow.v2beta1.Sessions.StreamingDetectIntent|StreamingDetectIntent}) method to determine
- *  user intent and respond.
+ *  A service used for session interactions.
+ *
+ *  For more information, see the [API interactions
+ *  guide](https://cloud.google.com/dialogflow/docs/api-overview).
  * @class
  * @memberof v2beta1
  */
@@ -281,12 +281,11 @@ export class SessionsClient {
         }
       );
 
+      const descriptor = this.descriptors.stream[methodName] || undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        this.descriptors.page[methodName] ||
-          this.descriptors.stream[methodName] ||
-          this.descriptors.longrunning[methodName]
+        descriptor
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -388,15 +387,24 @@ export class SessionsClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.session
-   *   Required. The name of the session this query is sent to. Format:
-   *   `projects/<Project ID>/agent/sessions/<Session ID>`, or
-   *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
-   *   default 'draft' environment. If `User ID` is not specified, we are using
-   *   "-". It's up to the API caller to choose an appropriate `Session ID` and
-   *   `User Id`. They can be a random number or some type of user and session
-   *   identifiers (preferably hashed). The length of the `Session ID` and
-   *   `User ID` must not exceed 36 characters.
+   *   Required. The name of the session this query is sent to. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified, we assume default 'draft' environment.
+   *   If `User ID` is not specified, we are using "-". It's up to the API caller
+   *   to choose an appropriate `Session ID` and `User Id`. They can be a random
+   *   number or some type of user and session identifiers (preferably hashed).
+   *   The length of the `Session ID` and `User ID` must not exceed 36 characters.
+   *   For more information, see the [API interactions
+   *   guide](https://cloud.google.com/dialogflow/docs/api-overview).
    * @param {google.cloud.dialogflow.v2beta1.QueryParameters} request.queryParams
    *   The parameters of this query.
    * @param {google.cloud.dialogflow.v2beta1.QueryInput} request.queryInput
