@@ -10,16 +10,6 @@ items:
         uid: '@google-cloud/dialogflow!google.api.Http:class'
       - name: HttpRule
         uid: '@google-cloud/dialogflow!google.api.HttpRule:class'
-      - name: ICustomHttpPattern
-        uid: '@google-cloud/dialogflow!google.api.ICustomHttpPattern:interface'
-      - name: IHttp
-        uid: '@google-cloud/dialogflow!google.api.IHttp:interface'
-      - name: IHttpRule
-        uid: '@google-cloud/dialogflow!google.api.IHttpRule:interface'
-      - name: IResourceDescriptor
-        uid: '@google-cloud/dialogflow!google.api.IResourceDescriptor:interface'
-      - name: IResourceReference
-        uid: '@google-cloud/dialogflow!google.api.IResourceReference:interface'
       - name: ResourceDescriptor (Class)
         uid: '@google-cloud/dialogflow!google.api.ResourceDescriptor:class'
       - name: History
@@ -90,8 +80,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.EntityType.AutoExpansionMode:enum'
       - name: Entity
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.EntityType.Entity:class'
-      - name: IEntity
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.EntityType.IEntity:interface'
       - name: Kind
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.EntityType.Kind:enum'
       - name: EntityTypeBatch
@@ -122,104 +110,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.GetSessionEntityTypeRequest:class'
       - name: GetValidationResultRequest
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.GetValidationResultRequest:class'
-      - name: IAgent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IAgent:interface'
-      - name: IBatchCreateEntitiesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest:interface'
-      - name: IBatchDeleteEntitiesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest:interface'
-      - name: IBatchDeleteEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest:interface'
-      - name: IBatchDeleteIntentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchDeleteIntentsRequest:interface'
-      - name: IBatchUpdateEntitiesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest:interface'
-      - name: IBatchUpdateEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest:interface'
-      - name: IBatchUpdateEntityTypesResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse:interface'
-      - name: IBatchUpdateIntentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchUpdateIntentsRequest:interface'
-      - name: IBatchUpdateIntentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IBatchUpdateIntentsResponse:interface'
-      - name: IContext
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IContext:interface'
-      - name: ICreateContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ICreateContextRequest:interface'
-      - name: ICreateEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ICreateEntityTypeRequest:interface'
-      - name: ICreateIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ICreateIntentRequest:interface'
-      - name: ICreateSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ICreateSessionEntityTypeRequest:interface'
-      - name: IDeleteAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDeleteAgentRequest:interface'
-      - name: IDeleteAllContextsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDeleteAllContextsRequest:interface'
-      - name: IDeleteContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDeleteContextRequest:interface'
-      - name: IDeleteEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDeleteEntityTypeRequest:interface'
-      - name: IDeleteIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDeleteIntentRequest:interface'
-      - name: IDeleteSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDeleteSessionEntityTypeRequest:interface'
-      - name: IDetectIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDetectIntentRequest:interface'
-      - name: IDetectIntentResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IDetectIntentResponse:interface'
-      - name: IEntityType
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IEntityType:interface'
-      - name: IEntityTypeBatch
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IEntityTypeBatch:interface'
-      - name: IEnvironment
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IEnvironment:interface'
-      - name: IEventInput
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IEventInput:interface'
-      - name: IExportAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IExportAgentRequest:interface'
-      - name: IExportAgentResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IExportAgentResponse:interface'
-      - name: IGetAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IGetAgentRequest:interface'
-      - name: IGetContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IGetContextRequest:interface'
-      - name: IGetEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IGetEntityTypeRequest:interface'
-      - name: IGetIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IGetIntentRequest:interface'
-      - name: IGetSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IGetSessionEntityTypeRequest:interface'
-      - name: IGetValidationResultRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IGetValidationResultRequest:interface'
-      - name: IImportAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IImportAgentRequest:interface'
-      - name: IInputAudioConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IInputAudioConfig:interface'
-      - name: IIntent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IIntent:interface'
-      - name: IIntentBatch
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IIntentBatch:interface'
-      - name: IListContextsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListContextsRequest:interface'
-      - name: IListContextsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListContextsResponse:interface'
-      - name: IListEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListEntityTypesRequest:interface'
-      - name: IListEntityTypesResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListEntityTypesResponse:interface'
-      - name: IListEnvironmentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListEnvironmentsRequest:interface'
-      - name: IListEnvironmentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListEnvironmentsResponse:interface'
-      - name: IListIntentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListIntentsRequest:interface'
-      - name: IListIntentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListIntentsResponse:interface'
-      - name: IListSessionEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListSessionEntityTypesRequest:interface'
-      - name: IListSessionEntityTypesResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IListSessionEntityTypesResponse:interface'
       - name: ImportAgentRequest
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ImportAgentRequest:class'
       - name: InputAudioConfig
@@ -228,34 +118,20 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent:class'
       - name: FollowupIntentInfo
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.FollowupIntentInfo:class'
-      - name: IFollowupIntentInfo
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.IFollowupIntentInfo:interface'
-      - name: IMessage
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.IMessage:interface'
-      - name: IParameter
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.IParameter:interface'
-      - name: ITrainingPhrase
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.ITrainingPhrase:interface'
       - name: Message (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message:class'
       - name: BasicCard (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard:class'
       - name: Button (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard.Button:class'
-      - name: IOpenUriAction
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard.Button.IOpenUriAction:interface
       - name: OpenUriAction
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard.Button.OpenUriAction:class'
-      - name: IButton
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard.IButton:interface'
       - name: BrowseCarouselCard (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard:class'
       - name: BrowseCarouselCardItem (Class)
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem:class
-      - name: IOpenUrlAction
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.IOpenUrlAction:interface
       - name: OpenUrlAction (Class)
         uid: >-
@@ -263,8 +139,6 @@ items:
       - name: UrlTypeHint
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.OpenUrlAction.UrlTypeHint:enum
-      - name: IBrowseCarouselCardItem
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.IBrowseCarouselCardItem:interface
       - name: ImageDisplayOptions
         uid: >-
@@ -273,12 +147,8 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.Card:class'
       - name: Button
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.Card.Button:class'
-      - name: IButton
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.Card.IButton:interface'
       - name: CarouselSelect (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.CarouselSelect:class'
-      - name: IItem
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.CarouselSelect.IItem:interface'
       - name: Item
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.CarouselSelect.Item:class'
       - name: ColumnProperties (Class)
@@ -286,58 +156,16 @@ items:
       - name: HorizontalAlignment
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ColumnProperties.HorizontalAlignment:enum
-      - name: IBasicCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IBasicCard:interface'
-      - name: IBrowseCarouselCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IBrowseCarouselCard:interface'
-      - name: ICard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ICard:interface'
-      - name: ICarouselSelect
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ICarouselSelect:interface'
-      - name: IColumnProperties
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IColumnProperties:interface'
-      - name: IImage
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IImage:interface'
-      - name: ILinkOutSuggestion
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ILinkOutSuggestion:interface'
-      - name: IListSelect
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IListSelect:interface'
       - name: Image
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.Image:class'
-      - name: IMediaContent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IMediaContent:interface'
-      - name: IQuickReplies
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IQuickReplies:interface'
-      - name: ISelectItemInfo
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ISelectItemInfo:interface'
-      - name: ISimpleResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ISimpleResponse:interface'
-      - name: ISimpleResponses
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ISimpleResponses:interface'
-      - name: ISuggestion
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ISuggestion:interface'
-      - name: ISuggestions
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ISuggestions:interface'
-      - name: ITableCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ITableCard:interface'
-      - name: ITableCardCell
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ITableCardCell:interface'
-      - name: ITableCardRow
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ITableCardRow:interface'
-      - name: IText
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.IText:interface'
       - name: LinkOutSuggestion
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.LinkOutSuggestion:class'
       - name: ListSelect (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ListSelect:class'
-      - name: IItem
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ListSelect.IItem:interface'
       - name: Item
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ListSelect.Item:class'
       - name: MediaContent (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.MediaContent:class'
-      - name: IResponseMediaObject
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.MediaContent.IResponseMediaObject:interface
       - name: ResponseMediaObject
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.MediaContent.ResponseMediaObject:class'
@@ -369,8 +197,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Parameter:class'
       - name: TrainingPhrase (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.TrainingPhrase:class'
-      - name: IPart
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.TrainingPhrase.IPart:interface'
       - name: Part
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.TrainingPhrase.Part:class'
       - name: Type
@@ -383,66 +209,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intents:class'
       - name: IntentView
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IntentView:enum'
-      - name: IOriginalDetectIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IOriginalDetectIntentRequest:interface'
-      - name: IOutputAudioConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IOutputAudioConfig:interface'
-      - name: IQueryInput
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IQueryInput:interface'
-      - name: IQueryParameters
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IQueryParameters:interface'
-      - name: IQueryResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IQueryResult:interface'
-      - name: IRestoreAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IRestoreAgentRequest:interface'
-      - name: ISearchAgentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISearchAgentsRequest:interface'
-      - name: ISearchAgentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISearchAgentsResponse:interface'
-      - name: ISentiment
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISentiment:interface'
-      - name: ISentimentAnalysisRequestConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISentimentAnalysisRequestConfig:interface'
-      - name: ISentimentAnalysisResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISentimentAnalysisResult:interface'
-      - name: ISessionEntityType
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISessionEntityType:interface'
-      - name: ISetAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISetAgentRequest:interface'
-      - name: ISpeechContext
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISpeechContext:interface'
-      - name: ISpeechWordInfo
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISpeechWordInfo:interface'
-      - name: IStreamingDetectIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IStreamingDetectIntentRequest:interface'
-      - name: IStreamingDetectIntentResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IStreamingDetectIntentResponse:interface'
-      - name: IStreamingRecognitionResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IStreamingRecognitionResult:interface'
-      - name: ISynthesizeSpeechConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ISynthesizeSpeechConfig:interface'
-      - name: ITextInput
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ITextInput:interface'
-      - name: ITrainAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ITrainAgentRequest:interface'
-      - name: IUpdateContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IUpdateContextRequest:interface'
-      - name: IUpdateEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IUpdateEntityTypeRequest:interface'
-      - name: IUpdateIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IUpdateIntentRequest:interface'
-      - name: IUpdateSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IUpdateSessionEntityTypeRequest:interface'
-      - name: IValidationError
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IValidationError:interface'
-      - name: IValidationResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IValidationResult:interface'
-      - name: IVoiceSelectionParams
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IVoiceSelectionParams:interface'
-      - name: IWebhookRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IWebhookRequest:interface'
-      - name: IWebhookResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.IWebhookResponse:interface'
       - name: ListContextsRequest
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.ListContextsRequest:class'
       - name: ListContextsResponse
@@ -609,8 +375,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.DetectIntentResponse:class'
       - name: Document (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Document:class'
-      - name: IReloadStatus
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Document.IReloadStatus:interface'
       - name: KnowledgeType
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Document.KnowledgeType:enum'
       - name: ReloadStatus
@@ -623,8 +387,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.EntityType.AutoExpansionMode:enum'
       - name: Entity
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.EntityType.Entity:class'
-      - name: IEntity
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.EntityType.IEntity:interface'
       - name: Kind
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.EntityType.Kind:enum'
       - name: EntityTypeBatch
@@ -661,137 +423,7 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.GetSessionEntityTypeRequest:class'
       - name: GetValidationResultRequest
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.GetValidationResultRequest:class'
-      - name: IAgent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IAgent:interface'
-      - name: IAutoApproveSmartMessagingEntriesResponse
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IAutoApproveSmartMessagingEntriesResponse:interface
-      - name: IBatchCreateEntitiesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchCreateEntitiesRequest:interface'
-      - name: IBatchDeleteEntitiesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchDeleteEntitiesRequest:interface'
-      - name: IBatchDeleteEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchDeleteEntityTypesRequest:interface'
-      - name: IBatchDeleteIntentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchDeleteIntentsRequest:interface'
-      - name: IBatchUpdateEntitiesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchUpdateEntitiesRequest:interface'
-      - name: IBatchUpdateEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchUpdateEntityTypesRequest:interface'
-      - name: IBatchUpdateEntityTypesResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchUpdateEntityTypesResponse:interface'
-      - name: IBatchUpdateIntentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsRequest:interface'
-      - name: IBatchUpdateIntentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IBatchUpdateIntentsResponse:interface'
-      - name: IContext
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IContext:interface'
-      - name: ICreateContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ICreateContextRequest:interface'
-      - name: ICreateDocumentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ICreateDocumentRequest:interface'
-      - name: ICreateEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ICreateEntityTypeRequest:interface'
-      - name: ICreateIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ICreateIntentRequest:interface'
-      - name: ICreateKnowledgeBaseRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ICreateKnowledgeBaseRequest:interface'
-      - name: ICreateSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ICreateSessionEntityTypeRequest:interface'
-      - name: IDeleteAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteAgentRequest:interface'
-      - name: IDeleteAllContextsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest:interface'
-      - name: IDeleteContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteContextRequest:interface'
-      - name: IDeleteDocumentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteDocumentRequest:interface'
-      - name: IDeleteEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteEntityTypeRequest:interface'
-      - name: IDeleteIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteIntentRequest:interface'
-      - name: IDeleteKnowledgeBaseRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteKnowledgeBaseRequest:interface'
-      - name: IDeleteSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDeleteSessionEntityTypeRequest:interface'
-      - name: IDetectIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDetectIntentRequest:interface'
-      - name: IDetectIntentResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDetectIntentResponse:interface'
-      - name: IDocument
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IDocument:interface'
-      - name: IEntityType
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IEntityType:interface'
-      - name: IEntityTypeBatch
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IEntityTypeBatch:interface'
-      - name: IEnvironment
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IEnvironment:interface'
-      - name: IEventInput
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IEventInput:interface'
-      - name: IExportAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IExportAgentRequest:interface'
-      - name: IExportAgentResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IExportAgentResponse:interface'
-      - name: IGcsSource
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGcsSource:interface'
-      - name: IGetAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetAgentRequest:interface'
-      - name: IGetContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetContextRequest:interface'
-      - name: IGetDocumentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetDocumentRequest:interface'
-      - name: IGetEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetEntityTypeRequest:interface'
-      - name: IGetIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetIntentRequest:interface'
-      - name: IGetKnowledgeBaseRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetKnowledgeBaseRequest:interface'
-      - name: IGetSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetSessionEntityTypeRequest:interface'
-      - name: IGetValidationResultRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IGetValidationResultRequest:interface'
-      - name: IImportAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IImportAgentRequest:interface'
-      - name: IInputAudioConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IInputAudioConfig:interface'
-      - name: IIntent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IIntent:interface'
-      - name: IIntentBatch
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IIntentBatch:interface'
-      - name: IKnowledgeAnswers
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IKnowledgeAnswers:interface'
-      - name: IKnowledgeBase
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IKnowledgeBase:interface'
-      - name: IKnowledgeOperationMetadata
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IKnowledgeOperationMetadata:interface'
-      - name: IListContextsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListContextsRequest:interface'
-      - name: IListContextsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListContextsResponse:interface'
-      - name: IListDocumentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListDocumentsRequest:interface'
-      - name: IListDocumentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListDocumentsResponse:interface'
-      - name: IListEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListEntityTypesRequest:interface'
-      - name: IListEntityTypesResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListEntityTypesResponse:interface'
-      - name: IListEnvironmentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListEnvironmentsRequest:interface'
-      - name: IListEnvironmentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListEnvironmentsResponse:interface'
-      - name: IListIntentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListIntentsRequest:interface'
-      - name: IListIntentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListIntentsResponse:interface'
-      - name: IListKnowledgeBasesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListKnowledgeBasesRequest:interface'
-      - name: IListKnowledgeBasesResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListKnowledgeBasesResponse:interface'
-      - name: IListSessionEntityTypesRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListSessionEntityTypesRequest:interface'
-      - name: IListSessionEntityTypesResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IListSessionEntityTypesResponse:interface'
       - name: ImportAgentRequest
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ImportAgentRequest:class'
       - name: InputAudioConfig
@@ -800,35 +432,21 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent:class'
       - name: FollowupIntentInfo
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.FollowupIntentInfo:class'
-      - name: IFollowupIntentInfo
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.IFollowupIntentInfo:interface'
-      - name: IMessage
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.IMessage:interface'
-      - name: IParameter
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.IParameter:interface'
-      - name: ITrainingPhrase
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.ITrainingPhrase:interface'
       - name: Message (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message:class'
       - name: BasicCard (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard:class'
       - name: Button (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard.Button:class'
-      - name: IOpenUriAction
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard.Button.IOpenUriAction:interface
       - name: OpenUriAction
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard.Button.OpenUriAction:class
-      - name: IButton
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard.IButton:interface'
       - name: BrowseCarouselCard (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard:class'
       - name: BrowseCarouselCardItem (Class)
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem:class
-      - name: IOpenUrlAction
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.IOpenUrlAction:interface
       - name: OpenUrlAction (Class)
         uid: >-
@@ -836,8 +454,6 @@ items:
       - name: UrlTypeHint
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.OpenUrlAction.UrlTypeHint:enum
-      - name: IBrowseCarouselCardItem
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.IBrowseCarouselCardItem:interface
       - name: ImageDisplayOptions
         uid: >-
@@ -846,12 +462,8 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.Card:class'
       - name: Button
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.Card.Button:class'
-      - name: IButton
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.Card.IButton:interface'
       - name: CarouselSelect (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.CarouselSelect:class'
-      - name: IItem
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.CarouselSelect.IItem:interface'
       - name: Item
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.CarouselSelect.Item:class'
       - name: ColumnProperties (Class)
@@ -859,79 +471,17 @@ items:
       - name: HorizontalAlignment
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ColumnProperties.HorizontalAlignment:enum
-      - name: IBasicCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IBasicCard:interface'
-      - name: IBrowseCarouselCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IBrowseCarouselCard:interface'
-      - name: ICard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ICard:interface'
-      - name: ICarouselSelect
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ICarouselSelect:interface'
-      - name: IColumnProperties
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IColumnProperties:interface'
-      - name: IImage
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IImage:interface'
-      - name: ILinkOutSuggestion
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ILinkOutSuggestion:interface'
-      - name: IListSelect
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IListSelect:interface'
       - name: Image
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.Image:class'
-      - name: IMediaContent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IMediaContent:interface'
-      - name: IQuickReplies
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IQuickReplies:interface'
-      - name: IRbmCardContent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IRbmCardContent:interface'
-      - name: IRbmCarouselCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IRbmCarouselCard:interface'
-      - name: IRbmStandaloneCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IRbmStandaloneCard:interface'
-      - name: IRbmSuggestedAction
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IRbmSuggestedAction:interface'
-      - name: IRbmSuggestedReply
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IRbmSuggestedReply:interface'
-      - name: IRbmSuggestion
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IRbmSuggestion:interface'
-      - name: IRbmText
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IRbmText:interface'
-      - name: ISelectItemInfo
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ISelectItemInfo:interface'
-      - name: ISimpleResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ISimpleResponse:interface'
-      - name: ISimpleResponses
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ISimpleResponses:interface'
-      - name: ISuggestion
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ISuggestion:interface'
-      - name: ISuggestions
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ISuggestions:interface'
-      - name: ITableCard
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ITableCard:interface'
-      - name: ITableCardCell
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ITableCardCell:interface'
-      - name: ITableCardRow
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ITableCardRow:interface'
-      - name: ITelephonyPlayAudio
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ITelephonyPlayAudio:interface'
-      - name: ITelephonySynthesizeSpeech
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ITelephonySynthesizeSpeech:interface
-      - name: ITelephonyTransferCall
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ITelephonyTransferCall:interface'
-      - name: IText
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.IText:interface'
       - name: LinkOutSuggestion
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.LinkOutSuggestion:class'
       - name: ListSelect (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ListSelect:class'
-      - name: IItem
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ListSelect.IItem:interface'
       - name: Item
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ListSelect.Item:class'
       - name: MediaContent (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.MediaContent:class'
-      - name: IResponseMediaObject
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.MediaContent.IResponseMediaObject:interface
       - name: ResponseMediaObject
         uid: >-
@@ -945,8 +495,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.QuickReplies:class'
       - name: RbmCardContent (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmCardContent:class'
-      - name: IRbmMedia
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmCardContent.IRbmMedia:interface'
       - name: RbmMedia (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmCardContent.RbmMedia:class'
       - name: Height
@@ -966,14 +514,8 @@ items:
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmStandaloneCard.ThumbnailImageAlignment:enum
       - name: RbmSuggestedAction (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction:class'
-      - name: IRbmSuggestedActionDial
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction.IRbmSuggestedActionDial:interface
-      - name: IRbmSuggestedActionOpenUri
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction.IRbmSuggestedActionOpenUri:interface
-      - name: IRbmSuggestedActionShareLocation
-        uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction.IRbmSuggestedActionShareLocation:interface
       - name: RbmSuggestedActionDial
         uid: >-
@@ -1018,8 +560,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Parameter:class'
       - name: TrainingPhrase (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.TrainingPhrase:class'
-      - name: IPart
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.TrainingPhrase.IPart:interface'
       - name: Part
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.TrainingPhrase.Part:class'
       - name: Type
@@ -1032,84 +572,12 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intents:class'
       - name: IntentView
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IntentView:enum'
-      - name: IOriginalDetectIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IOriginalDetectIntentRequest:interface'
-      - name: IOutputAudioConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IOutputAudioConfig:interface'
-      - name: IQueryInput
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IQueryInput:interface'
-      - name: IQueryParameters
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IQueryParameters:interface'
-      - name: IQueryResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IQueryResult:interface'
-      - name: IReloadDocumentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IReloadDocumentRequest:interface'
-      - name: IRestoreAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IRestoreAgentRequest:interface'
-      - name: ISearchAgentsRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISearchAgentsRequest:interface'
-      - name: ISearchAgentsResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISearchAgentsResponse:interface'
-      - name: ISentiment
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISentiment:interface'
-      - name: ISentimentAnalysisRequestConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISentimentAnalysisRequestConfig:interface'
-      - name: ISentimentAnalysisResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISentimentAnalysisResult:interface'
-      - name: ISessionEntityType
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISessionEntityType:interface'
-      - name: ISetAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISetAgentRequest:interface'
-      - name: ISpeechContext
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISpeechContext:interface'
-      - name: ISpeechWordInfo
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISpeechWordInfo:interface'
-      - name: IStreamingDetectIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IStreamingDetectIntentRequest:interface'
-      - name: IStreamingDetectIntentResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IStreamingDetectIntentResponse:interface'
-      - name: IStreamingRecognitionResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IStreamingRecognitionResult:interface'
-      - name: ISubAgent
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISubAgent:interface'
-      - name: ISynthesizeSpeechConfig
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ISynthesizeSpeechConfig:interface'
-      - name: ITelephonyDtmfEvents
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ITelephonyDtmfEvents:interface'
-      - name: ITextInput
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ITextInput:interface'
-      - name: ITrainAgentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ITrainAgentRequest:interface'
-      - name: IUpdateContextRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IUpdateContextRequest:interface'
-      - name: IUpdateDocumentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IUpdateDocumentRequest:interface'
-      - name: IUpdateEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IUpdateEntityTypeRequest:interface'
-      - name: IUpdateIntentRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IUpdateIntentRequest:interface'
-      - name: IUpdateKnowledgeBaseRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IUpdateKnowledgeBaseRequest:interface'
-      - name: IUpdateSessionEntityTypeRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IUpdateSessionEntityTypeRequest:interface'
-      - name: IValidationError
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IValidationError:interface'
-      - name: IValidationResult
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IValidationResult:interface'
-      - name: IVoiceSelectionParams
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IVoiceSelectionParams:interface'
-      - name: IWebhookRequest
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IWebhookRequest:interface'
-      - name: IWebhookResponse
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IWebhookResponse:interface'
       - name: KnowledgeAnswers (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.KnowledgeAnswers:class'
       - name: Answer (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.KnowledgeAnswers.Answer:class'
       - name: MatchConfidenceLevel
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.KnowledgeAnswers.Answer.MatchConfidenceLevel:enum'
-      - name: IAnswer
-        uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.KnowledgeAnswers.IAnswer:interface'
       - name: KnowledgeBase
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.KnowledgeBase:class'
       - name: KnowledgeBases (Class)
@@ -1240,22 +708,6 @@ items:
         uid: '@google-cloud/dialogflow!google.longrunning.DeleteOperationRequest:class'
       - name: GetOperationRequest
         uid: '@google-cloud/dialogflow!google.longrunning.GetOperationRequest:class'
-      - name: ICancelOperationRequest
-        uid: '@google-cloud/dialogflow!google.longrunning.ICancelOperationRequest:interface'
-      - name: IDeleteOperationRequest
-        uid: '@google-cloud/dialogflow!google.longrunning.IDeleteOperationRequest:interface'
-      - name: IGetOperationRequest
-        uid: '@google-cloud/dialogflow!google.longrunning.IGetOperationRequest:interface'
-      - name: IListOperationsRequest
-        uid: '@google-cloud/dialogflow!google.longrunning.IListOperationsRequest:interface'
-      - name: IListOperationsResponse
-        uid: '@google-cloud/dialogflow!google.longrunning.IListOperationsResponse:interface'
-      - name: IOperation
-        uid: '@google-cloud/dialogflow!google.longrunning.IOperation:interface'
-      - name: IOperationInfo
-        uid: '@google-cloud/dialogflow!google.longrunning.IOperationInfo:interface'
-      - name: IWaitOperationRequest
-        uid: '@google-cloud/dialogflow!google.longrunning.IWaitOperationRequest:interface'
       - name: ListOperationsRequest
         uid: '@google-cloud/dialogflow!google.longrunning.ListOperationsRequest:class'
       - name: ListOperationsResponse
@@ -1274,10 +726,6 @@ items:
         uid: '@google-cloud/dialogflow!google.protobuf.DescriptorProto:class'
       - name: ExtensionRange
         uid: '@google-cloud/dialogflow!google.protobuf.DescriptorProto.ExtensionRange:class'
-      - name: IExtensionRange
-        uid: '@google-cloud/dialogflow!google.protobuf.DescriptorProto.IExtensionRange:interface'
-      - name: IReservedRange
-        uid: '@google-cloud/dialogflow!google.protobuf.DescriptorProto.IReservedRange:interface'
       - name: ReservedRange
         uid: '@google-cloud/dialogflow!google.protobuf.DescriptorProto.ReservedRange:class'
       - name: Duration
@@ -1288,8 +736,6 @@ items:
         uid: '@google-cloud/dialogflow!google.protobuf.EnumDescriptorProto:class'
       - name: EnumReservedRange
         uid: '@google-cloud/dialogflow!google.protobuf.EnumDescriptorProto.EnumReservedRange:class'
-      - name: IEnumReservedRange
-        uid: '@google-cloud/dialogflow!google.protobuf.EnumDescriptorProto.IEnumReservedRange:interface'
       - name: EnumOptions
         uid: '@google-cloud/dialogflow!google.protobuf.EnumOptions:class'
       - name: EnumValueDescriptorProto
@@ -1324,66 +770,6 @@ items:
         uid: '@google-cloud/dialogflow!google.protobuf.GeneratedCodeInfo:class'
       - name: Annotation
         uid: '@google-cloud/dialogflow!google.protobuf.GeneratedCodeInfo.Annotation:class'
-      - name: IAnnotation
-        uid: '@google-cloud/dialogflow!google.protobuf.GeneratedCodeInfo.IAnnotation:interface'
-      - name: IAny
-        uid: '@google-cloud/dialogflow!google.protobuf.IAny:interface'
-      - name: IDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IDescriptorProto:interface'
-      - name: IDuration
-        uid: '@google-cloud/dialogflow!google.protobuf.IDuration:interface'
-      - name: IEmpty
-        uid: '@google-cloud/dialogflow!google.protobuf.IEmpty:interface'
-      - name: IEnumDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IEnumDescriptorProto:interface'
-      - name: IEnumOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IEnumOptions:interface'
-      - name: IEnumValueDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IEnumValueDescriptorProto:interface'
-      - name: IEnumValueOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IEnumValueOptions:interface'
-      - name: IExtensionRangeOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IExtensionRangeOptions:interface'
-      - name: IFieldDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IFieldDescriptorProto:interface'
-      - name: IFieldMask
-        uid: '@google-cloud/dialogflow!google.protobuf.IFieldMask:interface'
-      - name: IFieldOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IFieldOptions:interface'
-      - name: IFileDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IFileDescriptorProto:interface'
-      - name: IFileDescriptorSet
-        uid: '@google-cloud/dialogflow!google.protobuf.IFileDescriptorSet:interface'
-      - name: IFileOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IFileOptions:interface'
-      - name: IGeneratedCodeInfo
-        uid: '@google-cloud/dialogflow!google.protobuf.IGeneratedCodeInfo:interface'
-      - name: IListValue
-        uid: '@google-cloud/dialogflow!google.protobuf.IListValue:interface'
-      - name: IMessageOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IMessageOptions:interface'
-      - name: IMethodDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IMethodDescriptorProto:interface'
-      - name: IMethodOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IMethodOptions:interface'
-      - name: IOneofDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IOneofDescriptorProto:interface'
-      - name: IOneofOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IOneofOptions:interface'
-      - name: IServiceDescriptorProto
-        uid: '@google-cloud/dialogflow!google.protobuf.IServiceDescriptorProto:interface'
-      - name: IServiceOptions
-        uid: '@google-cloud/dialogflow!google.protobuf.IServiceOptions:interface'
-      - name: ISourceCodeInfo
-        uid: '@google-cloud/dialogflow!google.protobuf.ISourceCodeInfo:interface'
-      - name: IStruct
-        uid: '@google-cloud/dialogflow!google.protobuf.IStruct:interface'
-      - name: ITimestamp
-        uid: '@google-cloud/dialogflow!google.protobuf.ITimestamp:interface'
-      - name: IUninterpretedOption
-        uid: '@google-cloud/dialogflow!google.protobuf.IUninterpretedOption:interface'
-      - name: IValue
-        uid: '@google-cloud/dialogflow!google.protobuf.IValue:interface'
       - name: ListValue
         uid: '@google-cloud/dialogflow!google.protobuf.ListValue:class'
       - name: MessageOptions
@@ -1406,8 +792,6 @@ items:
         uid: '@google-cloud/dialogflow!google.protobuf.ServiceOptions:class'
       - name: SourceCodeInfo (Class)
         uid: '@google-cloud/dialogflow!google.protobuf.SourceCodeInfo:class'
-      - name: ILocation
-        uid: '@google-cloud/dialogflow!google.protobuf.SourceCodeInfo.ILocation:interface'
       - name: Location
         uid: '@google-cloud/dialogflow!google.protobuf.SourceCodeInfo.Location:class'
       - name: Struct
@@ -1416,17 +800,11 @@ items:
         uid: '@google-cloud/dialogflow!google.protobuf.Timestamp:class'
       - name: UninterpretedOption (Class)
         uid: '@google-cloud/dialogflow!google.protobuf.UninterpretedOption:class'
-      - name: INamePart
-        uid: '@google-cloud/dialogflow!google.protobuf.UninterpretedOption.INamePart:interface'
       - name: NamePart
         uid: '@google-cloud/dialogflow!google.protobuf.UninterpretedOption.NamePart:class'
       - name: Value
         uid: '@google-cloud/dialogflow!google.protobuf.Value:class'
-      - name: IStatus
-        uid: '@google-cloud/dialogflow!google.rpc.IStatus:interface'
       - name: Status
         uid: '@google-cloud/dialogflow!google.rpc.Status:class'
-      - name: ILatLng
-        uid: '@google-cloud/dialogflow!google.type.ILatLng:interface'
       - name: LatLng
         uid: '@google-cloud/dialogflow!google.type.LatLng:class'
