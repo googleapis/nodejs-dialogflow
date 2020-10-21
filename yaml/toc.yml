@@ -124,7 +124,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard:class'
       - name: Button (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard.Button:class'
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard.Button.IOpenUriAction:interface
       - name: OpenUriAction
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BasicCard.Button.OpenUriAction:class'
       - name: BrowseCarouselCard (Class)
@@ -132,14 +131,12 @@ items:
       - name: BrowseCarouselCardItem (Class)
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem:class
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.IOpenUrlAction:interface
       - name: OpenUrlAction (Class)
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.OpenUrlAction:class
       - name: UrlTypeHint
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.OpenUrlAction.UrlTypeHint:enum
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.IBrowseCarouselCardItem:interface
       - name: ImageDisplayOptions
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.BrowseCarouselCard.ImageDisplayOptions:enum
@@ -166,7 +163,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.ListSelect.Item:class'
       - name: MediaContent (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.MediaContent:class'
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.MediaContent.IResponseMediaObject:interface
       - name: ResponseMediaObject
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2.Intent.Message.MediaContent.ResponseMediaObject:class'
       - name: ResponseMediaType
@@ -423,7 +419,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.GetSessionEntityTypeRequest:class'
       - name: GetValidationResultRequest
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.GetValidationResultRequest:class'
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.IAutoApproveSmartMessagingEntriesResponse:interface
       - name: ImportAgentRequest
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.ImportAgentRequest:class'
       - name: InputAudioConfig
@@ -438,7 +433,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard:class'
       - name: Button (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard.Button:class'
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard.Button.IOpenUriAction:interface
       - name: OpenUriAction
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BasicCard.Button.OpenUriAction:class
@@ -447,14 +441,12 @@ items:
       - name: BrowseCarouselCardItem (Class)
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem:class
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.IOpenUrlAction:interface
       - name: OpenUrlAction (Class)
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.OpenUrlAction:class
       - name: UrlTypeHint
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.BrowseCarouselCardItem.OpenUrlAction.UrlTypeHint:enum
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.IBrowseCarouselCardItem:interface
       - name: ImageDisplayOptions
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.BrowseCarouselCard.ImageDisplayOptions:enum
@@ -473,7 +465,6 @@ items:
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ColumnProperties.HorizontalAlignment:enum
       - name: Image
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.Image:class'
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ITelephonySynthesizeSpeech:interface
       - name: LinkOutSuggestion
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.LinkOutSuggestion:class'
       - name: ListSelect (Class)
@@ -482,7 +473,6 @@ items:
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.ListSelect.Item:class'
       - name: MediaContent (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.MediaContent:class'
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.MediaContent.IResponseMediaObject:interface
       - name: ResponseMediaObject
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.MediaContent.ResponseMediaObject:class
@@ -514,9 +504,6 @@ items:
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmStandaloneCard.ThumbnailImageAlignment:enum
       - name: RbmSuggestedAction (Class)
         uid: '@google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction:class'
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction.IRbmSuggestedActionDial:interface
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction.IRbmSuggestedActionOpenUri:interface
-          @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction.IRbmSuggestedActionShareLocation:interface
       - name: RbmSuggestedActionDial
         uid: >-
           @google-cloud/dialogflow!google.cloud.dialogflow.v2beta1.Intent.Message.RbmSuggestedAction.RbmSuggestedActionDial:class
