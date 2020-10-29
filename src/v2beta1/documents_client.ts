@@ -565,7 +565,7 @@ export class DocumentsClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The knoweldge base to create a document for.
+   *   Required. The knowledge base to create a document for.
    *   Format: `projects/<Project ID>/knowledgeBases/<Knowledge Base ID>`.
    * @param {google.cloud.dialogflow.v2beta1.Document} request.document
    *   Required. The document to create.
