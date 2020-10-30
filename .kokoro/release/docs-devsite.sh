@@ -45,6 +45,14 @@ sed -i -e 's/^    //' ./yaml/toc.yml
 sed -i -e '/name: I[A-Z]/{N;d;}' ./yaml/toc.yml
 sed -i -e '/^ *\@google-cloud.*:interface/d' ./yaml/toc.yml
 
+sed -i -e '4i\
+\ \ \ \ summary: Dialogflow.
+' ./yaml/toc.yml
+
+sed -i -e '5i\
+\ \ \ \ description: Client library for Dialogflow.
+' ./yaml/toc.yml
+
 cp ./yaml/toc.yml ./_devsite/toc.yml
 
 # create docs.metadata, based on package.json and .repo-metadata.json.
