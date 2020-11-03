@@ -599,7 +599,7 @@ export class KnowledgeBasesClient {
    * @param {string} request.name
    *   Required. The name of the knowledge base to delete.
    *   Format: `projects/<Project ID>/knowledgeBases/<Knowledge Base ID>`.
-   * @param {boolean} request.force
+   * @param {boolean} [request.force]
    *   Optional. Force deletes the knowledge base. When set to true, any documents
    *   in the knowledge base are also deleted.
    * @param {object} [options]
@@ -799,11 +799,38 @@ export class KnowledgeBasesClient {
    * @param {string} request.parent
    *   Required. The project to list of knowledge bases for.
    *   Format: `projects/<Project ID>`.
-   * @param {number} [request.pageSize]
-   *   Optional. The maximum number of items to return in a single page. By
+   * @param {number} request.pageSize
+   *   The maximum number of items to return in a single page. By
    *   default 10 and at most 100.
-   * @param {string} [request.pageToken]
-   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {string} request.filter
+   *   The filter expression used to filter knowledge bases returned by the list
+   *   method. The expression has the following syntax:
+   *
+   *     <field> <operator> <value> [AND <field> <operator> <value>] ...
+   *
+   *   The following fields and operators are supported:
+   *
+   *   * display_name with has(:) operator
+   *   * language_code with equals(=) operator
+   *
+   *   Examples:
+   *
+   *   * 'language_code=en-us' matches knowledge bases with en-us language code.
+   *   * 'display_name:articles' matches knowledge bases whose display name
+   *     contains "articles".
+   *   * 'display_name:"Best Articles"' matches knowledge bases whose display
+   *     name contains "Best Articles".
+   *   * 'language_code=en-gb AND display_name=articles' matches all knowledge
+   *     bases whose display name contains "articles" and whose language code is
+   *     "en-gb".
+   *
+   *   Note: An empty filter string (i.e. "") is a no-op and will result in no
+   *   filtering.
+   *
+   *   For more information about filtering, see
+   *   [API Filtering](https://aip.dev/160).
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -885,11 +912,38 @@ export class KnowledgeBasesClient {
    * @param {string} request.parent
    *   Required. The project to list of knowledge bases for.
    *   Format: `projects/<Project ID>`.
-   * @param {number} [request.pageSize]
-   *   Optional. The maximum number of items to return in a single page. By
+   * @param {number} request.pageSize
+   *   The maximum number of items to return in a single page. By
    *   default 10 and at most 100.
-   * @param {string} [request.pageToken]
-   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {string} request.filter
+   *   The filter expression used to filter knowledge bases returned by the list
+   *   method. The expression has the following syntax:
+   *
+   *     <field> <operator> <value> [AND <field> <operator> <value>] ...
+   *
+   *   The following fields and operators are supported:
+   *
+   *   * display_name with has(:) operator
+   *   * language_code with equals(=) operator
+   *
+   *   Examples:
+   *
+   *   * 'language_code=en-us' matches knowledge bases with en-us language code.
+   *   * 'display_name:articles' matches knowledge bases whose display name
+   *     contains "articles".
+   *   * 'display_name:"Best Articles"' matches knowledge bases whose display
+   *     name contains "Best Articles".
+   *   * 'language_code=en-gb AND display_name=articles' matches all knowledge
+   *     bases whose display name contains "articles" and whose language code is
+   *     "en-gb".
+   *
+   *   Note: An empty filter string (i.e. "") is a no-op and will result in no
+   *   filtering.
+   *
+   *   For more information about filtering, see
+   *   [API Filtering](https://aip.dev/160).
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
@@ -927,11 +981,38 @@ export class KnowledgeBasesClient {
    * @param {string} request.parent
    *   Required. The project to list of knowledge bases for.
    *   Format: `projects/<Project ID>`.
-   * @param {number} [request.pageSize]
-   *   Optional. The maximum number of items to return in a single page. By
+   * @param {number} request.pageSize
+   *   The maximum number of items to return in a single page. By
    *   default 10 and at most 100.
-   * @param {string} [request.pageToken]
-   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {string} request.filter
+   *   The filter expression used to filter knowledge bases returned by the list
+   *   method. The expression has the following syntax:
+   *
+   *     <field> <operator> <value> [AND <field> <operator> <value>] ...
+   *
+   *   The following fields and operators are supported:
+   *
+   *   * display_name with has(:) operator
+   *   * language_code with equals(=) operator
+   *
+   *   Examples:
+   *
+   *   * 'language_code=en-us' matches knowledge bases with en-us language code.
+   *   * 'display_name:articles' matches knowledge bases whose display name
+   *     contains "articles".
+   *   * 'display_name:"Best Articles"' matches knowledge bases whose display
+   *     name contains "Best Articles".
+   *   * 'language_code=en-gb AND display_name=articles' matches all knowledge
+   *     bases whose display name contains "articles" and whose language code is
+   *     "en-gb".
+   *
+   *   Note: An empty filter string (i.e. "") is a no-op and will result in no
+   *   filtering.
+   *
+   *   For more information about filtering, see
+   *   [API Filtering](https://aip.dev/160).
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
