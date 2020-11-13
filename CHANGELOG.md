@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/dialogflow?activeTab=versions
 
+### [3.3.1](https://www.github.com/googleapis/nodejs-dialogflow/compare/v3.3.0...v3.3.1) (2020-11-13)
+
+
+### Bug Fixes
+
+* do not modify options object, use defaultScopes ([#706](https://www.github.com/googleapis/nodejs-dialogflow/issues/706)) ([95a938d](https://www.github.com/googleapis/nodejs-dialogflow/commit/95a938dbc5f2cc49c217bb5d3cecbbffba3e6d18))
+
 ## [3.3.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v3.2.0...v3.3.0) (2020-09-15)
 
 
