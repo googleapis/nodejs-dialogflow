@@ -18,11 +18,18 @@
 
 /* global window */
 import * as gax from 'google-gax';
-import {Callback, CallOptions, Descriptors, ClientOptions, PaginationCallback, GaxCall} from 'google-gax';
+import {
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+  PaginationCallback,
+  GaxCall,
+} from 'google-gax';
 import * as path from 'path';
 
-import { Transform } from 'stream';
-import { RequestType } from 'google-gax/build/src/apitypes';
+import {Transform} from 'stream';
+import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 /**
  * Client JSON configuration object, loaded from
@@ -93,10 +100,13 @@ export class ContextsClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include all the required fields.
     const staticMembers = this.constructor as typeof ContextsClient;
-    const servicePath = opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
+    const servicePath =
+      opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
-    const fallback = opts?.fallback ?? (typeof window !== 'undefined' && typeof window?.fetch === 'function');
+    const fallback =
+      opts?.fallback ??
+      (typeof window !== 'undefined' && typeof window?.fetch === 'function');
     opts = Object.assign({servicePath, port, clientConfig, fallback}, opts);
 
     // If scopes are unset in options and we're connecting to a non-default endpoint, set scopes just in case.
@@ -114,7 +124,7 @@ export class ContextsClient {
     this._opts = opts;
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (this._gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
 
     // Set the default scopes in auth client if needed.
     if (servicePath === staticMembers.servicePath) {
@@ -122,10 +132,7 @@ export class ContextsClient {
     }
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${this._gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -141,12 +148,18 @@ export class ContextsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
+    const nodejsProtoPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'protos',
+      'protos.json'
+    );
     this._protos = this._gaxGrpc.loadProto(
-      opts.fallback ?
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        require("../../protos/protos.json") :
-        nodejsProtoPath
+      opts.fallback
+        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+          require('../../protos/protos.json')
+        : nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -213,14 +226,20 @@ export class ContextsClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this.descriptors.page = {
-      listContexts:
-          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'contexts')
+      listContexts: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'contexts'
+      ),
     };
 
     // Put together the default options sent with requests.
     this._defaults = this._gaxGrpc.constructSettings(
-        'google.cloud.dialogflow.v2beta1.Contexts', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.cloud.dialogflow.v2beta1.Contexts',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -248,16 +267,25 @@ export class ContextsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2beta1.Contexts.
     this.contextsStub = this._gaxGrpc.createStub(
-        this._opts.fallback ?
-          (this._protos as protobuf.Root).lookupService('google.cloud.dialogflow.v2beta1.Contexts') :
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this._opts.fallback
+        ? (this._protos as protobuf.Root).lookupService(
+            'google.cloud.dialogflow.v2beta1.Contexts'
+          )
+        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.cloud.dialogflow.v2beta1.Contexts,
-        this._opts) as Promise<{[method: string]: Function}>;
+      this._opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const contextsStubMethods =
-        ['listContexts', 'getContext', 'createContext', 'updateContext', 'deleteContext', 'deleteAllContexts'];
+    const contextsStubMethods = [
+      'listContexts',
+      'getContext',
+      'createContext',
+      'updateContext',
+      'deleteContext',
+      'deleteAllContexts',
+    ];
     for (const methodName of contextsStubMethods) {
       const callPromise = this.contextsStub.then(
         stub => (...args: Array<{}>) => {
@@ -267,13 +295,12 @@ export class ContextsClient {
           const func = stub[methodName];
           return func.apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
-      const descriptor =
-        this.descriptors.page[methodName] ||
-        undefined;
+      const descriptor = this.descriptors.page[methodName] || undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
@@ -319,7 +346,7 @@ export class ContextsClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow'
+      'https://www.googleapis.com/auth/dialogflow',
     ];
   }
 
@@ -329,8 +356,9 @@ export class ContextsClient {
    * Return the project ID used by this class.
    * @returns {Promise} A promise that resolves to string containing the project ID.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -342,76 +370,97 @@ export class ContextsClient {
   // -- Service calls --
   // -------------------
   getContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext,
-        protos.google.cloud.dialogflow.v2beta1.IGetContextRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      protos.google.cloud.dialogflow.v2beta1.IGetContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   getContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IGetContextRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.IGetContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   getContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
-      callback: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IGetContextRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Retrieves the specified context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the context. Supported formats:
- *   - `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context
- *     ID>`,
- *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
- *     ID>/contexts/<Context ID>`,
- *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *     ID>/sessions/<Session ID>/contexts/<Context ID>`,
- *   - `projects/<Project ID>/locations/<Location
- *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *     ID>/contexts/<Context ID>`,
- *
- *   If `Location ID` is not specified we assume default 'us' location. If
- *   `Environment ID` is not specified, we assume default 'draft' environment.
- *   If `User ID` is not specified, we assume default '-' user.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.getContext(request);
- */
+    request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.IGetContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Retrieves the specified context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the context. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context
+   *     ID>`,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>/contexts/<Context ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>/contexts/<Context ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>/contexts/<Context ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified, we assume default 'draft' environment.
+   *   If `User ID` is not specified, we assume default '-' user.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.getContext(request);
+   */
   getContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IGetContextRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IGetContextRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext,
-        protos.google.cloud.dialogflow.v2beta1.IGetContextRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.v2beta1.IGetContextRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.IGetContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      protos.google.cloud.dialogflow.v2beta1.IGetContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -420,85 +469,106 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.getContext(request, options, callback);
   }
   createContext(
-      request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext,
-        protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   createContext(
-      request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   createContext(
-      request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
-      callback: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Creates a context.
- *
- * If the specified context already exists, overrides the context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The session to create a context for. Supported formats:
- *   - `projects/<Project ID>/agent/sessions/<Session ID>,
- *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
- *     ID>`,
- *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *     ID>/sessions/<Session ID>`,
- *   - `projects/<Project ID>/locations/<Location
- *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *     ID>`,
- *
- *   If `Location ID` is not specified we assume default 'us' location. If
- *   `Environment ID` is not specified, we assume default 'draft' environment.
- *   If `User ID` is not specified, we assume default '-' user.
- * @param {google.cloud.dialogflow.v2beta1.Context} request.context
- *   Required. The context to create.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.createContext(request);
- */
+    request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates a context.
+   *
+   * If the specified context already exists, overrides the context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The session to create a context for. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified, we assume default 'draft' environment.
+   *   If `User ID` is not specified, we assume default '-' user.
+   * @param {google.cloud.dialogflow.v2beta1.Context} request.context
+   *   Required. The context to create.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.createContext(request);
+   */
   createContext(
-      request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext,
-        protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -507,71 +577,92 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.createContext(request, options, callback);
   }
   updateContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext,
-        protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   updateContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   updateContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
-      callback: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Updates the specified context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {google.cloud.dialogflow.v2beta1.Context} request.context
- *   Required. The context to update.
- * @param {google.protobuf.FieldMask} [request.updateMask]
- *   Optional. The mask to control which fields get updated.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.updateContext(request);
- */
+    request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Updates the specified context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {google.cloud.dialogflow.v2beta1.Context} request.context
+   *   Required. The context to update.
+   * @param {google.protobuf.FieldMask} [request.updateMask]
+   *   Optional. The mask to control which fields get updated.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.updateContext(request);
+   */
   updateContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.dialogflow.v2beta1.IContext,
-          protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext,
-        protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      | protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext,
+      protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -586,76 +677,97 @@ export class ContextsClient {
     return this.innerApiCalls.updateContext(request, options, callback);
   }
   deleteContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest | undefined,
+      {} | undefined
+    ]
+  >;
   deleteContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   deleteContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Deletes the specified context.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the context to delete. Supported formats:
- *   - `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context
- *     ID>`,
- *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
- *     ID>/contexts/<Context ID>`,
- *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *     ID>/sessions/<Session ID>/contexts/<Context ID>`,
- *   - `projects/<Project ID>/locations/<Location
- *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *     ID>/contexts/<Context ID>`,
- *
- *   If `Location ID` is not specified we assume default 'us' location. If
- *   `Environment ID` is not specified, we assume default 'draft' environment.
- *   If `User ID` is not specified, we assume default '-' user.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.deleteContext(request);
- */
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes the specified context.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the context to delete. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context
+   *     ID>`,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>/contexts/<Context ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>/contexts/<Context ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>/contexts/<Context ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified, we assume default 'draft' environment.
+   *   If `User ID` is not specified, we assume default '-' user.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.deleteContext(request);
+   */
   deleteContext(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -664,81 +776,108 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.deleteContext(request, options, callback);
   }
   deleteAllContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   deleteAllContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   deleteAllContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Deletes all active contexts in the specified session.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The name of the session to delete all contexts from. Supported formats:
- *   - `projects/<Project ID>/agent/sessions/<Session ID>,
- *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
- *     ID>`,
- *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *     ID>/sessions/<Session ID>`,
- *   - `projects/<Project ID>/locations/<Location
- *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *     ID>`,
- *
- *   If `Location ID` is not specified we assume default 'us' location. If
- *   `Environment ID` is not specified we assume default 'draft' environment. If
- *   `User ID` is not specified, we assume default '-' user.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.deleteAllContexts(request);
- */
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes all active contexts in the specified session.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The name of the session to delete all contexts from. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified we assume default 'draft' environment. If
+   *   `User ID` is not specified, we assume default '-' user.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.deleteAllContexts(request);
+   */
   deleteAllContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -747,92 +886,111 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.deleteAllContexts(request, options, callback);
   }
 
   listContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext[],
-        protos.google.cloud.dialogflow.v2beta1.IListContextsRequest|null,
-        protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
-      ]>;
+    request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext[],
+      protos.google.cloud.dialogflow.v2beta1.IListContextsRequest | null,
+      protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
+    ]
+  >;
   listContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-      options: CallOptions,
-      callback: PaginationCallback<
-          protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-          protos.google.cloud.dialogflow.v2beta1.IListContextsResponse|null|undefined,
-          protos.google.cloud.dialogflow.v2beta1.IContext>): void;
+    request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+    options: CallOptions,
+    callback: PaginationCallback<
+      protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+      | protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
+      | null
+      | undefined,
+      protos.google.cloud.dialogflow.v2beta1.IContext
+    >
+  ): void;
   listContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-      callback: PaginationCallback<
-          protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-          protos.google.cloud.dialogflow.v2beta1.IListContextsResponse|null|undefined,
-          protos.google.cloud.dialogflow.v2beta1.IContext>): void;
-/**
- * Returns the list of all contexts in the specified session.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The session to list all contexts from. Supported formats:
- *   - `projects/<Project ID>/agent/sessions/<Session ID>,
- *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
- *     ID>`,
- *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *     ID>/sessions/<Session ID>`,
- *   - `projects/<Project ID>/locations/<Location
- *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *     ID>`,
- *
- *   If `Location ID` is not specified we assume default 'us' location. If
- *   `Environment ID` is not specified, we assume default 'draft' environment.
- *   If `User ID` is not specified, we assume default '-' user.
- * @param {number} request.pageSize
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} request.pageToken
- *   Optional. The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *   Note that it can affect your quota.
- *   We recommend using `listContextsAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+    request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+    callback: PaginationCallback<
+      protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+      | protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
+      | null
+      | undefined,
+      protos.google.cloud.dialogflow.v2beta1.IContext
+    >
+  ): void;
+  /**
+   * Returns the list of all contexts in the specified session.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The session to list all contexts from. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified, we assume default 'draft' environment.
+   *   If `User ID` is not specified, we assume default '-' user.
+   * @param {number} request.pageSize
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} request.pageToken
+   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [Context]{@link google.cloud.dialogflow.v2beta1.Context}.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *   Note that it can affect your quota.
+   *   We recommend using `listContextsAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listContexts(
-      request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-      optionsOrCallback?: CallOptions|PaginationCallback<
+    request: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | PaginationCallback<
           protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-          protos.google.cloud.dialogflow.v2beta1.IListContextsResponse|null|undefined,
-          protos.google.cloud.dialogflow.v2beta1.IContext>,
-      callback?: PaginationCallback<
-          protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-          protos.google.cloud.dialogflow.v2beta1.IListContextsResponse|null|undefined,
-          protos.google.cloud.dialogflow.v2beta1.IContext>):
-      Promise<[
-        protos.google.cloud.dialogflow.v2beta1.IContext[],
-        protos.google.cloud.dialogflow.v2beta1.IListContextsRequest|null,
-        protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
-      ]>|void {
+          | protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
+          | null
+          | undefined,
+          protos.google.cloud.dialogflow.v2beta1.IContext
+        >,
+    callback?: PaginationCallback<
+      protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+      | protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
+      | null
+      | undefined,
+      protos.google.cloud.dialogflow.v2beta1.IContext
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.IContext[],
+      protos.google.cloud.dialogflow.v2beta1.IListContextsRequest | null,
+      protos.google.cloud.dialogflow.v2beta1.IListContextsResponse
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -841,51 +999,51 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.listContexts(request, options, callback);
   }
 
-/**
- * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The session to list all contexts from. Supported formats:
- *   - `projects/<Project ID>/agent/sessions/<Session ID>,
- *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
- *     ID>`,
- *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *     ID>/sessions/<Session ID>`,
- *   - `projects/<Project ID>/locations/<Location
- *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *     ID>`,
- *
- *   If `Location ID` is not specified we assume default 'us' location. If
- *   `Environment ID` is not specified, we assume default 'draft' environment.
- *   If `User ID` is not specified, we assume default '-' user.
- * @param {number} request.pageSize
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} request.pageToken
- *   Optional. The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context} on 'data' event.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed. Note that it can affect your quota.
- *   We recommend using `listContextsAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+  /**
+   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The session to list all contexts from. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified, we assume default 'draft' environment.
+   *   If `User ID` is not specified, we assume default '-' user.
+   * @param {number} request.pageSize
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} request.pageToken
+   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [Context]{@link google.cloud.dialogflow.v2beta1.Context} on 'data' event.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed. Note that it can affect your quota.
+   *   We recommend using `listContextsAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listContextsStream(
-      request?: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-      options?: CallOptions):
-    Transform{
+    request?: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+    options?: CallOptions
+  ): Transform {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -893,7 +1051,7 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -904,51 +1062,51 @@ export class ContextsClient {
     );
   }
 
-/**
- * Equivalent to `listContexts`, but returns an iterable object.
- *
- * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The session to list all contexts from. Supported formats:
- *   - `projects/<Project ID>/agent/sessions/<Session ID>,
- *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
- *     ID>`,
- *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- *     ID>/sessions/<Session ID>`,
- *   - `projects/<Project ID>/locations/<Location
- *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- *     ID>`,
- *
- *   If `Location ID` is not specified we assume default 'us' location. If
- *   `Environment ID` is not specified, we assume default 'draft' environment.
- *   If `User ID` is not specified, we assume default '-' user.
- * @param {number} request.pageSize
- *   Optional. The maximum number of items to return in a single page. By
- *   default 100 and at most 1000.
- * @param {string} request.pageToken
- *   Optional. The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Object}
- *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
- *   When you iterate the returned iterable, each element will be an object representing
- *   [Context]{@link google.cloud.dialogflow.v2beta1.Context}. The API will be called under the hood as needed, once per the page,
- *   so you can stop the iteration when you don't need more results.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- * @example
- * const iterable = client.listContextsAsync(request);
- * for await (const response of iterable) {
- *   // process response
- * }
- */
+  /**
+   * Equivalent to `listContexts`, but returns an iterable object.
+   *
+   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The session to list all contexts from. Supported formats:
+   *   - `projects/<Project ID>/agent/sessions/<Session ID>,
+   *   - `projects/<Project ID>/locations/<Location ID>/agent/sessions/<Session
+   *     ID>`,
+   *   - `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+   *     ID>/sessions/<Session ID>`,
+   *   - `projects/<Project ID>/locations/<Location
+   *     ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+   *     ID>`,
+   *
+   *   If `Location ID` is not specified we assume default 'us' location. If
+   *   `Environment ID` is not specified, we assume default 'draft' environment.
+   *   If `User ID` is not specified, we assume default '-' user.
+   * @param {number} request.pageSize
+   *   Optional. The maximum number of items to return in a single page. By
+   *   default 100 and at most 1000.
+   * @param {string} request.pageToken
+   *   Optional. The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+   *   When you iterate the returned iterable, each element will be an object representing
+   *   [Context]{@link google.cloud.dialogflow.v2beta1.Context}. The API will be called under the hood as needed, once per the page,
+   *   so you can stop the iteration when you don't need more results.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   * @example
+   * const iterable = client.listContextsAsync(request);
+   * for await (const response of iterable) {
+   *   // process response
+   * }
+   */
   listContextsAsync(
-      request?: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
-      options?: CallOptions):
-    AsyncIterable<protos.google.cloud.dialogflow.v2beta1.IContext>{
+    request?: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
+    options?: CallOptions
+  ): AsyncIterable<protos.google.cloud.dialogflow.v2beta1.IContext> {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -956,14 +1114,14 @@ export class ContextsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listContexts.asyncIterate(
       this.innerApiCalls['listContexts'] as GaxCall,
-      request as unknown as RequestType,
+      (request as unknown) as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2beta1.IContext>;
   }
@@ -979,7 +1137,7 @@ export class ContextsClient {
    * @param {string} document
    * @returns {string} Resource name string.
    */
-  documentPath(project:string,knowledgeBase:string,document:string) {
+  documentPath(project: string, knowledgeBase: string, document: string) {
     return this.pathTemplates.documentPathTemplate.render({
       project: project,
       knowledge_base: knowledgeBase,
@@ -1006,7 +1164,8 @@ export class ContextsClient {
    * @returns {string} A string representing the knowledge_base.
    */
   matchKnowledgeBaseFromDocumentName(documentName: string) {
-    return this.pathTemplates.documentPathTemplate.match(documentName).knowledge_base;
+    return this.pathTemplates.documentPathTemplate.match(documentName)
+      .knowledge_base;
   }
 
   /**
@@ -1027,7 +1186,7 @@ export class ContextsClient {
    * @param {string} knowledge_base
    * @returns {string} Resource name string.
    */
-  knowledgeBasePath(project:string,knowledgeBase:string) {
+  knowledgeBasePath(project: string, knowledgeBase: string) {
     return this.pathTemplates.knowledgeBasePathTemplate.render({
       project: project,
       knowledge_base: knowledgeBase,
@@ -1042,7 +1201,8 @@ export class ContextsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromKnowledgeBaseName(knowledgeBaseName: string) {
-    return this.pathTemplates.knowledgeBasePathTemplate.match(knowledgeBaseName).project;
+    return this.pathTemplates.knowledgeBasePathTemplate.match(knowledgeBaseName)
+      .project;
   }
 
   /**
@@ -1053,7 +1213,8 @@ export class ContextsClient {
    * @returns {string} A string representing the knowledge_base.
    */
   matchKnowledgeBaseFromKnowledgeBaseName(knowledgeBaseName: string) {
-    return this.pathTemplates.knowledgeBasePathTemplate.match(knowledgeBaseName).knowledge_base;
+    return this.pathTemplates.knowledgeBasePathTemplate.match(knowledgeBaseName)
+      .knowledge_base;
   }
 
   /**
@@ -1062,7 +1223,7 @@ export class ContextsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project:string) {
+  projectPath(project: string) {
     return this.pathTemplates.projectPathTemplate.render({
       project: project,
     });
@@ -1085,7 +1246,7 @@ export class ContextsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectAgentPath(project:string) {
+  projectAgentPath(project: string) {
     return this.pathTemplates.projectAgentPathTemplate.render({
       project: project,
     });
@@ -1099,7 +1260,8 @@ export class ContextsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectAgentName(projectAgentName: string) {
-    return this.pathTemplates.projectAgentPathTemplate.match(projectAgentName).project;
+    return this.pathTemplates.projectAgentPathTemplate.match(projectAgentName)
+      .project;
   }
 
   /**
@@ -1109,7 +1271,7 @@ export class ContextsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectAgentEntityTypePath(project:string,entityType:string) {
+  projectAgentEntityTypePath(project: string, entityType: string) {
     return this.pathTemplates.projectAgentEntityTypePathTemplate.render({
       project: project,
       entity_type: entityType,
@@ -1123,8 +1285,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEntityTypeName(projectAgentEntityTypeName: string) {
-    return this.pathTemplates.projectAgentEntityTypePathTemplate.match(projectAgentEntityTypeName).project;
+  matchProjectFromProjectAgentEntityTypeName(
+    projectAgentEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentEntityTypePathTemplate.match(
+      projectAgentEntityTypeName
+    ).project;
   }
 
   /**
@@ -1134,8 +1300,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectAgentEntityTypeName(projectAgentEntityTypeName: string) {
-    return this.pathTemplates.projectAgentEntityTypePathTemplate.match(projectAgentEntityTypeName).entity_type;
+  matchEntityTypeFromProjectAgentEntityTypeName(
+    projectAgentEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentEntityTypePathTemplate.match(
+      projectAgentEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -1145,7 +1315,7 @@ export class ContextsClient {
    * @param {string} environment
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentPath(project:string,environment:string) {
+  projectAgentEnvironmentPath(project: string, environment: string) {
     return this.pathTemplates.projectAgentEnvironmentPathTemplate.render({
       project: project,
       environment: environment,
@@ -1159,8 +1329,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentName(projectAgentEnvironmentName: string) {
-    return this.pathTemplates.projectAgentEnvironmentPathTemplate.match(projectAgentEnvironmentName).project;
+  matchProjectFromProjectAgentEnvironmentName(
+    projectAgentEnvironmentName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentPathTemplate.match(
+      projectAgentEnvironmentName
+    ).project;
   }
 
   /**
@@ -1170,8 +1344,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentName(projectAgentEnvironmentName: string) {
-    return this.pathTemplates.projectAgentEnvironmentPathTemplate.match(projectAgentEnvironmentName).environment;
+  matchEnvironmentFromProjectAgentEnvironmentName(
+    projectAgentEnvironmentName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentPathTemplate.match(
+      projectAgentEnvironmentName
+    ).environment;
   }
 
   /**
@@ -1184,14 +1362,22 @@ export class ContextsClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentUserSessionContextPath(project:string,environment:string,user:string,session:string,context:string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.render({
-      project: project,
-      environment: environment,
-      user: user,
-      session: session,
-      context: context,
-    });
+  projectAgentEnvironmentUserSessionContextPath(
+    project: string,
+    environment: string,
+    user: string,
+    session: string,
+    context: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.render(
+      {
+        project: project,
+        environment: environment,
+        user: user,
+        session: session,
+        context: context,
+      }
+    );
   }
 
   /**
@@ -1201,8 +1387,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).project;
+  matchProjectFromProjectAgentEnvironmentUserSessionContextName(
+    projectAgentEnvironmentUserSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
+      projectAgentEnvironmentUserSessionContextName
+    ).project;
   }
 
   /**
@@ -1212,8 +1402,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).environment;
+  matchEnvironmentFromProjectAgentEnvironmentUserSessionContextName(
+    projectAgentEnvironmentUserSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
+      projectAgentEnvironmentUserSessionContextName
+    ).environment;
   }
 
   /**
@@ -1223,8 +1417,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the user.
    */
-  matchUserFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).user;
+  matchUserFromProjectAgentEnvironmentUserSessionContextName(
+    projectAgentEnvironmentUserSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
+      projectAgentEnvironmentUserSessionContextName
+    ).user;
   }
 
   /**
@@ -1234,8 +1432,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).session;
+  matchSessionFromProjectAgentEnvironmentUserSessionContextName(
+    projectAgentEnvironmentUserSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
+      projectAgentEnvironmentUserSessionContextName
+    ).session;
   }
 
   /**
@@ -1245,8 +1447,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the context.
    */
-  matchContextFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).context;
+  matchContextFromProjectAgentEnvironmentUserSessionContextName(
+    projectAgentEnvironmentUserSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
+      projectAgentEnvironmentUserSessionContextName
+    ).context;
   }
 
   /**
@@ -1259,14 +1465,22 @@ export class ContextsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentUserSessionEntityTypePath(project:string,environment:string,user:string,session:string,entityType:string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.render({
-      project: project,
-      environment: environment,
-      user: user,
-      session: session,
-      entity_type: entityType,
-    });
+  projectAgentEnvironmentUserSessionEntityTypePath(
+    project: string,
+    environment: string,
+    user: string,
+    session: string,
+    entityType: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.render(
+      {
+        project: project,
+        environment: environment,
+        user: user,
+        session: session,
+        entity_type: entityType,
+      }
+    );
   }
 
   /**
@@ -1276,8 +1490,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).project;
+  matchProjectFromProjectAgentEnvironmentUserSessionEntityTypeName(
+    projectAgentEnvironmentUserSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
+      projectAgentEnvironmentUserSessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -1287,8 +1505,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).environment;
+  matchEnvironmentFromProjectAgentEnvironmentUserSessionEntityTypeName(
+    projectAgentEnvironmentUserSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
+      projectAgentEnvironmentUserSessionEntityTypeName
+    ).environment;
   }
 
   /**
@@ -1298,8 +1520,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the user.
    */
-  matchUserFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).user;
+  matchUserFromProjectAgentEnvironmentUserSessionEntityTypeName(
+    projectAgentEnvironmentUserSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
+      projectAgentEnvironmentUserSessionEntityTypeName
+    ).user;
   }
 
   /**
@@ -1309,8 +1535,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).session;
+  matchSessionFromProjectAgentEnvironmentUserSessionEntityTypeName(
+    projectAgentEnvironmentUserSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
+      projectAgentEnvironmentUserSessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -1320,8 +1550,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).entity_type;
+  matchEntityTypeFromProjectAgentEnvironmentUserSessionEntityTypeName(
+    projectAgentEnvironmentUserSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
+      projectAgentEnvironmentUserSessionEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -1331,7 +1565,7 @@ export class ContextsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  projectAgentIntentPath(project:string,intent:string) {
+  projectAgentIntentPath(project: string, intent: string) {
     return this.pathTemplates.projectAgentIntentPathTemplate.render({
       project: project,
       intent: intent,
@@ -1346,7 +1580,9 @@ export class ContextsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectAgentIntentName(projectAgentIntentName: string) {
-    return this.pathTemplates.projectAgentIntentPathTemplate.match(projectAgentIntentName).project;
+    return this.pathTemplates.projectAgentIntentPathTemplate.match(
+      projectAgentIntentName
+    ).project;
   }
 
   /**
@@ -1357,7 +1593,9 @@ export class ContextsClient {
    * @returns {string} A string representing the intent.
    */
   matchIntentFromProjectAgentIntentName(projectAgentIntentName: string) {
-    return this.pathTemplates.projectAgentIntentPathTemplate.match(projectAgentIntentName).intent;
+    return this.pathTemplates.projectAgentIntentPathTemplate.match(
+      projectAgentIntentName
+    ).intent;
   }
 
   /**
@@ -1367,7 +1605,7 @@ export class ContextsClient {
    * @param {string} session
    * @returns {string} Resource name string.
    */
-  projectAgentSessionPath(project:string,session:string) {
+  projectAgentSessionPath(project: string, session: string) {
     return this.pathTemplates.projectAgentSessionPathTemplate.render({
       project: project,
       session: session,
@@ -1382,7 +1620,9 @@ export class ContextsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectAgentSessionName(projectAgentSessionName: string) {
-    return this.pathTemplates.projectAgentSessionPathTemplate.match(projectAgentSessionName).project;
+    return this.pathTemplates.projectAgentSessionPathTemplate.match(
+      projectAgentSessionName
+    ).project;
   }
 
   /**
@@ -1393,7 +1633,9 @@ export class ContextsClient {
    * @returns {string} A string representing the session.
    */
   matchSessionFromProjectAgentSessionName(projectAgentSessionName: string) {
-    return this.pathTemplates.projectAgentSessionPathTemplate.match(projectAgentSessionName).session;
+    return this.pathTemplates.projectAgentSessionPathTemplate.match(
+      projectAgentSessionName
+    ).session;
   }
 
   /**
@@ -1404,7 +1646,11 @@ export class ContextsClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  projectAgentSessionContextPath(project:string,session:string,context:string) {
+  projectAgentSessionContextPath(
+    project: string,
+    session: string,
+    context: string
+  ) {
     return this.pathTemplates.projectAgentSessionContextPathTemplate.render({
       project: project,
       session: session,
@@ -1419,8 +1665,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).project;
+  matchProjectFromProjectAgentSessionContextName(
+    projectAgentSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
+      projectAgentSessionContextName
+    ).project;
   }
 
   /**
@@ -1430,8 +1680,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).session;
+  matchSessionFromProjectAgentSessionContextName(
+    projectAgentSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
+      projectAgentSessionContextName
+    ).session;
   }
 
   /**
@@ -1441,8 +1695,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the context.
    */
-  matchContextFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).context;
+  matchContextFromProjectAgentSessionContextName(
+    projectAgentSessionContextName: string
+  ) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
+      projectAgentSessionContextName
+    ).context;
   }
 
   /**
@@ -1453,7 +1711,11 @@ export class ContextsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectAgentSessionEntityTypePath(project:string,session:string,entityType:string) {
+  projectAgentSessionEntityTypePath(
+    project: string,
+    session: string,
+    entityType: string
+  ) {
     return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.render({
       project: project,
       session: session,
@@ -1468,8 +1730,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).project;
+  matchProjectFromProjectAgentSessionEntityTypeName(
+    projectAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
+      projectAgentSessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -1479,8 +1745,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).session;
+  matchSessionFromProjectAgentSessionEntityTypeName(
+    projectAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
+      projectAgentSessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -1490,8 +1760,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).entity_type;
+  matchEntityTypeFromProjectAgentSessionEntityTypeName(
+    projectAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
+      projectAgentSessionEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -1501,7 +1775,7 @@ export class ContextsClient {
    * @param {string} location
    * @returns {string} Resource name string.
    */
-  projectLocationAgentPath(project:string,location:string) {
+  projectLocationAgentPath(project: string, location: string) {
     return this.pathTemplates.projectLocationAgentPathTemplate.render({
       project: project,
       location: location,
@@ -1516,7 +1790,9 @@ export class ContextsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectLocationAgentName(projectLocationAgentName: string) {
-    return this.pathTemplates.projectLocationAgentPathTemplate.match(projectLocationAgentName).project;
+    return this.pathTemplates.projectLocationAgentPathTemplate.match(
+      projectLocationAgentName
+    ).project;
   }
 
   /**
@@ -1527,7 +1803,9 @@ export class ContextsClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromProjectLocationAgentName(projectLocationAgentName: string) {
-    return this.pathTemplates.projectLocationAgentPathTemplate.match(projectLocationAgentName).location;
+    return this.pathTemplates.projectLocationAgentPathTemplate.match(
+      projectLocationAgentName
+    ).location;
   }
 
   /**
@@ -1538,12 +1816,18 @@ export class ContextsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectLocationAgentEntityTypePath(project:string,location:string,entityType:string) {
-    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.render({
-      project: project,
-      location: location,
-      entity_type: entityType,
-    });
+  projectLocationAgentEntityTypePath(
+    project: string,
+    location: string,
+    entityType: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.render(
+      {
+        project: project,
+        location: location,
+        entity_type: entityType,
+      }
+    );
   }
 
   /**
@@ -1553,8 +1837,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAgentEntityTypeName(projectLocationAgentEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.match(projectLocationAgentEntityTypeName).project;
+  matchProjectFromProjectLocationAgentEntityTypeName(
+    projectLocationAgentEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.match(
+      projectLocationAgentEntityTypeName
+    ).project;
   }
 
   /**
@@ -1564,8 +1852,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_entity_type resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAgentEntityTypeName(projectLocationAgentEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.match(projectLocationAgentEntityTypeName).location;
+  matchLocationFromProjectLocationAgentEntityTypeName(
+    projectLocationAgentEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.match(
+      projectLocationAgentEntityTypeName
+    ).location;
   }
 
   /**
@@ -1575,8 +1867,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectLocationAgentEntityTypeName(projectLocationAgentEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.match(projectLocationAgentEntityTypeName).entity_type;
+  matchEntityTypeFromProjectLocationAgentEntityTypeName(
+    projectLocationAgentEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEntityTypePathTemplate.match(
+      projectLocationAgentEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -1587,12 +1883,18 @@ export class ContextsClient {
    * @param {string} environment
    * @returns {string} Resource name string.
    */
-  projectLocationAgentEnvironmentPath(project:string,location:string,environment:string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.render({
-      project: project,
-      location: location,
-      environment: environment,
-    });
+  projectLocationAgentEnvironmentPath(
+    project: string,
+    location: string,
+    environment: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.render(
+      {
+        project: project,
+        location: location,
+        environment: environment,
+      }
+    );
   }
 
   /**
@@ -1602,8 +1904,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_environment resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAgentEnvironmentName(projectLocationAgentEnvironmentName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.match(projectLocationAgentEnvironmentName).project;
+  matchProjectFromProjectLocationAgentEnvironmentName(
+    projectLocationAgentEnvironmentName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.match(
+      projectLocationAgentEnvironmentName
+    ).project;
   }
 
   /**
@@ -1613,8 +1919,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_environment resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAgentEnvironmentName(projectLocationAgentEnvironmentName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.match(projectLocationAgentEnvironmentName).location;
+  matchLocationFromProjectLocationAgentEnvironmentName(
+    projectLocationAgentEnvironmentName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.match(
+      projectLocationAgentEnvironmentName
+    ).location;
   }
 
   /**
@@ -1624,8 +1934,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_environment resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectLocationAgentEnvironmentName(projectLocationAgentEnvironmentName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.match(projectLocationAgentEnvironmentName).environment;
+  matchEnvironmentFromProjectLocationAgentEnvironmentName(
+    projectLocationAgentEnvironmentName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentPathTemplate.match(
+      projectLocationAgentEnvironmentName
+    ).environment;
   }
 
   /**
@@ -1636,7 +1950,11 @@ export class ContextsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  projectLocationAgentIntentPath(project:string,location:string,intent:string) {
+  projectLocationAgentIntentPath(
+    project: string,
+    location: string,
+    intent: string
+  ) {
     return this.pathTemplates.projectLocationAgentIntentPathTemplate.render({
       project: project,
       location: location,
@@ -1651,8 +1969,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_intent resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAgentIntentName(projectLocationAgentIntentName: string) {
-    return this.pathTemplates.projectLocationAgentIntentPathTemplate.match(projectLocationAgentIntentName).project;
+  matchProjectFromProjectLocationAgentIntentName(
+    projectLocationAgentIntentName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentIntentPathTemplate.match(
+      projectLocationAgentIntentName
+    ).project;
   }
 
   /**
@@ -1662,8 +1984,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_intent resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAgentIntentName(projectLocationAgentIntentName: string) {
-    return this.pathTemplates.projectLocationAgentIntentPathTemplate.match(projectLocationAgentIntentName).location;
+  matchLocationFromProjectLocationAgentIntentName(
+    projectLocationAgentIntentName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentIntentPathTemplate.match(
+      projectLocationAgentIntentName
+    ).location;
   }
 
   /**
@@ -1673,8 +1999,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_intent resource.
    * @returns {string} A string representing the intent.
    */
-  matchIntentFromProjectLocationAgentIntentName(projectLocationAgentIntentName: string) {
-    return this.pathTemplates.projectLocationAgentIntentPathTemplate.match(projectLocationAgentIntentName).intent;
+  matchIntentFromProjectLocationAgentIntentName(
+    projectLocationAgentIntentName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentIntentPathTemplate.match(
+      projectLocationAgentIntentName
+    ).intent;
   }
 
   /**
@@ -1686,13 +2016,20 @@ export class ContextsClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  projectLocationAgentSessionContextPath(project:string,location:string,session:string,context:string) {
-    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.render({
-      project: project,
-      location: location,
-      session: session,
-      context: context,
-    });
+  projectLocationAgentSessionContextPath(
+    project: string,
+    location: string,
+    session: string,
+    context: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.render(
+      {
+        project: project,
+        location: location,
+        session: session,
+        context: context,
+      }
+    );
   }
 
   /**
@@ -1702,8 +2039,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_context resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAgentSessionContextName(projectLocationAgentSessionContextName: string) {
-    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(projectLocationAgentSessionContextName).project;
+  matchProjectFromProjectLocationAgentSessionContextName(
+    projectLocationAgentSessionContextName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(
+      projectLocationAgentSessionContextName
+    ).project;
   }
 
   /**
@@ -1713,8 +2054,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_context resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAgentSessionContextName(projectLocationAgentSessionContextName: string) {
-    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(projectLocationAgentSessionContextName).location;
+  matchLocationFromProjectLocationAgentSessionContextName(
+    projectLocationAgentSessionContextName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(
+      projectLocationAgentSessionContextName
+    ).location;
   }
 
   /**
@@ -1724,8 +2069,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_context resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectLocationAgentSessionContextName(projectLocationAgentSessionContextName: string) {
-    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(projectLocationAgentSessionContextName).session;
+  matchSessionFromProjectLocationAgentSessionContextName(
+    projectLocationAgentSessionContextName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(
+      projectLocationAgentSessionContextName
+    ).session;
   }
 
   /**
@@ -1735,8 +2084,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_context resource.
    * @returns {string} A string representing the context.
    */
-  matchContextFromProjectLocationAgentSessionContextName(projectLocationAgentSessionContextName: string) {
-    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(projectLocationAgentSessionContextName).context;
+  matchContextFromProjectLocationAgentSessionContextName(
+    projectLocationAgentSessionContextName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionContextPathTemplate.match(
+      projectLocationAgentSessionContextName
+    ).context;
   }
 
   /**
@@ -1748,13 +2101,20 @@ export class ContextsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectLocationAgentSessionEntityTypePath(project:string,location:string,session:string,entityType:string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.render({
-      project: project,
-      location: location,
-      session: session,
-      entity_type: entityType,
-    });
+  projectLocationAgentSessionEntityTypePath(
+    project: string,
+    location: string,
+    session: string,
+    entityType: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.render(
+      {
+        project: project,
+        location: location,
+        session: session,
+        entity_type: entityType,
+      }
+    );
   }
 
   /**
@@ -1764,8 +2124,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).project;
+  matchProjectFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -1775,8 +2139,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).location;
+  matchLocationFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).location;
   }
 
   /**
@@ -1786,8 +2154,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).session;
+  matchSessionFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -1797,8 +2169,12 @@ export class ContextsClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).entity_type;
+  matchEntityTypeFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).entity_type;
   }
 
   /**
