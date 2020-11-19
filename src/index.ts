@@ -34,27 +34,7 @@ type SessionEntityTypesClient = v2.SessionEntityTypesClient;
 const SessionsClient = v2.SessionsClient;
 type SessionsClient = v2.SessionsClient;
 
-export {
-  v2beta1,
-  v2,
-  AgentsClient,
-  ContextsClient,
-  EntityTypesClient,
-  EnvironmentsClient,
-  IntentsClient,
-  SessionEntityTypesClient,
-  SessionsClient,
-};
-export default {
-  v2beta1,
-  v2,
-  AgentsClient,
-  ContextsClient,
-  EntityTypesClient,
-  EnvironmentsClient,
-  IntentsClient,
-  SessionEntityTypesClient,
-  SessionsClient,
-};
+export {v2beta1, v2, AgentsClient, ContextsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, SessionEntityTypesClient, SessionsClient};
+export default {v2beta1, v2, AgentsClient, ContextsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, SessionEntityTypesClient, SessionsClient};
 import * as protos from '../protos/protos';
 export {protos};
