@@ -54,6 +54,9 @@ sed -i -e '5i\
 ' ./yaml/toc.yml
 
 cp ./yaml/toc.yml ./_devsite/toc.yml
+cp ./quickstart.yml ./_devsite/index.yml
+cp ./yaml/$NAME.yml ./_devsite/$NAME.yml
+
 
 # create docs.metadata, based on package.json and .repo-metadata.json.
 pip install -U pip
