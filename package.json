@@ -68,6 +68,6 @@
     "webpack": "^5.6.0",
     "webpack-cli": "^4.2.0",
     "@microsoft/api-documenter": "^7.11.0",
-    "@microsoft/api-extractor": "^7.12.0"
+    "@microsoft/api-extractor": "7.8.2-pr1796.0"
   }
 }
