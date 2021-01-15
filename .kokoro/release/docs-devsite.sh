@@ -28,7 +28,7 @@ fi
 
 dir="$(cd "$(dirname "$0")"; pwd)"
 
-. "$dir/generate-devsite.sh"
+. "$dir/.kokoro/release/generate-devsite.sh"
 
 # create docs.metadata, based on package.json and .repo-metadata.json.
 pip install -U pip
