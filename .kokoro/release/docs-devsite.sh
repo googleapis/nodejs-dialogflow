@@ -25,9 +25,8 @@ if [[ -z "$CREDENTIALS" ]]; then
   cd $(dirname $0)/../..
 fi
 
-
+# Generate the data for the devsite tarball
 dir="$(cd "$(dirname "$0")"; pwd)"
-
 . "$dir/.kokoro/release/generate-devsite.sh"
 
 # create docs.metadata, based on package.json and .repo-metadata.json.
