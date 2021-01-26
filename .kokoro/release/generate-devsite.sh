@@ -37,19 +37,18 @@ sed -i -e 's/^    //' ./yaml/toc.yml
 sed -i -e '/name: I[A-Z]/{N;d;}' ./yaml/toc.yml
 sed -i -e '/^ *\@google-cloud.*:interface/d' ./yaml/toc.yml
 
-sed -i -e '4i\
-\ \ \ \ summary: Dialogflow.
+## Add "items:" to short toc for overview file
+if [[ $(wc -l <./yaml/toc.yml) -le 3 ]] ; then
+  sed -i -e '3a\
+ \ \ \ items:
 ' ./yaml/toc.yml
-
-sed -i -e '5i\
-\ \ \ \ description: Client library for Dialogflow.
-' ./yaml/toc.yml
+fi
 
 # Add overview section
-sed -i -e '7i\
+sed -i -e '4a\
  \ \ \ \ \ - name: Overview
 ' ./yaml/toc.yml
-sed -i -e '8i\
+sed -i -e '5a\
  \ \ \ \ \ \ \ homepage: index.md
 ' ./yaml/toc.yml
 
