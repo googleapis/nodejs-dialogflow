@@ -23,12 +23,6 @@ npm install
 npm run api-extractor
 npm run api-documenter
 
-NAME=$(ls temp | sed s/.api.json*//)
-
-mkdir ./_devsite
-mkdir ./_devsite/$NAME
-cp ./yaml/$NAME/* ./_devsite/$NAME || :
-
 # Clean up TOC
 # Delete SharePoint item, see https://github.com/microsoft/rushstack/issues/1229
 sed -i -e '1,3d' ./yaml/toc.yml
@@ -52,10 +46,20 @@ sed -i -e '5a\
  \ \ \ \ \ \ \ homepage: index.md
 ' ./yaml/toc.yml
 
-## Copy everything to devsite
-cp ./yaml/toc.yml ./_devsite/toc.yml
-# cp ./quickstart.yml ./_devsite/index.yml
-cp ./yaml/$NAME.yml ./_devsite/$NAME.yml
 
+NAME=$(ls temp | sed s/.api.json*//)
+
+## Delete the default overvew page,
+## otherwise anchors are added and they break left nav
+rm ./yaml/$NAME.yml
+
+## Copy everything to devsite
+mkdir ./_devsite
+mkdir ./_devsite/$NAME
+
+cp ./yaml/$NAME/* ./_devsite/$NAME || :
+cp ./yaml/toc.yml ./_devsite/toc.yml
+
+## readme is not allowed as filename
 cp ./README.md ./_devsite/index.md
 
