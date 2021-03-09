@@ -16,21 +16,16 @@
 // ** https://github.com/googleapis/gapic-generator-typescript **
 // ** All changes to this file may be overwritten. **
 
-import {
-  AgentsClient,
-  ContextsClient,
-  EntityTypesClient,
-  EnvironmentsClient,
-  IntentsClient,
-  SessionEntityTypesClient,
-  SessionsClient,
-} from '@google-cloud/dialogflow';
+import {AgentsClient, ContextsClient, DocumentsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, KnowledgeBasesClient, SessionEntityTypesClient, SessionsClient} from '@google-cloud/dialogflow';
 
 // check that the client class type name can be used
 function doStuffWithAgentsClient(client: AgentsClient) {
   client.close();
 }
 function doStuffWithContextsClient(client: ContextsClient) {
+  client.close();
+}
+function doStuffWithDocumentsClient(client: DocumentsClient) {
   client.close();
 }
 function doStuffWithEntityTypesClient(client: EntityTypesClient) {
@@ -40,6 +35,9 @@ function doStuffWithEnvironmentsClient(client: EnvironmentsClient) {
   client.close();
 }
 function doStuffWithIntentsClient(client: IntentsClient) {
+  client.close();
+}
+function doStuffWithKnowledgeBasesClient(client: KnowledgeBasesClient) {
   client.close();
 }
 function doStuffWithSessionEntityTypesClient(client: SessionEntityTypesClient) {
@@ -57,6 +55,9 @@ function main() {
   const contextsClient = new ContextsClient();
   doStuffWithContextsClient(contextsClient);
   // check that the client instance can be created
+  const documentsClient = new DocumentsClient();
+  doStuffWithDocumentsClient(documentsClient);
+  // check that the client instance can be created
   const entityTypesClient = new EntityTypesClient();
   doStuffWithEntityTypesClient(entityTypesClient);
   // check that the client instance can be created
@@ -65,6 +66,9 @@ function main() {
   // check that the client instance can be created
   const intentsClient = new IntentsClient();
   doStuffWithIntentsClient(intentsClient);
+  // check that the client instance can be created
+  const knowledgeBasesClient = new KnowledgeBasesClient();
+  doStuffWithKnowledgeBasesClient(knowledgeBasesClient);
   // check that the client instance can be created
   const sessionEntityTypesClient = new SessionEntityTypesClient();
   doStuffWithSessionEntityTypesClient(sessionEntityTypesClient);
