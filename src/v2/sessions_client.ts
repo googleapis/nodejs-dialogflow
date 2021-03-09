@@ -94,13 +94,10 @@ export class SessionsClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include all the required fields.
     const staticMembers = this.constructor as typeof SessionsClient;
-    const servicePath =
-      opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
+    const servicePath = opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
-    const fallback =
-      opts?.fallback ??
-      (typeof window !== 'undefined' && typeof window?.fetch === 'function');
+    const fallback = opts?.fallback ?? (typeof window !== 'undefined' && typeof window?.fetch === 'function');
     opts = Object.assign({servicePath, port, clientConfig, fallback}, opts);
 
     // If scopes are unset in options and we're connecting to a non-default endpoint, set scopes just in case.
@@ -118,7 +115,7 @@ export class SessionsClient {
     this._opts = opts;
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
+    this.auth = (this._gaxGrpc.auth as gax.GoogleAuth);
 
     // Set the default scopes in auth client if needed.
     if (servicePath === staticMembers.servicePath) {
@@ -126,7 +123,10 @@ export class SessionsClient {
     }
 
     // Determine the client header string.
-    const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
+    const clientHeader = [
+      `gax/${this._gaxModule.version}`,
+      `gapic/${version}`,
+    ];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -142,18 +142,12 @@ export class SessionsClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     this._protos = this._gaxGrpc.loadProto(
-      opts.fallback
-        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('../../protos/protos.json')
-        : nodejsProtoPath
+      opts.fallback ?
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -190,23 +184,66 @@ export class SessionsClient {
       projectAgentSessionEntityTypePathTemplate: new this._gaxModule.PathTemplate(
         'projects/{project}/agent/sessions/{session}/entityTypes/{entity_type}'
       ),
+      projectAnswerRecordPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/answerRecords/{answer_record}'
+      ),
+      projectConversationPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/conversations/{conversation}'
+      ),
+      projectConversationCallMatcherPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/conversations/{conversation}/callMatchers/{call_matcher}'
+      ),
+      projectConversationMessagePathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/conversations/{conversation}/messages/{message}'
+      ),
+      projectConversationParticipantPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/conversations/{conversation}/participants/{participant}'
+      ),
+      projectConversationProfilePathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/conversationProfiles/{conversation_profile}'
+      ),
+      projectKnowledgeBasePathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/knowledgeBases/{knowledge_base}'
+      ),
+      projectKnowledgeBaseDocumentPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/knowledgeBases/{knowledge_base}/documents/{document}'
+      ),
+      projectLocationAnswerRecordPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/answerRecords/{answer_record}'
+      ),
+      projectLocationConversationPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/conversations/{conversation}'
+      ),
+      projectLocationConversationCallMatcherPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/conversations/{conversation}/callMatchers/{call_matcher}'
+      ),
+      projectLocationConversationMessagePathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/conversations/{conversation}/messages/{message}'
+      ),
+      projectLocationConversationParticipantPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/conversations/{conversation}/participants/{participant}'
+      ),
+      projectLocationConversationProfilePathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/conversationProfiles/{conversation_profile}'
+      ),
+      projectLocationKnowledgeBasePathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/knowledgeBases/{knowledge_base}'
+      ),
+      projectLocationKnowledgeBaseDocumentPathTemplate: new this._gaxModule.PathTemplate(
+        'projects/{project}/locations/{location}/knowledgeBases/{knowledge_base}/documents/{document}'
+      ),
     };
 
     // Some of the methods on this service provide streaming responses.
     // Provide descriptors for these.
     this.descriptors.stream = {
-      streamingDetectIntent: new this._gaxModule.StreamDescriptor(
-        gax.StreamType.BIDI_STREAMING
-      ),
+      streamingDetectIntent: new this._gaxModule.StreamDescriptor(gax.StreamType.BIDI_STREAMING)
     };
 
     // Put together the default options sent with requests.
     this._defaults = this._gaxGrpc.constructSettings(
-      'google.cloud.dialogflow.v2.Sessions',
-      gapicConfig as gax.ClientConfig,
-      opts.clientConfig || {},
-      {'x-goog-api-client': clientHeader.join(' ')}
-    );
+        'google.cloud.dialogflow.v2.Sessions', gapicConfig as gax.ClientConfig,
+        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -234,18 +271,16 @@ export class SessionsClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.Sessions.
     this.sessionsStub = this._gaxGrpc.createStub(
-      this._opts.fallback
-        ? (this._protos as protobuf.Root).lookupService(
-            'google.cloud.dialogflow.v2.Sessions'
-          )
-        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this._opts.fallback ?
+          (this._protos as protobuf.Root).lookupService('google.cloud.dialogflow.v2.Sessions') :
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.cloud.dialogflow.v2.Sessions,
-      this._opts
-    ) as Promise<{[method: string]: Function}>;
+        this._opts) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const sessionsStubMethods = ['detectIntent', 'streamingDetectIntent'];
+    const sessionsStubMethods =
+        ['detectIntent', 'streamingDetectIntent'];
     for (const methodName of sessionsStubMethods) {
       const callPromise = this.sessionsStub.then(
         stub => (...args: Array<{}>) => {
@@ -255,12 +290,13 @@ export class SessionsClient {
           const func = stub[methodName];
           return func.apply(stub, args);
         },
-        (err: Error | null | undefined) => () => {
+        (err: Error|null|undefined) => () => {
           throw err;
-        }
-      );
+        });
 
-      const descriptor = this.descriptors.stream[methodName] || undefined;
+      const descriptor =
+        this.descriptors.stream[methodName] ||
+        undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
@@ -306,7 +342,7 @@ export class SessionsClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow',
+      'https://www.googleapis.com/auth/dialogflow'
     ];
   }
 
@@ -316,9 +352,8 @@ export class SessionsClient {
    * Return the project ID used by this class.
    * @returns {Promise} A promise that resolves to string containing the project ID.
    */
-  getProjectId(
-    callback?: Callback<string, undefined, undefined>
-  ): Promise<string> | void {
+  getProjectId(callback?: Callback<string, undefined, undefined>):
+      Promise<string>|void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -330,127 +365,112 @@ export class SessionsClient {
   // -- Service calls --
   // -------------------
   detectIntent(
-    request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
-      protos.google.cloud.dialogflow.v2.IDetectIntentRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
+      options?: CallOptions):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
+        protos.google.cloud.dialogflow.v2.IDetectIntentRequest|undefined, {}|undefined
+      ]>;
   detectIntent(
-    request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
-    options: CallOptions,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
-      protos.google.cloud.dialogflow.v2.IDetectIntentRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  detectIntent(
-    request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
-      protos.google.cloud.dialogflow.v2.IDetectIntentRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Processes a natural language query and returns structured, actionable data
-   * as a result. This method is not idempotent, because it may cause contexts
-   * and session entity types to be updated, which in turn might affect
-   * results of future queries.
-   *
-   * Note: Always use agent versions for production traffic.
-   * See [Versions and
-   * environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.session
-   *   Required. The name of the session this query is sent to. Format:
-   *   `projects/<Project ID>/agent/sessions/<Session ID>`, or
-   *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-   *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
-   *   default 'draft' environment (`Environment ID` might be referred to as
-   *   environment name at some places). If `User ID` is not specified, we are
-   *   using "-". It's up to the API caller to choose an appropriate `Session ID`
-   *   and `User Id`. They can be a random number or some type of user and session
-   *   identifiers (preferably hashed). The length of the `Session ID` and
-   *   `User ID` must not exceed 36 characters.
-   *
-   *   For more information, see the [API interactions
-   *   guide](https://cloud.google.com/dialogflow/docs/api-overview).
-   *
-   *   Note: Always use agent versions for production traffic.
-   *   See [Versions and
-   *   environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
-   * @param {google.cloud.dialogflow.v2.QueryParameters} request.queryParams
-   *   The parameters of this query.
-   * @param {google.cloud.dialogflow.v2.QueryInput} request.queryInput
-   *   Required. The input specification. It can be set to:
-   *
-   *   1.  an audio config
-   *       which instructs the speech recognizer how to process the speech audio,
-   *
-   *   2.  a conversational query in the form of text, or
-   *
-   *   3.  an event that specifies which intent to trigger.
-   * @param {google.cloud.dialogflow.v2.OutputAudioConfig} request.outputAudioConfig
-   *   Instructs the speech synthesizer how to generate the output
-   *   audio. If this field is not set and agent-level speech synthesizer is not
-   *   configured, no output audio is generated.
-   * @param {google.protobuf.FieldMask} request.outputAudioConfigMask
-   *   Mask for {@link google.cloud.dialogflow.v2.DetectIntentRequest.output_audio_config|output_audio_config} indicating which settings in this
-   *   request-level config should override speech synthesizer settings defined at
-   *   agent-level.
-   *
-   *   If unspecified or empty, {@link google.cloud.dialogflow.v2.DetectIntentRequest.output_audio_config|output_audio_config} replaces the agent-level
-   *   config in its entirety.
-   * @param {Buffer} request.inputAudio
-   *   The natural language speech audio to be processed. This field
-   *   should be populated iff `query_input` is set to an input audio config.
-   *   A single request can contain up to 1 minute of speech audio data.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [DetectIntentResponse]{@link google.cloud.dialogflow.v2.DetectIntentResponse}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.detectIntent(request);
-   */
-  detectIntent(
-    request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
+      request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
+      options: CallOptions,
+      callback: Callback<
           protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
-          | protos.google.cloud.dialogflow.v2.IDetectIntentRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
-      protos.google.cloud.dialogflow.v2.IDetectIntentRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
-      protos.google.cloud.dialogflow.v2.IDetectIntentRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.cloud.dialogflow.v2.IDetectIntentRequest|null|undefined,
+          {}|null|undefined>): void;
+  detectIntent(
+      request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
+      callback: Callback<
+          protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
+          protos.google.cloud.dialogflow.v2.IDetectIntentRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Processes a natural language query and returns structured, actionable data
+ * as a result. This method is not idempotent, because it may cause contexts
+ * and session entity types to be updated, which in turn might affect
+ * results of future queries.
+ *
+ * Note: Always use agent versions for production traffic.
+ * See [Versions and
+ * environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.session
+ *   Required. The name of the session this query is sent to. Format:
+ *   `projects/<Project ID>/agent/sessions/<Session ID>`, or
+ *   `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+ *   ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+ *   default 'draft' environment (`Environment ID` might be referred to as
+ *   environment name at some places). If `User ID` is not specified, we are
+ *   using "-". It's up to the API caller to choose an appropriate `Session ID`
+ *   and `User Id`. They can be a random number or some type of user and session
+ *   identifiers (preferably hashed). The length of the `Session ID` and
+ *   `User ID` must not exceed 36 characters.
+ *
+ *   For more information, see the [API interactions
+ *   guide](https://cloud.google.com/dialogflow/docs/api-overview).
+ *
+ *   Note: Always use agent versions for production traffic.
+ *   See [Versions and
+ *   environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
+ * @param {google.cloud.dialogflow.v2.QueryParameters} request.queryParams
+ *   The parameters of this query.
+ * @param {google.cloud.dialogflow.v2.QueryInput} request.queryInput
+ *   Required. The input specification. It can be set to:
+ *
+ *   1.  an audio config
+ *       which instructs the speech recognizer how to process the speech audio,
+ *
+ *   2.  a conversational query in the form of text, or
+ *
+ *   3.  an event that specifies which intent to trigger.
+ * @param {google.cloud.dialogflow.v2.OutputAudioConfig} request.outputAudioConfig
+ *   Instructs the speech synthesizer how to generate the output
+ *   audio. If this field is not set and agent-level speech synthesizer is not
+ *   configured, no output audio is generated.
+ * @param {google.protobuf.FieldMask} request.outputAudioConfigMask
+ *   Mask for {@link google.cloud.dialogflow.v2.DetectIntentRequest.output_audio_config|output_audio_config} indicating which settings in this
+ *   request-level config should override speech synthesizer settings defined at
+ *   agent-level.
+ *
+ *   If unspecified or empty, {@link google.cloud.dialogflow.v2.DetectIntentRequest.output_audio_config|output_audio_config} replaces the agent-level
+ *   config in its entirety.
+ * @param {Buffer} request.inputAudio
+ *   The natural language speech audio to be processed. This field
+ *   should be populated iff `query_input` is set to an input audio config.
+ *   A single request can contain up to 1 minute of speech audio data.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [DetectIntentResponse]{@link google.cloud.dialogflow.v2.DetectIntentResponse}.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+ *   for more details and examples.
+ * @example
+ * const [response] = await client.detectIntent(request);
+ */
+  detectIntent(
+      request: protos.google.cloud.dialogflow.v2.IDetectIntentRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
+          protos.google.cloud.dialogflow.v2.IDetectIntentRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
+          protos.google.cloud.dialogflow.v2.IDetectIntentRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IDetectIntentResponse,
+        protos.google.cloud.dialogflow.v2.IDetectIntentRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -459,38 +479,40 @@ export class SessionsClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      session: request.session || '',
+      'session': request.session || '',
     });
     this.initialize();
     return this.innerApiCalls.detectIntent(request, options, callback);
   }
 
-  /**
-   * Processes a natural language query in audio format in a streaming fashion
-   * and returns structured, actionable data as a result. This method is only
-   * available via the gRPC API (not REST).
-   *
-   * Note: Always use agent versions for production traffic.
-   * See [Versions and
-   * environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
-   *
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Stream}
-   *   An object stream which is both readable and writable. It accepts objects
-   *   representing [StreamingDetectIntentRequest]{@link google.cloud.dialogflow.v2.StreamingDetectIntentRequest} for write() method, and
-   *   will emit objects representing [StreamingDetectIntentResponse]{@link google.cloud.dialogflow.v2.StreamingDetectIntentResponse} on 'data' event asynchronously.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#bi-directional-streaming)
-   *   for more details and examples.
-   * @example
-   * const stream = client.streamingDetectIntent();
-   * stream.on('data', (response) => { ... });
-   * stream.on('end', () => { ... });
-   * stream.write(request);
-   * stream.end();
-   */
-  streamingDetectIntent(options?: CallOptions): gax.CancellableStream {
+/**
+ * Processes a natural language query in audio format in a streaming fashion
+ * and returns structured, actionable data as a result. This method is only
+ * available via the gRPC API (not REST).
+ *
+ * Note: Always use agent versions for production traffic.
+ * See [Versions and
+ * environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
+ *
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Stream}
+ *   An object stream which is both readable and writable. It accepts objects
+ *   representing [StreamingDetectIntentRequest]{@link google.cloud.dialogflow.v2.StreamingDetectIntentRequest} for write() method, and
+ *   will emit objects representing [StreamingDetectIntentResponse]{@link google.cloud.dialogflow.v2.StreamingDetectIntentResponse} on 'data' event asynchronously.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#bi-directional-streaming)
+ *   for more details and examples.
+ * @example
+ * const stream = client.streamingDetectIntent();
+ * stream.on('data', (response) => { ... });
+ * stream.on('end', () => { ... });
+ * stream.write(request);
+ * stream.end();
+ */
+  streamingDetectIntent(
+      options?: CallOptions):
+    gax.CancellableStream {
     this.initialize();
     return this.innerApiCalls.streamingDetectIntent(options);
   }
@@ -505,7 +527,7 @@ export class SessionsClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  agentPath(project: string) {
+  agentPath(project:string) {
     return this.pathTemplates.agentPathTemplate.render({
       project: project,
     });
@@ -529,7 +551,7 @@ export class SessionsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  entityTypePath(project: string, entityType: string) {
+  entityTypePath(project:string,entityType:string) {
     return this.pathTemplates.entityTypePathTemplate.render({
       project: project,
       entity_type: entityType,
@@ -544,8 +566,7 @@ export class SessionsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
-      .project;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).project;
   }
 
   /**
@@ -556,8 +577,7 @@ export class SessionsClient {
    * @returns {string} A string representing the entity_type.
    */
   matchEntityTypeFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
-      .entity_type;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).entity_type;
   }
 
   /**
@@ -567,7 +587,7 @@ export class SessionsClient {
    * @param {string} environment
    * @returns {string} Resource name string.
    */
-  environmentPath(project: string, environment: string) {
+  environmentPath(project:string,environment:string) {
     return this.pathTemplates.environmentPathTemplate.render({
       project: project,
       environment: environment,
@@ -582,8 +602,7 @@ export class SessionsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName)
-      .project;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName).project;
   }
 
   /**
@@ -594,8 +613,7 @@ export class SessionsClient {
    * @returns {string} A string representing the environment.
    */
   matchEnvironmentFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName)
-      .environment;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName).environment;
   }
 
   /**
@@ -605,7 +623,7 @@ export class SessionsClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  intentPath(project: string, intent: string) {
+  intentPath(project:string,intent:string) {
     return this.pathTemplates.intentPathTemplate.render({
       project: project,
       intent: intent,
@@ -643,20 +661,13 @@ export class SessionsClient {
    * @param {string} session
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentUserSessionPath(
-    project: string,
-    environment: string,
-    user: string,
-    session: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.render(
-      {
-        project: project,
-        environment: environment,
-        user: user,
-        session: session,
-      }
-    );
+  projectAgentEnvironmentUserSessionPath(project:string,environment:string,user:string,session:string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+    });
   }
 
   /**
@@ -666,12 +677,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentUserSessionName(
-    projectAgentEnvironmentUserSessionName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(
-      projectAgentEnvironmentUserSessionName
-    ).project;
+  matchProjectFromProjectAgentEnvironmentUserSessionName(projectAgentEnvironmentUserSessionName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(projectAgentEnvironmentUserSessionName).project;
   }
 
   /**
@@ -681,12 +688,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentUserSessionName(
-    projectAgentEnvironmentUserSessionName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(
-      projectAgentEnvironmentUserSessionName
-    ).environment;
+  matchEnvironmentFromProjectAgentEnvironmentUserSessionName(projectAgentEnvironmentUserSessionName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(projectAgentEnvironmentUserSessionName).environment;
   }
 
   /**
@@ -696,12 +699,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session resource.
    * @returns {string} A string representing the user.
    */
-  matchUserFromProjectAgentEnvironmentUserSessionName(
-    projectAgentEnvironmentUserSessionName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(
-      projectAgentEnvironmentUserSessionName
-    ).user;
+  matchUserFromProjectAgentEnvironmentUserSessionName(projectAgentEnvironmentUserSessionName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(projectAgentEnvironmentUserSessionName).user;
   }
 
   /**
@@ -711,12 +710,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentEnvironmentUserSessionName(
-    projectAgentEnvironmentUserSessionName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(
-      projectAgentEnvironmentUserSessionName
-    ).session;
+  matchSessionFromProjectAgentEnvironmentUserSessionName(projectAgentEnvironmentUserSessionName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionPathTemplate.match(projectAgentEnvironmentUserSessionName).session;
   }
 
   /**
@@ -729,22 +724,14 @@ export class SessionsClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentUserSessionContextPath(
-    project: string,
-    environment: string,
-    user: string,
-    session: string,
-    context: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.render(
-      {
-        project: project,
-        environment: environment,
-        user: user,
-        session: session,
-        context: context,
-      }
-    );
+  projectAgentEnvironmentUserSessionContextPath(project:string,environment:string,user:string,session:string,context:string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+      context: context,
+    });
   }
 
   /**
@@ -754,12 +741,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).project;
+  matchProjectFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).project;
   }
 
   /**
@@ -769,12 +752,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).environment;
+  matchEnvironmentFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).environment;
   }
 
   /**
@@ -784,12 +763,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the user.
    */
-  matchUserFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).user;
+  matchUserFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).user;
   }
 
   /**
@@ -799,12 +774,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).session;
+  matchSessionFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).session;
   }
 
   /**
@@ -814,12 +785,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the context.
    */
-  matchContextFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).context;
+  matchContextFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).context;
   }
 
   /**
@@ -832,22 +799,14 @@ export class SessionsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentUserSessionEntityTypePath(
-    project: string,
-    environment: string,
-    user: string,
-    session: string,
-    entityType: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.render(
-      {
-        project: project,
-        environment: environment,
-        user: user,
-        session: session,
-        entity_type: entityType,
-      }
-    );
+  projectAgentEnvironmentUserSessionEntityTypePath(project:string,environment:string,user:string,session:string,entityType:string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+      entity_type: entityType,
+    });
   }
 
   /**
@@ -857,12 +816,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).project;
+  matchProjectFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).project;
   }
 
   /**
@@ -872,12 +827,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).environment;
+  matchEnvironmentFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).environment;
   }
 
   /**
@@ -887,12 +838,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the user.
    */
-  matchUserFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).user;
+  matchUserFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).user;
   }
 
   /**
@@ -902,12 +849,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).session;
+  matchSessionFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).session;
   }
 
   /**
@@ -917,12 +860,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).entity_type;
+  matchEntityTypeFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).entity_type;
   }
 
   /**
@@ -932,7 +871,7 @@ export class SessionsClient {
    * @param {string} session
    * @returns {string} Resource name string.
    */
-  projectAgentSessionPath(project: string, session: string) {
+  projectAgentSessionPath(project:string,session:string) {
     return this.pathTemplates.projectAgentSessionPathTemplate.render({
       project: project,
       session: session,
@@ -947,9 +886,7 @@ export class SessionsClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectAgentSessionName(projectAgentSessionName: string) {
-    return this.pathTemplates.projectAgentSessionPathTemplate.match(
-      projectAgentSessionName
-    ).project;
+    return this.pathTemplates.projectAgentSessionPathTemplate.match(projectAgentSessionName).project;
   }
 
   /**
@@ -960,9 +897,7 @@ export class SessionsClient {
    * @returns {string} A string representing the session.
    */
   matchSessionFromProjectAgentSessionName(projectAgentSessionName: string) {
-    return this.pathTemplates.projectAgentSessionPathTemplate.match(
-      projectAgentSessionName
-    ).session;
+    return this.pathTemplates.projectAgentSessionPathTemplate.match(projectAgentSessionName).session;
   }
 
   /**
@@ -973,11 +908,7 @@ export class SessionsClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  projectAgentSessionContextPath(
-    project: string,
-    session: string,
-    context: string
-  ) {
+  projectAgentSessionContextPath(project:string,session:string,context:string) {
     return this.pathTemplates.projectAgentSessionContextPathTemplate.render({
       project: project,
       session: session,
@@ -992,12 +923,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentSessionContextName(
-    projectAgentSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
-      projectAgentSessionContextName
-    ).project;
+  matchProjectFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).project;
   }
 
   /**
@@ -1007,12 +934,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentSessionContextName(
-    projectAgentSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
-      projectAgentSessionContextName
-    ).session;
+  matchSessionFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).session;
   }
 
   /**
@@ -1022,12 +945,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the context.
    */
-  matchContextFromProjectAgentSessionContextName(
-    projectAgentSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
-      projectAgentSessionContextName
-    ).context;
+  matchContextFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).context;
   }
 
   /**
@@ -1038,11 +957,7 @@ export class SessionsClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectAgentSessionEntityTypePath(
-    project: string,
-    session: string,
-    entityType: string
-  ) {
+  projectAgentSessionEntityTypePath(project:string,session:string,entityType:string) {
     return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.render({
       project: project,
       session: session,
@@ -1057,12 +972,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentSessionEntityTypeName(
-    projectAgentSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
-      projectAgentSessionEntityTypeName
-    ).project;
+  matchProjectFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).project;
   }
 
   /**
@@ -1072,12 +983,8 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentSessionEntityTypeName(
-    projectAgentSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
-      projectAgentSessionEntityTypeName
-    ).session;
+  matchSessionFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).session;
   }
 
   /**
@@ -1087,12 +994,792 @@ export class SessionsClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectAgentSessionEntityTypeName(
-    projectAgentSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
-      projectAgentSessionEntityTypeName
-    ).entity_type;
+  matchEntityTypeFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).entity_type;
+  }
+
+  /**
+   * Return a fully-qualified projectAnswerRecord resource name string.
+   *
+   * @param {string} project
+   * @param {string} answer_record
+   * @returns {string} Resource name string.
+   */
+  projectAnswerRecordPath(project:string,answerRecord:string) {
+    return this.pathTemplates.projectAnswerRecordPathTemplate.render({
+      project: project,
+      answer_record: answerRecord,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectAnswerRecord resource.
+   *
+   * @param {string} projectAnswerRecordName
+   *   A fully-qualified path representing project_answer_record resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectAnswerRecordName(projectAnswerRecordName: string) {
+    return this.pathTemplates.projectAnswerRecordPathTemplate.match(projectAnswerRecordName).project;
+  }
+
+  /**
+   * Parse the answer_record from ProjectAnswerRecord resource.
+   *
+   * @param {string} projectAnswerRecordName
+   *   A fully-qualified path representing project_answer_record resource.
+   * @returns {string} A string representing the answer_record.
+   */
+  matchAnswerRecordFromProjectAnswerRecordName(projectAnswerRecordName: string) {
+    return this.pathTemplates.projectAnswerRecordPathTemplate.match(projectAnswerRecordName).answer_record;
+  }
+
+  /**
+   * Return a fully-qualified projectConversation resource name string.
+   *
+   * @param {string} project
+   * @param {string} conversation
+   * @returns {string} Resource name string.
+   */
+  projectConversationPath(project:string,conversation:string) {
+    return this.pathTemplates.projectConversationPathTemplate.render({
+      project: project,
+      conversation: conversation,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectConversation resource.
+   *
+   * @param {string} projectConversationName
+   *   A fully-qualified path representing project_conversation resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectConversationName(projectConversationName: string) {
+    return this.pathTemplates.projectConversationPathTemplate.match(projectConversationName).project;
+  }
+
+  /**
+   * Parse the conversation from ProjectConversation resource.
+   *
+   * @param {string} projectConversationName
+   *   A fully-qualified path representing project_conversation resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectConversationName(projectConversationName: string) {
+    return this.pathTemplates.projectConversationPathTemplate.match(projectConversationName).conversation;
+  }
+
+  /**
+   * Return a fully-qualified projectConversationCallMatcher resource name string.
+   *
+   * @param {string} project
+   * @param {string} conversation
+   * @param {string} call_matcher
+   * @returns {string} Resource name string.
+   */
+  projectConversationCallMatcherPath(project:string,conversation:string,callMatcher:string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.render({
+      project: project,
+      conversation: conversation,
+      call_matcher: callMatcher,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectConversationCallMatcher resource.
+   *
+   * @param {string} projectConversationCallMatcherName
+   *   A fully-qualified path representing project_conversation_call_matcher resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectConversationCallMatcherName(projectConversationCallMatcherName: string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(projectConversationCallMatcherName).project;
+  }
+
+  /**
+   * Parse the conversation from ProjectConversationCallMatcher resource.
+   *
+   * @param {string} projectConversationCallMatcherName
+   *   A fully-qualified path representing project_conversation_call_matcher resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectConversationCallMatcherName(projectConversationCallMatcherName: string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(projectConversationCallMatcherName).conversation;
+  }
+
+  /**
+   * Parse the call_matcher from ProjectConversationCallMatcher resource.
+   *
+   * @param {string} projectConversationCallMatcherName
+   *   A fully-qualified path representing project_conversation_call_matcher resource.
+   * @returns {string} A string representing the call_matcher.
+   */
+  matchCallMatcherFromProjectConversationCallMatcherName(projectConversationCallMatcherName: string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(projectConversationCallMatcherName).call_matcher;
+  }
+
+  /**
+   * Return a fully-qualified projectConversationMessage resource name string.
+   *
+   * @param {string} project
+   * @param {string} conversation
+   * @param {string} message
+   * @returns {string} Resource name string.
+   */
+  projectConversationMessagePath(project:string,conversation:string,message:string) {
+    return this.pathTemplates.projectConversationMessagePathTemplate.render({
+      project: project,
+      conversation: conversation,
+      message: message,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectConversationMessage resource.
+   *
+   * @param {string} projectConversationMessageName
+   *   A fully-qualified path representing project_conversation_message resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectConversationMessageName(projectConversationMessageName: string) {
+    return this.pathTemplates.projectConversationMessagePathTemplate.match(projectConversationMessageName).project;
+  }
+
+  /**
+   * Parse the conversation from ProjectConversationMessage resource.
+   *
+   * @param {string} projectConversationMessageName
+   *   A fully-qualified path representing project_conversation_message resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectConversationMessageName(projectConversationMessageName: string) {
+    return this.pathTemplates.projectConversationMessagePathTemplate.match(projectConversationMessageName).conversation;
+  }
+
+  /**
+   * Parse the message from ProjectConversationMessage resource.
+   *
+   * @param {string} projectConversationMessageName
+   *   A fully-qualified path representing project_conversation_message resource.
+   * @returns {string} A string representing the message.
+   */
+  matchMessageFromProjectConversationMessageName(projectConversationMessageName: string) {
+    return this.pathTemplates.projectConversationMessagePathTemplate.match(projectConversationMessageName).message;
+  }
+
+  /**
+   * Return a fully-qualified projectConversationParticipant resource name string.
+   *
+   * @param {string} project
+   * @param {string} conversation
+   * @param {string} participant
+   * @returns {string} Resource name string.
+   */
+  projectConversationParticipantPath(project:string,conversation:string,participant:string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.render({
+      project: project,
+      conversation: conversation,
+      participant: participant,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectConversationParticipant resource.
+   *
+   * @param {string} projectConversationParticipantName
+   *   A fully-qualified path representing project_conversation_participant resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectConversationParticipantName(projectConversationParticipantName: string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.match(projectConversationParticipantName).project;
+  }
+
+  /**
+   * Parse the conversation from ProjectConversationParticipant resource.
+   *
+   * @param {string} projectConversationParticipantName
+   *   A fully-qualified path representing project_conversation_participant resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectConversationParticipantName(projectConversationParticipantName: string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.match(projectConversationParticipantName).conversation;
+  }
+
+  /**
+   * Parse the participant from ProjectConversationParticipant resource.
+   *
+   * @param {string} projectConversationParticipantName
+   *   A fully-qualified path representing project_conversation_participant resource.
+   * @returns {string} A string representing the participant.
+   */
+  matchParticipantFromProjectConversationParticipantName(projectConversationParticipantName: string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.match(projectConversationParticipantName).participant;
+  }
+
+  /**
+   * Return a fully-qualified projectConversationProfile resource name string.
+   *
+   * @param {string} project
+   * @param {string} conversation_profile
+   * @returns {string} Resource name string.
+   */
+  projectConversationProfilePath(project:string,conversationProfile:string) {
+    return this.pathTemplates.projectConversationProfilePathTemplate.render({
+      project: project,
+      conversation_profile: conversationProfile,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectConversationProfile resource.
+   *
+   * @param {string} projectConversationProfileName
+   *   A fully-qualified path representing project_conversation_profile resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectConversationProfileName(projectConversationProfileName: string) {
+    return this.pathTemplates.projectConversationProfilePathTemplate.match(projectConversationProfileName).project;
+  }
+
+  /**
+   * Parse the conversation_profile from ProjectConversationProfile resource.
+   *
+   * @param {string} projectConversationProfileName
+   *   A fully-qualified path representing project_conversation_profile resource.
+   * @returns {string} A string representing the conversation_profile.
+   */
+  matchConversationProfileFromProjectConversationProfileName(projectConversationProfileName: string) {
+    return this.pathTemplates.projectConversationProfilePathTemplate.match(projectConversationProfileName).conversation_profile;
+  }
+
+  /**
+   * Return a fully-qualified projectKnowledgeBase resource name string.
+   *
+   * @param {string} project
+   * @param {string} knowledge_base
+   * @returns {string} Resource name string.
+   */
+  projectKnowledgeBasePath(project:string,knowledgeBase:string) {
+    return this.pathTemplates.projectKnowledgeBasePathTemplate.render({
+      project: project,
+      knowledge_base: knowledgeBase,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectKnowledgeBase resource.
+   *
+   * @param {string} projectKnowledgeBaseName
+   *   A fully-qualified path representing project_knowledge_base resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectKnowledgeBaseName(projectKnowledgeBaseName: string) {
+    return this.pathTemplates.projectKnowledgeBasePathTemplate.match(projectKnowledgeBaseName).project;
+  }
+
+  /**
+   * Parse the knowledge_base from ProjectKnowledgeBase resource.
+   *
+   * @param {string} projectKnowledgeBaseName
+   *   A fully-qualified path representing project_knowledge_base resource.
+   * @returns {string} A string representing the knowledge_base.
+   */
+  matchKnowledgeBaseFromProjectKnowledgeBaseName(projectKnowledgeBaseName: string) {
+    return this.pathTemplates.projectKnowledgeBasePathTemplate.match(projectKnowledgeBaseName).knowledge_base;
+  }
+
+  /**
+   * Return a fully-qualified projectKnowledgeBaseDocument resource name string.
+   *
+   * @param {string} project
+   * @param {string} knowledge_base
+   * @param {string} document
+   * @returns {string} Resource name string.
+   */
+  projectKnowledgeBaseDocumentPath(project:string,knowledgeBase:string,document:string) {
+    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.render({
+      project: project,
+      knowledge_base: knowledgeBase,
+      document: document,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectKnowledgeBaseDocument resource.
+   *
+   * @param {string} projectKnowledgeBaseDocumentName
+   *   A fully-qualified path representing project_knowledge_base_document resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectKnowledgeBaseDocumentName(projectKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(projectKnowledgeBaseDocumentName).project;
+  }
+
+  /**
+   * Parse the knowledge_base from ProjectKnowledgeBaseDocument resource.
+   *
+   * @param {string} projectKnowledgeBaseDocumentName
+   *   A fully-qualified path representing project_knowledge_base_document resource.
+   * @returns {string} A string representing the knowledge_base.
+   */
+  matchKnowledgeBaseFromProjectKnowledgeBaseDocumentName(projectKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(projectKnowledgeBaseDocumentName).knowledge_base;
+  }
+
+  /**
+   * Parse the document from ProjectKnowledgeBaseDocument resource.
+   *
+   * @param {string} projectKnowledgeBaseDocumentName
+   *   A fully-qualified path representing project_knowledge_base_document resource.
+   * @returns {string} A string representing the document.
+   */
+  matchDocumentFromProjectKnowledgeBaseDocumentName(projectKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(projectKnowledgeBaseDocumentName).document;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationAnswerRecord resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} answer_record
+   * @returns {string} Resource name string.
+   */
+  projectLocationAnswerRecordPath(project:string,location:string,answerRecord:string) {
+    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.render({
+      project: project,
+      location: location,
+      answer_record: answerRecord,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationAnswerRecord resource.
+   *
+   * @param {string} projectLocationAnswerRecordName
+   *   A fully-qualified path representing project_location_answer_record resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationAnswerRecordName(projectLocationAnswerRecordName: string) {
+    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(projectLocationAnswerRecordName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationAnswerRecord resource.
+   *
+   * @param {string} projectLocationAnswerRecordName
+   *   A fully-qualified path representing project_location_answer_record resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationAnswerRecordName(projectLocationAnswerRecordName: string) {
+    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(projectLocationAnswerRecordName).location;
+  }
+
+  /**
+   * Parse the answer_record from ProjectLocationAnswerRecord resource.
+   *
+   * @param {string} projectLocationAnswerRecordName
+   *   A fully-qualified path representing project_location_answer_record resource.
+   * @returns {string} A string representing the answer_record.
+   */
+  matchAnswerRecordFromProjectLocationAnswerRecordName(projectLocationAnswerRecordName: string) {
+    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(projectLocationAnswerRecordName).answer_record;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationConversation resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} conversation
+   * @returns {string} Resource name string.
+   */
+  projectLocationConversationPath(project:string,location:string,conversation:string) {
+    return this.pathTemplates.projectLocationConversationPathTemplate.render({
+      project: project,
+      location: location,
+      conversation: conversation,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationConversation resource.
+   *
+   * @param {string} projectLocationConversationName
+   *   A fully-qualified path representing project_location_conversation resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationConversationName(projectLocationConversationName: string) {
+    return this.pathTemplates.projectLocationConversationPathTemplate.match(projectLocationConversationName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationConversation resource.
+   *
+   * @param {string} projectLocationConversationName
+   *   A fully-qualified path representing project_location_conversation resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationConversationName(projectLocationConversationName: string) {
+    return this.pathTemplates.projectLocationConversationPathTemplate.match(projectLocationConversationName).location;
+  }
+
+  /**
+   * Parse the conversation from ProjectLocationConversation resource.
+   *
+   * @param {string} projectLocationConversationName
+   *   A fully-qualified path representing project_location_conversation resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectLocationConversationName(projectLocationConversationName: string) {
+    return this.pathTemplates.projectLocationConversationPathTemplate.match(projectLocationConversationName).conversation;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationConversationCallMatcher resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} conversation
+   * @param {string} call_matcher
+   * @returns {string} Resource name string.
+   */
+  projectLocationConversationCallMatcherPath(project:string,location:string,conversation:string,callMatcher:string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.render({
+      project: project,
+      location: location,
+      conversation: conversation,
+      call_matcher: callMatcher,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationConversationCallMatcher resource.
+   *
+   * @param {string} projectLocationConversationCallMatcherName
+   *   A fully-qualified path representing project_location_conversation_call_matcher resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationConversationCallMatcher resource.
+   *
+   * @param {string} projectLocationConversationCallMatcherName
+   *   A fully-qualified path representing project_location_conversation_call_matcher resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).location;
+  }
+
+  /**
+   * Parse the conversation from ProjectLocationConversationCallMatcher resource.
+   *
+   * @param {string} projectLocationConversationCallMatcherName
+   *   A fully-qualified path representing project_location_conversation_call_matcher resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).conversation;
+  }
+
+  /**
+   * Parse the call_matcher from ProjectLocationConversationCallMatcher resource.
+   *
+   * @param {string} projectLocationConversationCallMatcherName
+   *   A fully-qualified path representing project_location_conversation_call_matcher resource.
+   * @returns {string} A string representing the call_matcher.
+   */
+  matchCallMatcherFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).call_matcher;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationConversationMessage resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} conversation
+   * @param {string} message
+   * @returns {string} Resource name string.
+   */
+  projectLocationConversationMessagePath(project:string,location:string,conversation:string,message:string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.render({
+      project: project,
+      location: location,
+      conversation: conversation,
+      message: message,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationConversationMessage resource.
+   *
+   * @param {string} projectLocationConversationMessageName
+   *   A fully-qualified path representing project_location_conversation_message resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationConversationMessage resource.
+   *
+   * @param {string} projectLocationConversationMessageName
+   *   A fully-qualified path representing project_location_conversation_message resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).location;
+  }
+
+  /**
+   * Parse the conversation from ProjectLocationConversationMessage resource.
+   *
+   * @param {string} projectLocationConversationMessageName
+   *   A fully-qualified path representing project_location_conversation_message resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).conversation;
+  }
+
+  /**
+   * Parse the message from ProjectLocationConversationMessage resource.
+   *
+   * @param {string} projectLocationConversationMessageName
+   *   A fully-qualified path representing project_location_conversation_message resource.
+   * @returns {string} A string representing the message.
+   */
+  matchMessageFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).message;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationConversationParticipant resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} conversation
+   * @param {string} participant
+   * @returns {string} Resource name string.
+   */
+  projectLocationConversationParticipantPath(project:string,location:string,conversation:string,participant:string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.render({
+      project: project,
+      location: location,
+      conversation: conversation,
+      participant: participant,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationConversationParticipant resource.
+   *
+   * @param {string} projectLocationConversationParticipantName
+   *   A fully-qualified path representing project_location_conversation_participant resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationConversationParticipant resource.
+   *
+   * @param {string} projectLocationConversationParticipantName
+   *   A fully-qualified path representing project_location_conversation_participant resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).location;
+  }
+
+  /**
+   * Parse the conversation from ProjectLocationConversationParticipant resource.
+   *
+   * @param {string} projectLocationConversationParticipantName
+   *   A fully-qualified path representing project_location_conversation_participant resource.
+   * @returns {string} A string representing the conversation.
+   */
+  matchConversationFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).conversation;
+  }
+
+  /**
+   * Parse the participant from ProjectLocationConversationParticipant resource.
+   *
+   * @param {string} projectLocationConversationParticipantName
+   *   A fully-qualified path representing project_location_conversation_participant resource.
+   * @returns {string} A string representing the participant.
+   */
+  matchParticipantFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).participant;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationConversationProfile resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} conversation_profile
+   * @returns {string} Resource name string.
+   */
+  projectLocationConversationProfilePath(project:string,location:string,conversationProfile:string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.render({
+      project: project,
+      location: location,
+      conversation_profile: conversationProfile,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationConversationProfile resource.
+   *
+   * @param {string} projectLocationConversationProfileName
+   *   A fully-qualified path representing project_location_conversation_profile resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationConversationProfileName(projectLocationConversationProfileName: string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(projectLocationConversationProfileName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationConversationProfile resource.
+   *
+   * @param {string} projectLocationConversationProfileName
+   *   A fully-qualified path representing project_location_conversation_profile resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationConversationProfileName(projectLocationConversationProfileName: string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(projectLocationConversationProfileName).location;
+  }
+
+  /**
+   * Parse the conversation_profile from ProjectLocationConversationProfile resource.
+   *
+   * @param {string} projectLocationConversationProfileName
+   *   A fully-qualified path representing project_location_conversation_profile resource.
+   * @returns {string} A string representing the conversation_profile.
+   */
+  matchConversationProfileFromProjectLocationConversationProfileName(projectLocationConversationProfileName: string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(projectLocationConversationProfileName).conversation_profile;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationKnowledgeBase resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} knowledge_base
+   * @returns {string} Resource name string.
+   */
+  projectLocationKnowledgeBasePath(project:string,location:string,knowledgeBase:string) {
+    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.render({
+      project: project,
+      location: location,
+      knowledge_base: knowledgeBase,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationKnowledgeBase resource.
+   *
+   * @param {string} projectLocationKnowledgeBaseName
+   *   A fully-qualified path representing project_location_knowledge_base resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationKnowledgeBaseName(projectLocationKnowledgeBaseName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(projectLocationKnowledgeBaseName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationKnowledgeBase resource.
+   *
+   * @param {string} projectLocationKnowledgeBaseName
+   *   A fully-qualified path representing project_location_knowledge_base resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationKnowledgeBaseName(projectLocationKnowledgeBaseName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(projectLocationKnowledgeBaseName).location;
+  }
+
+  /**
+   * Parse the knowledge_base from ProjectLocationKnowledgeBase resource.
+   *
+   * @param {string} projectLocationKnowledgeBaseName
+   *   A fully-qualified path representing project_location_knowledge_base resource.
+   * @returns {string} A string representing the knowledge_base.
+   */
+  matchKnowledgeBaseFromProjectLocationKnowledgeBaseName(projectLocationKnowledgeBaseName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(projectLocationKnowledgeBaseName).knowledge_base;
+  }
+
+  /**
+   * Return a fully-qualified projectLocationKnowledgeBaseDocument resource name string.
+   *
+   * @param {string} project
+   * @param {string} location
+   * @param {string} knowledge_base
+   * @param {string} document
+   * @returns {string} Resource name string.
+   */
+  projectLocationKnowledgeBaseDocumentPath(project:string,location:string,knowledgeBase:string,document:string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.render({
+      project: project,
+      location: location,
+      knowledge_base: knowledgeBase,
+      document: document,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectLocationKnowledgeBaseDocument resource.
+   *
+   * @param {string} projectLocationKnowledgeBaseDocumentName
+   *   A fully-qualified path representing project_location_knowledge_base_document resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).project;
+  }
+
+  /**
+   * Parse the location from ProjectLocationKnowledgeBaseDocument resource.
+   *
+   * @param {string} projectLocationKnowledgeBaseDocumentName
+   *   A fully-qualified path representing project_location_knowledge_base_document resource.
+   * @returns {string} A string representing the location.
+   */
+  matchLocationFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).location;
+  }
+
+  /**
+   * Parse the knowledge_base from ProjectLocationKnowledgeBaseDocument resource.
+   *
+   * @param {string} projectLocationKnowledgeBaseDocumentName
+   *   A fully-qualified path representing project_location_knowledge_base_document resource.
+   * @returns {string} A string representing the knowledge_base.
+   */
+  matchKnowledgeBaseFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).knowledge_base;
+  }
+
+  /**
+   * Parse the document from ProjectLocationKnowledgeBaseDocument resource.
+   *
+   * @param {string} projectLocationKnowledgeBaseDocumentName
+   *   A fully-qualified path representing project_location_knowledge_base_document resource.
+   * @returns {string} A string representing the document.
+   */
+  matchDocumentFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).document;
   }
 
   /**
