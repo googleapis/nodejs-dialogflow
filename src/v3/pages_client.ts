@@ -18,11 +18,18 @@
 
 /* global window */
 import * as gax from 'google-gax';
-import {Callback, CallOptions, Descriptors, ClientOptions, PaginationCallback, GaxCall} from 'google-gax';
+import {
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+  PaginationCallback,
+  GaxCall,
+} from 'google-gax';
 import * as path from 'path';
 
-import { Transform } from 'stream';
-import { RequestType } from 'google-gax/build/src/apitypes';
+import {Transform} from 'stream';
+import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 /**
  * Client JSON configuration object, loaded from
@@ -93,10 +100,13 @@ export class PagesClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include all the required fields.
     const staticMembers = this.constructor as typeof PagesClient;
-    const servicePath = opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
+    const servicePath =
+      opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
-    const fallback = opts?.fallback ?? (typeof window !== 'undefined' && typeof window?.fetch === 'function');
+    const fallback =
+      opts?.fallback ??
+      (typeof window !== 'undefined' && typeof window?.fetch === 'function');
     opts = Object.assign({servicePath, port, clientConfig, fallback}, opts);
 
     // If scopes are unset in options and we're connecting to a non-default endpoint, set scopes just in case.
@@ -114,7 +124,7 @@ export class PagesClient {
     this._opts = opts;
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (this._gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
 
     // Set the default scopes in auth client if needed.
     if (servicePath === staticMembers.servicePath) {
@@ -122,10 +132,7 @@ export class PagesClient {
     }
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${this._gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -141,12 +148,18 @@ export class PagesClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
+    const nodejsProtoPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'protos',
+      'protos.json'
+    );
     this._protos = this._gaxGrpc.loadProto(
-      opts.fallback ?
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        require("../../protos/protos.json") :
-        nodejsProtoPath
+      opts.fallback
+        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+          require('../../protos/protos.json')
+        : nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -216,14 +229,20 @@ export class PagesClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this.descriptors.page = {
-      listPages:
-          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'pages')
+      listPages: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'pages'
+      ),
     };
 
     // Put together the default options sent with requests.
     this._defaults = this._gaxGrpc.constructSettings(
-        'google.cloud.dialogflow.cx.v3.Pages', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.cloud.dialogflow.cx.v3.Pages',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -251,16 +270,24 @@ export class PagesClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.cx.v3.Pages.
     this.pagesStub = this._gaxGrpc.createStub(
-        this._opts.fallback ?
-          (this._protos as protobuf.Root).lookupService('google.cloud.dialogflow.cx.v3.Pages') :
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this._opts.fallback
+        ? (this._protos as protobuf.Root).lookupService(
+            'google.cloud.dialogflow.cx.v3.Pages'
+          )
+        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.cloud.dialogflow.cx.v3.Pages,
-        this._opts) as Promise<{[method: string]: Function}>;
+      this._opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const pagesStubMethods =
-        ['listPages', 'getPage', 'createPage', 'updatePage', 'deletePage'];
+    const pagesStubMethods = [
+      'listPages',
+      'getPage',
+      'createPage',
+      'updatePage',
+      'deletePage',
+    ];
     for (const methodName of pagesStubMethods) {
       const callPromise = this.pagesStub.then(
         stub => (...args: Array<{}>) => {
@@ -270,13 +297,12 @@ export class PagesClient {
           const func = stub[methodName];
           return func.apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
-      const descriptor =
-        this.descriptors.page[methodName] ||
-        undefined;
+      const descriptor = this.descriptors.page[methodName] || undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
@@ -322,7 +348,7 @@ export class PagesClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow'
+      'https://www.googleapis.com/auth/dialogflow',
     ];
   }
 
@@ -332,8 +358,9 @@ export class PagesClient {
    * Return the project ID used by this class.
    * @returns {Promise} A promise that resolves to string containing the project ID.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -345,81 +372,96 @@ export class PagesClient {
   // -- Service calls --
   // -------------------
   getPage(
-      request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage,
-        protos.google.cloud.dialogflow.cx.v3.IGetPageRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.IGetPageRequest | undefined,
+      {} | undefined
+    ]
+  >;
   getPage(
-      request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IGetPageRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.IGetPageRequest | null | undefined,
+      {} | null | undefined
+    >
+  ): void;
   getPage(
-      request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
-      callback: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IGetPageRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Retrieves the specified page.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the page.
- *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- *   ID>/flows/<Flow ID>/pages/<Page ID>`.
- * @param {string} request.languageCode
- *   The language to retrieve the page for. The following fields are language
- *   dependent:
- *
- *   *  `Page.entry_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
- *   *  `Page.transition_routes.trigger_fulfillment.messages`
- *   *
- *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
- *
- *   If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
- *   are supported.
- *   Note: languages must be enabled in the agent before they can be used.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.getPage(request);
- */
+    request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
+    callback: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.IGetPageRequest | null | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Retrieves the specified page.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the page.
+   *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+   *   ID>/flows/<Flow ID>/pages/<Page ID>`.
+   * @param {string} request.languageCode
+   *   The language to retrieve the page for. The following fields are language
+   *   dependent:
+   *
+   *   *  `Page.entry_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
+   *   *  `Page.transition_routes.trigger_fulfillment.messages`
+   *   *
+   *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
+   *
+   *   If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
+   *   are supported.
+   *   Note: languages must be enabled in the agent before they can be used.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.getPage(request);
+   */
   getPage(
-      request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.cx.v3.IGetPageRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IGetPageRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IGetPageRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage,
-        protos.google.cloud.dialogflow.cx.v3.IGetPageRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.cx.v3.IGetPageRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.IGetPageRequest | null | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.IGetPageRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -428,88 +470,109 @@ export class PagesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.getPage(request, options, callback);
   }
   createPage(
-      request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage,
-        protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest | undefined,
+      {} | undefined
+    ]
+  >;
   createPage(
-      request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      | protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   createPage(
-      request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
-      callback: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Creates a page in the specified flow.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The flow to create a page for.
- *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- *   ID>/flows/<Flow ID>`.
- * @param {google.cloud.dialogflow.cx.v3.Page} request.page
- *   Required. The page to create.
- * @param {string} request.languageCode
- *   The language of the following fields in `page`:
- *
- *   *  `Page.entry_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
- *   *  `Page.transition_routes.trigger_fulfillment.messages`
- *   *
- *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
- *
- *   If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
- *   are supported.
- *   Note: languages must be enabled in the agent before they can be used.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.createPage(request);
- */
+    request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
+    callback: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      | protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates a page in the specified flow.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The flow to create a page for.
+   *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+   *   ID>/flows/<Flow ID>`.
+   * @param {google.cloud.dialogflow.cx.v3.Page} request.page
+   *   Required. The page to create.
+   * @param {string} request.languageCode
+   *   The language of the following fields in `page`:
+   *
+   *   *  `Page.entry_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
+   *   *  `Page.transition_routes.trigger_fulfillment.messages`
+   *   *
+   *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
+   *
+   *   If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
+   *   are supported.
+   *   Note: languages must be enabled in the agent before they can be used.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.createPage(request);
+   */
   createPage(
-      request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage,
-        protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      | protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.ICreatePageRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -518,87 +581,108 @@ export class PagesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.createPage(request, options, callback);
   }
   updatePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage,
-        protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest | undefined,
+      {} | undefined
+    ]
+  >;
   updatePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      | protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   updatePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
-      callback: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Updates the specified page.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {google.cloud.dialogflow.cx.v3.Page} request.page
- *   Required. The page to update.
- * @param {string} request.languageCode
- *   The language of the following fields in `page`:
- *
- *   *  `Page.entry_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
- *   *  `Page.transition_routes.trigger_fulfillment.messages`
- *   *
- *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
- *
- *   If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
- *   are supported.
- *   Note: languages must be enabled in the agent before they can be used.
- * @param {google.protobuf.FieldMask} request.updateMask
- *   The mask to control which fields get updated. If the mask is not present,
- *   all fields will be updated.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.updatePage(request);
- */
+    request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
+    callback: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      | protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Updates the specified page.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {google.cloud.dialogflow.cx.v3.Page} request.page
+   *   Required. The page to update.
+   * @param {string} request.languageCode
+   *   The language of the following fields in `page`:
+   *
+   *   *  `Page.entry_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
+   *   *  `Page.transition_routes.trigger_fulfillment.messages`
+   *   *
+   *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
+   *
+   *   If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
+   *   are supported.
+   *   Note: languages must be enabled in the agent before they can be used.
+   * @param {google.protobuf.FieldMask} request.updateMask
+   *   The mask to control which fields get updated. If the mask is not present,
+   *   all fields will be updated.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.updatePage(request);
+   */
   updatePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.dialogflow.cx.v3.IPage,
-          protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage,
-        protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      | protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage,
+      protos.google.cloud.dialogflow.cx.v3.IUpdatePageRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -613,76 +697,97 @@ export class PagesClient {
     return this.innerApiCalls.updatePage(request, options, callback);
   }
   deletePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest | undefined,
+      {} | undefined
+    ]
+  >;
   deletePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   deletePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Deletes the specified page.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the page to delete.
- *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- *   ID>/Flows/<flow ID>/pages/<Page ID>`.
- * @param {boolean} request.force
- *   This field has no effect for pages with no incoming transitions.
- *   For pages with incoming transitions:
- *
- *   *  If `force` is set to false, an error will be returned with message
- *      indicating the incoming transitions.
- *   *  If `force` is set to true, Dialogflow will remove the page, as well as
- *      any transitions to the page (i.e. [Target
- *      page][EventHandler.target_page] in event handlers or [Target
- *      page][TransitionRoute.target_page] in transition routes that point to
- *      this page will be cleared).
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.deletePage(request);
- */
+    request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes the specified page.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the page to delete.
+   *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+   *   ID>/Flows/<flow ID>/pages/<Page ID>`.
+   * @param {boolean} request.force
+   *   This field has no effect for pages with no incoming transitions.
+   *   For pages with incoming transitions:
+   *
+   *   *  If `force` is set to false, an error will be returned with message
+   *      indicating the incoming transitions.
+   *   *  If `force` is set to true, Dialogflow will remove the page, as well as
+   *      any transitions to the page (i.e. [Target
+   *      page][EventHandler.target_page] in event handlers or [Target
+   *      page][TransitionRoute.target_page] in transition routes that point to
+   *      this page will be cleared).
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.deletePage(request);
+   */
   deletePage(
-      request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.cloud.dialogflow.cx.v3.IDeletePageRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -691,98 +796,117 @@ export class PagesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.deletePage(request, options, callback);
   }
 
   listPages(
-      request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage[],
-        protos.google.cloud.dialogflow.cx.v3.IListPagesRequest|null,
-        protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
-      ]>;
+    request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage[],
+      protos.google.cloud.dialogflow.cx.v3.IListPagesRequest | null,
+      protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
+    ]
+  >;
   listPages(
-      request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-      options: CallOptions,
-      callback: PaginationCallback<
-          protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-          protos.google.cloud.dialogflow.cx.v3.IListPagesResponse|null|undefined,
-          protos.google.cloud.dialogflow.cx.v3.IPage>): void;
+    request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+    options: CallOptions,
+    callback: PaginationCallback<
+      protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+      | protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
+      | null
+      | undefined,
+      protos.google.cloud.dialogflow.cx.v3.IPage
+    >
+  ): void;
   listPages(
-      request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-      callback: PaginationCallback<
-          protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-          protos.google.cloud.dialogflow.cx.v3.IListPagesResponse|null|undefined,
-          protos.google.cloud.dialogflow.cx.v3.IPage>): void;
-/**
- * Returns the list of all pages in the specified flow.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The flow to list all pages for.
- *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- *   ID>/flows/<Flow ID>`.
- * @param {string} request.languageCode
- *   The language to list pages for. The following fields are language
- *   dependent:
- *
- *   *  `Page.entry_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
- *   *  `Page.transition_routes.trigger_fulfillment.messages`
- *   *
- *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
- *
- *   If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
- *   are supported.
- *   Note: languages must be enabled in the agent before they can be used.
- * @param {number} request.pageSize
- *   The maximum number of items to return in a single page. By default 100 and
- *   at most 1000.
- * @param {string} request.pageToken
- *   The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *   Note that it can affect your quota.
- *   We recommend using `listPagesAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+    request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+    callback: PaginationCallback<
+      protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+      | protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
+      | null
+      | undefined,
+      protos.google.cloud.dialogflow.cx.v3.IPage
+    >
+  ): void;
+  /**
+   * Returns the list of all pages in the specified flow.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The flow to list all pages for.
+   *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+   *   ID>/flows/<Flow ID>`.
+   * @param {string} request.languageCode
+   *   The language to list pages for. The following fields are language
+   *   dependent:
+   *
+   *   *  `Page.entry_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
+   *   *  `Page.transition_routes.trigger_fulfillment.messages`
+   *   *
+   *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
+   *
+   *   If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
+   *   are supported.
+   *   Note: languages must be enabled in the agent before they can be used.
+   * @param {number} request.pageSize
+   *   The maximum number of items to return in a single page. By default 100 and
+   *   at most 1000.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [Page]{@link google.cloud.dialogflow.cx.v3.Page}.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *   Note that it can affect your quota.
+   *   We recommend using `listPagesAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listPages(
-      request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-      optionsOrCallback?: CallOptions|PaginationCallback<
+    request: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | PaginationCallback<
           protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-          protos.google.cloud.dialogflow.cx.v3.IListPagesResponse|null|undefined,
-          protos.google.cloud.dialogflow.cx.v3.IPage>,
-      callback?: PaginationCallback<
-          protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-          protos.google.cloud.dialogflow.cx.v3.IListPagesResponse|null|undefined,
-          protos.google.cloud.dialogflow.cx.v3.IPage>):
-      Promise<[
-        protos.google.cloud.dialogflow.cx.v3.IPage[],
-        protos.google.cloud.dialogflow.cx.v3.IListPagesRequest|null,
-        protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
-      ]>|void {
+          | protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
+          | null
+          | undefined,
+          protos.google.cloud.dialogflow.cx.v3.IPage
+        >,
+    callback?: PaginationCallback<
+      protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+      | protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
+      | null
+      | undefined,
+      protos.google.cloud.dialogflow.cx.v3.IPage
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.cx.v3.IPage[],
+      protos.google.cloud.dialogflow.cx.v3.IListPagesRequest | null,
+      protos.google.cloud.dialogflow.cx.v3.IListPagesResponse
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -791,57 +915,57 @@ export class PagesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.listPages(request, options, callback);
   }
 
-/**
- * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The flow to list all pages for.
- *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- *   ID>/flows/<Flow ID>`.
- * @param {string} request.languageCode
- *   The language to list pages for. The following fields are language
- *   dependent:
- *
- *   *  `Page.entry_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
- *   *  `Page.transition_routes.trigger_fulfillment.messages`
- *   *
- *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
- *
- *   If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
- *   are supported.
- *   Note: languages must be enabled in the agent before they can be used.
- * @param {number} request.pageSize
- *   The maximum number of items to return in a single page. By default 100 and
- *   at most 1000.
- * @param {string} request.pageToken
- *   The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page} on 'data' event.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed. Note that it can affect your quota.
- *   We recommend using `listPagesAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+  /**
+   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The flow to list all pages for.
+   *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+   *   ID>/flows/<Flow ID>`.
+   * @param {string} request.languageCode
+   *   The language to list pages for. The following fields are language
+   *   dependent:
+   *
+   *   *  `Page.entry_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
+   *   *  `Page.transition_routes.trigger_fulfillment.messages`
+   *   *
+   *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
+   *
+   *   If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
+   *   are supported.
+   *   Note: languages must be enabled in the agent before they can be used.
+   * @param {number} request.pageSize
+   *   The maximum number of items to return in a single page. By default 100 and
+   *   at most 1000.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [Page]{@link google.cloud.dialogflow.cx.v3.Page} on 'data' event.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed. Note that it can affect your quota.
+   *   We recommend using `listPagesAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listPagesStream(
-      request?: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-      options?: CallOptions):
-    Transform{
+    request?: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+    options?: CallOptions
+  ): Transform {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -849,7 +973,7 @@ export class PagesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -860,57 +984,57 @@ export class PagesClient {
     );
   }
 
-/**
- * Equivalent to `listPages`, but returns an iterable object.
- *
- * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The flow to list all pages for.
- *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- *   ID>/flows/<Flow ID>`.
- * @param {string} request.languageCode
- *   The language to list pages for. The following fields are language
- *   dependent:
- *
- *   *  `Page.entry_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
- *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
- *   *  `Page.transition_routes.trigger_fulfillment.messages`
- *   *
- *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
- *
- *   If not specified, the agent's default language is used.
- *   [Many
- *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
- *   are supported.
- *   Note: languages must be enabled in the agent before they can be used.
- * @param {number} request.pageSize
- *   The maximum number of items to return in a single page. By default 100 and
- *   at most 1000.
- * @param {string} request.pageToken
- *   The next_page_token value returned from a previous list request.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Object}
- *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
- *   When you iterate the returned iterable, each element will be an object representing
- *   [Page]{@link google.cloud.dialogflow.cx.v3.Page}. The API will be called under the hood as needed, once per the page,
- *   so you can stop the iteration when you don't need more results.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- * @example
- * const iterable = client.listPagesAsync(request);
- * for await (const response of iterable) {
- *   // process response
- * }
- */
+  /**
+   * Equivalent to `listPages`, but returns an iterable object.
+   *
+   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The flow to list all pages for.
+   *   Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+   *   ID>/flows/<Flow ID>`.
+   * @param {string} request.languageCode
+   *   The language to list pages for. The following fields are language
+   *   dependent:
+   *
+   *   *  `Page.entry_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.initial_prompt_fulfillment.messages`
+   *   *  `Page.form.parameters.fill_behavior.reprompt_event_handlers.messages`
+   *   *  `Page.transition_routes.trigger_fulfillment.messages`
+   *   *
+   *   `Page.transition_route_groups.transition_routes.trigger_fulfillment.messages`
+   *
+   *   If not specified, the agent's default language is used.
+   *   [Many
+   *   languages](https://cloud.google.com/dialogflow/cx/docs/reference/language)
+   *   are supported.
+   *   Note: languages must be enabled in the agent before they can be used.
+   * @param {number} request.pageSize
+   *   The maximum number of items to return in a single page. By default 100 and
+   *   at most 1000.
+   * @param {string} request.pageToken
+   *   The next_page_token value returned from a previous list request.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+   *   When you iterate the returned iterable, each element will be an object representing
+   *   [Page]{@link google.cloud.dialogflow.cx.v3.Page}. The API will be called under the hood as needed, once per the page,
+   *   so you can stop the iteration when you don't need more results.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   * @example
+   * const iterable = client.listPagesAsync(request);
+   * for await (const response of iterable) {
+   *   // process response
+   * }
+   */
   listPagesAsync(
-      request?: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
-      options?: CallOptions):
-    AsyncIterable<protos.google.cloud.dialogflow.cx.v3.IPage>{
+    request?: protos.google.cloud.dialogflow.cx.v3.IListPagesRequest,
+    options?: CallOptions
+  ): AsyncIterable<protos.google.cloud.dialogflow.cx.v3.IPage> {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -918,14 +1042,14 @@ export class PagesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listPages.asyncIterate(
       this.innerApiCalls['listPages'] as GaxCall,
-      request as unknown as RequestType,
+      (request as unknown) as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.cx.v3.IPage>;
   }
@@ -941,7 +1065,7 @@ export class PagesClient {
    * @param {string} agent
    * @returns {string} Resource name string.
    */
-  agentPath(project:string,location:string,agent:string) {
+  agentPath(project: string, location: string, agent: string) {
     return this.pathTemplates.agentPathTemplate.render({
       project: project,
       location: location,
@@ -990,7 +1114,7 @@ export class PagesClient {
    * @param {string} agent
    * @returns {string} Resource name string.
    */
-  agentValidationResultPath(project:string,location:string,agent:string) {
+  agentValidationResultPath(project: string, location: string, agent: string) {
     return this.pathTemplates.agentValidationResultPathTemplate.render({
       project: project,
       location: location,
@@ -1006,7 +1130,9 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromAgentValidationResultName(agentValidationResultName: string) {
-    return this.pathTemplates.agentValidationResultPathTemplate.match(agentValidationResultName).project;
+    return this.pathTemplates.agentValidationResultPathTemplate.match(
+      agentValidationResultName
+    ).project;
   }
 
   /**
@@ -1016,8 +1142,12 @@ export class PagesClient {
    *   A fully-qualified path representing AgentValidationResult resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromAgentValidationResultName(agentValidationResultName: string) {
-    return this.pathTemplates.agentValidationResultPathTemplate.match(agentValidationResultName).location;
+  matchLocationFromAgentValidationResultName(
+    agentValidationResultName: string
+  ) {
+    return this.pathTemplates.agentValidationResultPathTemplate.match(
+      agentValidationResultName
+    ).location;
   }
 
   /**
@@ -1028,7 +1158,9 @@ export class PagesClient {
    * @returns {string} A string representing the agent.
    */
   matchAgentFromAgentValidationResultName(agentValidationResultName: string) {
-    return this.pathTemplates.agentValidationResultPathTemplate.match(agentValidationResultName).agent;
+    return this.pathTemplates.agentValidationResultPathTemplate.match(
+      agentValidationResultName
+    ).agent;
   }
 
   /**
@@ -1040,7 +1172,12 @@ export class PagesClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  entityTypePath(project:string,location:string,agent:string,entityType:string) {
+  entityTypePath(
+    project: string,
+    location: string,
+    agent: string,
+    entityType: string
+  ) {
     return this.pathTemplates.entityTypePathTemplate.render({
       project: project,
       location: location,
@@ -1057,7 +1194,8 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).project;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .project;
   }
 
   /**
@@ -1068,7 +1206,8 @@ export class PagesClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).location;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .location;
   }
 
   /**
@@ -1079,7 +1218,8 @@ export class PagesClient {
    * @returns {string} A string representing the agent.
    */
   matchAgentFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).agent;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .agent;
   }
 
   /**
@@ -1090,7 +1230,8 @@ export class PagesClient {
    * @returns {string} A string representing the entity_type.
    */
   matchEntityTypeFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).entity_type;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
+      .entity_type;
   }
 
   /**
@@ -1102,7 +1243,12 @@ export class PagesClient {
    * @param {string} environment
    * @returns {string} Resource name string.
    */
-  environmentPath(project:string,location:string,agent:string,environment:string) {
+  environmentPath(
+    project: string,
+    location: string,
+    agent: string,
+    environment: string
+  ) {
     return this.pathTemplates.environmentPathTemplate.render({
       project: project,
       location: location,
@@ -1119,7 +1265,8 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName).project;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName)
+      .project;
   }
 
   /**
@@ -1130,7 +1277,8 @@ export class PagesClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName).location;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName)
+      .location;
   }
 
   /**
@@ -1141,7 +1289,8 @@ export class PagesClient {
    * @returns {string} A string representing the agent.
    */
   matchAgentFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName).agent;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName)
+      .agent;
   }
 
   /**
@@ -1152,7 +1301,8 @@ export class PagesClient {
    * @returns {string} A string representing the environment.
    */
   matchEnvironmentFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName).environment;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName)
+      .environment;
   }
 
   /**
@@ -1165,7 +1315,13 @@ export class PagesClient {
    * @param {string} experiment
    * @returns {string} Resource name string.
    */
-  experimentPath(project:string,location:string,agent:string,environment:string,experiment:string) {
+  experimentPath(
+    project: string,
+    location: string,
+    agent: string,
+    environment: string,
+    experiment: string
+  ) {
     return this.pathTemplates.experimentPathTemplate.render({
       project: project,
       location: location,
@@ -1183,7 +1339,8 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromExperimentName(experimentName: string) {
-    return this.pathTemplates.experimentPathTemplate.match(experimentName).project;
+    return this.pathTemplates.experimentPathTemplate.match(experimentName)
+      .project;
   }
 
   /**
@@ -1194,7 +1351,8 @@ export class PagesClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromExperimentName(experimentName: string) {
-    return this.pathTemplates.experimentPathTemplate.match(experimentName).location;
+    return this.pathTemplates.experimentPathTemplate.match(experimentName)
+      .location;
   }
 
   /**
@@ -1205,7 +1363,8 @@ export class PagesClient {
    * @returns {string} A string representing the agent.
    */
   matchAgentFromExperimentName(experimentName: string) {
-    return this.pathTemplates.experimentPathTemplate.match(experimentName).agent;
+    return this.pathTemplates.experimentPathTemplate.match(experimentName)
+      .agent;
   }
 
   /**
@@ -1216,7 +1375,8 @@ export class PagesClient {
    * @returns {string} A string representing the environment.
    */
   matchEnvironmentFromExperimentName(experimentName: string) {
-    return this.pathTemplates.experimentPathTemplate.match(experimentName).environment;
+    return this.pathTemplates.experimentPathTemplate.match(experimentName)
+      .environment;
   }
 
   /**
@@ -1227,7 +1387,8 @@ export class PagesClient {
    * @returns {string} A string representing the experiment.
    */
   matchExperimentFromExperimentName(experimentName: string) {
-    return this.pathTemplates.experimentPathTemplate.match(experimentName).experiment;
+    return this.pathTemplates.experimentPathTemplate.match(experimentName)
+      .experiment;
   }
 
   /**
@@ -1239,7 +1400,7 @@ export class PagesClient {
    * @param {string} flow
    * @returns {string} Resource name string.
    */
-  flowPath(project:string,location:string,agent:string,flow:string) {
+  flowPath(project: string, location: string, agent: string, flow: string) {
     return this.pathTemplates.flowPathTemplate.render({
       project: project,
       location: location,
@@ -1301,7 +1462,12 @@ export class PagesClient {
    * @param {string} flow
    * @returns {string} Resource name string.
    */
-  flowValidationResultPath(project:string,location:string,agent:string,flow:string) {
+  flowValidationResultPath(
+    project: string,
+    location: string,
+    agent: string,
+    flow: string
+  ) {
     return this.pathTemplates.flowValidationResultPathTemplate.render({
       project: project,
       location: location,
@@ -1318,7 +1484,9 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromFlowValidationResultName(flowValidationResultName: string) {
-    return this.pathTemplates.flowValidationResultPathTemplate.match(flowValidationResultName).project;
+    return this.pathTemplates.flowValidationResultPathTemplate.match(
+      flowValidationResultName
+    ).project;
   }
 
   /**
@@ -1329,7 +1497,9 @@ export class PagesClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromFlowValidationResultName(flowValidationResultName: string) {
-    return this.pathTemplates.flowValidationResultPathTemplate.match(flowValidationResultName).location;
+    return this.pathTemplates.flowValidationResultPathTemplate.match(
+      flowValidationResultName
+    ).location;
   }
 
   /**
@@ -1340,7 +1510,9 @@ export class PagesClient {
    * @returns {string} A string representing the agent.
    */
   matchAgentFromFlowValidationResultName(flowValidationResultName: string) {
-    return this.pathTemplates.flowValidationResultPathTemplate.match(flowValidationResultName).agent;
+    return this.pathTemplates.flowValidationResultPathTemplate.match(
+      flowValidationResultName
+    ).agent;
   }
 
   /**
@@ -1351,7 +1523,9 @@ export class PagesClient {
    * @returns {string} A string representing the flow.
    */
   matchFlowFromFlowValidationResultName(flowValidationResultName: string) {
-    return this.pathTemplates.flowValidationResultPathTemplate.match(flowValidationResultName).flow;
+    return this.pathTemplates.flowValidationResultPathTemplate.match(
+      flowValidationResultName
+    ).flow;
   }
 
   /**
@@ -1363,7 +1537,7 @@ export class PagesClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  intentPath(project:string,location:string,agent:string,intent:string) {
+  intentPath(project: string, location: string, agent: string, intent: string) {
     return this.pathTemplates.intentPathTemplate.render({
       project: project,
       location: location,
@@ -1423,7 +1597,7 @@ export class PagesClient {
    * @param {string} location
    * @returns {string} Resource name string.
    */
-  locationPath(project:string,location:string) {
+  locationPath(project: string, location: string) {
     return this.pathTemplates.locationPathTemplate.render({
       project: project,
       location: location,
@@ -1462,7 +1636,13 @@ export class PagesClient {
    * @param {string} page
    * @returns {string} Resource name string.
    */
-  pagePath(project:string,location:string,agent:string,flow:string,page:string) {
+  pagePath(
+    project: string,
+    location: string,
+    agent: string,
+    flow: string,
+    page: string
+  ) {
     return this.pathTemplates.pagePathTemplate.render({
       project: project,
       location: location,
@@ -1533,7 +1713,7 @@ export class PagesClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project:string) {
+  projectPath(project: string) {
     return this.pathTemplates.projectPathTemplate.render({
       project: project,
     });
@@ -1561,15 +1741,24 @@ export class PagesClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectLocationAgentEnvironmentSessionEntityTypePath(project:string,location:string,agent:string,environment:string,session:string,entityType:string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.render({
-      project: project,
-      location: location,
-      agent: agent,
-      environment: environment,
-      session: session,
-      entity_type: entityType,
-    });
+  projectLocationAgentEnvironmentSessionEntityTypePath(
+    project: string,
+    location: string,
+    agent: string,
+    environment: string,
+    session: string,
+    entityType: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.render(
+      {
+        project: project,
+        location: location,
+        agent: agent,
+        environment: environment,
+        session: session,
+        entity_type: entityType,
+      }
+    );
   }
 
   /**
@@ -1579,8 +1768,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_environment_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAgentEnvironmentSessionEntityTypeName(projectLocationAgentEnvironmentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(projectLocationAgentEnvironmentSessionEntityTypeName).project;
+  matchProjectFromProjectLocationAgentEnvironmentSessionEntityTypeName(
+    projectLocationAgentEnvironmentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(
+      projectLocationAgentEnvironmentSessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -1590,8 +1783,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_environment_session_entity_type resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAgentEnvironmentSessionEntityTypeName(projectLocationAgentEnvironmentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(projectLocationAgentEnvironmentSessionEntityTypeName).location;
+  matchLocationFromProjectLocationAgentEnvironmentSessionEntityTypeName(
+    projectLocationAgentEnvironmentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(
+      projectLocationAgentEnvironmentSessionEntityTypeName
+    ).location;
   }
 
   /**
@@ -1601,8 +1798,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_environment_session_entity_type resource.
    * @returns {string} A string representing the agent.
    */
-  matchAgentFromProjectLocationAgentEnvironmentSessionEntityTypeName(projectLocationAgentEnvironmentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(projectLocationAgentEnvironmentSessionEntityTypeName).agent;
+  matchAgentFromProjectLocationAgentEnvironmentSessionEntityTypeName(
+    projectLocationAgentEnvironmentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(
+      projectLocationAgentEnvironmentSessionEntityTypeName
+    ).agent;
   }
 
   /**
@@ -1612,8 +1813,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_environment_session_entity_type resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectLocationAgentEnvironmentSessionEntityTypeName(projectLocationAgentEnvironmentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(projectLocationAgentEnvironmentSessionEntityTypeName).environment;
+  matchEnvironmentFromProjectLocationAgentEnvironmentSessionEntityTypeName(
+    projectLocationAgentEnvironmentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(
+      projectLocationAgentEnvironmentSessionEntityTypeName
+    ).environment;
   }
 
   /**
@@ -1623,8 +1828,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_environment_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectLocationAgentEnvironmentSessionEntityTypeName(projectLocationAgentEnvironmentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(projectLocationAgentEnvironmentSessionEntityTypeName).session;
+  matchSessionFromProjectLocationAgentEnvironmentSessionEntityTypeName(
+    projectLocationAgentEnvironmentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(
+      projectLocationAgentEnvironmentSessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -1634,8 +1843,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_environment_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectLocationAgentEnvironmentSessionEntityTypeName(projectLocationAgentEnvironmentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(projectLocationAgentEnvironmentSessionEntityTypeName).entity_type;
+  matchEntityTypeFromProjectLocationAgentEnvironmentSessionEntityTypeName(
+    projectLocationAgentEnvironmentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentEnvironmentSessionEntityTypePathTemplate.match(
+      projectLocationAgentEnvironmentSessionEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -1648,14 +1861,22 @@ export class PagesClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectLocationAgentSessionEntityTypePath(project:string,location:string,agent:string,session:string,entityType:string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.render({
-      project: project,
-      location: location,
-      agent: agent,
-      session: session,
-      entity_type: entityType,
-    });
+  projectLocationAgentSessionEntityTypePath(
+    project: string,
+    location: string,
+    agent: string,
+    session: string,
+    entityType: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.render(
+      {
+        project: project,
+        location: location,
+        agent: agent,
+        session: session,
+        entity_type: entityType,
+      }
+    );
   }
 
   /**
@@ -1665,8 +1886,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).project;
+  matchProjectFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).project;
   }
 
   /**
@@ -1676,8 +1901,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).location;
+  matchLocationFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).location;
   }
 
   /**
@@ -1687,8 +1916,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the agent.
    */
-  matchAgentFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).agent;
+  matchAgentFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).agent;
   }
 
   /**
@@ -1698,8 +1931,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).session;
+  matchSessionFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).session;
   }
 
   /**
@@ -1709,8 +1946,12 @@ export class PagesClient {
    *   A fully-qualified path representing project_location_agent_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectLocationAgentSessionEntityTypeName(projectLocationAgentSessionEntityTypeName: string) {
-    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(projectLocationAgentSessionEntityTypeName).entity_type;
+  matchEntityTypeFromProjectLocationAgentSessionEntityTypeName(
+    projectLocationAgentSessionEntityTypeName: string
+  ) {
+    return this.pathTemplates.projectLocationAgentSessionEntityTypePathTemplate.match(
+      projectLocationAgentSessionEntityTypeName
+    ).entity_type;
   }
 
   /**
@@ -1721,7 +1962,11 @@ export class PagesClient {
    * @param {string} security_settings
    * @returns {string} Resource name string.
    */
-  securitySettingsPath(project:string,location:string,securitySettings:string) {
+  securitySettingsPath(
+    project: string,
+    location: string,
+    securitySettings: string
+  ) {
     return this.pathTemplates.securitySettingsPathTemplate.render({
       project: project,
       location: location,
@@ -1737,7 +1982,9 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromSecuritySettingsName(securitySettingsName: string) {
-    return this.pathTemplates.securitySettingsPathTemplate.match(securitySettingsName).project;
+    return this.pathTemplates.securitySettingsPathTemplate.match(
+      securitySettingsName
+    ).project;
   }
 
   /**
@@ -1748,7 +1995,9 @@ export class PagesClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromSecuritySettingsName(securitySettingsName: string) {
-    return this.pathTemplates.securitySettingsPathTemplate.match(securitySettingsName).location;
+    return this.pathTemplates.securitySettingsPathTemplate.match(
+      securitySettingsName
+    ).location;
   }
 
   /**
@@ -1759,7 +2008,9 @@ export class PagesClient {
    * @returns {string} A string representing the security_settings.
    */
   matchSecuritySettingsFromSecuritySettingsName(securitySettingsName: string) {
-    return this.pathTemplates.securitySettingsPathTemplate.match(securitySettingsName).security_settings;
+    return this.pathTemplates.securitySettingsPathTemplate.match(
+      securitySettingsName
+    ).security_settings;
   }
 
   /**
@@ -1771,7 +2022,12 @@ export class PagesClient {
    * @param {string} test_case
    * @returns {string} Resource name string.
    */
-  testCasePath(project:string,location:string,agent:string,testCase:string) {
+  testCasePath(
+    project: string,
+    location: string,
+    agent: string,
+    testCase: string
+  ) {
     return this.pathTemplates.testCasePathTemplate.render({
       project: project,
       location: location,
@@ -1821,7 +2077,8 @@ export class PagesClient {
    * @returns {string} A string representing the test_case.
    */
   matchTestCaseFromTestCaseName(testCaseName: string) {
-    return this.pathTemplates.testCasePathTemplate.match(testCaseName).test_case;
+    return this.pathTemplates.testCasePathTemplate.match(testCaseName)
+      .test_case;
   }
 
   /**
@@ -1834,7 +2091,13 @@ export class PagesClient {
    * @param {string} result
    * @returns {string} Resource name string.
    */
-  testCaseResultPath(project:string,location:string,agent:string,testCase:string,result:string) {
+  testCaseResultPath(
+    project: string,
+    location: string,
+    agent: string,
+    testCase: string,
+    result: string
+  ) {
     return this.pathTemplates.testCaseResultPathTemplate.render({
       project: project,
       location: location,
@@ -1852,7 +2115,9 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromTestCaseResultName(testCaseResultName: string) {
-    return this.pathTemplates.testCaseResultPathTemplate.match(testCaseResultName).project;
+    return this.pathTemplates.testCaseResultPathTemplate.match(
+      testCaseResultName
+    ).project;
   }
 
   /**
@@ -1863,7 +2128,9 @@ export class PagesClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromTestCaseResultName(testCaseResultName: string) {
-    return this.pathTemplates.testCaseResultPathTemplate.match(testCaseResultName).location;
+    return this.pathTemplates.testCaseResultPathTemplate.match(
+      testCaseResultName
+    ).location;
   }
 
   /**
@@ -1874,7 +2141,9 @@ export class PagesClient {
    * @returns {string} A string representing the agent.
    */
   matchAgentFromTestCaseResultName(testCaseResultName: string) {
-    return this.pathTemplates.testCaseResultPathTemplate.match(testCaseResultName).agent;
+    return this.pathTemplates.testCaseResultPathTemplate.match(
+      testCaseResultName
+    ).agent;
   }
 
   /**
@@ -1885,7 +2154,9 @@ export class PagesClient {
    * @returns {string} A string representing the test_case.
    */
   matchTestCaseFromTestCaseResultName(testCaseResultName: string) {
-    return this.pathTemplates.testCaseResultPathTemplate.match(testCaseResultName).test_case;
+    return this.pathTemplates.testCaseResultPathTemplate.match(
+      testCaseResultName
+    ).test_case;
   }
 
   /**
@@ -1896,7 +2167,9 @@ export class PagesClient {
    * @returns {string} A string representing the result.
    */
   matchResultFromTestCaseResultName(testCaseResultName: string) {
-    return this.pathTemplates.testCaseResultPathTemplate.match(testCaseResultName).result;
+    return this.pathTemplates.testCaseResultPathTemplate.match(
+      testCaseResultName
+    ).result;
   }
 
   /**
@@ -1909,7 +2182,13 @@ export class PagesClient {
    * @param {string} transition_route_group
    * @returns {string} Resource name string.
    */
-  transitionRouteGroupPath(project:string,location:string,agent:string,flow:string,transitionRouteGroup:string) {
+  transitionRouteGroupPath(
+    project: string,
+    location: string,
+    agent: string,
+    flow: string,
+    transitionRouteGroup: string
+  ) {
     return this.pathTemplates.transitionRouteGroupPathTemplate.render({
       project: project,
       location: location,
@@ -1927,7 +2206,9 @@ export class PagesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromTransitionRouteGroupName(transitionRouteGroupName: string) {
-    return this.pathTemplates.transitionRouteGroupPathTemplate.match(transitionRouteGroupName).project;
+    return this.pathTemplates.transitionRouteGroupPathTemplate.match(
+      transitionRouteGroupName
+    ).project;
   }
 
   /**
@@ -1938,7 +2219,9 @@ export class PagesClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromTransitionRouteGroupName(transitionRouteGroupName: string) {
-    return this.pathTemplates.transitionRouteGroupPathTemplate.match(transitionRouteGroupName).location;
+    return this.pathTemplates.transitionRouteGroupPathTemplate.match(
+      transitionRouteGroupName
+    ).location;
   }
 
   /**
@@ -1949,7 +2232,9 @@ export class PagesClient {
    * @returns {string} A string representing the agent.
    */
   matchAgentFromTransitionRouteGroupName(transitionRouteGroupName: string) {
-    return this.pathTemplates.transitionRouteGroupPathTemplate.match(transitionRouteGroupName).agent;
+    return this.pathTemplates.transitionRouteGroupPathTemplate.match(
+      transitionRouteGroupName
+    ).agent;
   }
 
   /**
@@ -1960,7 +2245,9 @@ export class PagesClient {
    * @returns {string} A string representing the flow.
    */
   matchFlowFromTransitionRouteGroupName(transitionRouteGroupName: string) {
-    return this.pathTemplates.transitionRouteGroupPathTemplate.match(transitionRouteGroupName).flow;
+    return this.pathTemplates.transitionRouteGroupPathTemplate.match(
+      transitionRouteGroupName
+    ).flow;
   }
 
   /**
@@ -1970,8 +2257,12 @@ export class PagesClient {
    *   A fully-qualified path representing TransitionRouteGroup resource.
    * @returns {string} A string representing the transition_route_group.
    */
-  matchTransitionRouteGroupFromTransitionRouteGroupName(transitionRouteGroupName: string) {
-    return this.pathTemplates.transitionRouteGroupPathTemplate.match(transitionRouteGroupName).transition_route_group;
+  matchTransitionRouteGroupFromTransitionRouteGroupName(
+    transitionRouteGroupName: string
+  ) {
+    return this.pathTemplates.transitionRouteGroupPathTemplate.match(
+      transitionRouteGroupName
+    ).transition_route_group;
   }
 
   /**
@@ -1984,7 +2275,13 @@ export class PagesClient {
    * @param {string} version
    * @returns {string} Resource name string.
    */
-  versionPath(project:string,location:string,agent:string,flow:string,version:string) {
+  versionPath(
+    project: string,
+    location: string,
+    agent: string,
+    flow: string,
+    version: string
+  ) {
     return this.pathTemplates.versionPathTemplate.render({
       project: project,
       location: location,
@@ -2058,7 +2355,12 @@ export class PagesClient {
    * @param {string} webhook
    * @returns {string} Resource name string.
    */
-  webhookPath(project:string,location:string,agent:string,webhook:string) {
+  webhookPath(
+    project: string,
+    location: string,
+    agent: string,
+    webhook: string
+  ) {
     return this.pathTemplates.webhookPathTemplate.render({
       project: project,
       location: location,
