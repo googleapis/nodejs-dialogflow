@@ -9366,8 +9366,7 @@
                             "text",
                             "payload",
                             "liveAgentHandoff",
-                            "endInteraction",
-                            "mixedAudio"
+                            "endInteraction"
                           ]
                         }
                       },
@@ -9387,10 +9386,6 @@
                         "endInteraction": {
                           "type": "EndInteraction",
                           "id": 4
-                        },
-                        "mixedAudio": {
-                          "type": "MixedAudio",
-                          "id": 5
                         }
                       },
                       "nested": {
@@ -9413,41 +9408,6 @@
                         },
                         "EndInteraction": {
                           "fields": {}
-                        },
-                        "MixedAudio": {
-                          "fields": {
-                            "segments": {
-                              "rule": "repeated",
-                              "type": "Segment",
-                              "id": 1
-                            }
-                          },
-                          "nested": {
-                            "Segment": {
-                              "oneofs": {
-                                "content": {
-                                  "oneof": [
-                                    "audio",
-                                    "uri"
-                                  ]
-                                }
-                              },
-                              "fields": {
-                                "audio": {
-                                  "type": "bytes",
-                                  "id": 1
-                                },
-                                "uri": {
-                                  "type": "string",
-                                  "id": 2
-                                },
-                                "allowPlaybackInterruption": {
-                                  "type": "bool",
-                                  "id": 3
-                                }
-                              }
-                            }
-                          }
                         }
                       }
                     },

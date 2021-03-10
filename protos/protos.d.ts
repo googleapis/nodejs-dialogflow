@@ -31792,9 +31792,6 @@ export namespace google {
 
                     /** ResponseMessage endInteraction */
                     endInteraction?: (google.cloud.dialogflow.v2beta1.ResponseMessage.IEndInteraction|null);
-
-                    /** ResponseMessage mixedAudio */
-                    mixedAudio?: (google.cloud.dialogflow.v2beta1.ResponseMessage.IMixedAudio|null);
                 }
 
                 /** Represents a ResponseMessage. */
@@ -31818,11 +31815,8 @@ export namespace google {
                     /** ResponseMessage endInteraction. */
                     public endInteraction?: (google.cloud.dialogflow.v2beta1.ResponseMessage.IEndInteraction|null);
 
-                    /** ResponseMessage mixedAudio. */
-                    public mixedAudio?: (google.cloud.dialogflow.v2beta1.ResponseMessage.IMixedAudio|null);
-
                     /** ResponseMessage message. */
-                    public message?: ("text"|"payload"|"liveAgentHandoff"|"endInteraction"|"mixedAudio");
+                    public message?: ("text"|"payload"|"liveAgentHandoff"|"endInteraction");
 
                     /**
                      * Creates a new ResponseMessage instance using the specified properties.
@@ -32159,204 +32153,6 @@ export namespace google {
                          * @returns JSON object
                          */
                         public toJSON(): { [k: string]: any };
-                    }
-
-                    /** Properties of a MixedAudio. */
-                    interface IMixedAudio {
-
-                        /** MixedAudio segments */
-                        segments?: (google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.ISegment[]|null);
-                    }
-
-                    /** Represents a MixedAudio. */
-                    class MixedAudio implements IMixedAudio {
-
-                        /**
-                         * Constructs a new MixedAudio.
-                         * @param [properties] Properties to set
-                         */
-                        constructor(properties?: google.cloud.dialogflow.v2beta1.ResponseMessage.IMixedAudio);
-
-                        /** MixedAudio segments. */
-                        public segments: google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.ISegment[];
-
-                        /**
-                         * Creates a new MixedAudio instance using the specified properties.
-                         * @param [properties] Properties to set
-                         * @returns MixedAudio instance
-                         */
-                        public static create(properties?: google.cloud.dialogflow.v2beta1.ResponseMessage.IMixedAudio): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio;
-
-                        /**
-                         * Encodes the specified MixedAudio message. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.verify|verify} messages.
-                         * @param message MixedAudio message or plain object to encode
-                         * @param [writer] Writer to encode to
-                         * @returns Writer
-                         */
-                        public static encode(message: google.cloud.dialogflow.v2beta1.ResponseMessage.IMixedAudio, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                        /**
-                         * Encodes the specified MixedAudio message, length delimited. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.verify|verify} messages.
-                         * @param message MixedAudio message or plain object to encode
-                         * @param [writer] Writer to encode to
-                         * @returns Writer
-                         */
-                        public static encodeDelimited(message: google.cloud.dialogflow.v2beta1.ResponseMessage.IMixedAudio, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                        /**
-                         * Decodes a MixedAudio message from the specified reader or buffer.
-                         * @param reader Reader or buffer to decode from
-                         * @param [length] Message length if known beforehand
-                         * @returns MixedAudio
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio;
-
-                        /**
-                         * Decodes a MixedAudio message from the specified reader or buffer, length delimited.
-                         * @param reader Reader or buffer to decode from
-                         * @returns MixedAudio
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio;
-
-                        /**
-                         * Verifies a MixedAudio message.
-                         * @param message Plain object to verify
-                         * @returns `null` if valid, otherwise the reason why it is not
-                         */
-                        public static verify(message: { [k: string]: any }): (string|null);
-
-                        /**
-                         * Creates a MixedAudio message from a plain object. Also converts values to their respective internal types.
-                         * @param object Plain object
-                         * @returns MixedAudio
-                         */
-                        public static fromObject(object: { [k: string]: any }): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio;
-
-                        /**
-                         * Creates a plain object from a MixedAudio message. Also converts values to other types if specified.
-                         * @param message MixedAudio
-                         * @param [options] Conversion options
-                         * @returns Plain object
-                         */
-                        public static toObject(message: google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                        /**
-                         * Converts this MixedAudio to JSON.
-                         * @returns JSON object
-                         */
-                        public toJSON(): { [k: string]: any };
-                    }
-
-                    namespace MixedAudio {
-
-                        /** Properties of a Segment. */
-                        interface ISegment {
-
-                            /** Segment audio */
-                            audio?: (Uint8Array|string|null);
-
-                            /** Segment uri */
-                            uri?: (string|null);
-
-                            /** Segment allowPlaybackInterruption */
-                            allowPlaybackInterruption?: (boolean|null);
-                        }
-
-                        /** Represents a Segment. */
-                        class Segment implements ISegment {
-
-                            /**
-                             * Constructs a new Segment.
-                             * @param [properties] Properties to set
-                             */
-                            constructor(properties?: google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.ISegment);
-
-                            /** Segment audio. */
-                            public audio: (Uint8Array|string);
-
-                            /** Segment uri. */
-                            public uri: string;
-
-                            /** Segment allowPlaybackInterruption. */
-                            public allowPlaybackInterruption: boolean;
-
-                            /** Segment content. */
-                            public content?: ("audio"|"uri");
-
-                            /**
-                             * Creates a new Segment instance using the specified properties.
-                             * @param [properties] Properties to set
-                             * @returns Segment instance
-                             */
-                            public static create(properties?: google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.ISegment): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.Segment;
-
-                            /**
-                             * Encodes the specified Segment message. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.Segment.verify|verify} messages.
-                             * @param message Segment message or plain object to encode
-                             * @param [writer] Writer to encode to
-                             * @returns Writer
-                             */
-                            public static encode(message: google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.ISegment, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                            /**
-                             * Encodes the specified Segment message, length delimited. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.Segment.verify|verify} messages.
-                             * @param message Segment message or plain object to encode
-                             * @param [writer] Writer to encode to
-                             * @returns Writer
-                             */
-                            public static encodeDelimited(message: google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.ISegment, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                            /**
-                             * Decodes a Segment message from the specified reader or buffer.
-                             * @param reader Reader or buffer to decode from
-                             * @param [length] Message length if known beforehand
-                             * @returns Segment
-                             * @throws {Error} If the payload is not a reader or valid buffer
-                             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                             */
-                            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.Segment;
-
-                            /**
-                             * Decodes a Segment message from the specified reader or buffer, length delimited.
-                             * @param reader Reader or buffer to decode from
-                             * @returns Segment
-                             * @throws {Error} If the payload is not a reader or valid buffer
-                             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                             */
-                            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.Segment;
-
-                            /**
-                             * Verifies a Segment message.
-                             * @param message Plain object to verify
-                             * @returns `null` if valid, otherwise the reason why it is not
-                             */
-                            public static verify(message: { [k: string]: any }): (string|null);
-
-                            /**
-                             * Creates a Segment message from a plain object. Also converts values to their respective internal types.
-                             * @param object Plain object
-                             * @returns Segment
-                             */
-                            public static fromObject(object: { [k: string]: any }): google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.Segment;
-
-                            /**
-                             * Creates a plain object from a Segment message. Also converts values to other types if specified.
-                             * @param message Segment
-                             * @param [options] Conversion options
-                             * @returns Plain object
-                             */
-                            public static toObject(message: google.cloud.dialogflow.v2beta1.ResponseMessage.MixedAudio.Segment, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                            /**
-                             * Converts this Segment to JSON.
-                             * @returns JSON object
-                             */
-                            public toJSON(): { [k: string]: any };
-                        }
                     }
                 }
 
