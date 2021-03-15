@@ -16,21 +16,7 @@
 // ** https://github.com/googleapis/gapic-generator-typescript **
 // ** All changes to this file may be overwritten. **
 
-import {
-  AgentsClient,
-  AnswerRecordsClient,
-  ContextsClient,
-  ConversationProfilesClient,
-  ConversationsClient,
-  DocumentsClient,
-  EntityTypesClient,
-  EnvironmentsClient,
-  IntentsClient,
-  KnowledgeBasesClient,
-  ParticipantsClient,
-  SessionEntityTypesClient,
-  SessionsClient,
-} from '@google-cloud/dialogflow';
+import {AgentsClient, AnswerRecordsClient, ContextsClient, ConversationProfilesClient, ConversationsClient, DocumentsClient, EntityTypesClient, EnvironmentsClient, IntentsClient, KnowledgeBasesClient, ParticipantsClient, SessionEntityTypesClient, SessionsClient} from '@google-cloud/dialogflow';
 
 // check that the client class type name can be used
 function doStuffWithAgentsClient(client: AgentsClient) {
@@ -42,9 +28,7 @@ function doStuffWithAnswerRecordsClient(client: AnswerRecordsClient) {
 function doStuffWithContextsClient(client: ContextsClient) {
   client.close();
 }
-function doStuffWithConversationProfilesClient(
-  client: ConversationProfilesClient
-) {
+function doStuffWithConversationProfilesClient(client: ConversationProfilesClient) {
   client.close();
 }
 function doStuffWithConversationsClient(client: ConversationsClient) {

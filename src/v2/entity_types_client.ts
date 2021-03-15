@@ -18,19 +18,11 @@
 
 /* global window */
 import * as gax from 'google-gax';
-import {
-  Callback,
-  CallOptions,
-  Descriptors,
-  ClientOptions,
-  LROperation,
-  PaginationCallback,
-  GaxCall,
-} from 'google-gax';
+import {Callback, CallOptions, Descriptors, ClientOptions, LROperation, PaginationCallback, GaxCall} from 'google-gax';
 import * as path from 'path';
 
-import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
+import { Transform } from 'stream';
+import { RequestType } from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 /**
  * Client JSON configuration object, loaded from
@@ -38,7 +30,7 @@ import * as protos from '../../protos/protos';
  * This file defines retry strategy and timeouts for all API methods in this library.
  */
 import * as gapicConfig from './entity_types_client_config.json';
-import {operationsProtos} from 'google-gax';
+import { operationsProtos } from 'google-gax';
 const version = require('../../../package.json').version;
 
 /**
@@ -102,13 +94,10 @@ export class EntityTypesClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include all the required fields.
     const staticMembers = this.constructor as typeof EntityTypesClient;
-    const servicePath =
-      opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
+    const servicePath = opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
-    const fallback =
-      opts?.fallback ??
-      (typeof window !== 'undefined' && typeof window?.fetch === 'function');
+    const fallback = opts?.fallback ?? (typeof window !== 'undefined' && typeof window?.fetch === 'function');
     opts = Object.assign({servicePath, port, clientConfig, fallback}, opts);
 
     // If scopes are unset in options and we're connecting to a non-default endpoint, set scopes just in case.
@@ -126,7 +115,7 @@ export class EntityTypesClient {
     this._opts = opts;
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
+    this.auth = (this._gaxGrpc.auth as gax.GoogleAuth);
 
     // Set the default scopes in auth client if needed.
     if (servicePath === staticMembers.servicePath) {
@@ -134,7 +123,10 @@ export class EntityTypesClient {
     }
 
     // Determine the client header string.
-    const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
+    const clientHeader = [
+      `gax/${this._gaxModule.version}`,
+      `gapic/${version}`,
+    ];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -150,18 +142,12 @@ export class EntityTypesClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     this._protos = this._gaxGrpc.loadProto(
-      opts.fallback
-        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('../../protos/protos.json')
-        : nodejsProtoPath
+      opts.fallback ?
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -249,103 +235,71 @@ export class EntityTypesClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this.descriptors.page = {
-      listEntityTypes: new this._gaxModule.PageDescriptor(
-        'pageToken',
-        'nextPageToken',
-        'entityTypes'
-      ),
+      listEntityTypes:
+          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'entityTypes')
     };
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
     // rather than holding a request open.
-    const protoFilesRoot = opts.fallback
-      ? this._gaxModule.protobuf.Root.fromJSON(
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('../../protos/protos.json')
-        )
-      : this._gaxModule.protobuf.loadSync(nodejsProtoPath);
+    const protoFilesRoot = opts.fallback ?
+      this._gaxModule.protobuf.Root.fromJSON(
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        require("../../protos/protos.json")) :
+      this._gaxModule.protobuf.loadSync(nodejsProtoPath);
 
-    this.operationsClient = this._gaxModule
-      .lro({
-        auth: this.auth,
-        grpc: 'grpc' in this._gaxGrpc ? this._gaxGrpc.grpc : undefined,
-      })
-      .operationsClient(opts);
+    this.operationsClient = this._gaxModule.lro({
+      auth: this.auth,
+      grpc: 'grpc' in this._gaxGrpc ? this._gaxGrpc.grpc : undefined
+    }).operationsClient(opts);
     const batchUpdateEntityTypesResponse = protoFilesRoot.lookup(
-      '.google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse'
-    ) as gax.protobuf.Type;
+      '.google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse') as gax.protobuf.Type;
     const batchUpdateEntityTypesMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Struct') as gax.protobuf.Type;
     const batchDeleteEntityTypesResponse = protoFilesRoot.lookup(
-      '.google.protobuf.Empty'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Empty') as gax.protobuf.Type;
     const batchDeleteEntityTypesMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Struct') as gax.protobuf.Type;
     const batchCreateEntitiesResponse = protoFilesRoot.lookup(
-      '.google.protobuf.Empty'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Empty') as gax.protobuf.Type;
     const batchCreateEntitiesMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Struct') as gax.protobuf.Type;
     const batchUpdateEntitiesResponse = protoFilesRoot.lookup(
-      '.google.protobuf.Empty'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Empty') as gax.protobuf.Type;
     const batchUpdateEntitiesMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Struct') as gax.protobuf.Type;
     const batchDeleteEntitiesResponse = protoFilesRoot.lookup(
-      '.google.protobuf.Empty'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Empty') as gax.protobuf.Type;
     const batchDeleteEntitiesMetadata = protoFilesRoot.lookup(
-      '.google.protobuf.Struct'
-    ) as gax.protobuf.Type;
+      '.google.protobuf.Struct') as gax.protobuf.Type;
 
     this.descriptors.longrunning = {
       batchUpdateEntityTypes: new this._gaxModule.LongrunningDescriptor(
         this.operationsClient,
-        batchUpdateEntityTypesResponse.decode.bind(
-          batchUpdateEntityTypesResponse
-        ),
-        batchUpdateEntityTypesMetadata.decode.bind(
-          batchUpdateEntityTypesMetadata
-        )
-      ),
+        batchUpdateEntityTypesResponse.decode.bind(batchUpdateEntityTypesResponse),
+        batchUpdateEntityTypesMetadata.decode.bind(batchUpdateEntityTypesMetadata)),
       batchDeleteEntityTypes: new this._gaxModule.LongrunningDescriptor(
         this.operationsClient,
-        batchDeleteEntityTypesResponse.decode.bind(
-          batchDeleteEntityTypesResponse
-        ),
-        batchDeleteEntityTypesMetadata.decode.bind(
-          batchDeleteEntityTypesMetadata
-        )
-      ),
+        batchDeleteEntityTypesResponse.decode.bind(batchDeleteEntityTypesResponse),
+        batchDeleteEntityTypesMetadata.decode.bind(batchDeleteEntityTypesMetadata)),
       batchCreateEntities: new this._gaxModule.LongrunningDescriptor(
         this.operationsClient,
         batchCreateEntitiesResponse.decode.bind(batchCreateEntitiesResponse),
-        batchCreateEntitiesMetadata.decode.bind(batchCreateEntitiesMetadata)
-      ),
+        batchCreateEntitiesMetadata.decode.bind(batchCreateEntitiesMetadata)),
       batchUpdateEntities: new this._gaxModule.LongrunningDescriptor(
         this.operationsClient,
         batchUpdateEntitiesResponse.decode.bind(batchUpdateEntitiesResponse),
-        batchUpdateEntitiesMetadata.decode.bind(batchUpdateEntitiesMetadata)
-      ),
+        batchUpdateEntitiesMetadata.decode.bind(batchUpdateEntitiesMetadata)),
       batchDeleteEntities: new this._gaxModule.LongrunningDescriptor(
         this.operationsClient,
         batchDeleteEntitiesResponse.decode.bind(batchDeleteEntitiesResponse),
-        batchDeleteEntitiesMetadata.decode.bind(batchDeleteEntitiesMetadata)
-      ),
+        batchDeleteEntitiesMetadata.decode.bind(batchDeleteEntitiesMetadata))
     };
 
     // Put together the default options sent with requests.
     this._defaults = this._gaxGrpc.constructSettings(
-      'google.cloud.dialogflow.v2.EntityTypes',
-      gapicConfig as gax.ClientConfig,
-      opts.clientConfig || {},
-      {'x-goog-api-client': clientHeader.join(' ')}
-    );
+        'google.cloud.dialogflow.v2.EntityTypes', gapicConfig as gax.ClientConfig,
+        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -373,29 +327,16 @@ export class EntityTypesClient {
     // Put together the "service stub" for
     // google.cloud.dialogflow.v2.EntityTypes.
     this.entityTypesStub = this._gaxGrpc.createStub(
-      this._opts.fallback
-        ? (this._protos as protobuf.Root).lookupService(
-            'google.cloud.dialogflow.v2.EntityTypes'
-          )
-        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this._opts.fallback ?
+          (this._protos as protobuf.Root).lookupService('google.cloud.dialogflow.v2.EntityTypes') :
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.cloud.dialogflow.v2.EntityTypes,
-      this._opts
-    ) as Promise<{[method: string]: Function}>;
+        this._opts) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const entityTypesStubMethods = [
-      'listEntityTypes',
-      'getEntityType',
-      'createEntityType',
-      'updateEntityType',
-      'deleteEntityType',
-      'batchUpdateEntityTypes',
-      'batchDeleteEntityTypes',
-      'batchCreateEntities',
-      'batchUpdateEntities',
-      'batchDeleteEntities',
-    ];
+    const entityTypesStubMethods =
+        ['listEntityTypes', 'getEntityType', 'createEntityType', 'updateEntityType', 'deleteEntityType', 'batchUpdateEntityTypes', 'batchDeleteEntityTypes', 'batchCreateEntities', 'batchUpdateEntities', 'batchDeleteEntities'];
     for (const methodName of entityTypesStubMethods) {
       const callPromise = this.entityTypesStub.then(
         stub => (...args: Array<{}>) => {
@@ -405,10 +346,9 @@ export class EntityTypesClient {
           const func = stub[methodName];
           return func.apply(stub, args);
         },
-        (err: Error | null | undefined) => () => {
+        (err: Error|null|undefined) => () => {
           throw err;
-        }
-      );
+        });
 
       const descriptor =
         this.descriptors.page[methodName] ||
@@ -459,7 +399,7 @@ export class EntityTypesClient {
   static get scopes() {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/dialogflow',
+      'https://www.googleapis.com/auth/dialogflow'
     ];
   }
 
@@ -469,9 +409,8 @@ export class EntityTypesClient {
    * Return the project ID used by this class.
    * @returns {Promise} A promise that resolves to string containing the project ID.
    */
-  getProjectId(
-    callback?: Callback<string, undefined, undefined>
-  ): Promise<string> | void {
+  getProjectId(callback?: Callback<string, undefined, undefined>):
+      Promise<string>|void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -483,91 +422,70 @@ export class EntityTypesClient {
   // -- Service calls --
   // -------------------
   getEntityType(
-    request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
+      options?: CallOptions):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType,
+        protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest|undefined, {}|undefined
+      ]>;
   getEntityType(
-    request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
-    options: CallOptions,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  getEntityType(
-    request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Retrieves the specified entity type.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The name of the entity type.
-   *   Format: `projects/<Project ID>/agent/entityTypes/<EntityType ID>`.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getEntityType(request);
-   */
-  getEntityType(
-    request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
+      request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
+      options: CallOptions,
+      callback: Callback<
           protos.google.cloud.dialogflow.v2.IEntityType,
-          | protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+  getEntityType(
+      request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
+      callback: Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Retrieves the specified entity type.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The name of the entity type.
+ *   Format: `projects/<Project ID>/agent/entityTypes/<EntityType ID>`.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+ *   for more details and examples.
+ * @example
+ * const [response] = await client.getEntityType(request);
+ */
+  getEntityType(
+      request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType,
+        protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -576,99 +494,78 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.getEntityType(request, options, callback);
   }
   createEntityType(
-    request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
+      options?: CallOptions):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType,
+        protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest|undefined, {}|undefined
+      ]>;
   createEntityType(
-    request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
-    options: CallOptions,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  createEntityType(
-    request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Creates an entity type in the specified agent.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The agent to create a entity type for.
-   *   Format: `projects/<Project ID>/agent`.
-   * @param {google.cloud.dialogflow.v2.EntityType} request.entityType
-   *   Required. The entity type to create.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createEntityType(request);
-   */
-  createEntityType(
-    request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
+      request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
+      options: CallOptions,
+      callback: Callback<
           protos.google.cloud.dialogflow.v2.IEntityType,
-          | protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+  createEntityType(
+      request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
+      callback: Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Creates an entity type in the specified agent.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The agent to create a entity type for.
+ *   Format: `projects/<Project ID>/agent`.
+ * @param {google.cloud.dialogflow.v2.EntityType} request.entityType
+ *   Required. The entity type to create.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+ *   for more details and examples.
+ * @example
+ * const [response] = await client.createEntityType(request);
+ */
+  createEntityType(
+      request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType,
+        protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -677,98 +574,77 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.createEntityType(request, options, callback);
   }
   updateEntityType(
-    request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
+      options?: CallOptions):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType,
+        protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest|undefined, {}|undefined
+      ]>;
   updateEntityType(
-    request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
-    options: CallOptions,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  updateEntityType(
-    request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
-    callback: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Updates the specified entity type.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {google.cloud.dialogflow.v2.EntityType} request.entityType
-   *   Required. The entity type to update.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {google.protobuf.FieldMask} [request.updateMask]
-   *   Optional. The mask to control which fields get updated.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateEntityType(request);
-   */
-  updateEntityType(
-    request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
+      request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
+      options: CallOptions,
+      callback: Callback<
           protos.google.cloud.dialogflow.v2.IEntityType,
-          | protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      | protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType,
-      protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+  updateEntityType(
+      request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
+      callback: Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Updates the specified entity type.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {google.cloud.dialogflow.v2.EntityType} request.entityType
+ *   Required. The entity type to update.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {google.protobuf.FieldMask} [request.updateMask]
+ *   Optional. The mask to control which fields get updated.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+ *   for more details and examples.
+ * @example
+ * const [response] = await client.updateEntityType(request);
+ */
+  updateEntityType(
+      request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.cloud.dialogflow.v2.IEntityType,
+          protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType,
+        protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -783,85 +659,64 @@ export class EntityTypesClient {
     return this.innerApiCalls.updateEntityType(request, options, callback);
   }
   deleteEntityType(
-    request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      protos.google.protobuf.IEmpty,
-      protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
+      options?: CallOptions):
+      Promise<[
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest|undefined, {}|undefined
+      ]>;
   deleteEntityType(
-    request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
-    options: CallOptions,
-    callback: Callback<
-      protos.google.protobuf.IEmpty,
-      | protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  deleteEntityType(
-    request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
-    callback: Callback<
-      protos.google.protobuf.IEmpty,
-      | protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Deletes the specified entity type.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The name of the entity type to delete.
-   *   Format: `projects/<Project ID>/agent/entityTypes/<EntityType ID>`.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteEntityType(request);
-   */
-  deleteEntityType(
-    request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
+      request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
+      options: CallOptions,
+      callback: Callback<
           protos.google.protobuf.IEmpty,
-          | protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.protobuf.IEmpty,
-      | protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.protobuf.IEmpty,
-      protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+  deleteEntityType(
+      request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
+      callback: Callback<
+          protos.google.protobuf.IEmpty,
+          protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Deletes the specified entity type.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The name of the entity type to delete.
+ *   Format: `projects/<Project ID>/agent/entityTypes/<EntityType ID>`.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+ *   for more details and examples.
+ * @example
+ * const [response] = await client.deleteEntityType(request);
+ */
+  deleteEntityType(
+      request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          protos.google.protobuf.IEmpty,
+          protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.protobuf.IEmpty,
+          protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.protobuf.IEmpty,
+        protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -870,122 +725,91 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.deleteEntityType(request, options, callback);
   }
 
   batchUpdateEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      LROperation<
-        protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
+      options?: CallOptions):
+      Promise<[
+        LROperation<protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>;
   batchUpdateEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
-    options: CallOptions,
-    callback: Callback<
-      LROperation<
-        protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
+      options: CallOptions,
+      callback: Callback<
+          LROperation<protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
   batchUpdateEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
-    callback: Callback<
-      LROperation<
-        protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Updates/Creates multiple entity types in the specified agent.
-   *
-   * Operation <response: {@link google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse|BatchUpdateEntityTypesResponse}>
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The name of the agent to update or create entity types in.
-   *   Format: `projects/<Project ID>/agent`.
-   * @param {string} request.entityTypeBatchUri
-   *   The URI to a Google Cloud Storage file containing entity types to update
-   *   or create. The file format can either be a serialized proto (of
-   *   EntityBatch type) or a JSON object. Note: The URI must start with
-   *   "gs://".
-   * @param {google.cloud.dialogflow.v2.EntityTypeBatch} request.entityTypeBatchInline
-   *   The collection of entity types to update or create.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {google.protobuf.FieldMask} [request.updateMask]
-   *   Optional. The mask to control which fields get updated.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing
-   *   a long running operation. Its `promise()` method returns a promise
-   *   you can `await` for.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const [operation] = await client.batchUpdateEntityTypes(request);
-   * const [response] = await operation.promise();
-   */
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
+      callback: Callback<
+          LROperation<protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Updates/Creates multiple entity types in the specified agent.
+ *
+ * Operation <response: {@link google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse|BatchUpdateEntityTypesResponse}>
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The name of the agent to update or create entity types in.
+ *   Format: `projects/<Project ID>/agent`.
+ * @param {string} request.entityTypeBatchUri
+ *   The URI to a Google Cloud Storage file containing entity types to update
+ *   or create. The file format can either be a serialized proto (of
+ *   EntityBatch type) or a JSON object. Note: The URI must start with
+ *   "gs://".
+ * @param {google.cloud.dialogflow.v2.EntityTypeBatch} request.entityTypeBatchInline
+ *   The collection of entity types to update or create.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {google.protobuf.FieldMask} [request.updateMask]
+ *   Optional. The mask to control which fields get updated.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing
+ *   a long running operation. Its `promise()` method returns a promise
+ *   you can `await` for.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const [operation] = await client.batchUpdateEntityTypes(request);
+ * const [response] = await operation.promise();
+ */
   batchUpdateEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
-          LROperation<
-            protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse,
-            protos.google.protobuf.IStruct
-          >,
-          protos.google.longrunning.IOperation | null | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      LROperation<
-        protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      LROperation<
-        protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  > | void {
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          LROperation<protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          LROperation<protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        LROperation<protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesResponse, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -994,150 +818,99 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     this.initialize();
-    return this.innerApiCalls.batchUpdateEntityTypes(
-      request,
-      options,
-      callback
-    );
+    return this.innerApiCalls.batchUpdateEntityTypes(request, options, callback);
   }
-  /**
-   * Check the status of the long running operation returned by `batchUpdateEntityTypes()`.
-   * @param {String} name
-   *   The operation name that will be passed.
-   * @returns {Promise} - The promise which resolves to an object.
-   *   The decoded operation object has result and metadata field to get information from.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const decodedOperation = await checkBatchUpdateEntityTypesProgress(name);
-   * console.log(decodedOperation.result);
-   * console.log(decodedOperation.done);
-   * console.log(decodedOperation.metadata);
-   */
-  async checkBatchUpdateEntityTypesProgress(
-    name: string
-  ): Promise<
-    LROperation<
-      protos.google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse,
-      protos.google.protobuf.Struct
-    >
-  > {
-    const request = new operationsProtos.google.longrunning.GetOperationRequest(
-      {name}
-    );
+/**
+ * Check the status of the long running operation returned by `batchUpdateEntityTypes()`.
+ * @param {String} name
+ *   The operation name that will be passed.
+ * @returns {Promise} - The promise which resolves to an object.
+ *   The decoded operation object has result and metadata field to get information from.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const decodedOperation = await checkBatchUpdateEntityTypesProgress(name);
+ * console.log(decodedOperation.result);
+ * console.log(decodedOperation.done);
+ * console.log(decodedOperation.metadata);
+ */
+  async checkBatchUpdateEntityTypesProgress(name: string): Promise<LROperation<protos.google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse, protos.google.protobuf.Struct>>{
+    const request = new operationsProtos.google.longrunning.GetOperationRequest({name});
     const [operation] = await this.operationsClient.getOperation(request);
-    const decodeOperation = new gax.Operation(
-      operation,
-      this.descriptors.longrunning.batchUpdateEntityTypes,
-      gax.createDefaultBackoffSettings()
-    );
-    return decodeOperation as LROperation<
-      protos.google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse,
-      protos.google.protobuf.Struct
-    >;
+    const decodeOperation = new gax.Operation(operation, this.descriptors.longrunning.batchUpdateEntityTypes, gax.createDefaultBackoffSettings());
+    return decodeOperation as LROperation<protos.google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse, protos.google.protobuf.Struct>;
   }
   batchDeleteEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
+      options?: CallOptions):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>;
   batchDeleteEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
-    options: CallOptions,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
+      options: CallOptions,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
   batchDeleteEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Deletes entity types in the specified agent.
-   *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The name of the agent to delete all entities types for. Format:
-   *   `projects/<Project ID>/agent`.
-   * @param {string[]} request.entityTypeNames
-   *   Required. The names entity types to delete. All names must point to the
-   *   same agent as `parent`.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing
-   *   a long running operation. Its `promise()` method returns a promise
-   *   you can `await` for.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const [operation] = await client.batchDeleteEntityTypes(request);
-   * const [response] = await operation.promise();
-   */
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Deletes entity types in the specified agent.
+ *
+ * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The name of the agent to delete all entities types for. Format:
+ *   `projects/<Project ID>/agent`.
+ * @param {string[]} request.entityTypeNames
+ *   Required. The names entity types to delete. All names must point to the
+ *   same agent as `parent`.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing
+ *   a long running operation. Its `promise()` method returns a promise
+ *   you can `await` for.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const [operation] = await client.batchDeleteEntityTypes(request);
+ * const [response] = await operation.promise();
+ */
   batchDeleteEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
-          LROperation<
-            protos.google.protobuf.IEmpty,
-            protos.google.protobuf.IStruct
-          >,
-          protos.google.longrunning.IOperation | null | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  > | void {
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -1146,152 +919,104 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     this.initialize();
-    return this.innerApiCalls.batchDeleteEntityTypes(
-      request,
-      options,
-      callback
-    );
+    return this.innerApiCalls.batchDeleteEntityTypes(request, options, callback);
   }
-  /**
-   * Check the status of the long running operation returned by `batchDeleteEntityTypes()`.
-   * @param {String} name
-   *   The operation name that will be passed.
-   * @returns {Promise} - The promise which resolves to an object.
-   *   The decoded operation object has result and metadata field to get information from.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const decodedOperation = await checkBatchDeleteEntityTypesProgress(name);
-   * console.log(decodedOperation.result);
-   * console.log(decodedOperation.done);
-   * console.log(decodedOperation.metadata);
-   */
-  async checkBatchDeleteEntityTypesProgress(
-    name: string
-  ): Promise<
-    LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>
-  > {
-    const request = new operationsProtos.google.longrunning.GetOperationRequest(
-      {name}
-    );
+/**
+ * Check the status of the long running operation returned by `batchDeleteEntityTypes()`.
+ * @param {String} name
+ *   The operation name that will be passed.
+ * @returns {Promise} - The promise which resolves to an object.
+ *   The decoded operation object has result and metadata field to get information from.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const decodedOperation = await checkBatchDeleteEntityTypesProgress(name);
+ * console.log(decodedOperation.result);
+ * console.log(decodedOperation.done);
+ * console.log(decodedOperation.metadata);
+ */
+  async checkBatchDeleteEntityTypesProgress(name: string): Promise<LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>>{
+    const request = new operationsProtos.google.longrunning.GetOperationRequest({name});
     const [operation] = await this.operationsClient.getOperation(request);
-    const decodeOperation = new gax.Operation(
-      operation,
-      this.descriptors.longrunning.batchDeleteEntityTypes,
-      gax.createDefaultBackoffSettings()
-    );
-    return decodeOperation as LROperation<
-      protos.google.protobuf.Empty,
-      protos.google.protobuf.Struct
-    >;
+    const decodeOperation = new gax.Operation(operation, this.descriptors.longrunning.batchDeleteEntityTypes, gax.createDefaultBackoffSettings());
+    return decodeOperation as LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>;
   }
   batchCreateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
+      options?: CallOptions):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>;
   batchCreateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
-    options: CallOptions,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
+      request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
+      options: CallOptions,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
   batchCreateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Creates multiple new entities in the specified entity type.
-   *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The name of the entity type to create entities in. Format:
-   *   `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
-   * @param {number[]} request.entities
-   *   Required. The entities to create.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing
-   *   a long running operation. Its `promise()` method returns a promise
-   *   you can `await` for.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const [operation] = await client.batchCreateEntities(request);
-   * const [response] = await operation.promise();
-   */
+      request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Creates multiple new entities in the specified entity type.
+ *
+ * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The name of the entity type to create entities in. Format:
+ *   `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
+ * @param {number[]} request.entities
+ *   Required. The entities to create.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing
+ *   a long running operation. Its `promise()` method returns a promise
+ *   you can `await` for.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const [operation] = await client.batchCreateEntities(request);
+ * const [response] = await operation.promise();
+ */
   batchCreateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
-          LROperation<
-            protos.google.protobuf.IEmpty,
-            protos.google.protobuf.IStruct
-          >,
-          protos.google.longrunning.IOperation | null | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  > | void {
+      request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -1300,153 +1025,109 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.batchCreateEntities(request, options, callback);
   }
-  /**
-   * Check the status of the long running operation returned by `batchCreateEntities()`.
-   * @param {String} name
-   *   The operation name that will be passed.
-   * @returns {Promise} - The promise which resolves to an object.
-   *   The decoded operation object has result and metadata field to get information from.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const decodedOperation = await checkBatchCreateEntitiesProgress(name);
-   * console.log(decodedOperation.result);
-   * console.log(decodedOperation.done);
-   * console.log(decodedOperation.metadata);
-   */
-  async checkBatchCreateEntitiesProgress(
-    name: string
-  ): Promise<
-    LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>
-  > {
-    const request = new operationsProtos.google.longrunning.GetOperationRequest(
-      {name}
-    );
+/**
+ * Check the status of the long running operation returned by `batchCreateEntities()`.
+ * @param {String} name
+ *   The operation name that will be passed.
+ * @returns {Promise} - The promise which resolves to an object.
+ *   The decoded operation object has result and metadata field to get information from.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const decodedOperation = await checkBatchCreateEntitiesProgress(name);
+ * console.log(decodedOperation.result);
+ * console.log(decodedOperation.done);
+ * console.log(decodedOperation.metadata);
+ */
+  async checkBatchCreateEntitiesProgress(name: string): Promise<LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>>{
+    const request = new operationsProtos.google.longrunning.GetOperationRequest({name});
     const [operation] = await this.operationsClient.getOperation(request);
-    const decodeOperation = new gax.Operation(
-      operation,
-      this.descriptors.longrunning.batchCreateEntities,
-      gax.createDefaultBackoffSettings()
-    );
-    return decodeOperation as LROperation<
-      protos.google.protobuf.Empty,
-      protos.google.protobuf.Struct
-    >;
+    const decodeOperation = new gax.Operation(operation, this.descriptors.longrunning.batchCreateEntities, gax.createDefaultBackoffSettings());
+    return decodeOperation as LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>;
   }
   batchUpdateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
+      options?: CallOptions):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>;
   batchUpdateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
-    options: CallOptions,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
+      options: CallOptions,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
   batchUpdateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Updates or creates multiple entities in the specified entity type. This
-   * method does not affect entities in the entity type that aren't explicitly
-   * specified in the request.
-   *
-   *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The name of the entity type to update or create entities in.
-   *   Format: `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
-   * @param {number[]} request.entities
-   *   Required. The entities to update or create.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {google.protobuf.FieldMask} [request.updateMask]
-   *   Optional. The mask to control which fields get updated.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing
-   *   a long running operation. Its `promise()` method returns a promise
-   *   you can `await` for.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const [operation] = await client.batchUpdateEntities(request);
-   * const [response] = await operation.promise();
-   */
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Updates or creates multiple entities in the specified entity type. This
+ * method does not affect entities in the entity type that aren't explicitly
+ * specified in the request.
+ *
+ *
+ * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The name of the entity type to update or create entities in.
+ *   Format: `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
+ * @param {number[]} request.entities
+ *   Required. The entities to update or create.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {google.protobuf.FieldMask} [request.updateMask]
+ *   Optional. The mask to control which fields get updated.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing
+ *   a long running operation. Its `promise()` method returns a promise
+ *   you can `await` for.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const [operation] = await client.batchUpdateEntities(request);
+ * const [response] = await operation.promise();
+ */
   batchUpdateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
-          LROperation<
-            protos.google.protobuf.IEmpty,
-            protos.google.protobuf.IStruct
-          >,
-          protos.google.longrunning.IOperation | null | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  > | void {
+      request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -1455,151 +1136,107 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.batchUpdateEntities(request, options, callback);
   }
-  /**
-   * Check the status of the long running operation returned by `batchUpdateEntities()`.
-   * @param {String} name
-   *   The operation name that will be passed.
-   * @returns {Promise} - The promise which resolves to an object.
-   *   The decoded operation object has result and metadata field to get information from.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const decodedOperation = await checkBatchUpdateEntitiesProgress(name);
-   * console.log(decodedOperation.result);
-   * console.log(decodedOperation.done);
-   * console.log(decodedOperation.metadata);
-   */
-  async checkBatchUpdateEntitiesProgress(
-    name: string
-  ): Promise<
-    LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>
-  > {
-    const request = new operationsProtos.google.longrunning.GetOperationRequest(
-      {name}
-    );
+/**
+ * Check the status of the long running operation returned by `batchUpdateEntities()`.
+ * @param {String} name
+ *   The operation name that will be passed.
+ * @returns {Promise} - The promise which resolves to an object.
+ *   The decoded operation object has result and metadata field to get information from.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const decodedOperation = await checkBatchUpdateEntitiesProgress(name);
+ * console.log(decodedOperation.result);
+ * console.log(decodedOperation.done);
+ * console.log(decodedOperation.metadata);
+ */
+  async checkBatchUpdateEntitiesProgress(name: string): Promise<LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>>{
+    const request = new operationsProtos.google.longrunning.GetOperationRequest({name});
     const [operation] = await this.operationsClient.getOperation(request);
-    const decodeOperation = new gax.Operation(
-      operation,
-      this.descriptors.longrunning.batchUpdateEntities,
-      gax.createDefaultBackoffSettings()
-    );
-    return decodeOperation as LROperation<
-      protos.google.protobuf.Empty,
-      protos.google.protobuf.Struct
-    >;
+    const decodeOperation = new gax.Operation(operation, this.descriptors.longrunning.batchUpdateEntities, gax.createDefaultBackoffSettings());
+    return decodeOperation as LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>;
   }
   batchDeleteEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
+      options?: CallOptions):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>;
   batchDeleteEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
-    options: CallOptions,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
+      options: CallOptions,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
   batchDeleteEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
-    callback: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Deletes entities in the specified entity type.
-   *
-   *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The name of the entity type to delete entries for. Format:
-   *   `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
-   * @param {string[]} request.entityValues
-   *   Required. The reference `values` of the entities to delete. Note that
-   *   these are not fully-qualified names, i.e. they don't start with
-   *   `projects/<Project ID>`.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing
-   *   a long running operation. Its `promise()` method returns a promise
-   *   you can `await` for.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const [operation] = await client.batchDeleteEntities(request);
-   * const [response] = await operation.promise();
-   */
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
+      callback: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Deletes entities in the specified entity type.
+ *
+ *
+ * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The name of the entity type to delete entries for. Format:
+ *   `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
+ * @param {string[]} request.entityValues
+ *   Required. The reference `values` of the entities to delete. Note that
+ *   these are not fully-qualified names, i.e. they don't start with
+ *   `projects/<Project ID>`.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing
+ *   a long running operation. Its `promise()` method returns a promise
+ *   you can `await` for.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const [operation] = await client.batchDeleteEntities(request);
+ * const [response] = await operation.promise();
+ */
   batchDeleteEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
-          LROperation<
-            protos.google.protobuf.IEmpty,
-            protos.google.protobuf.IStruct
-          >,
-          protos.google.longrunning.IOperation | null | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      LROperation<
-        protos.google.protobuf.IEmpty,
-        protos.google.protobuf.IStruct
-      >,
-      protos.google.longrunning.IOperation | undefined,
-      {} | undefined
-    ]
-  > | void {
+      request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
+      optionsOrCallback?: CallOptions|Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+          protos.google.longrunning.IOperation|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        LROperation<protos.google.protobuf.IEmpty, protos.google.protobuf.IStruct>,
+        protos.google.longrunning.IOperation|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -1608,139 +1245,107 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.batchDeleteEntities(request, options, callback);
   }
-  /**
-   * Check the status of the long running operation returned by `batchDeleteEntities()`.
-   * @param {String} name
-   *   The operation name that will be passed.
-   * @returns {Promise} - The promise which resolves to an object.
-   *   The decoded operation object has result and metadata field to get information from.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
-   *   for more details and examples.
-   * @example
-   * const decodedOperation = await checkBatchDeleteEntitiesProgress(name);
-   * console.log(decodedOperation.result);
-   * console.log(decodedOperation.done);
-   * console.log(decodedOperation.metadata);
-   */
-  async checkBatchDeleteEntitiesProgress(
-    name: string
-  ): Promise<
-    LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>
-  > {
-    const request = new operationsProtos.google.longrunning.GetOperationRequest(
-      {name}
-    );
+/**
+ * Check the status of the long running operation returned by `batchDeleteEntities()`.
+ * @param {String} name
+ *   The operation name that will be passed.
+ * @returns {Promise} - The promise which resolves to an object.
+ *   The decoded operation object has result and metadata field to get information from.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#long-running-operations)
+ *   for more details and examples.
+ * @example
+ * const decodedOperation = await checkBatchDeleteEntitiesProgress(name);
+ * console.log(decodedOperation.result);
+ * console.log(decodedOperation.done);
+ * console.log(decodedOperation.metadata);
+ */
+  async checkBatchDeleteEntitiesProgress(name: string): Promise<LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>>{
+    const request = new operationsProtos.google.longrunning.GetOperationRequest({name});
     const [operation] = await this.operationsClient.getOperation(request);
-    const decodeOperation = new gax.Operation(
-      operation,
-      this.descriptors.longrunning.batchDeleteEntities,
-      gax.createDefaultBackoffSettings()
-    );
-    return decodeOperation as LROperation<
-      protos.google.protobuf.Empty,
-      protos.google.protobuf.Struct
-    >;
+    const decodeOperation = new gax.Operation(operation, this.descriptors.longrunning.batchDeleteEntities, gax.createDefaultBackoffSettings());
+    return decodeOperation as LROperation<protos.google.protobuf.Empty, protos.google.protobuf.Struct>;
   }
   listEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType[],
-      protos.google.cloud.dialogflow.v2.IListEntityTypesRequest | null,
-      protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
-    ]
-  >;
+      request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+      options?: CallOptions):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType[],
+        protos.google.cloud.dialogflow.v2.IListEntityTypesRequest|null,
+        protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
+      ]>;
   listEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-    options: CallOptions,
-    callback: PaginationCallback<
-      protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-      | protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
-      | null
-      | undefined,
-      protos.google.cloud.dialogflow.v2.IEntityType
-    >
-  ): void;
-  listEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-    callback: PaginationCallback<
-      protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-      | protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
-      | null
-      | undefined,
-      protos.google.cloud.dialogflow.v2.IEntityType
-    >
-  ): void;
-  /**
-   * Returns the list of all entity types in the specified agent.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The agent to list all entity types from.
-   *   Format: `projects/<Project ID>/agent`.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {number} [request.pageSize]
-   *   Optional. The maximum number of items to return in a single page. By
-   *   default 100 and at most 1000.
-   * @param {string} [request.pageToken]
-   *   Optional. The next_page_token value returned from a previous list request.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is Array of [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listEntityTypesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   */
-  listEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | PaginationCallback<
+      request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+      options: CallOptions,
+      callback: PaginationCallback<
           protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-          | protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
-          | null
-          | undefined,
-          protos.google.cloud.dialogflow.v2.IEntityType
-        >,
-    callback?: PaginationCallback<
-      protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-      | protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
-      | null
-      | undefined,
-      protos.google.cloud.dialogflow.v2.IEntityType
-    >
-  ): Promise<
-    [
-      protos.google.cloud.dialogflow.v2.IEntityType[],
-      protos.google.cloud.dialogflow.v2.IListEntityTypesRequest | null,
-      protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
-    ]
-  > | void {
+          protos.google.cloud.dialogflow.v2.IListEntityTypesResponse|null|undefined,
+          protos.google.cloud.dialogflow.v2.IEntityType>): void;
+  listEntityTypes(
+      request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+      callback: PaginationCallback<
+          protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+          protos.google.cloud.dialogflow.v2.IListEntityTypesResponse|null|undefined,
+          protos.google.cloud.dialogflow.v2.IEntityType>): void;
+/**
+ * Returns the list of all entity types in the specified agent.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The agent to list all entity types from.
+ *   Format: `projects/<Project ID>/agent`.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {number} [request.pageSize]
+ *   Optional. The maximum number of items to return in a single page. By
+ *   default 100 and at most 1000.
+ * @param {string} [request.pageToken]
+ *   Optional. The next_page_token value returned from a previous list request.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is Array of [EntityType]{@link google.cloud.dialogflow.v2.EntityType}.
+ *   The client library will perform auto-pagination by default: it will call the API as many
+ *   times as needed and will merge results from all the pages into this array.
+ *   Note that it can affect your quota.
+ *   We recommend using `listEntityTypesAsync()`
+ *   method described below for async iteration which you can stop as needed.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+ *   for more details and examples.
+ */
+  listEntityTypes(
+      request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+      optionsOrCallback?: CallOptions|PaginationCallback<
+          protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+          protos.google.cloud.dialogflow.v2.IListEntityTypesResponse|null|undefined,
+          protos.google.cloud.dialogflow.v2.IEntityType>,
+      callback?: PaginationCallback<
+          protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+          protos.google.cloud.dialogflow.v2.IListEntityTypesResponse|null|undefined,
+          protos.google.cloud.dialogflow.v2.IEntityType>):
+      Promise<[
+        protos.google.cloud.dialogflow.v2.IEntityType[],
+        protos.google.cloud.dialogflow.v2.IListEntityTypesRequest|null,
+        protos.google.cloud.dialogflow.v2.IListEntityTypesResponse
+      ]>|void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -1749,46 +1354,46 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.listEntityTypes(request, options, callback);
   }
 
-  /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The agent to list all entity types from.
-   *   Format: `projects/<Project ID>/agent`.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {number} [request.pageSize]
-   *   Optional. The maximum number of items to return in a single page. By
-   *   default 100 and at most 1000.
-   * @param {string} [request.pageToken]
-   *   Optional. The next_page_token value returned from a previous list request.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Stream}
-   *   An object stream which emits an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listEntityTypesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   */
+/**
+ * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The agent to list all entity types from.
+ *   Format: `projects/<Project ID>/agent`.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {number} [request.pageSize]
+ *   Optional. The maximum number of items to return in a single page. By
+ *   default 100 and at most 1000.
+ * @param {string} [request.pageToken]
+ *   Optional. The next_page_token value returned from a previous list request.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Stream}
+ *   An object stream which emits an object representing [EntityType]{@link google.cloud.dialogflow.v2.EntityType} on 'data' event.
+ *   The client library will perform auto-pagination by default: it will call the API as many
+ *   times as needed. Note that it can affect your quota.
+ *   We recommend using `listEntityTypesAsync()`
+ *   method described below for async iteration which you can stop as needed.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+ *   for more details and examples.
+ */
   listEntityTypesStream(
-    request?: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-    options?: CallOptions
-  ): Transform {
+      request?: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+      options?: CallOptions):
+    Transform{
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1796,7 +1401,7 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -1807,46 +1412,46 @@ export class EntityTypesClient {
     );
   }
 
-  /**
-   * Equivalent to `listEntityTypes`, but returns an iterable object.
-   *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.parent
-   *   Required. The agent to list all entity types from.
-   *   Format: `projects/<Project ID>/agent`.
-   * @param {string} [request.languageCode]
-   *   Optional. The language used to access language-specific data.
-   *   If not specified, the agent's default language is used.
-   *   For more information, see
-   *   [Multilingual intent and entity
-   *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
-   * @param {number} [request.pageSize]
-   *   Optional. The maximum number of items to return in a single page. By
-   *   default 100 and at most 1000.
-   * @param {string} [request.pageToken]
-   *   Optional. The next_page_token value returned from a previous list request.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [EntityType]{@link google.cloud.dialogflow.v2.EntityType}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listEntityTypesAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
-   */
+/**
+ * Equivalent to `listEntityTypes`, but returns an iterable object.
+ *
+ * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.parent
+ *   Required. The agent to list all entity types from.
+ *   Format: `projects/<Project ID>/agent`.
+ * @param {string} [request.languageCode]
+ *   Optional. The language used to access language-specific data.
+ *   If not specified, the agent's default language is used.
+ *   For more information, see
+ *   [Multilingual intent and entity
+ *   data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+ * @param {number} [request.pageSize]
+ *   Optional. The maximum number of items to return in a single page. By
+ *   default 100 and at most 1000.
+ * @param {string} [request.pageToken]
+ *   Optional. The next_page_token value returned from a previous list request.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Object}
+ *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+ *   When you iterate the returned iterable, each element will be an object representing
+ *   [EntityType]{@link google.cloud.dialogflow.v2.EntityType}. The API will be called under the hood as needed, once per the page,
+ *   so you can stop the iteration when you don't need more results.
+ *   Please see the
+ *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+ *   for more details and examples.
+ * @example
+ * const iterable = client.listEntityTypesAsync(request);
+ * for await (const response of iterable) {
+ *   // process response
+ * }
+ */
   listEntityTypesAsync(
-    request?: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
-    options?: CallOptions
-  ): AsyncIterable<protos.google.cloud.dialogflow.v2.IEntityType> {
+      request?: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+      options?: CallOptions):
+    AsyncIterable<protos.google.cloud.dialogflow.v2.IEntityType>{
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1854,14 +1459,14 @@ export class EntityTypesClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
+      'parent': request.parent || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listEntityTypes.asyncIterate(
       this.innerApiCalls['listEntityTypes'] as GaxCall,
-      (request as unknown) as RequestType,
+      request as unknown as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IEntityType>;
   }
@@ -1875,7 +1480,7 @@ export class EntityTypesClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  agentPath(project: string) {
+  agentPath(project:string) {
     return this.pathTemplates.agentPathTemplate.render({
       project: project,
     });
@@ -1899,7 +1504,7 @@ export class EntityTypesClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  entityTypePath(project: string, entityType: string) {
+  entityTypePath(project:string,entityType:string) {
     return this.pathTemplates.entityTypePathTemplate.render({
       project: project,
       entity_type: entityType,
@@ -1914,8 +1519,7 @@ export class EntityTypesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
-      .project;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).project;
   }
 
   /**
@@ -1926,8 +1530,7 @@ export class EntityTypesClient {
    * @returns {string} A string representing the entity_type.
    */
   matchEntityTypeFromEntityTypeName(entityTypeName: string) {
-    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName)
-      .entity_type;
+    return this.pathTemplates.entityTypePathTemplate.match(entityTypeName).entity_type;
   }
 
   /**
@@ -1937,7 +1540,7 @@ export class EntityTypesClient {
    * @param {string} environment
    * @returns {string} Resource name string.
    */
-  environmentPath(project: string, environment: string) {
+  environmentPath(project:string,environment:string) {
     return this.pathTemplates.environmentPathTemplate.render({
       project: project,
       environment: environment,
@@ -1952,8 +1555,7 @@ export class EntityTypesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName)
-      .project;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName).project;
   }
 
   /**
@@ -1964,8 +1566,7 @@ export class EntityTypesClient {
    * @returns {string} A string representing the environment.
    */
   matchEnvironmentFromEnvironmentName(environmentName: string) {
-    return this.pathTemplates.environmentPathTemplate.match(environmentName)
-      .environment;
+    return this.pathTemplates.environmentPathTemplate.match(environmentName).environment;
   }
 
   /**
@@ -1975,7 +1576,7 @@ export class EntityTypesClient {
    * @param {string} intent
    * @returns {string} Resource name string.
    */
-  intentPath(project: string, intent: string) {
+  intentPath(project:string,intent:string) {
     return this.pathTemplates.intentPathTemplate.render({
       project: project,
       intent: intent,
@@ -2010,7 +1611,7 @@ export class EntityTypesClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project: string) {
+  projectPath(project:string) {
     return this.pathTemplates.projectPathTemplate.render({
       project: project,
     });
@@ -2037,22 +1638,14 @@ export class EntityTypesClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentUserSessionContextPath(
-    project: string,
-    environment: string,
-    user: string,
-    session: string,
-    context: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.render(
-      {
-        project: project,
-        environment: environment,
-        user: user,
-        session: session,
-        context: context,
-      }
-    );
+  projectAgentEnvironmentUserSessionContextPath(project:string,environment:string,user:string,session:string,context:string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+      context: context,
+    });
   }
 
   /**
@@ -2062,12 +1655,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).project;
+  matchProjectFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).project;
   }
 
   /**
@@ -2077,12 +1666,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).environment;
+  matchEnvironmentFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).environment;
   }
 
   /**
@@ -2092,12 +1677,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the user.
    */
-  matchUserFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).user;
+  matchUserFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).user;
   }
 
   /**
@@ -2107,12 +1688,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).session;
+  matchSessionFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).session;
   }
 
   /**
@@ -2122,12 +1699,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_context resource.
    * @returns {string} A string representing the context.
    */
-  matchContextFromProjectAgentEnvironmentUserSessionContextName(
-    projectAgentEnvironmentUserSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(
-      projectAgentEnvironmentUserSessionContextName
-    ).context;
+  matchContextFromProjectAgentEnvironmentUserSessionContextName(projectAgentEnvironmentUserSessionContextName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionContextPathTemplate.match(projectAgentEnvironmentUserSessionContextName).context;
   }
 
   /**
@@ -2140,22 +1713,14 @@ export class EntityTypesClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectAgentEnvironmentUserSessionEntityTypePath(
-    project: string,
-    environment: string,
-    user: string,
-    session: string,
-    entityType: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.render(
-      {
-        project: project,
-        environment: environment,
-        user: user,
-        session: session,
-        entity_type: entityType,
-      }
-    );
+  projectAgentEnvironmentUserSessionEntityTypePath(project:string,environment:string,user:string,session:string,entityType:string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.render({
+      project: project,
+      environment: environment,
+      user: user,
+      session: session,
+      entity_type: entityType,
+    });
   }
 
   /**
@@ -2165,12 +1730,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).project;
+  matchProjectFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).project;
   }
 
   /**
@@ -2180,12 +1741,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the environment.
    */
-  matchEnvironmentFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).environment;
+  matchEnvironmentFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).environment;
   }
 
   /**
@@ -2195,12 +1752,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the user.
    */
-  matchUserFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).user;
+  matchUserFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).user;
   }
 
   /**
@@ -2210,12 +1763,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).session;
+  matchSessionFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).session;
   }
 
   /**
@@ -2225,12 +1774,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_environment_user_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectAgentEnvironmentUserSessionEntityTypeName(
-    projectAgentEnvironmentUserSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(
-      projectAgentEnvironmentUserSessionEntityTypeName
-    ).entity_type;
+  matchEntityTypeFromProjectAgentEnvironmentUserSessionEntityTypeName(projectAgentEnvironmentUserSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentEnvironmentUserSessionEntityTypePathTemplate.match(projectAgentEnvironmentUserSessionEntityTypeName).entity_type;
   }
 
   /**
@@ -2241,11 +1786,7 @@ export class EntityTypesClient {
    * @param {string} context
    * @returns {string} Resource name string.
    */
-  projectAgentSessionContextPath(
-    project: string,
-    session: string,
-    context: string
-  ) {
+  projectAgentSessionContextPath(project:string,session:string,context:string) {
     return this.pathTemplates.projectAgentSessionContextPathTemplate.render({
       project: project,
       session: session,
@@ -2260,12 +1801,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentSessionContextName(
-    projectAgentSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
-      projectAgentSessionContextName
-    ).project;
+  matchProjectFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).project;
   }
 
   /**
@@ -2275,12 +1812,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentSessionContextName(
-    projectAgentSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
-      projectAgentSessionContextName
-    ).session;
+  matchSessionFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).session;
   }
 
   /**
@@ -2290,12 +1823,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_session_context resource.
    * @returns {string} A string representing the context.
    */
-  matchContextFromProjectAgentSessionContextName(
-    projectAgentSessionContextName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(
-      projectAgentSessionContextName
-    ).context;
+  matchContextFromProjectAgentSessionContextName(projectAgentSessionContextName: string) {
+    return this.pathTemplates.projectAgentSessionContextPathTemplate.match(projectAgentSessionContextName).context;
   }
 
   /**
@@ -2306,11 +1835,7 @@ export class EntityTypesClient {
    * @param {string} entity_type
    * @returns {string} Resource name string.
    */
-  projectAgentSessionEntityTypePath(
-    project: string,
-    session: string,
-    entityType: string
-  ) {
+  projectAgentSessionEntityTypePath(project:string,session:string,entityType:string) {
     return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.render({
       project: project,
       session: session,
@@ -2325,12 +1850,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAgentSessionEntityTypeName(
-    projectAgentSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
-      projectAgentSessionEntityTypeName
-    ).project;
+  matchProjectFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).project;
   }
 
   /**
@@ -2340,12 +1861,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the session.
    */
-  matchSessionFromProjectAgentSessionEntityTypeName(
-    projectAgentSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
-      projectAgentSessionEntityTypeName
-    ).session;
+  matchSessionFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).session;
   }
 
   /**
@@ -2355,12 +1872,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_agent_session_entity_type resource.
    * @returns {string} A string representing the entity_type.
    */
-  matchEntityTypeFromProjectAgentSessionEntityTypeName(
-    projectAgentSessionEntityTypeName: string
-  ) {
-    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(
-      projectAgentSessionEntityTypeName
-    ).entity_type;
+  matchEntityTypeFromProjectAgentSessionEntityTypeName(projectAgentSessionEntityTypeName: string) {
+    return this.pathTemplates.projectAgentSessionEntityTypePathTemplate.match(projectAgentSessionEntityTypeName).entity_type;
   }
 
   /**
@@ -2370,7 +1883,7 @@ export class EntityTypesClient {
    * @param {string} answer_record
    * @returns {string} Resource name string.
    */
-  projectAnswerRecordPath(project: string, answerRecord: string) {
+  projectAnswerRecordPath(project:string,answerRecord:string) {
     return this.pathTemplates.projectAnswerRecordPathTemplate.render({
       project: project,
       answer_record: answerRecord,
@@ -2385,9 +1898,7 @@ export class EntityTypesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectAnswerRecordName(projectAnswerRecordName: string) {
-    return this.pathTemplates.projectAnswerRecordPathTemplate.match(
-      projectAnswerRecordName
-    ).project;
+    return this.pathTemplates.projectAnswerRecordPathTemplate.match(projectAnswerRecordName).project;
   }
 
   /**
@@ -2397,12 +1908,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_answer_record resource.
    * @returns {string} A string representing the answer_record.
    */
-  matchAnswerRecordFromProjectAnswerRecordName(
-    projectAnswerRecordName: string
-  ) {
-    return this.pathTemplates.projectAnswerRecordPathTemplate.match(
-      projectAnswerRecordName
-    ).answer_record;
+  matchAnswerRecordFromProjectAnswerRecordName(projectAnswerRecordName: string) {
+    return this.pathTemplates.projectAnswerRecordPathTemplate.match(projectAnswerRecordName).answer_record;
   }
 
   /**
@@ -2412,7 +1919,7 @@ export class EntityTypesClient {
    * @param {string} conversation
    * @returns {string} Resource name string.
    */
-  projectConversationPath(project: string, conversation: string) {
+  projectConversationPath(project:string,conversation:string) {
     return this.pathTemplates.projectConversationPathTemplate.render({
       project: project,
       conversation: conversation,
@@ -2427,9 +1934,7 @@ export class EntityTypesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectConversationName(projectConversationName: string) {
-    return this.pathTemplates.projectConversationPathTemplate.match(
-      projectConversationName
-    ).project;
+    return this.pathTemplates.projectConversationPathTemplate.match(projectConversationName).project;
   }
 
   /**
@@ -2439,12 +1944,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectConversationName(
-    projectConversationName: string
-  ) {
-    return this.pathTemplates.projectConversationPathTemplate.match(
-      projectConversationName
-    ).conversation;
+  matchConversationFromProjectConversationName(projectConversationName: string) {
+    return this.pathTemplates.projectConversationPathTemplate.match(projectConversationName).conversation;
   }
 
   /**
@@ -2455,18 +1956,12 @@ export class EntityTypesClient {
    * @param {string} call_matcher
    * @returns {string} Resource name string.
    */
-  projectConversationCallMatcherPath(
-    project: string,
-    conversation: string,
-    callMatcher: string
-  ) {
-    return this.pathTemplates.projectConversationCallMatcherPathTemplate.render(
-      {
-        project: project,
-        conversation: conversation,
-        call_matcher: callMatcher,
-      }
-    );
+  projectConversationCallMatcherPath(project:string,conversation:string,callMatcher:string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.render({
+      project: project,
+      conversation: conversation,
+      call_matcher: callMatcher,
+    });
   }
 
   /**
@@ -2476,12 +1971,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_call_matcher resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectConversationCallMatcherName(
-    projectConversationCallMatcherName: string
-  ) {
-    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(
-      projectConversationCallMatcherName
-    ).project;
+  matchProjectFromProjectConversationCallMatcherName(projectConversationCallMatcherName: string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(projectConversationCallMatcherName).project;
   }
 
   /**
@@ -2491,12 +1982,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_call_matcher resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectConversationCallMatcherName(
-    projectConversationCallMatcherName: string
-  ) {
-    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(
-      projectConversationCallMatcherName
-    ).conversation;
+  matchConversationFromProjectConversationCallMatcherName(projectConversationCallMatcherName: string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(projectConversationCallMatcherName).conversation;
   }
 
   /**
@@ -2506,12 +1993,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_call_matcher resource.
    * @returns {string} A string representing the call_matcher.
    */
-  matchCallMatcherFromProjectConversationCallMatcherName(
-    projectConversationCallMatcherName: string
-  ) {
-    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(
-      projectConversationCallMatcherName
-    ).call_matcher;
+  matchCallMatcherFromProjectConversationCallMatcherName(projectConversationCallMatcherName: string) {
+    return this.pathTemplates.projectConversationCallMatcherPathTemplate.match(projectConversationCallMatcherName).call_matcher;
   }
 
   /**
@@ -2522,11 +2005,7 @@ export class EntityTypesClient {
    * @param {string} message
    * @returns {string} Resource name string.
    */
-  projectConversationMessagePath(
-    project: string,
-    conversation: string,
-    message: string
-  ) {
+  projectConversationMessagePath(project:string,conversation:string,message:string) {
     return this.pathTemplates.projectConversationMessagePathTemplate.render({
       project: project,
       conversation: conversation,
@@ -2541,12 +2020,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_message resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectConversationMessageName(
-    projectConversationMessageName: string
-  ) {
-    return this.pathTemplates.projectConversationMessagePathTemplate.match(
-      projectConversationMessageName
-    ).project;
+  matchProjectFromProjectConversationMessageName(projectConversationMessageName: string) {
+    return this.pathTemplates.projectConversationMessagePathTemplate.match(projectConversationMessageName).project;
   }
 
   /**
@@ -2556,12 +2031,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_message resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectConversationMessageName(
-    projectConversationMessageName: string
-  ) {
-    return this.pathTemplates.projectConversationMessagePathTemplate.match(
-      projectConversationMessageName
-    ).conversation;
+  matchConversationFromProjectConversationMessageName(projectConversationMessageName: string) {
+    return this.pathTemplates.projectConversationMessagePathTemplate.match(projectConversationMessageName).conversation;
   }
 
   /**
@@ -2571,12 +2042,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_message resource.
    * @returns {string} A string representing the message.
    */
-  matchMessageFromProjectConversationMessageName(
-    projectConversationMessageName: string
-  ) {
-    return this.pathTemplates.projectConversationMessagePathTemplate.match(
-      projectConversationMessageName
-    ).message;
+  matchMessageFromProjectConversationMessageName(projectConversationMessageName: string) {
+    return this.pathTemplates.projectConversationMessagePathTemplate.match(projectConversationMessageName).message;
   }
 
   /**
@@ -2587,18 +2054,12 @@ export class EntityTypesClient {
    * @param {string} participant
    * @returns {string} Resource name string.
    */
-  projectConversationParticipantPath(
-    project: string,
-    conversation: string,
-    participant: string
-  ) {
-    return this.pathTemplates.projectConversationParticipantPathTemplate.render(
-      {
-        project: project,
-        conversation: conversation,
-        participant: participant,
-      }
-    );
+  projectConversationParticipantPath(project:string,conversation:string,participant:string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.render({
+      project: project,
+      conversation: conversation,
+      participant: participant,
+    });
   }
 
   /**
@@ -2608,12 +2069,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_participant resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectConversationParticipantName(
-    projectConversationParticipantName: string
-  ) {
-    return this.pathTemplates.projectConversationParticipantPathTemplate.match(
-      projectConversationParticipantName
-    ).project;
+  matchProjectFromProjectConversationParticipantName(projectConversationParticipantName: string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.match(projectConversationParticipantName).project;
   }
 
   /**
@@ -2623,12 +2080,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_participant resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectConversationParticipantName(
-    projectConversationParticipantName: string
-  ) {
-    return this.pathTemplates.projectConversationParticipantPathTemplate.match(
-      projectConversationParticipantName
-    ).conversation;
+  matchConversationFromProjectConversationParticipantName(projectConversationParticipantName: string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.match(projectConversationParticipantName).conversation;
   }
 
   /**
@@ -2638,12 +2091,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_participant resource.
    * @returns {string} A string representing the participant.
    */
-  matchParticipantFromProjectConversationParticipantName(
-    projectConversationParticipantName: string
-  ) {
-    return this.pathTemplates.projectConversationParticipantPathTemplate.match(
-      projectConversationParticipantName
-    ).participant;
+  matchParticipantFromProjectConversationParticipantName(projectConversationParticipantName: string) {
+    return this.pathTemplates.projectConversationParticipantPathTemplate.match(projectConversationParticipantName).participant;
   }
 
   /**
@@ -2653,7 +2102,7 @@ export class EntityTypesClient {
    * @param {string} conversation_profile
    * @returns {string} Resource name string.
    */
-  projectConversationProfilePath(project: string, conversationProfile: string) {
+  projectConversationProfilePath(project:string,conversationProfile:string) {
     return this.pathTemplates.projectConversationProfilePathTemplate.render({
       project: project,
       conversation_profile: conversationProfile,
@@ -2667,12 +2116,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_profile resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectConversationProfileName(
-    projectConversationProfileName: string
-  ) {
-    return this.pathTemplates.projectConversationProfilePathTemplate.match(
-      projectConversationProfileName
-    ).project;
+  matchProjectFromProjectConversationProfileName(projectConversationProfileName: string) {
+    return this.pathTemplates.projectConversationProfilePathTemplate.match(projectConversationProfileName).project;
   }
 
   /**
@@ -2682,12 +2127,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_conversation_profile resource.
    * @returns {string} A string representing the conversation_profile.
    */
-  matchConversationProfileFromProjectConversationProfileName(
-    projectConversationProfileName: string
-  ) {
-    return this.pathTemplates.projectConversationProfilePathTemplate.match(
-      projectConversationProfileName
-    ).conversation_profile;
+  matchConversationProfileFromProjectConversationProfileName(projectConversationProfileName: string) {
+    return this.pathTemplates.projectConversationProfilePathTemplate.match(projectConversationProfileName).conversation_profile;
   }
 
   /**
@@ -2697,7 +2138,7 @@ export class EntityTypesClient {
    * @param {string} knowledge_base
    * @returns {string} Resource name string.
    */
-  projectKnowledgeBasePath(project: string, knowledgeBase: string) {
+  projectKnowledgeBasePath(project:string,knowledgeBase:string) {
     return this.pathTemplates.projectKnowledgeBasePathTemplate.render({
       project: project,
       knowledge_base: knowledgeBase,
@@ -2712,9 +2153,7 @@ export class EntityTypesClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectKnowledgeBaseName(projectKnowledgeBaseName: string) {
-    return this.pathTemplates.projectKnowledgeBasePathTemplate.match(
-      projectKnowledgeBaseName
-    ).project;
+    return this.pathTemplates.projectKnowledgeBasePathTemplate.match(projectKnowledgeBaseName).project;
   }
 
   /**
@@ -2724,12 +2163,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_knowledge_base resource.
    * @returns {string} A string representing the knowledge_base.
    */
-  matchKnowledgeBaseFromProjectKnowledgeBaseName(
-    projectKnowledgeBaseName: string
-  ) {
-    return this.pathTemplates.projectKnowledgeBasePathTemplate.match(
-      projectKnowledgeBaseName
-    ).knowledge_base;
+  matchKnowledgeBaseFromProjectKnowledgeBaseName(projectKnowledgeBaseName: string) {
+    return this.pathTemplates.projectKnowledgeBasePathTemplate.match(projectKnowledgeBaseName).knowledge_base;
   }
 
   /**
@@ -2740,11 +2175,7 @@ export class EntityTypesClient {
    * @param {string} document
    * @returns {string} Resource name string.
    */
-  projectKnowledgeBaseDocumentPath(
-    project: string,
-    knowledgeBase: string,
-    document: string
-  ) {
+  projectKnowledgeBaseDocumentPath(project:string,knowledgeBase:string,document:string) {
     return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.render({
       project: project,
       knowledge_base: knowledgeBase,
@@ -2759,12 +2190,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_knowledge_base_document resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectKnowledgeBaseDocumentName(
-    projectKnowledgeBaseDocumentName: string
-  ) {
-    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(
-      projectKnowledgeBaseDocumentName
-    ).project;
+  matchProjectFromProjectKnowledgeBaseDocumentName(projectKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(projectKnowledgeBaseDocumentName).project;
   }
 
   /**
@@ -2774,12 +2201,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_knowledge_base_document resource.
    * @returns {string} A string representing the knowledge_base.
    */
-  matchKnowledgeBaseFromProjectKnowledgeBaseDocumentName(
-    projectKnowledgeBaseDocumentName: string
-  ) {
-    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(
-      projectKnowledgeBaseDocumentName
-    ).knowledge_base;
+  matchKnowledgeBaseFromProjectKnowledgeBaseDocumentName(projectKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(projectKnowledgeBaseDocumentName).knowledge_base;
   }
 
   /**
@@ -2789,12 +2212,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_knowledge_base_document resource.
    * @returns {string} A string representing the document.
    */
-  matchDocumentFromProjectKnowledgeBaseDocumentName(
-    projectKnowledgeBaseDocumentName: string
-  ) {
-    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(
-      projectKnowledgeBaseDocumentName
-    ).document;
+  matchDocumentFromProjectKnowledgeBaseDocumentName(projectKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectKnowledgeBaseDocumentPathTemplate.match(projectKnowledgeBaseDocumentName).document;
   }
 
   /**
@@ -2805,11 +2224,7 @@ export class EntityTypesClient {
    * @param {string} answer_record
    * @returns {string} Resource name string.
    */
-  projectLocationAnswerRecordPath(
-    project: string,
-    location: string,
-    answerRecord: string
-  ) {
+  projectLocationAnswerRecordPath(project:string,location:string,answerRecord:string) {
     return this.pathTemplates.projectLocationAnswerRecordPathTemplate.render({
       project: project,
       location: location,
@@ -2824,12 +2239,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_answer_record resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationAnswerRecordName(
-    projectLocationAnswerRecordName: string
-  ) {
-    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(
-      projectLocationAnswerRecordName
-    ).project;
+  matchProjectFromProjectLocationAnswerRecordName(projectLocationAnswerRecordName: string) {
+    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(projectLocationAnswerRecordName).project;
   }
 
   /**
@@ -2839,12 +2250,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_answer_record resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationAnswerRecordName(
-    projectLocationAnswerRecordName: string
-  ) {
-    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(
-      projectLocationAnswerRecordName
-    ).location;
+  matchLocationFromProjectLocationAnswerRecordName(projectLocationAnswerRecordName: string) {
+    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(projectLocationAnswerRecordName).location;
   }
 
   /**
@@ -2854,12 +2261,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_answer_record resource.
    * @returns {string} A string representing the answer_record.
    */
-  matchAnswerRecordFromProjectLocationAnswerRecordName(
-    projectLocationAnswerRecordName: string
-  ) {
-    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(
-      projectLocationAnswerRecordName
-    ).answer_record;
+  matchAnswerRecordFromProjectLocationAnswerRecordName(projectLocationAnswerRecordName: string) {
+    return this.pathTemplates.projectLocationAnswerRecordPathTemplate.match(projectLocationAnswerRecordName).answer_record;
   }
 
   /**
@@ -2870,11 +2273,7 @@ export class EntityTypesClient {
    * @param {string} conversation
    * @returns {string} Resource name string.
    */
-  projectLocationConversationPath(
-    project: string,
-    location: string,
-    conversation: string
-  ) {
+  projectLocationConversationPath(project:string,location:string,conversation:string) {
     return this.pathTemplates.projectLocationConversationPathTemplate.render({
       project: project,
       location: location,
@@ -2889,12 +2288,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationConversationName(
-    projectLocationConversationName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationPathTemplate.match(
-      projectLocationConversationName
-    ).project;
+  matchProjectFromProjectLocationConversationName(projectLocationConversationName: string) {
+    return this.pathTemplates.projectLocationConversationPathTemplate.match(projectLocationConversationName).project;
   }
 
   /**
@@ -2904,12 +2299,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationConversationName(
-    projectLocationConversationName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationPathTemplate.match(
-      projectLocationConversationName
-    ).location;
+  matchLocationFromProjectLocationConversationName(projectLocationConversationName: string) {
+    return this.pathTemplates.projectLocationConversationPathTemplate.match(projectLocationConversationName).location;
   }
 
   /**
@@ -2919,12 +2310,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectLocationConversationName(
-    projectLocationConversationName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationPathTemplate.match(
-      projectLocationConversationName
-    ).conversation;
+  matchConversationFromProjectLocationConversationName(projectLocationConversationName: string) {
+    return this.pathTemplates.projectLocationConversationPathTemplate.match(projectLocationConversationName).conversation;
   }
 
   /**
@@ -2936,20 +2323,13 @@ export class EntityTypesClient {
    * @param {string} call_matcher
    * @returns {string} Resource name string.
    */
-  projectLocationConversationCallMatcherPath(
-    project: string,
-    location: string,
-    conversation: string,
-    callMatcher: string
-  ) {
-    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.render(
-      {
-        project: project,
-        location: location,
-        conversation: conversation,
-        call_matcher: callMatcher,
-      }
-    );
+  projectLocationConversationCallMatcherPath(project:string,location:string,conversation:string,callMatcher:string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.render({
+      project: project,
+      location: location,
+      conversation: conversation,
+      call_matcher: callMatcher,
+    });
   }
 
   /**
@@ -2959,12 +2339,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_call_matcher resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationConversationCallMatcherName(
-    projectLocationConversationCallMatcherName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(
-      projectLocationConversationCallMatcherName
-    ).project;
+  matchProjectFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).project;
   }
 
   /**
@@ -2974,12 +2350,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_call_matcher resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationConversationCallMatcherName(
-    projectLocationConversationCallMatcherName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(
-      projectLocationConversationCallMatcherName
-    ).location;
+  matchLocationFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).location;
   }
 
   /**
@@ -2989,12 +2361,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_call_matcher resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectLocationConversationCallMatcherName(
-    projectLocationConversationCallMatcherName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(
-      projectLocationConversationCallMatcherName
-    ).conversation;
+  matchConversationFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).conversation;
   }
 
   /**
@@ -3004,12 +2372,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_call_matcher resource.
    * @returns {string} A string representing the call_matcher.
    */
-  matchCallMatcherFromProjectLocationConversationCallMatcherName(
-    projectLocationConversationCallMatcherName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(
-      projectLocationConversationCallMatcherName
-    ).call_matcher;
+  matchCallMatcherFromProjectLocationConversationCallMatcherName(projectLocationConversationCallMatcherName: string) {
+    return this.pathTemplates.projectLocationConversationCallMatcherPathTemplate.match(projectLocationConversationCallMatcherName).call_matcher;
   }
 
   /**
@@ -3021,20 +2385,13 @@ export class EntityTypesClient {
    * @param {string} message
    * @returns {string} Resource name string.
    */
-  projectLocationConversationMessagePath(
-    project: string,
-    location: string,
-    conversation: string,
-    message: string
-  ) {
-    return this.pathTemplates.projectLocationConversationMessagePathTemplate.render(
-      {
-        project: project,
-        location: location,
-        conversation: conversation,
-        message: message,
-      }
-    );
+  projectLocationConversationMessagePath(project:string,location:string,conversation:string,message:string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.render({
+      project: project,
+      location: location,
+      conversation: conversation,
+      message: message,
+    });
   }
 
   /**
@@ -3044,12 +2401,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_message resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationConversationMessageName(
-    projectLocationConversationMessageName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(
-      projectLocationConversationMessageName
-    ).project;
+  matchProjectFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).project;
   }
 
   /**
@@ -3059,12 +2412,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_message resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationConversationMessageName(
-    projectLocationConversationMessageName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(
-      projectLocationConversationMessageName
-    ).location;
+  matchLocationFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).location;
   }
 
   /**
@@ -3074,12 +2423,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_message resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectLocationConversationMessageName(
-    projectLocationConversationMessageName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(
-      projectLocationConversationMessageName
-    ).conversation;
+  matchConversationFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).conversation;
   }
 
   /**
@@ -3089,12 +2434,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_message resource.
    * @returns {string} A string representing the message.
    */
-  matchMessageFromProjectLocationConversationMessageName(
-    projectLocationConversationMessageName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(
-      projectLocationConversationMessageName
-    ).message;
+  matchMessageFromProjectLocationConversationMessageName(projectLocationConversationMessageName: string) {
+    return this.pathTemplates.projectLocationConversationMessagePathTemplate.match(projectLocationConversationMessageName).message;
   }
 
   /**
@@ -3106,20 +2447,13 @@ export class EntityTypesClient {
    * @param {string} participant
    * @returns {string} Resource name string.
    */
-  projectLocationConversationParticipantPath(
-    project: string,
-    location: string,
-    conversation: string,
-    participant: string
-  ) {
-    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.render(
-      {
-        project: project,
-        location: location,
-        conversation: conversation,
-        participant: participant,
-      }
-    );
+  projectLocationConversationParticipantPath(project:string,location:string,conversation:string,participant:string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.render({
+      project: project,
+      location: location,
+      conversation: conversation,
+      participant: participant,
+    });
   }
 
   /**
@@ -3129,12 +2463,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_participant resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationConversationParticipantName(
-    projectLocationConversationParticipantName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(
-      projectLocationConversationParticipantName
-    ).project;
+  matchProjectFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).project;
   }
 
   /**
@@ -3144,12 +2474,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_participant resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationConversationParticipantName(
-    projectLocationConversationParticipantName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(
-      projectLocationConversationParticipantName
-    ).location;
+  matchLocationFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).location;
   }
 
   /**
@@ -3159,12 +2485,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_participant resource.
    * @returns {string} A string representing the conversation.
    */
-  matchConversationFromProjectLocationConversationParticipantName(
-    projectLocationConversationParticipantName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(
-      projectLocationConversationParticipantName
-    ).conversation;
+  matchConversationFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).conversation;
   }
 
   /**
@@ -3174,12 +2496,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_participant resource.
    * @returns {string} A string representing the participant.
    */
-  matchParticipantFromProjectLocationConversationParticipantName(
-    projectLocationConversationParticipantName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(
-      projectLocationConversationParticipantName
-    ).participant;
+  matchParticipantFromProjectLocationConversationParticipantName(projectLocationConversationParticipantName: string) {
+    return this.pathTemplates.projectLocationConversationParticipantPathTemplate.match(projectLocationConversationParticipantName).participant;
   }
 
   /**
@@ -3190,18 +2508,12 @@ export class EntityTypesClient {
    * @param {string} conversation_profile
    * @returns {string} Resource name string.
    */
-  projectLocationConversationProfilePath(
-    project: string,
-    location: string,
-    conversationProfile: string
-  ) {
-    return this.pathTemplates.projectLocationConversationProfilePathTemplate.render(
-      {
-        project: project,
-        location: location,
-        conversation_profile: conversationProfile,
-      }
-    );
+  projectLocationConversationProfilePath(project:string,location:string,conversationProfile:string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.render({
+      project: project,
+      location: location,
+      conversation_profile: conversationProfile,
+    });
   }
 
   /**
@@ -3211,12 +2523,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_profile resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationConversationProfileName(
-    projectLocationConversationProfileName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(
-      projectLocationConversationProfileName
-    ).project;
+  matchProjectFromProjectLocationConversationProfileName(projectLocationConversationProfileName: string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(projectLocationConversationProfileName).project;
   }
 
   /**
@@ -3226,12 +2534,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_profile resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationConversationProfileName(
-    projectLocationConversationProfileName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(
-      projectLocationConversationProfileName
-    ).location;
+  matchLocationFromProjectLocationConversationProfileName(projectLocationConversationProfileName: string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(projectLocationConversationProfileName).location;
   }
 
   /**
@@ -3241,12 +2545,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_conversation_profile resource.
    * @returns {string} A string representing the conversation_profile.
    */
-  matchConversationProfileFromProjectLocationConversationProfileName(
-    projectLocationConversationProfileName: string
-  ) {
-    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(
-      projectLocationConversationProfileName
-    ).conversation_profile;
+  matchConversationProfileFromProjectLocationConversationProfileName(projectLocationConversationProfileName: string) {
+    return this.pathTemplates.projectLocationConversationProfilePathTemplate.match(projectLocationConversationProfileName).conversation_profile;
   }
 
   /**
@@ -3257,11 +2557,7 @@ export class EntityTypesClient {
    * @param {string} knowledge_base
    * @returns {string} Resource name string.
    */
-  projectLocationKnowledgeBasePath(
-    project: string,
-    location: string,
-    knowledgeBase: string
-  ) {
+  projectLocationKnowledgeBasePath(project:string,location:string,knowledgeBase:string) {
     return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.render({
       project: project,
       location: location,
@@ -3276,12 +2572,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_knowledge_base resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationKnowledgeBaseName(
-    projectLocationKnowledgeBaseName: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(
-      projectLocationKnowledgeBaseName
-    ).project;
+  matchProjectFromProjectLocationKnowledgeBaseName(projectLocationKnowledgeBaseName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(projectLocationKnowledgeBaseName).project;
   }
 
   /**
@@ -3291,12 +2583,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_knowledge_base resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationKnowledgeBaseName(
-    projectLocationKnowledgeBaseName: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(
-      projectLocationKnowledgeBaseName
-    ).location;
+  matchLocationFromProjectLocationKnowledgeBaseName(projectLocationKnowledgeBaseName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(projectLocationKnowledgeBaseName).location;
   }
 
   /**
@@ -3306,12 +2594,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_knowledge_base resource.
    * @returns {string} A string representing the knowledge_base.
    */
-  matchKnowledgeBaseFromProjectLocationKnowledgeBaseName(
-    projectLocationKnowledgeBaseName: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(
-      projectLocationKnowledgeBaseName
-    ).knowledge_base;
+  matchKnowledgeBaseFromProjectLocationKnowledgeBaseName(projectLocationKnowledgeBaseName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBasePathTemplate.match(projectLocationKnowledgeBaseName).knowledge_base;
   }
 
   /**
@@ -3323,20 +2607,13 @@ export class EntityTypesClient {
    * @param {string} document
    * @returns {string} Resource name string.
    */
-  projectLocationKnowledgeBaseDocumentPath(
-    project: string,
-    location: string,
-    knowledgeBase: string,
-    document: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.render(
-      {
-        project: project,
-        location: location,
-        knowledge_base: knowledgeBase,
-        document: document,
-      }
-    );
+  projectLocationKnowledgeBaseDocumentPath(project:string,location:string,knowledgeBase:string,document:string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.render({
+      project: project,
+      location: location,
+      knowledge_base: knowledgeBase,
+      document: document,
+    });
   }
 
   /**
@@ -3346,12 +2623,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_knowledge_base_document resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectLocationKnowledgeBaseDocumentName(
-    projectLocationKnowledgeBaseDocumentName: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(
-      projectLocationKnowledgeBaseDocumentName
-    ).project;
+  matchProjectFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).project;
   }
 
   /**
@@ -3361,12 +2634,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_knowledge_base_document resource.
    * @returns {string} A string representing the location.
    */
-  matchLocationFromProjectLocationKnowledgeBaseDocumentName(
-    projectLocationKnowledgeBaseDocumentName: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(
-      projectLocationKnowledgeBaseDocumentName
-    ).location;
+  matchLocationFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).location;
   }
 
   /**
@@ -3376,12 +2645,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_knowledge_base_document resource.
    * @returns {string} A string representing the knowledge_base.
    */
-  matchKnowledgeBaseFromProjectLocationKnowledgeBaseDocumentName(
-    projectLocationKnowledgeBaseDocumentName: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(
-      projectLocationKnowledgeBaseDocumentName
-    ).knowledge_base;
+  matchKnowledgeBaseFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).knowledge_base;
   }
 
   /**
@@ -3391,12 +2656,8 @@ export class EntityTypesClient {
    *   A fully-qualified path representing project_location_knowledge_base_document resource.
    * @returns {string} A string representing the document.
    */
-  matchDocumentFromProjectLocationKnowledgeBaseDocumentName(
-    projectLocationKnowledgeBaseDocumentName: string
-  ) {
-    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(
-      projectLocationKnowledgeBaseDocumentName
-    ).document;
+  matchDocumentFromProjectLocationKnowledgeBaseDocumentName(projectLocationKnowledgeBaseDocumentName: string) {
+    return this.pathTemplates.projectLocationKnowledgeBaseDocumentPathTemplate.match(projectLocationKnowledgeBaseDocumentName).document;
   }
 
   /**
