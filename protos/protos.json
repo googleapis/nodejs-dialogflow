@@ -721,8 +721,7 @@
                           "type": "AnswerRecord",
                           "id": 1,
                           "options": {
-                            "(google.api.field_behavior)": "REQUIRED",
-                            "(google.api.resource_reference).type": "dialogflow.googleapis.com/AnswerRecord"
+                            "(google.api.field_behavior)": "REQUIRED"
                           }
                         },
                         "updateMask": {
@@ -7801,8 +7800,7 @@
                           "type": "AnswerRecord",
                           "id": 1,
                           "options": {
-                            "(google.api.field_behavior)": "REQUIRED",
-                            "(google.api.resource_reference).type": "dialogflow.googleapis.com/AnswerRecord"
+                            "(google.api.field_behavior)": "REQUIRED"
                           }
                         },
                         "updateMask": {
