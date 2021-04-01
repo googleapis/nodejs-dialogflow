@@ -24829,7 +24829,9 @@ export namespace google {
                     OUTPUT_AUDIO_ENCODING_UNSPECIFIED = 0,
                     OUTPUT_AUDIO_ENCODING_LINEAR_16 = 1,
                     OUTPUT_AUDIO_ENCODING_MP3 = 2,
-                    OUTPUT_AUDIO_ENCODING_OGG_OPUS = 3
+                    OUTPUT_AUDIO_ENCODING_MP3_64_KBPS = 4,
+                    OUTPUT_AUDIO_ENCODING_OGG_OPUS = 3,
+                    OUTPUT_AUDIO_ENCODING_MULAW = 5
                 }
 
                 /** Properties of a SpeechToTextConfig. */
@@ -30870,6 +30872,9 @@ export namespace google {
 
                     /** QueryInput event */
                     event?: (google.cloud.dialogflow.v2beta1.IEventInput|null);
+
+                    /** QueryInput dtmf */
+                    dtmf?: (google.cloud.dialogflow.v2beta1.ITelephonyDtmfEvents|null);
                 }
 
                 /** Represents a QueryInput. */
@@ -30890,8 +30895,11 @@ export namespace google {
                     /** QueryInput event. */
                     public event?: (google.cloud.dialogflow.v2beta1.IEventInput|null);
 
+                    /** QueryInput dtmf. */
+                    public dtmf?: (google.cloud.dialogflow.v2beta1.ITelephonyDtmfEvents|null);
+
                     /** QueryInput input. */
-                    public input?: ("audioConfig"|"text"|"event");
+                    public input?: ("audioConfig"|"text"|"event"|"dtmf");
 
                     /**
                      * Creates a new QueryInput instance using the specified properties.
