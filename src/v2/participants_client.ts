@@ -706,7 +706,7 @@ export class ParticipantsClient {
    *
    * Note: Always use agent versions for production traffic
    * sent to virtual agents. See [Versions and
-   * environments(https://cloud.google.com/dialogflow/es/docs/agents-versions).
+   * environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
    *
    * @param {Object} request
    *   The request object that will be sent.
