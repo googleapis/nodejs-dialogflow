@@ -5932,8 +5932,7 @@
                               "type": "string",
                               "id": 1,
                               "options": {
-                                "(google.api.field_behavior)": "REQUIRED",
-                                "(google.api.resource_reference).type": "dialogflow.googleapis.com/ConversationModel"
+                                "(google.api.field_behavior)": "REQUIRED"
                               }
                             }
                           }
@@ -13761,8 +13760,7 @@
                               "type": "string",
                               "id": 1,
                               "options": {
-                                "(google.api.field_behavior)": "REQUIRED",
-                                "(google.api.resource_reference).type": "dialogflow.googleapis.com/ConversationModel"
+                                "(google.api.field_behavior)": "REQUIRED"
                               }
                             }
                           }
