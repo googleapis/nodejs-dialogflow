@@ -5669,7 +5669,9 @@ export namespace google {
                     OUTPUT_AUDIO_ENCODING_UNSPECIFIED = 0,
                     OUTPUT_AUDIO_ENCODING_LINEAR_16 = 1,
                     OUTPUT_AUDIO_ENCODING_MP3 = 2,
-                    OUTPUT_AUDIO_ENCODING_OGG_OPUS = 3
+                    OUTPUT_AUDIO_ENCODING_MP3_64_KBPS = 4,
+                    OUTPUT_AUDIO_ENCODING_OGG_OPUS = 3,
+                    OUTPUT_AUDIO_ENCODING_MULAW = 5
                 }
 
                 /** Represents a Sessions */
