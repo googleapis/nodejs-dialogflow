@@ -25,31 +25,5 @@ if [[ -z "$CREDENTIALS" ]]; then
   cd $(dirname $0)/../..
 fi
 
-# Generate the data for the devsite tarball
-dir="$(cd "$(dirname "$0")"; pwd)"
-. "$dir/.kokoro/release/generate-devsite.sh"
-
-npm i json@9.0.6 -g
-
-# create docs.metadata, based on package.json and .repo-metadata.json.
-pip install -U pip
-python3 -m pip install --user gcp-docuploader
-python3 -m docuploader create-metadata \
-  --name=$NAME \
-  --version=$(cat package.json | json version) \
-  --language=$(cat .repo-metadata.json | json language) \
-  --distribution-name=$(cat .repo-metadata.json | json distribution_name) \
-  --product-page=$(cat .repo-metadata.json | json product_documentation) \
-  --github-repository=$(cat .repo-metadata.json | json repo) \
-  --issue-tracker=$(cat .repo-metadata.json | json issue_tracker)
-cp docs.metadata ./_devsite/docs.metadata
-
-# deploy the docs.
-if [[ -z "$CREDENTIALS" ]]; then
-  CREDENTIALS=${KOKORO_KEYSTORE_DIR}/73713_docuploader_service_account
-fi
-if [[ -z "$BUCKET" ]]; then
-  BUCKET=docs-staging-v2
-fi
-
-python3 -m docuploader upload ./_devsite --destination-prefix docfx --credentials $CREDENTIALS --staging-bucket $BUCKET
+npm install
+npx cloud-rad
