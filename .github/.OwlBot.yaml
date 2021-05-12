@@ -18,6 +18,6 @@ deep-remove-regex:
   - /owl-bot-staging
 
 deep-copy-regex:
-  - source: /google/cloud/dialogflow/(.*)/.*-nodejs/(.*)
+  - source: /google/cloud/dialogflow/(v.*)/.*-nodejs/(.*)
     dest: /owl-bot-staging/$1/$2
 
