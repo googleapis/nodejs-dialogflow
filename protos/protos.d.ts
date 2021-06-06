@@ -1101,10 +1101,10 @@ export namespace google {
                     constructor(properties?: google.cloud.dialogflow.v2.IExportAgentResponse);
 
                     /** ExportAgentResponse agentUri. */
-                    public agentUri?: (string|null);
+                    public agentUri: string;
 
                     /** ExportAgentResponse agentContent. */
-                    public agentContent?: (Uint8Array|string|null);
+                    public agentContent: (Uint8Array|string);
 
                     /** ExportAgentResponse agent. */
                     public agent?: ("agentUri"|"agentContent");
@@ -1206,10 +1206,10 @@ export namespace google {
                     public parent: string;
 
                     /** ImportAgentRequest agentUri. */
-                    public agentUri?: (string|null);
+                    public agentUri: string;
 
                     /** ImportAgentRequest agentContent. */
-                    public agentContent?: (Uint8Array|string|null);
+                    public agentContent: (Uint8Array|string);
 
                     /** ImportAgentRequest agent. */
                     public agent?: ("agentUri"|"agentContent");
@@ -1311,10 +1311,10 @@ export namespace google {
                     public parent: string;
 
                     /** RestoreAgentRequest agentUri. */
-                    public agentUri?: (string|null);
+                    public agentUri: string;
 
                     /** RestoreAgentRequest agentContent. */
-                    public agentContent?: (Uint8Array|string|null);
+                    public agentContent: (Uint8Array|string);
 
                     /** RestoreAgentRequest agent. */
                     public agent?: ("agentUri"|"agentContent");
@@ -12572,7 +12572,7 @@ export namespace google {
                     public parent: string;
 
                     /** BatchUpdateIntentsRequest intentBatchUri. */
-                    public intentBatchUri?: (string|null);
+                    public intentBatchUri: string;
 
                     /** BatchUpdateIntentsRequest intentBatchInline. */
                     public intentBatchInline?: (google.cloud.dialogflow.v2.IIntentBatch|null);
@@ -14846,7 +14846,7 @@ export namespace google {
                     public parent: string;
 
                     /** BatchUpdateEntityTypesRequest entityTypeBatchUri. */
-                    public entityTypeBatchUri?: (string|null);
+                    public entityTypeBatchUri: string;
 
                     /** BatchUpdateEntityTypesRequest entityTypeBatchInline. */
                     public entityTypeBatchInline?: (google.cloud.dialogflow.v2.IEntityTypeBatch|null);
@@ -19540,10 +19540,10 @@ export namespace google {
                     public knowledgeTypes: google.cloud.dialogflow.v2.Document.KnowledgeType[];
 
                     /** Document contentUri. */
-                    public contentUri?: (string|null);
+                    public contentUri: string;
 
                     /** Document rawContent. */
-                    public rawContent?: (Uint8Array|string|null);
+                    public rawContent: (Uint8Array|string);
 
                     /** Document enableAutoReload. */
                     public enableAutoReload: boolean;
@@ -20328,7 +20328,7 @@ export namespace google {
                     public name: string;
 
                     /** ReloadDocumentRequest contentUri. */
-                    public contentUri?: (string|null);
+                    public contentUri: string;
 
                     /** ReloadDocumentRequest source. */
                     public source?: "contentUri";
@@ -23293,10 +23293,10 @@ export namespace google {
                     constructor(properties?: google.cloud.dialogflow.v2beta1.IExportAgentResponse);
 
                     /** ExportAgentResponse agentUri. */
-                    public agentUri?: (string|null);
+                    public agentUri: string;
 
                     /** ExportAgentResponse agentContent. */
-                    public agentContent?: (Uint8Array|string|null);
+                    public agentContent: (Uint8Array|string);
 
                     /** ExportAgentResponse agent. */
                     public agent?: ("agentUri"|"agentContent");
@@ -23398,10 +23398,10 @@ export namespace google {
                     public parent: string;
 
                     /** ImportAgentRequest agentUri. */
-                    public agentUri?: (string|null);
+                    public agentUri: string;
 
                     /** ImportAgentRequest agentContent. */
-                    public agentContent?: (Uint8Array|string|null);
+                    public agentContent: (Uint8Array|string);
 
                     /** ImportAgentRequest agent. */
                     public agent?: ("agentUri"|"agentContent");
@@ -23503,10 +23503,10 @@ export namespace google {
                     public parent: string;
 
                     /** RestoreAgentRequest agentUri. */
-                    public agentUri?: (string|null);
+                    public agentUri: string;
 
                     /** RestoreAgentRequest agentContent. */
-                    public agentContent?: (Uint8Array|string|null);
+                    public agentContent: (Uint8Array|string);
 
                     /** RestoreAgentRequest agent. */
                     public agent?: ("agentUri"|"agentContent");
@@ -27288,10 +27288,10 @@ export namespace google {
                     public responseMessages: google.cloud.dialogflow.v2beta1.IResponseMessage[];
 
                     /** AutomatedAgentReply intent. */
-                    public intent?: (string|null);
+                    public intent: string;
 
                     /** AutomatedAgentReply event. */
-                    public event?: (string|null);
+                    public event: string;
 
                     /** AutomatedAgentReply cxSessionParameters. */
                     public cxSessionParameters?: (google.protobuf.IStruct|null);
@@ -35977,10 +35977,10 @@ export namespace google {
                             constructor(properties?: google.cloud.dialogflow.v2beta1.Intent.Message.ITelephonySynthesizeSpeech);
 
                             /** TelephonySynthesizeSpeech text. */
-                            public text?: (string|null);
+                            public text: string;
 
                             /** TelephonySynthesizeSpeech ssml. */
-                            public ssml?: (string|null);
+                            public ssml: string;
 
                             /** TelephonySynthesizeSpeech source. */
                             public source?: ("text"|"ssml");
@@ -39009,7 +39009,7 @@ export namespace google {
                     public parent: string;
 
                     /** BatchUpdateIntentsRequest intentBatchUri. */
-                    public intentBatchUri?: (string|null);
+                    public intentBatchUri: string;
 
                     /** BatchUpdateIntentsRequest intentBatchInline. */
                     public intentBatchInline?: (google.cloud.dialogflow.v2beta1.IIntentBatch|null);
@@ -41283,7 +41283,7 @@ export namespace google {
                     public parent: string;
 
                     /** BatchUpdateEntityTypesRequest entityTypeBatchUri. */
-                    public entityTypeBatchUri?: (string|null);
+                    public entityTypeBatchUri: string;
 
                     /** BatchUpdateEntityTypesRequest entityTypeBatchInline. */
                     public entityTypeBatchInline?: (google.cloud.dialogflow.v2beta1.IEntityTypeBatch|null);
@@ -46203,13 +46203,13 @@ export namespace google {
                     public knowledgeTypes: google.cloud.dialogflow.v2beta1.Document.KnowledgeType[];
 
                     /** Document contentUri. */
-                    public contentUri?: (string|null);
+                    public contentUri: string;
 
                     /** Document content. */
-                    public content?: (string|null);
+                    public content: string;
 
                     /** Document rawContent. */
-                    public rawContent?: (Uint8Array|string|null);
+                    public rawContent: (Uint8Array|string);
 
                     /** Document enableAutoReload. */
                     public enableAutoReload: boolean;
@@ -48911,19 +48911,19 @@ export namespace google {
             public selector: string;
 
             /** HttpRule get. */
-            public get?: (string|null);
+            public get: string;
 
             /** HttpRule put. */
-            public put?: (string|null);
+            public put: string;
 
             /** HttpRule post. */
-            public post?: (string|null);
+            public post: string;
 
             /** HttpRule delete. */
-            public delete?: (string|null);
+            public delete: string;
 
             /** HttpRule patch. */
-            public patch?: (string|null);
+            public patch: string;
 
             /** HttpRule custom. */
             public custom?: (google.api.ICustomHttpPattern|null);
@@ -52977,16 +52977,16 @@ export namespace google {
             constructor(properties?: google.protobuf.IValue);
 
             /** Value nullValue. */
-            public nullValue?: (google.protobuf.NullValue|keyof typeof google.protobuf.NullValue|null);
+            public nullValue: (google.protobuf.NullValue|keyof typeof google.protobuf.NullValue);
 
             /** Value numberValue. */
-            public numberValue?: (number|null);
+            public numberValue: number;
 
             /** Value stringValue. */
-            public stringValue?: (string|null);
+            public stringValue: string;
 
             /** Value boolValue. */
-            public boolValue?: (boolean|null);
+            public boolValue: boolean;
 
             /** Value structValue. */
             public structValue?: (google.protobuf.IStruct|null);
