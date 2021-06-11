@@ -16,8 +16,8 @@
 // ** https://github.com/googleapis/synthtool **
 // ** All changes to this file may be overwritten. **
 
-import * as v2beta1 from './v2beta1';
 import * as v2 from './v2';
+import * as v2beta1 from './v2beta1';
 
 const AgentsClient = v2.AgentsClient;
 type AgentsClient = v2.AgentsClient;
@@ -51,8 +51,8 @@ const VersionsClient = v2.VersionsClient;
 type VersionsClient = v2.VersionsClient;
 
 export {
-  v2beta1,
   v2,
+  v2beta1,
   AgentsClient,
   AnswerRecordsClient,
   ContextsClient,
@@ -70,8 +70,8 @@ export {
   VersionsClient,
 };
 export default {
-  v2beta1,
   v2,
+  v2beta1,
   AgentsClient,
   AnswerRecordsClient,
   ContextsClient,
