@@ -57,7 +57,7 @@ describe('create session entity type', () => {
   after('delete the created entity type', async () => {
     const projectId = await client.getProjectId();
     const request = {
-      name: client.entityTypePath(projectId, entityTypeId),
+      name: client.projectAgentEntityTypePath(projectId, entityTypeId),
     };
     await client.deleteEntityType(request);
   });
