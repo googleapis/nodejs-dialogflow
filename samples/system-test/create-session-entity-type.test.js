@@ -33,7 +33,7 @@ describe('create session entity type', () => {
   before('create an entity type', async () => {
     const projectId = await client.getProjectId();
     const createEntityTypeRequest = {
-      parent: client.agentPath(projectId),
+      parent: client.projectAgentPath(projectId),
       entityType: {
         displayName: displayName,
         kind: 'KIND_MAP',
