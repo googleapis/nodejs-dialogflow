@@ -27297,6 +27297,18 @@ export namespace google {
                     }
                 }
 
+                /** AudioEncoding enum. */
+                enum AudioEncoding {
+                    AUDIO_ENCODING_UNSPECIFIED = 0,
+                    AUDIO_ENCODING_LINEAR_16 = 1,
+                    AUDIO_ENCODING_FLAC = 2,
+                    AUDIO_ENCODING_MULAW = 3,
+                    AUDIO_ENCODING_AMR = 4,
+                    AUDIO_ENCODING_AMR_WB = 5,
+                    AUDIO_ENCODING_OGG_OPUS = 6,
+                    AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE = 7
+                }
+
                 /** Properties of a SpeechContext. */
                 interface ISpeechContext {
 
@@ -27391,18 +27403,6 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
-                }
-
-                /** AudioEncoding enum. */
-                enum AudioEncoding {
-                    AUDIO_ENCODING_UNSPECIFIED = 0,
-                    AUDIO_ENCODING_LINEAR_16 = 1,
-                    AUDIO_ENCODING_FLAC = 2,
-                    AUDIO_ENCODING_MULAW = 3,
-                    AUDIO_ENCODING_AMR = 4,
-                    AUDIO_ENCODING_AMR_WB = 5,
-                    AUDIO_ENCODING_OGG_OPUS = 6,
-                    AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE = 7
                 }
 
                 /** Properties of a SpeechWordInfo. */
@@ -31112,6 +31112,12 @@ export namespace google {
 
                     /** AutomatedAgentReply cxSessionParameters */
                     cxSessionParameters?: (google.protobuf.IStruct|null);
+
+                    /** AutomatedAgentReply automatedAgentReplyType */
+                    automatedAgentReplyType?: (google.cloud.dialogflow.v2beta1.AutomatedAgentReply.AutomatedAgentReplyType|keyof typeof google.cloud.dialogflow.v2beta1.AutomatedAgentReply.AutomatedAgentReplyType|null);
+
+                    /** AutomatedAgentReply allowCancellation */
+                    allowCancellation?: (boolean|null);
                 }
 
                 /** Represents an AutomatedAgentReply. */
@@ -31143,6 +31149,12 @@ export namespace google {
 
                     /** AutomatedAgentReply cxSessionParameters. */
                     public cxSessionParameters?: (google.protobuf.IStruct|null);
+
+                    /** AutomatedAgentReply automatedAgentReplyType. */
+                    public automatedAgentReplyType: (google.cloud.dialogflow.v2beta1.AutomatedAgentReply.AutomatedAgentReplyType|keyof typeof google.cloud.dialogflow.v2beta1.AutomatedAgentReply.AutomatedAgentReplyType);
+
+                    /** AutomatedAgentReply allowCancellation. */
+                    public allowCancellation: boolean;
 
                     /** AutomatedAgentReply response. */
                     public response?: "detectIntentResponse";
@@ -31219,6 +31231,16 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
+                }
+
+                namespace AutomatedAgentReply {
+
+                    /** AutomatedAgentReplyType enum. */
+                    enum AutomatedAgentReplyType {
+                        AUTOMATED_AGENT_REPLY_TYPE_UNSPECIFIED = 0,
+                        PARTIAL = 1,
+                        FINAL = 2
+                    }
                 }
 
                 /** Properties of a SuggestionFeature. */
