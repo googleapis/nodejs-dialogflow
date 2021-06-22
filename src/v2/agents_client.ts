@@ -494,7 +494,7 @@ export class AgentsClient {
   // -- Service calls --
   // -------------------
   getAgent(
-    request: protos.google.cloud.dialogflow.v2.IGetAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetAgentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -539,7 +539,7 @@ export class AgentsClient {
    * const [response] = await client.getAgent(request);
    */
   getAgent(
-    request: protos.google.cloud.dialogflow.v2.IGetAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetAgentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -578,7 +578,7 @@ export class AgentsClient {
     return this.innerApiCalls.getAgent(request, options, callback);
   }
   setAgent(
-    request: protos.google.cloud.dialogflow.v2.ISetAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.ISetAgentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -607,6 +607,10 @@ export class AgentsClient {
   /**
    * Creates/updates the specified agent.
    *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {google.cloud.dialogflow.v2.Agent} request.agent
@@ -624,7 +628,7 @@ export class AgentsClient {
    * const [response] = await client.setAgent(request);
    */
   setAgent(
-    request: protos.google.cloud.dialogflow.v2.ISetAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.ISetAgentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -663,7 +667,7 @@ export class AgentsClient {
     return this.innerApiCalls.setAgent(request, options, callback);
   }
   deleteAgent(
-    request: protos.google.cloud.dialogflow.v2.IDeleteAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IDeleteAgentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -708,7 +712,7 @@ export class AgentsClient {
    * const [response] = await client.deleteAgent(request);
    */
   deleteAgent(
-    request: protos.google.cloud.dialogflow.v2.IDeleteAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IDeleteAgentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -749,7 +753,7 @@ export class AgentsClient {
     return this.innerApiCalls.deleteAgent(request, options, callback);
   }
   getValidationResult(
-    request: protos.google.cloud.dialogflow.v2.IGetValidationResultRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetValidationResultRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -805,7 +809,7 @@ export class AgentsClient {
    * const [response] = await client.getValidationResult(request);
    */
   getValidationResult(
-    request: protos.google.cloud.dialogflow.v2.IGetValidationResultRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetValidationResultRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -849,7 +853,7 @@ export class AgentsClient {
   }
 
   trainAgent(
-    request: protos.google.cloud.dialogflow.v2.ITrainAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.ITrainAgentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -887,7 +891,10 @@ export class AgentsClient {
   /**
    * Trains the specified agent.
    *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+   *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -908,7 +915,7 @@ export class AgentsClient {
    * const [response] = await operation.promise();
    */
   trainAgent(
-    request: protos.google.cloud.dialogflow.v2.ITrainAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.ITrainAgentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -990,7 +997,7 @@ export class AgentsClient {
     >;
   }
   exportAgent(
-    request: protos.google.cloud.dialogflow.v2.IExportAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IExportAgentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1028,8 +1035,6 @@ export class AgentsClient {
   /**
    * Exports the specified agent to a ZIP file.
    *
-   * Operation <response: {@link google.cloud.dialogflow.v2.ExportAgentResponse|ExportAgentResponse}>
-   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -1054,7 +1059,7 @@ export class AgentsClient {
    * const [response] = await operation.promise();
    */
   exportAgent(
-    request: protos.google.cloud.dialogflow.v2.IExportAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IExportAgentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1139,7 +1144,7 @@ export class AgentsClient {
     >;
   }
   importAgent(
-    request: protos.google.cloud.dialogflow.v2.IImportAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IImportAgentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1185,9 +1190,12 @@ export class AgentsClient {
    * call {@link google.cloud.dialogflow.v2.Agents.TrainAgent|TrainAgent} and wait for the operation it returns in order to train
    * explicitly.
    *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
    * An operation which tracks when importing is complete. It only tracks
    * when the draft agent is updated not when it is done training.
+   *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1213,7 +1221,7 @@ export class AgentsClient {
    * const [response] = await operation.promise();
    */
   importAgent(
-    request: protos.google.cloud.dialogflow.v2.IImportAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IImportAgentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1295,7 +1303,7 @@ export class AgentsClient {
     >;
   }
   restoreAgent(
-    request: protos.google.cloud.dialogflow.v2.IRestoreAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IRestoreAgentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1340,9 +1348,12 @@ export class AgentsClient {
    * completed yet. Please call {@link google.cloud.dialogflow.v2.Agents.TrainAgent|TrainAgent} and wait for the operation it
    * returns in order to train explicitly.
    *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
    * An operation which tracks when restoring is complete. It only tracks
    * when the draft agent is updated not when it is done training.
+   *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1368,7 +1379,7 @@ export class AgentsClient {
    * const [response] = await operation.promise();
    */
   restoreAgent(
-    request: protos.google.cloud.dialogflow.v2.IRestoreAgentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IRestoreAgentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1450,7 +1461,7 @@ export class AgentsClient {
     >;
   }
   searchAgents(
-    request: protos.google.cloud.dialogflow.v2.ISearchAgentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.ISearchAgentsRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1513,7 +1524,7 @@ export class AgentsClient {
    *   for more details and examples.
    */
   searchAgents(
-    request: protos.google.cloud.dialogflow.v2.ISearchAgentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.ISearchAgentsRequest,
     optionsOrCallback?:
       | CallOptions
       | PaginationCallback<

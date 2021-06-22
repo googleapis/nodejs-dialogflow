@@ -514,7 +514,7 @@ export class EntityTypesClient {
   // -- Service calls --
   // -------------------
   getEntityType(
-    request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -569,7 +569,7 @@ export class EntityTypesClient {
    * const [response] = await client.getEntityType(request);
    */
   getEntityType(
-    request: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetEntityTypeRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -612,7 +612,7 @@ export class EntityTypesClient {
     return this.innerApiCalls.getEntityType(request, options, callback);
   }
   createEntityType(
-    request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -645,6 +645,10 @@ export class EntityTypesClient {
   /**
    * Creates an entity type in the specified agent.
    *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -669,7 +673,7 @@ export class EntityTypesClient {
    * const [response] = await client.createEntityType(request);
    */
   createEntityType(
-    request: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.ICreateEntityTypeRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -712,7 +716,7 @@ export class EntityTypesClient {
     return this.innerApiCalls.createEntityType(request, options, callback);
   }
   updateEntityType(
-    request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -745,6 +749,10 @@ export class EntityTypesClient {
   /**
    * Updates the specified entity type.
    *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {google.cloud.dialogflow.v2.EntityType} request.entityType
@@ -768,7 +776,7 @@ export class EntityTypesClient {
    * const [response] = await client.updateEntityType(request);
    */
   updateEntityType(
-    request: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.IUpdateEntityTypeRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -811,7 +819,7 @@ export class EntityTypesClient {
     return this.innerApiCalls.updateEntityType(request, options, callback);
   }
   deleteEntityType(
-    request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -844,6 +852,10 @@ export class EntityTypesClient {
   /**
    * Deletes the specified entity type.
    *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
@@ -860,7 +872,7 @@ export class EntityTypesClient {
    * const [response] = await client.deleteEntityType(request);
    */
   deleteEntityType(
-    request: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
+    request?: protos.google.cloud.dialogflow.v2.IDeleteEntityTypeRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -904,7 +916,7 @@ export class EntityTypesClient {
   }
 
   batchUpdateEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -942,7 +954,10 @@ export class EntityTypesClient {
   /**
    * Updates/Creates multiple entity types in the specified agent.
    *
-   * Operation <response: {@link google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse|BatchUpdateEntityTypesResponse}>
+   *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -978,7 +993,7 @@ export class EntityTypesClient {
    * const [response] = await operation.promise();
    */
   batchUpdateEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchUpdateEntityTypesRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1067,7 +1082,7 @@ export class EntityTypesClient {
     >;
   }
   batchDeleteEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1105,7 +1120,9 @@ export class EntityTypesClient {
   /**
    * Deletes entity types in the specified agent.
    *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1129,7 +1146,7 @@ export class EntityTypesClient {
    * const [response] = await operation.promise();
    */
   batchDeleteEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchDeleteEntityTypesRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1215,7 +1232,7 @@ export class EntityTypesClient {
     >;
   }
   batchCreateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1253,7 +1270,9 @@ export class EntityTypesClient {
   /**
    * Creates multiple new entities in the specified entity type.
    *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1282,7 +1301,7 @@ export class EntityTypesClient {
    * const [response] = await operation.promise();
    */
   batchCreateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchCreateEntitiesRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1364,7 +1383,7 @@ export class EntityTypesClient {
     >;
   }
   batchUpdateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1404,8 +1423,9 @@ export class EntityTypesClient {
    * method does not affect entities in the entity type that aren't explicitly
    * specified in the request.
    *
-   *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1436,7 +1456,7 @@ export class EntityTypesClient {
    * const [response] = await operation.promise();
    */
   batchUpdateEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchUpdateEntitiesRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1518,7 +1538,7 @@ export class EntityTypesClient {
     >;
   }
   batchDeleteEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1556,8 +1576,9 @@ export class EntityTypesClient {
   /**
    * Deletes entities in the specified entity type.
    *
-   *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1588,7 +1609,7 @@ export class EntityTypesClient {
    * const [response] = await operation.promise();
    */
   batchDeleteEntities(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchDeleteEntitiesRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1670,7 +1691,7 @@ export class EntityTypesClient {
     >;
   }
   listEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1733,7 +1754,7 @@ export class EntityTypesClient {
    *   for more details and examples.
    */
   listEntityTypes(
-    request: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
+    request?: protos.google.cloud.dialogflow.v2.IListEntityTypesRequest,
     optionsOrCallback?:
       | CallOptions
       | PaginationCallback<

@@ -470,7 +470,7 @@ export class IntentsClient {
   // -- Service calls --
   // -------------------
   getIntent(
-    request: protos.google.cloud.dialogflow.v2.IGetIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetIntentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -523,7 +523,7 @@ export class IntentsClient {
    * const [response] = await client.getIntent(request);
    */
   getIntent(
-    request: protos.google.cloud.dialogflow.v2.IGetIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IGetIntentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -564,7 +564,7 @@ export class IntentsClient {
     return this.innerApiCalls.getIntent(request, options, callback);
   }
   createIntent(
-    request: protos.google.cloud.dialogflow.v2.ICreateIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.ICreateIntentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -593,6 +593,10 @@ export class IntentsClient {
   /**
    * Creates an intent in the specified agent.
    *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -619,7 +623,7 @@ export class IntentsClient {
    * const [response] = await client.createIntent(request);
    */
   createIntent(
-    request: protos.google.cloud.dialogflow.v2.ICreateIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.ICreateIntentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -660,7 +664,7 @@ export class IntentsClient {
     return this.innerApiCalls.createIntent(request, options, callback);
   }
   updateIntent(
-    request: protos.google.cloud.dialogflow.v2.IUpdateIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IUpdateIntentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -689,6 +693,10 @@ export class IntentsClient {
   /**
    * Updates the specified intent.
    *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {google.cloud.dialogflow.v2.Intent} request.intent
@@ -714,7 +722,7 @@ export class IntentsClient {
    * const [response] = await client.updateIntent(request);
    */
   updateIntent(
-    request: protos.google.cloud.dialogflow.v2.IUpdateIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IUpdateIntentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -755,7 +763,7 @@ export class IntentsClient {
     return this.innerApiCalls.updateIntent(request, options, callback);
   }
   deleteIntent(
-    request: protos.google.cloud.dialogflow.v2.IDeleteIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IDeleteIntentRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -784,6 +792,10 @@ export class IntentsClient {
   /**
    * Deletes the specified intent and its direct or indirect followup intents.
    *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
@@ -801,7 +813,7 @@ export class IntentsClient {
    * const [response] = await client.deleteIntent(request);
    */
   deleteIntent(
-    request: protos.google.cloud.dialogflow.v2.IDeleteIntentRequest,
+    request?: protos.google.cloud.dialogflow.v2.IDeleteIntentRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -843,7 +855,7 @@ export class IntentsClient {
   }
 
   batchUpdateIntents(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateIntentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchUpdateIntentsRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -881,7 +893,10 @@ export class IntentsClient {
   /**
    * Updates/Creates multiple intents in the specified agent.
    *
-   * Operation <response: {@link google.cloud.dialogflow.v2.BatchUpdateIntentsResponse|BatchUpdateIntentsResponse}>
+   *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -918,7 +933,7 @@ export class IntentsClient {
    * const [response] = await operation.promise();
    */
   batchUpdateIntents(
-    request: protos.google.cloud.dialogflow.v2.IBatchUpdateIntentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchUpdateIntentsRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1003,7 +1018,7 @@ export class IntentsClient {
     >;
   }
   batchDeleteIntents(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteIntentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchDeleteIntentsRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1041,7 +1056,10 @@ export class IntentsClient {
   /**
    * Deletes intents in the specified agent.
    *
-   * Operation <response: {@link google.protobuf.Empty|google.protobuf.Empty}>
+   *
+   * Note: You should always train an agent prior to sending it queries. See the
+   * [training
+   * documentation](https://cloud.google.com/dialogflow/es/docs/training).
    *
    * @param {Object} request
    *   The request object that will be sent.
@@ -1065,7 +1083,7 @@ export class IntentsClient {
    * const [response] = await operation.promise();
    */
   batchDeleteIntents(
-    request: protos.google.cloud.dialogflow.v2.IBatchDeleteIntentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.IBatchDeleteIntentsRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1147,7 +1165,7 @@ export class IntentsClient {
     >;
   }
   listIntents(
-    request: protos.google.cloud.dialogflow.v2.IListIntentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.IListIntentsRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1216,7 +1234,7 @@ export class IntentsClient {
    *   for more details and examples.
    */
   listIntents(
-    request: protos.google.cloud.dialogflow.v2.IListIntentsRequest,
+    request?: protos.google.cloud.dialogflow.v2.IListIntentsRequest,
     optionsOrCallback?:
       | CallOptions
       | PaginationCallback<
