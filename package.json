@@ -1,7 +1,7 @@
 {
   "name": "@google-cloud/dialogflow",
   "description": "Dialogflow API client for Node.js",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "license": "Apache-2.0",
   "author": "Google LLC",
   "engines": {
@@ -43,7 +43,7 @@
     "precompile": "gts clean"
   },
   "dependencies": {
-    "google-gax": "^2.12.0",
+    "google-gax": "^2.17.0",
     "protobufjs": "^6.8.9"
   },
   "devDependencies": {
