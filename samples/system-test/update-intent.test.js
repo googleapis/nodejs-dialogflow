@@ -13,6 +13,7 @@
 // limitations under the License.
 
 'use strict';
+
 const {assert} = require('chai');
 const {describe, before, it} = require('mocha');
 const execSync = require('child_process').execSync;
@@ -28,7 +29,7 @@ describe('update intent', () => {
   const cmd = 'node update-intent.js';
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
 
-  before('get intent ID', () => {
+  before('get intent ID', async () => {
     // The path to identify the agent that owns the intents.
 
     const projectAgentPath = intentClient.projectAgentPath(projectId);
@@ -37,7 +38,7 @@ describe('update intent', () => {
       parent: projectAgentPath,
     };
 
-    const [response] = intentClient.listIntents(intentRequest);
+    const response = intentClient.listIntents(intentRequest);
     intentID = response[0].name.split('/')[4];
   });
 
