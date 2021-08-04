@@ -14,12 +14,10 @@
 
 'use strict';
 const {
-  AgentsClient,
   IntentsClient,
-  protos,
 } = require('@google-cloud/dialogflow');
 const {assert} = require('chai');
-const {after, describe, it} = require('mocha');
+const {describe, it} = require('mocha');
 const execSync = require('child_process').execSync;
 const uuid = require('uuid');
 const projectId =
