@@ -13,11 +13,9 @@
 // limitations under the License.
 
 'use strict';
-const {
-  IntentsClient,
-} = require('@google-cloud/dialogflow');
+const {IntentsClient} = require('@google-cloud/dialogflow');
 const {assert} = require('chai');
-const {describe, it} = require('mocha');
+const {describe, before, it} = require('mocha');
 const execSync = require('child_process').execSync;
 const uuid = require('uuid');
 const projectId =
@@ -48,5 +46,4 @@ describe('update intent', () => {
     const output = exec(`${cmd} ${projectId} ${intentID} ${displayName}`);
     assert.include(output, displayName);
   });
-
 });
