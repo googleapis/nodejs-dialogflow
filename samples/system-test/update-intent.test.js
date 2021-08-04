@@ -15,22 +15,22 @@
 'use strict';
 const {assert} = require('chai');
 const {describe, before, it} = require('mocha');
-const dialogflow = require('@google-cloud/dialogflow');
 const execSync = require('child_process').execSync;
 const uuid = require('uuid');
+const dialogflow = require('@google-cloud/dialogflow');
+const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 const projectId =
   process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
-const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 let intentID = '';
 
 describe('update intent', () => {
+  const intentClient = new dialogflow.IntentsClient();
   const cmd = 'node update-intent.js';
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
 
   before('get intent ID', () => {
     // The path to identify the agent that owns the intents.
 
-    const intentClient = new dialogflow.IntentsClient();
     const projectAgentPath = intentClient.projectAgentPath(projectId);
 
     const intentRequest = {
