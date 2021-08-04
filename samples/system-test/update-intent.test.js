@@ -38,7 +38,7 @@ describe('update intent', () => {
       parent: projectAgentPath,
     };
 
-    const response = intentClient.listIntents(intentRequest);
+    const response = await intentClient.listIntents(intentRequest);
     intentID = response[0].name.split('/')[4];
   });
 
