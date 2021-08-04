@@ -13,14 +13,13 @@
 // limitations under the License.
 
 'use strict';
-const {IntentsClient} = require('@google-cloud/dialogflow');
 const {assert} = require('chai');
 const {describe, before, it} = require('mocha');
+const dialogflow = require('@google-cloud/dialogflow');
 const execSync = require('child_process').execSync;
 const uuid = require('uuid');
 const projectId =
   process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
-
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 let intentID = '';
 
@@ -28,10 +27,10 @@ describe('update intent', () => {
   const cmd = 'node update-intent.js';
   const displayName = `fake_display_name_${uuid.v4().split('-')[0]}`;
 
-  before('setup agent and get intent ID', () => {
+  before('get intent ID', () => {
     // The path to identify the agent that owns the intents.
 
-    const intentClient = new IntentsClient();
+    const intentClient = new dialogflow.IntentsClient();
     const projectAgentPath = intentClient.projectAgentPath(projectId);
 
     const intentRequest = {
