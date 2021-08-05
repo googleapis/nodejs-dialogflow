@@ -22,7 +22,7 @@ const dialogflow = require('@google-cloud/dialogflow');
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 const projectId =
   process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
-let intentID = '';
+let intentID = [];
 
 describe('update intent', () => {
   const intentClient = new dialogflow.IntentsClient();
@@ -38,12 +38,14 @@ describe('update intent', () => {
       parent: projectAgentPath,
     };
 
-    const response = await intentClient.listIntents(intentRequest);
-    intentID = response[0].name.split('/')[4];
-  });
+    const [response] = await intentsClient.listIntents(intentRequest);
+    response.forEach(intent => {
+        intentID.push(intent.name.split("/")[4])
+      });
+    });
 
   it('should update an intent using fieldmasks', async () => {
-    const output = exec(`${cmd} ${projectId} ${intentID} ${displayName}`);
+    const output = exec(`${cmd} ${projectId} ${intentID[0]} ${displayName}`);
     assert.include(output, displayName);
   });
 });
