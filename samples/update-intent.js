@@ -37,8 +37,7 @@ async function main(projectId, intentId, displayName) {
   };
 
   //Send the request for update the intent.
-  const result = await intentClient.updateIntent(updateIntentRequest)
-    .displayName;
+  const result = await intentClient.updateIntent(updateIntentRequest);
   console.log(result);
 }
 
