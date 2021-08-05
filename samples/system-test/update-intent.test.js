@@ -22,7 +22,7 @@ const dialogflow = require('@google-cloud/dialogflow');
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 const projectId =
   process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
-let intentID = [];
+  const intentID = [];
 
 describe('update intent', () => {
   const intentClient = new dialogflow.IntentsClient();
@@ -40,7 +40,7 @@ describe('update intent', () => {
 
     const [response] = await intentClient.listIntents(intentRequest);
     response.forEach(intent => {
-        intentID.push(intent.name.split('/')[4])
+        intentID.push(intent.name.split('/')[4]);
     });
   });
 
