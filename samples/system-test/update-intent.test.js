@@ -38,14 +38,14 @@ describe('update intent', () => {
       parent: projectAgentPath,
     };
 
-    const [response] = await intentsClient.listIntents(intentRequest);
+    const [response] = await intentClient.listIntents(intentRequest);
     response.forEach(intent => {
-        intentID.push(intent.name.split("/")[4])
-      });
+        intentID.push(intent.name.split('/')[4])
     });
+  });
 
   it('should update an intent using fieldmasks', async () => {
-    const output = exec(`${cmd} ${projectId} ${intentID[0]} ${displayName}`);
+    const output = exec(`${cmd} ${projectId} ${intentID} ${displayName}`);
     assert.include(output, displayName);
   });
 });
