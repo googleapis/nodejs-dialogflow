@@ -6,7 +6,7 @@
 
 [![release level](https://img.shields.io/badge/release%20level-general%20availability%20%28GA%29-brightgreen.svg?style=flat)](https://cloud.google.com/terms/launch-stages)
 [![npm version](https://img.shields.io/npm/v/@google-cloud/dialogflow.svg)](https://www.npmjs.org/package/@google-cloud/dialogflow)
-[![codecov](https://img.shields.io/codecov/c/github/googleapis/nodejs-dialogflow/master.svg?style=flat)](https://codecov.io/gh/googleapis/nodejs-dialogflow)
+[![codecov](https://img.shields.io/codecov/c/github/googleapis/nodejs-dialogflow/main.svg?style=flat)](https://codecov.io/gh/googleapis/nodejs-dialogflow)
 
 
 
@@ -16,7 +16,7 @@
 
 
 A comprehensive list of changes in each version may be found in
-[the CHANGELOG](https://github.com/googleapis/nodejs-dialogflow/blob/master/CHANGELOG.md).
+[the CHANGELOG](https://github.com/googleapis/nodejs-dialogflow/blob/main/CHANGELOG.md).
 
 * [Dialogflow API Node.js Client API Reference][client-docs]
 * [Dialogflow API Documentation][product-docs]
@@ -110,7 +110,7 @@ async function runSample(projectId = 'your-project-id') {
 
 ## Samples
 
-Samples are in the [`samples/`](https://github.com/googleapis/nodejs-dialogflow/tree/master/samples) directory. Each sample's `README.md` has instructions for running its sample.
+Samples are in the [`samples/`](https://github.com/googleapis/nodejs-dialogflow/tree/main/samples) directory. Each sample's `README.md` has instructions for running its sample.
 
 | Sample                      | Source Code                       | Try it |
 | --------------------------- | --------------------------------- | ------ |
@@ -123,7 +123,6 @@ Samples are in the [`samples/`](https://github.com/googleapis/nodejs-dialogflow/
 | Quickstart | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/quickstart.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/quickstart.js,samples/README.md) |
 | Resource | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
 | Update-intent | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/update-intent.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/update-intent.js,samples/README.md) |
-
 
 
 The [Dialogflow API Node.js Client API Reference][client-docs] documentation
@@ -171,19 +170,19 @@ More Information: [Google Cloud Platform Launch Stages][launch_stages]
 
 ## Contributing
 
-Contributions welcome! See the [Contributing Guide](https://github.com/googleapis/nodejs-dialogflow/blob/master/CONTRIBUTING.md).
+Contributions welcome! See the [Contributing Guide](https://github.com/googleapis/nodejs-dialogflow/blob/main/CONTRIBUTING.md).
 
 Please note that this `README.md`, the `samples/README.md`,
 and a variety of configuration files in this repository (including `.nycrc` and `tsconfig.json`)
 are generated from a central template. To edit one of these files, make an edit
-to its template in this
-[directory](https://github.com/googleapis/synthtool/tree/master/synthtool/gcp/templates/node_library).
+to its templates in
+[directory](https://github.com/googleapis/synthtool).
 
 ## License
 
 Apache Version 2.0
 
-See [LICENSE](https://github.com/googleapis/nodejs-dialogflow/blob/master/LICENSE)
+See [LICENSE](https://github.com/googleapis/nodejs-dialogflow/blob/main/LICENSE)
 
 [client-docs]: https://googleapis.dev/nodejs/dialogflow/latest
 [product-docs]: https://cloud.google.com/dialogflow-enterprise/
