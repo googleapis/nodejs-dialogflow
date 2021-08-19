@@ -4,6 +4,40 @@
 
 [1]: https://www.npmjs.com/package/dialogflow?activeTab=versions
 
+### [4.3.1](https://www.github.com/googleapis/nodejs-dialogflow/compare/v4.3.0...v4.3.1) (2021-08-17)
+
+
+### Bug Fixes
+
+* **deps:** google-gax v2.24.1 ([#864](https://www.github.com/googleapis/nodejs-dialogflow/issues/864)) ([6646fb3](https://www.github.com/googleapis/nodejs-dialogflow/commit/6646fb35de95b2933adad91a4a111ee0dfd37ce9))
+
+## [4.3.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v4.2.0...v4.3.0) (2021-08-16)
+
+
+### Features
+
+* expose `Locations` service to get/list avaliable locations of Dialogflow products; fixed some API annotations ([#860](https://www.github.com/googleapis/nodejs-dialogflow/issues/860)) ([05ea702](https://www.github.com/googleapis/nodejs-dialogflow/commit/05ea702372c08d0f0f157419799e59ea983df32a))
+
+
+### Bug Fixes
+
+* **build:** migrate to using main branch ([#862](https://www.github.com/googleapis/nodejs-dialogflow/issues/862)) ([ec0635c](https://www.github.com/googleapis/nodejs-dialogflow/commit/ec0635c17384c4fc5661d8a046b50b3fc2920505))
+
+## [4.2.0](https://www.github.com/googleapis/nodejs-dialogflow/compare/v4.1.4...v4.2.0) (2021-08-10)
+
+
+### Features
+
+* Expose `Locations` service to get/list avaliable locations of Dialogflow products docs: reorder some fields ([#857](https://www.github.com/googleapis/nodejs-dialogflow/issues/857)) ([4ffc775](https://www.github.com/googleapis/nodejs-dialogflow/commit/4ffc775af328735a00ba075e75e1065c3b1dd308))
+
+### [4.1.4](https://www.github.com/googleapis/nodejs-dialogflow/compare/v4.1.3...v4.1.4) (2021-08-04)
+
+
+### Bug Fixes
+
+* fix validation result docs feat: add language code to streaming recognition result docs: update environment docs ([#853](https://www.github.com/googleapis/nodejs-dialogflow/issues/853)) ([d2eb1bd](https://www.github.com/googleapis/nodejs-dialogflow/commit/d2eb1bdaf886493952163bcb41291ad492a7bfb8))
+* fix validation result docs feat: add language code to streaming recognition result feat: add time zone and security settings to conversation profile docs: update agent docs docs: update entity type docs docs: update intent docs ([#854](https://www.github.com/googleapis/nodejs-dialogflow/issues/854)) ([cda7ff3](https://www.github.com/googleapis/nodejs-dialogflow/commit/cda7ff335abad989612c104e990be1f6a55c89b5))
+
 ### [4.1.3](https://www.github.com/googleapis/nodejs-dialogflow/compare/v4.1.2...v4.1.3) (2021-07-21)
 
 

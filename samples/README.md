@@ -22,6 +22,7 @@
   * [Quickstart](#quickstart)
   * [Resource](#resource)
   * [Set-agent](#set-agent)
+  * [Update-intent](#update-intent)
 
 ## Before you begin
 
@@ -174,16 +175,26 @@ __Usage:__
 
 
 
+
 ### Set-agent
 
 View the [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/set-agent.js).
 
 [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/set-agent.js,samples/README.md)
 
+### Update-intent
+
+View the [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/update-intent.js).
+
+[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/update-intent.js,samples/README.md)
+
 __Usage:__
 
 
+
 `node samples/set-agent.js`
+`node samples/update-intent.js`
+
 
 
 
