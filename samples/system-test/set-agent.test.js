@@ -15,9 +15,10 @@
 'use strict';
 
 const {assert} = require('chai');
+const {describe, it} = require('mocha');
 
-// We cannot test setAgent because Dialogflow ES can only have one agent 
-// and if we create a agent it will delete the exisitng testing agent and 
+// We cannot test setAgent because Dialogflow ES can only have one agent
+// and if we create a agent it will delete the exisitng testing agent and
 // would cause all tests to fail
 describe('create agent', () => {
 
