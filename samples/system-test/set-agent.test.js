@@ -21,7 +21,6 @@ const {describe, it} = require('mocha');
 // and if we create a agent it will delete the exisitng testing agent and
 // would cause all tests to fail
 describe('create agent', () => {
-
   it('should create an intent', async () => {
     assert.isTrue(true);
   });
