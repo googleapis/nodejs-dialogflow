@@ -16,7 +16,7 @@
 
 
 A comprehensive list of changes in each version may be found in
-[the CHANGELOG](https://github.com/googleapis/nodejs-dialogflow/blob/master/CHANGELOG.md).
+[the CHANGELOG](https://github.com/googleapis/nodejs-dialogflow/blob/main/CHANGELOG.md).
 
 * [Dialogflow API Node.js Client API Reference][client-docs]
 * [Dialogflow API Documentation][product-docs]
@@ -110,18 +110,19 @@ async function runSample(projectId = 'your-project-id') {
 
 ## Samples
 
-Samples are in the [`samples/`](https://github.com/googleapis/nodejs-dialogflow/tree/master/samples) directory. Each sample's `README.md` has instructions for running its sample.
+Samples are in the [`samples/`](https://github.com/googleapis/nodejs-dialogflow/tree/main/samples) directory. Each sample's `README.md` has instructions for running its sample.
 
 | Sample                      | Source Code                       | Try it |
 | --------------------------- | --------------------------------- | ------ |
-| Create-intent | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/create-intent.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/create-intent.js,samples/README.md) |
-| Detect-intent-TTS-response.v2 | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/detect-intent-TTS-response.v2.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect-intent-TTS-response.v2.js,samples/README.md) |
-| Detect-intent-sentiment.v2 | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/detect-intent-sentiment.v2.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect-intent-sentiment.v2.js,samples/README.md) |
-| Detect | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/detect.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect.js,samples/README.md) |
-| Detect.v2beta1 | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/detect.v2beta1.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect.v2beta1.js,samples/README.md) |
-| List-intents | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/list-intents.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/list-intents.js,samples/README.md) |
-| Quickstart | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/quickstart.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/quickstart.js,samples/README.md) |
-| Resource | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Create-intent | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/create-intent.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/create-intent.js,samples/README.md) |
+| Detect-intent-TTS-response.v2 | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/detect-intent-TTS-response.v2.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect-intent-TTS-response.v2.js,samples/README.md) |
+| Detect-intent-sentiment.v2 | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/detect-intent-sentiment.v2.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect-intent-sentiment.v2.js,samples/README.md) |
+| Detect | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/detect.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect.js,samples/README.md) |
+| Detect.v2beta1 | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/detect.v2beta1.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/detect.v2beta1.js,samples/README.md) |
+| List-intents | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/list-intents.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/list-intents.js,samples/README.md) |
+| Quickstart | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/quickstart.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/quickstart.js,samples/README.md) |
+| Resource | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/resource.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/resource.js,samples/README.md) |
+| Set-agent | [source code](https://github.com/googleapis/nodejs-dialogflow/blob/main/samples/set-agent.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-dialogflow&page=editor&open_in_editor=samples/set-agent.js,samples/README.md) |
 
 
 
@@ -170,7 +171,7 @@ More Information: [Google Cloud Platform Launch Stages][launch_stages]
 
 ## Contributing
 
-Contributions welcome! See the [Contributing Guide](https://github.com/googleapis/nodejs-dialogflow/blob/master/CONTRIBUTING.md).
+Contributions welcome! See the [Contributing Guide](https://github.com/googleapis/nodejs-dialogflow/blob/main/CONTRIBUTING.md).
 
 Please note that this `README.md`, the `samples/README.md`,
 and a variety of configuration files in this repository (including `.nycrc` and `tsconfig.json`)
@@ -182,7 +183,7 @@ to its template in this
 
 Apache Version 2.0
 
-See [LICENSE](https://github.com/googleapis/nodejs-dialogflow/blob/master/LICENSE)
+See [LICENSE](https://github.com/googleapis/nodejs-dialogflow/blob/main/LICENSE)
 
 [client-docs]: https://googleapis.dev/nodejs/dialogflow/latest
 [product-docs]: https://cloud.google.com/dialogflow-enterprise/
