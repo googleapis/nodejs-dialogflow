@@ -536,6 +536,10 @@ export class IntentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.getIntent(request);
+   *
+   * @example <caption>include:samples/generated/v2/intents.get_intent.js</caption>
+   * region_tag:dialogflow_get_intent_sample
+   *
    */
   getIntent(
     request?: protos.google.cloud.dialogflow.v2.IGetIntentRequest,
@@ -636,6 +640,10 @@ export class IntentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.createIntent(request);
+   *
+   * @example <caption>include:samples/generated/v2/intents.create_intent.js</caption>
+   * region_tag:dialogflow_create_intent_sample
+   *
    */
   createIntent(
     request?: protos.google.cloud.dialogflow.v2.ICreateIntentRequest,
@@ -735,6 +743,10 @@ export class IntentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.updateIntent(request);
+   *
+   * @example <caption>include:samples/generated/v2/intents.update_intent.js</caption>
+   * region_tag:dialogflow_update_intent_sample
+   *
    */
   updateIntent(
     request?: protos.google.cloud.dialogflow.v2.IUpdateIntentRequest,
@@ -826,6 +838,10 @@ export class IntentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.deleteIntent(request);
+   *
+   * @example <caption>include:samples/generated/v2/intents.delete_intent.js</caption>
+   * region_tag:dialogflow_delete_intent_sample
+   *
    */
   deleteIntent(
     request?: protos.google.cloud.dialogflow.v2.IDeleteIntentRequest,
@@ -953,6 +969,10 @@ export class IntentsClient {
    * @example
    * const [operation] = await client.batchUpdateIntents(request);
    * const [response] = await operation.promise();
+   *
+   * @example <caption>include:samples/generated/v2/intents.batch_update_intents.js</caption>
+   * region_tag:dialogflow_batch_update_intents_sample
+   *
    */
   batchUpdateIntents(
     request?: protos.google.cloud.dialogflow.v2.IBatchUpdateIntentsRequest,
@@ -1016,6 +1036,10 @@ export class IntentsClient {
    * console.log(decodedOperation.result);
    * console.log(decodedOperation.done);
    * console.log(decodedOperation.metadata);
+   *
+   * @example <caption>include:samples/generated/v2/intents.batch_update_intents.js</caption>
+   * region_tag:dialogflow_batch_update_intents_sample
+   *
    */
   async checkBatchUpdateIntentsProgress(
     name: string
@@ -1111,6 +1135,10 @@ export class IntentsClient {
    * @example
    * const [operation] = await client.batchDeleteIntents(request);
    * const [response] = await operation.promise();
+   *
+   * @example <caption>include:samples/generated/v2/intents.batch_delete_intents.js</caption>
+   * region_tag:dialogflow_batch_delete_intents_sample
+   *
    */
   batchDeleteIntents(
     request?: protos.google.cloud.dialogflow.v2.IBatchDeleteIntentsRequest,
@@ -1174,6 +1202,10 @@ export class IntentsClient {
    * console.log(decodedOperation.result);
    * console.log(decodedOperation.done);
    * console.log(decodedOperation.metadata);
+   *
+   * @example <caption>include:samples/generated/v2/intents.batch_delete_intents.js</caption>
+   * region_tag:dialogflow_batch_delete_intents_sample
+   *
    */
   async checkBatchDeleteIntentsProgress(
     name: string
@@ -1262,6 +1294,10 @@ export class IntentsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2/intents.list_intents.js</caption>
+   * region_tag:dialogflow_list_intents_sample
+   *
    */
   listIntents(
     request?: protos.google.cloud.dialogflow.v2.IListIntentsRequest,
@@ -1344,6 +1380,10 @@ export class IntentsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2/intents.list_intents.js</caption>
+   * region_tag:dialogflow_list_intents_sample
+   *
    */
   listIntentsStream(
     request?: protos.google.cloud.dialogflow.v2.IListIntentsRequest,
@@ -1357,7 +1397,8 @@ export class IntentsClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listIntents'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listIntents.createStream(
       this.innerApiCalls.listIntents as gax.GaxCall,
@@ -1411,6 +1452,10 @@ export class IntentsClient {
    * for await (const response of iterable) {
    *   // process response
    * }
+   *
+   * @example <caption>include:samples/generated/v2/intents.list_intents.js</caption>
+   * region_tag:dialogflow_list_intents_sample
+   *
    */
   listIntentsAsync(
     request?: protos.google.cloud.dialogflow.v2.IListIntentsRequest,
@@ -1425,7 +1470,8 @@ export class IntentsClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listIntents'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listIntents.asyncIterate(
       this.innerApiCalls['listIntents'] as GaxCall,

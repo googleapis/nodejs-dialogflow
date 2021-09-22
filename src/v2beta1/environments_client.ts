@@ -496,6 +496,10 @@ export class EnvironmentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.getEnvironment(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.get_environment.js</caption>
+   * region_tag:dialogflow_get_environment_sample
+   *
    */
   getEnvironment(
     request?: protos.google.cloud.dialogflow.v2beta1.IGetEnvironmentRequest,
@@ -597,6 +601,10 @@ export class EnvironmentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.createEnvironment(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.create_environment.js</caption>
+   * region_tag:dialogflow_create_environment_sample
+   *
    */
   createEnvironment(
     request?: protos.google.cloud.dialogflow.v2beta1.ICreateEnvironmentRequest,
@@ -712,6 +720,10 @@ export class EnvironmentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.updateEnvironment(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.update_environment.js</caption>
+   * region_tag:dialogflow_update_environment_sample
+   *
    */
   updateEnvironment(
     request?: protos.google.cloud.dialogflow.v2beta1.IUpdateEnvironmentRequest,
@@ -813,6 +825,10 @@ export class EnvironmentsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.deleteEnvironment(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.delete_environment.js</caption>
+   * region_tag:dialogflow_delete_environment_sample
+   *
    */
   deleteEnvironment(
     request?: protos.google.cloud.dialogflow.v2beta1.IDeleteEnvironmentRequest,
@@ -919,6 +935,10 @@ export class EnvironmentsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.list_environments.js</caption>
+   * region_tag:dialogflow_list_environments_sample
+   *
    */
   listEnvironments(
     request?: protos.google.cloud.dialogflow.v2beta1.IListEnvironmentsRequest,
@@ -989,6 +1009,10 @@ export class EnvironmentsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.list_environments.js</caption>
+   * region_tag:dialogflow_list_environments_sample
+   *
    */
   listEnvironmentsStream(
     request?: protos.google.cloud.dialogflow.v2beta1.IListEnvironmentsRequest,
@@ -1002,7 +1026,8 @@ export class EnvironmentsClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listEnvironments'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listEnvironments.createStream(
       this.innerApiCalls.listEnvironments as gax.GaxCall,
@@ -1042,6 +1067,10 @@ export class EnvironmentsClient {
    * for await (const response of iterable) {
    *   // process response
    * }
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.list_environments.js</caption>
+   * region_tag:dialogflow_list_environments_sample
+   *
    */
   listEnvironmentsAsync(
     request?: protos.google.cloud.dialogflow.v2beta1.IListEnvironmentsRequest,
@@ -1056,7 +1085,8 @@ export class EnvironmentsClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listEnvironments'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listEnvironments.asyncIterate(
       this.innerApiCalls['listEnvironments'] as GaxCall,
@@ -1123,6 +1153,10 @@ export class EnvironmentsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.get_environment_history.js</caption>
+   * region_tag:dialogflow_get_environment_history_sample
+   *
    */
   getEnvironmentHistory(
     request?: protos.google.cloud.dialogflow.v2beta1.IGetEnvironmentHistoryRequest,
@@ -1194,6 +1228,10 @@ export class EnvironmentsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.get_environment_history.js</caption>
+   * region_tag:dialogflow_get_environment_history_sample
+   *
    */
   getEnvironmentHistoryStream(
     request?: protos.google.cloud.dialogflow.v2beta1.IGetEnvironmentHistoryRequest,
@@ -1207,7 +1245,8 @@ export class EnvironmentsClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['getEnvironmentHistory'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.getEnvironmentHistory.createStream(
       this.innerApiCalls.getEnvironmentHistory as gax.GaxCall,
@@ -1248,6 +1287,10 @@ export class EnvironmentsClient {
    * for await (const response of iterable) {
    *   // process response
    * }
+   *
+   * @example <caption>include:samples/generated/v2beta1/environments.get_environment_history.js</caption>
+   * region_tag:dialogflow_get_environment_history_sample
+   *
    */
   getEnvironmentHistoryAsync(
     request?: protos.google.cloud.dialogflow.v2beta1.IGetEnvironmentHistoryRequest,
@@ -1262,7 +1305,8 @@ export class EnvironmentsClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['getEnvironmentHistory'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.getEnvironmentHistory.asyncIterate(
       this.innerApiCalls['getEnvironmentHistory'] as GaxCall,

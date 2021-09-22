@@ -503,6 +503,10 @@ export class ContextsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.getContext(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.get_context.js</caption>
+   * region_tag:dialogflow_get_context_sample
+   *
    */
   getContext(
     request?: protos.google.cloud.dialogflow.v2beta1.IGetContextRequest,
@@ -610,6 +614,10 @@ export class ContextsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.createContext(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.create_context.js</caption>
+   * region_tag:dialogflow_create_context_sample
+   *
    */
   createContext(
     request?: protos.google.cloud.dialogflow.v2beta1.ICreateContextRequest,
@@ -703,6 +711,10 @@ export class ContextsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.updateContext(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.update_context.js</caption>
+   * region_tag:dialogflow_update_context_sample
+   *
    */
   updateContext(
     request?: protos.google.cloud.dialogflow.v2beta1.IUpdateContextRequest,
@@ -807,6 +819,10 @@ export class ContextsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.deleteContext(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.delete_context.js</caption>
+   * region_tag:dialogflow_delete_context_sample
+   *
    */
   deleteContext(
     request?: protos.google.cloud.dialogflow.v2beta1.IDeleteContextRequest,
@@ -913,6 +929,10 @@ export class ContextsClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.deleteAllContexts(request);
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.delete_all_contexts.js</caption>
+   * region_tag:dialogflow_delete_all_contexts_sample
+   *
    */
   deleteAllContexts(
     request?: protos.google.cloud.dialogflow.v2beta1.IDeleteAllContextsRequest,
@@ -1028,6 +1048,10 @@ export class ContextsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.list_contexts.js</caption>
+   * region_tag:dialogflow_list_contexts_sample
+   *
    */
   listContexts(
     request?: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
@@ -1107,6 +1131,10 @@ export class ContextsClient {
    *   Please see the
    *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
    *   for more details and examples.
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.list_contexts.js</caption>
+   * region_tag:dialogflow_list_contexts_sample
+   *
    */
   listContextsStream(
     request?: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
@@ -1120,7 +1148,8 @@ export class ContextsClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listContexts'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listContexts.createStream(
       this.innerApiCalls.listContexts as gax.GaxCall,
@@ -1169,6 +1198,10 @@ export class ContextsClient {
    * for await (const response of iterable) {
    *   // process response
    * }
+   *
+   * @example <caption>include:samples/generated/v2beta1/contexts.list_contexts.js</caption>
+   * region_tag:dialogflow_list_contexts_sample
+   *
    */
   listContextsAsync(
     request?: protos.google.cloud.dialogflow.v2beta1.IListContextsRequest,
@@ -1183,7 +1216,8 @@ export class ContextsClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listContexts'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listContexts.asyncIterate(
       this.innerApiCalls['listContexts'] as GaxCall,
