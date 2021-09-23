@@ -26,7 +26,7 @@ const request = {
         displayName: 'Default Welcome Intent',
       },
     },
-  }
+  },
 };
 
 describe('create agent', () => {
