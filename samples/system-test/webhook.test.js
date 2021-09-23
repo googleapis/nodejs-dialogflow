@@ -19,38 +19,10 @@ const {describe, it} = require('mocha');
 const webhook = require('../webhook');
 
 const request = {
-  queryResult: {
-    queryText: 'hi',
-    action: 'input.welcome',
-    parameters: {},
-    allRequiredParamsPresent: true,
-    fulfillmentMessages: [
-      {
-        text: {
-          text: [''],
-        },
-      },
-    ],
-    outputContexts: [
-      {
-        name: 'projects/galstarter-316823/agent/sessions/d386891c-b918-1238-21ec-c3b18859b11a/contexts/__system_counters__',
-        parameters: {
-          'no-input': 0,
-          'no-match': 0,
-        },
-      },
-    ],
-    intent: {
-      name: 'projects/galstarter-316823/agent/intents/00c2877d-2440-447f-8dc1-045623a55bd4',
-      displayName: 'Default Welcome Intent',
-    },
-    intentDetectionConfidence: 1,
-    languageCode: 'en',
-    sentimentAnalysisResult: {
-      queryTextSentiment: {
-        score: 0.3,
-        magnitude: 0.3,
-      },
+  "queryResult": {
+    "intent": {
+      "name": 'projects/galstarter-316823/agent/intents/00c2877d-2440-447f-8dc1-045623a55bd4',
+      "displayName": 'Default Welcome Intent',
     },
   },
 };
