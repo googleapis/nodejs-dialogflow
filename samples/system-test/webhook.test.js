@@ -19,10 +19,10 @@ const {describe, it} = require('mocha');
 const webhook = require('../webhook');
 
 const request = {
-  'queryResult': {
-    'intent': {
-      'name': 'projects/galstarter-316823/agent/intents/00c2877d-2440-447f-8dc1-045623a55bd4',
-      'displayName': 'Default Welcome Intent',
+  queryResult: {
+    intent: {
+      name: 'projects/galstarter-316823/agent/intents/00c2877d-2440-447f-8dc1-045623a55bd4',
+      displayName: 'Default Welcome Intent',
     },
   },
 };
