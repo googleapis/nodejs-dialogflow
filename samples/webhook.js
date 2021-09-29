@@ -18,8 +18,7 @@
 
 exports.handleWebhook = (request, response) => {
   const tag = request.body.queryResult.intent.displayName;
-  console.log('HERE');
-  console.log(tag);
+
   let jsonResponse = {};
   if (tag === 'Default Welcome Intent') {
     //fulfillment response to be sent to the agent if the request tag is equal to "welcome tag"
