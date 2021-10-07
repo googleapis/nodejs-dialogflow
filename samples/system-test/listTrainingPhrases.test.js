@@ -15,9 +15,8 @@
 'use strict';
 
 const {assert} = require('chai');
-const {describe, before, it} = require('mocha');
+const {describe, it} = require('mocha');
 const execSync = require('child_process').execSync;
-const dialogflow = require('@google-cloud/dialogflow');
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 const projectId =
