@@ -32,7 +32,7 @@ async function main(projectId, intentId) {
 
   const intent = await intentClient.getIntent(getIntentRequest);
 
-  return intent[0].trainingPhrases.length;
+  console.log(intent[0].trainingPhrases);
   // [END dialogflow_list_training_phrases]
 }
 

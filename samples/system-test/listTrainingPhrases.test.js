@@ -28,6 +28,6 @@ describe('list training phrases', () => {
 
   it('should list training phrases in an intent', async () => {
     const output = exec(`${cmd} ${projectId} ${intentId}`);
-    assert.isAtLeast(output, 10);
+    assert.include(output, 'EXAMPLE');
   });
 });
