@@ -21,13 +21,13 @@ const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
 const projectId =
   process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
-const intentId = '7b5bd47e-6dd9-4b45-8624-565862bd2d85';
+const intentId = 'e8f6a63e-73da-4a1a-8bfc-857183f71228';
 
 describe('list training phrases', () => {
   const cmd = 'node listTrainingPhrases.js';
 
   it('should list training phrases in an intent', async () => {
     const output = exec(`${cmd} ${projectId} ${intentId}`);
-    assert.isAtLeast(output, 9);
+    assert.isAtLeast(output, 10);
   });
 });
