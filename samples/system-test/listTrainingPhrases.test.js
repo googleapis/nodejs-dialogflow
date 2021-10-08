@@ -20,12 +20,12 @@ const dialogflow = require('@google-cloud/dialogflow');
 const execSync = require('child_process').execSync;
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
-let projectId = '';
-const intentId = 'e8f6a63e-73da-4a1a-8bfc-857183f71228';
 
 describe('list training phrases', () => {
+  const intentId = 'e8f6a63e-73da-4a1a-8bfc-857183f71228';
   const intentClient = new dialogflow.IntentsClient();
   const cmd = 'node listTrainingPhrases.js';
+  let projectId = '';
 
   before('get intent ID', async () => {
     // The path to identify the agent that owns the intent.
