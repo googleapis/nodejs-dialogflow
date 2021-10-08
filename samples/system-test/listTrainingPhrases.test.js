@@ -15,16 +15,22 @@
 'use strict';
 
 const {assert} = require('chai');
-const {describe, it} = require('mocha');
+const {describe, before, it} = require('mocha');
+const dialogflow = require('@google-cloud/dialogflow');
 const execSync = require('child_process').execSync;
 const exec = cmd => execSync(cmd, {encoding: 'utf8'});
 
-const projectId =
-  process.env.GCLOUD_PROJECT || process.env.GOOGLE_CLOUD_PROJECT;
+const projectId = '';
 const intentId = 'e8f6a63e-73da-4a1a-8bfc-857183f71228';
 
 describe('list training phrases', () => {
+  const intentClient = new dialogflow.IntentsClient();
   const cmd = 'node listTrainingPhrases.js';
+
+  before('get intent ID', async () => {
+    // The path to identify the agent that owns the intent.
+    projectId = intentClient.getProjectId();
+  });
 
   it('should list training phrases in an intent', async () => {
     const output = exec(`${cmd} ${projectId} ${intentId}`);
