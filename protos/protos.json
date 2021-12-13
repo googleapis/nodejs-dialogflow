@@ -1775,10 +1775,7 @@
                       "fields": {
                         "speechModelVariant": {
                           "type": "SpeechModelVariant",
-                          "id": 1,
-                          "options": {
-                            "(google.api.field_behavior)": "OPTIONAL"
-                          }
+                          "id": 1
                         }
                       }
                     },
@@ -8895,10 +8892,7 @@
                       "fields": {
                         "speechModelVariant": {
                           "type": "SpeechModelVariant",
-                          "id": 1,
-                          "options": {
-                            "(google.api.field_behavior)": "OPTIONAL"
-                          }
+                          "id": 1
                         }
                       }
                     },
@@ -15541,6 +15535,10 @@
                           "options": {
                             "(google.api.field_behavior)": "OUTPUT_ONLY"
                           }
+                        },
+                        "knowledgeBase": {
+                          "type": "string",
+                          "id": 3
                         }
                       },
                       "nested": {
