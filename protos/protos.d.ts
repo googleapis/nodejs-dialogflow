@@ -51562,6 +51562,9 @@ export namespace google {
 
                     /** KnowledgeOperationMetadata state */
                     state?: (google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata.State|keyof typeof google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata.State|null);
+
+                    /** KnowledgeOperationMetadata knowledgeBase */
+                    knowledgeBase?: (string|null);
                 }
 
                 /** Represents a KnowledgeOperationMetadata. */
@@ -51575,6 +51578,9 @@ export namespace google {
 
                     /** KnowledgeOperationMetadata state. */
                     public state: (google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata.State|keyof typeof google.cloud.dialogflow.v2beta1.KnowledgeOperationMetadata.State);
+
+                    /** KnowledgeOperationMetadata knowledgeBase. */
+                    public knowledgeBase: string;
 
                     /**
                      * Creates a new KnowledgeOperationMetadata instance using the specified properties.
