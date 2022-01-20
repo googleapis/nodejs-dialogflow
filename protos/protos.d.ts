@@ -27698,6 +27698,18 @@ export namespace google {
                     }
                 }
 
+                /** AudioEncoding enum. */
+                enum AudioEncoding {
+                    AUDIO_ENCODING_UNSPECIFIED = 0,
+                    AUDIO_ENCODING_LINEAR_16 = 1,
+                    AUDIO_ENCODING_FLAC = 2,
+                    AUDIO_ENCODING_MULAW = 3,
+                    AUDIO_ENCODING_AMR = 4,
+                    AUDIO_ENCODING_AMR_WB = 5,
+                    AUDIO_ENCODING_OGG_OPUS = 6,
+                    AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE = 7
+                }
+
                 /** Properties of a SpeechContext. */
                 interface ISpeechContext {
 
@@ -27794,16 +27806,12 @@ export namespace google {
                     public toJSON(): { [k: string]: any };
                 }
 
-                /** AudioEncoding enum. */
-                enum AudioEncoding {
-                    AUDIO_ENCODING_UNSPECIFIED = 0,
-                    AUDIO_ENCODING_LINEAR_16 = 1,
-                    AUDIO_ENCODING_FLAC = 2,
-                    AUDIO_ENCODING_MULAW = 3,
-                    AUDIO_ENCODING_AMR = 4,
-                    AUDIO_ENCODING_AMR_WB = 5,
-                    AUDIO_ENCODING_OGG_OPUS = 6,
-                    AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE = 7
+                /** SpeechModelVariant enum. */
+                enum SpeechModelVariant {
+                    SPEECH_MODEL_VARIANT_UNSPECIFIED = 0,
+                    USE_BEST_AVAILABLE = 1,
+                    USE_STANDARD = 2,
+                    USE_ENHANCED = 3
                 }
 
                 /** Properties of a SpeechWordInfo. */
@@ -27912,14 +27920,6 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
-                }
-
-                /** SpeechModelVariant enum. */
-                enum SpeechModelVariant {
-                    SPEECH_MODEL_VARIANT_UNSPECIFIED = 0,
-                    USE_BEST_AVAILABLE = 1,
-                    USE_STANDARD = 2,
-                    USE_ENHANCED = 3
                 }
 
                 /** Properties of an InputAudioConfig. */
@@ -28064,6 +28064,14 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
+                }
+
+                /** SsmlVoiceGender enum. */
+                enum SsmlVoiceGender {
+                    SSML_VOICE_GENDER_UNSPECIFIED = 0,
+                    SSML_VOICE_GENDER_MALE = 1,
+                    SSML_VOICE_GENDER_FEMALE = 2,
+                    SSML_VOICE_GENDER_NEUTRAL = 3
                 }
 
                 /** Properties of a VoiceSelectionParams. */
@@ -28276,12 +28284,14 @@ export namespace google {
                     public toJSON(): { [k: string]: any };
                 }
 
-                /** SsmlVoiceGender enum. */
-                enum SsmlVoiceGender {
-                    SSML_VOICE_GENDER_UNSPECIFIED = 0,
-                    SSML_VOICE_GENDER_MALE = 1,
-                    SSML_VOICE_GENDER_FEMALE = 2,
-                    SSML_VOICE_GENDER_NEUTRAL = 3
+                /** OutputAudioEncoding enum. */
+                enum OutputAudioEncoding {
+                    OUTPUT_AUDIO_ENCODING_UNSPECIFIED = 0,
+                    OUTPUT_AUDIO_ENCODING_LINEAR_16 = 1,
+                    OUTPUT_AUDIO_ENCODING_MP3 = 2,
+                    OUTPUT_AUDIO_ENCODING_MP3_64_KBPS = 4,
+                    OUTPUT_AUDIO_ENCODING_OGG_OPUS = 3,
+                    OUTPUT_AUDIO_ENCODING_MULAW = 5
                 }
 
                 /** Properties of an OutputAudioConfig. */
@@ -28386,6 +28396,27 @@ export namespace google {
                     public toJSON(): { [k: string]: any };
                 }
 
+                /** TelephonyDtmf enum. */
+                enum TelephonyDtmf {
+                    TELEPHONY_DTMF_UNSPECIFIED = 0,
+                    DTMF_ONE = 1,
+                    DTMF_TWO = 2,
+                    DTMF_THREE = 3,
+                    DTMF_FOUR = 4,
+                    DTMF_FIVE = 5,
+                    DTMF_SIX = 6,
+                    DTMF_SEVEN = 7,
+                    DTMF_EIGHT = 8,
+                    DTMF_NINE = 9,
+                    DTMF_ZERO = 10,
+                    DTMF_A = 11,
+                    DTMF_B = 12,
+                    DTMF_C = 13,
+                    DTMF_D = 14,
+                    DTMF_STAR = 15,
+                    DTMF_POUND = 16
+                }
+
                 /** Properties of a TelephonyDtmfEvents. */
                 interface ITelephonyDtmfEvents {
 
@@ -28476,16 +28507,6 @@ export namespace google {
                     public toJSON(): { [k: string]: any };
                 }
 
-                /** OutputAudioEncoding enum. */
-                enum OutputAudioEncoding {
-                    OUTPUT_AUDIO_ENCODING_UNSPECIFIED = 0,
-                    OUTPUT_AUDIO_ENCODING_LINEAR_16 = 1,
-                    OUTPUT_AUDIO_ENCODING_MP3 = 2,
-                    OUTPUT_AUDIO_ENCODING_MP3_64_KBPS = 4,
-                    OUTPUT_AUDIO_ENCODING_OGG_OPUS = 3,
-                    OUTPUT_AUDIO_ENCODING_MULAW = 5
-                }
-
                 /** Properties of a SpeechToTextConfig. */
                 interface ISpeechToTextConfig {
 
@@ -28574,27 +28595,6 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
-                }
-
-                /** TelephonyDtmf enum. */
-                enum TelephonyDtmf {
-                    TELEPHONY_DTMF_UNSPECIFIED = 0,
-                    DTMF_ONE = 1,
-                    DTMF_TWO = 2,
-                    DTMF_THREE = 3,
-                    DTMF_FOUR = 4,
-                    DTMF_FIVE = 5,
-                    DTMF_SIX = 6,
-                    DTMF_SEVEN = 7,
-                    DTMF_EIGHT = 8,
-                    DTMF_NINE = 9,
-                    DTMF_ZERO = 10,
-                    DTMF_A = 11,
-                    DTMF_B = 12,
-                    DTMF_C = 13,
-                    DTMF_D = 14,
-                    DTMF_STAR = 15,
-                    DTMF_POUND = 16
                 }
 
                 /** Represents a Fulfillments */
@@ -29921,6 +29921,27 @@ export namespace google {
 
                 namespace AgentAssistantFeedback {
 
+                    /** AnswerRelevance enum. */
+                    enum AnswerRelevance {
+                        ANSWER_RELEVANCE_UNSPECIFIED = 0,
+                        IRRELEVANT = 1,
+                        RELEVANT = 2
+                    }
+
+                    /** DocumentCorrectness enum. */
+                    enum DocumentCorrectness {
+                        DOCUMENT_CORRECTNESS_UNSPECIFIED = 0,
+                        INCORRECT = 1,
+                        CORRECT = 2
+                    }
+
+                    /** DocumentEfficiency enum. */
+                    enum DocumentEfficiency {
+                        DOCUMENT_EFFICIENCY_UNSPECIFIED = 0,
+                        INEFFICIENT = 1,
+                        EFFICIENT = 2
+                    }
+
                     /** Properties of a SummarizationFeedback. */
                     interface ISummarizationFeedback {
 
@@ -30021,27 +30042,6 @@ export namespace google {
                          * @returns JSON object
                          */
                         public toJSON(): { [k: string]: any };
-                    }
-
-                    /** AnswerRelevance enum. */
-                    enum AnswerRelevance {
-                        ANSWER_RELEVANCE_UNSPECIFIED = 0,
-                        IRRELEVANT = 1,
-                        RELEVANT = 2
-                    }
-
-                    /** DocumentCorrectness enum. */
-                    enum DocumentCorrectness {
-                        DOCUMENT_CORRECTNESS_UNSPECIFIED = 0,
-                        INCORRECT = 1,
-                        CORRECT = 2
-                    }
-
-                    /** DocumentEfficiency enum. */
-                    enum DocumentEfficiency {
-                        DOCUMENT_EFFICIENCY_UNSPECIFIED = 0,
-                        INEFFICIENT = 1,
-                        EFFICIENT = 2
                     }
                 }
 
@@ -38025,6 +38025,13 @@ export namespace google {
 
                 namespace Intent {
 
+                    /** WebhookState enum. */
+                    enum WebhookState {
+                        WEBHOOK_STATE_UNSPECIFIED = 0,
+                        WEBHOOK_STATE_ENABLED = 1,
+                        WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING = 2
+                    }
+
                     /** Properties of a TrainingPhrase. */
                     interface ITrainingPhrase {
 
@@ -38135,6 +38142,13 @@ export namespace google {
 
                     namespace TrainingPhrase {
 
+                        /** Type enum. */
+                        enum Type {
+                            TYPE_UNSPECIFIED = 0,
+                            EXAMPLE = 1,
+                            TEMPLATE = 2
+                        }
+
                         /** Properties of a Part. */
                         interface IPart {
 
@@ -38241,13 +38255,6 @@ export namespace google {
                              * @returns JSON object
                              */
                             public toJSON(): { [k: string]: any };
-                        }
-
-                        /** Type enum. */
-                        enum Type {
-                            TYPE_UNSPECIFIED = 0,
-                            EXAMPLE = 1,
-                            TEMPLATE = 2
                         }
                     }
 
@@ -38597,6 +38604,21 @@ export namespace google {
                     }
 
                     namespace Message {
+
+                        /** Platform enum. */
+                        enum Platform {
+                            PLATFORM_UNSPECIFIED = 0,
+                            FACEBOOK = 1,
+                            SLACK = 2,
+                            TELEGRAM = 3,
+                            KIK = 4,
+                            SKYPE = 5,
+                            LINE = 6,
+                            VIBER = 7,
+                            ACTIONS_ON_GOOGLE = 8,
+                            TELEPHONY = 10,
+                            GOOGLE_HANGOUTS = 11
+                        }
 
                         /** Properties of a Text. */
                         interface IText {
@@ -41872,6 +41894,12 @@ export namespace google {
 
                         namespace MediaContent {
 
+                            /** ResponseMediaType enum. */
+                            enum ResponseMediaType {
+                                RESPONSE_MEDIA_TYPE_UNSPECIFIED = 0,
+                                AUDIO = 1
+                            }
+
                             /** Properties of a ResponseMediaObject. */
                             interface IResponseMediaObject {
 
@@ -41987,12 +42015,6 @@ export namespace google {
                                  * @returns JSON object
                                  */
                                 public toJSON(): { [k: string]: any };
-                            }
-
-                            /** ResponseMediaType enum. */
-                            enum ResponseMediaType {
-                                RESPONSE_MEDIA_TYPE_UNSPECIFIED = 0,
-                                AUDIO = 1
                             }
                         }
 
@@ -42739,21 +42761,6 @@ export namespace google {
                              */
                             public toJSON(): { [k: string]: any };
                         }
-
-                        /** Platform enum. */
-                        enum Platform {
-                            PLATFORM_UNSPECIFIED = 0,
-                            FACEBOOK = 1,
-                            SLACK = 2,
-                            TELEGRAM = 3,
-                            KIK = 4,
-                            SKYPE = 5,
-                            LINE = 6,
-                            VIBER = 7,
-                            ACTIONS_ON_GOOGLE = 8,
-                            TELEPHONY = 10,
-                            GOOGLE_HANGOUTS = 11
-                        }
                     }
 
                     /** Properties of a FollowupIntentInfo. */
@@ -42850,13 +42857,6 @@ export namespace google {
                          * @returns JSON object
                          */
                         public toJSON(): { [k: string]: any };
-                    }
-
-                    /** WebhookState enum. */
-                    enum WebhookState {
-                        WEBHOOK_STATE_UNSPECIFIED = 0,
-                        WEBHOOK_STATE_ENABLED = 1,
-                        WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING = 2
                     }
                 }
 
@@ -43787,6 +43787,12 @@ export namespace google {
                     public toJSON(): { [k: string]: any };
                 }
 
+                /** IntentView enum. */
+                enum IntentView {
+                    INTENT_VIEW_UNSPECIFIED = 0,
+                    INTENT_VIEW_FULL = 1
+                }
+
                 /** Properties of an IntentBatch. */
                 interface IIntentBatch {
 
@@ -43875,12 +43881,6 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
-                }
-
-                /** IntentView enum. */
-                enum IntentView {
-                    INTENT_VIEW_UNSPECIFIED = 0,
-                    INTENT_VIEW_FULL = 1
                 }
 
                 /** Represents a SessionEntityTypes */
@@ -45050,6 +45050,20 @@ export namespace google {
 
                 namespace EntityType {
 
+                    /** Kind enum. */
+                    enum Kind {
+                        KIND_UNSPECIFIED = 0,
+                        KIND_MAP = 1,
+                        KIND_LIST = 2,
+                        KIND_REGEXP = 3
+                    }
+
+                    /** AutoExpansionMode enum. */
+                    enum AutoExpansionMode {
+                        AUTO_EXPANSION_MODE_UNSPECIFIED = 0,
+                        AUTO_EXPANSION_MODE_DEFAULT = 1
+                    }
+
                     /** Properties of an Entity. */
                     interface IEntity {
 
@@ -45144,20 +45158,6 @@ export namespace google {
                          * @returns JSON object
                          */
                         public toJSON(): { [k: string]: any };
-                    }
-
-                    /** Kind enum. */
-                    enum Kind {
-                        KIND_UNSPECIFIED = 0,
-                        KIND_MAP = 1,
-                        KIND_LIST = 2,
-                        KIND_REGEXP = 3
-                    }
-
-                    /** AutoExpansionMode enum. */
-                    enum AutoExpansionMode {
-                        AUTO_EXPANSION_MODE_UNSPECIFIED = 0,
-                        AUTO_EXPANSION_MODE_DEFAULT = 1
                     }
                 }
 
@@ -47813,129 +47813,6 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
-                }
-
-                /** Properties of a ConversationEvent. */
-                interface IConversationEvent {
-
-                    /** ConversationEvent conversation */
-                    conversation?: (string|null);
-
-                    /** ConversationEvent type */
-                    type?: (google.cloud.dialogflow.v2beta1.ConversationEvent.Type|keyof typeof google.cloud.dialogflow.v2beta1.ConversationEvent.Type|null);
-
-                    /** ConversationEvent errorStatus */
-                    errorStatus?: (google.rpc.IStatus|null);
-
-                    /** ConversationEvent newMessagePayload */
-                    newMessagePayload?: (google.cloud.dialogflow.v2beta1.IMessage|null);
-                }
-
-                /** Represents a ConversationEvent. */
-                class ConversationEvent implements IConversationEvent {
-
-                    /**
-                     * Constructs a new ConversationEvent.
-                     * @param [properties] Properties to set
-                     */
-                    constructor(properties?: google.cloud.dialogflow.v2beta1.IConversationEvent);
-
-                    /** ConversationEvent conversation. */
-                    public conversation: string;
-
-                    /** ConversationEvent type. */
-                    public type: (google.cloud.dialogflow.v2beta1.ConversationEvent.Type|keyof typeof google.cloud.dialogflow.v2beta1.ConversationEvent.Type);
-
-                    /** ConversationEvent errorStatus. */
-                    public errorStatus?: (google.rpc.IStatus|null);
-
-                    /** ConversationEvent newMessagePayload. */
-                    public newMessagePayload?: (google.cloud.dialogflow.v2beta1.IMessage|null);
-
-                    /** ConversationEvent payload. */
-                    public payload?: "newMessagePayload";
-
-                    /**
-                     * Creates a new ConversationEvent instance using the specified properties.
-                     * @param [properties] Properties to set
-                     * @returns ConversationEvent instance
-                     */
-                    public static create(properties?: google.cloud.dialogflow.v2beta1.IConversationEvent): google.cloud.dialogflow.v2beta1.ConversationEvent;
-
-                    /**
-                     * Encodes the specified ConversationEvent message. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ConversationEvent.verify|verify} messages.
-                     * @param message ConversationEvent message or plain object to encode
-                     * @param [writer] Writer to encode to
-                     * @returns Writer
-                     */
-                    public static encode(message: google.cloud.dialogflow.v2beta1.IConversationEvent, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                    /**
-                     * Encodes the specified ConversationEvent message, length delimited. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ConversationEvent.verify|verify} messages.
-                     * @param message ConversationEvent message or plain object to encode
-                     * @param [writer] Writer to encode to
-                     * @returns Writer
-                     */
-                    public static encodeDelimited(message: google.cloud.dialogflow.v2beta1.IConversationEvent, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                    /**
-                     * Decodes a ConversationEvent message from the specified reader or buffer.
-                     * @param reader Reader or buffer to decode from
-                     * @param [length] Message length if known beforehand
-                     * @returns ConversationEvent
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): google.cloud.dialogflow.v2beta1.ConversationEvent;
-
-                    /**
-                     * Decodes a ConversationEvent message from the specified reader or buffer, length delimited.
-                     * @param reader Reader or buffer to decode from
-                     * @returns ConversationEvent
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): google.cloud.dialogflow.v2beta1.ConversationEvent;
-
-                    /**
-                     * Verifies a ConversationEvent message.
-                     * @param message Plain object to verify
-                     * @returns `null` if valid, otherwise the reason why it is not
-                     */
-                    public static verify(message: { [k: string]: any }): (string|null);
-
-                    /**
-                     * Creates a ConversationEvent message from a plain object. Also converts values to their respective internal types.
-                     * @param object Plain object
-                     * @returns ConversationEvent
-                     */
-                    public static fromObject(object: { [k: string]: any }): google.cloud.dialogflow.v2beta1.ConversationEvent;
-
-                    /**
-                     * Creates a plain object from a ConversationEvent message. Also converts values to other types if specified.
-                     * @param message ConversationEvent
-                     * @param [options] Conversion options
-                     * @returns Plain object
-                     */
-                    public static toObject(message: google.cloud.dialogflow.v2beta1.ConversationEvent, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                    /**
-                     * Converts this ConversationEvent to JSON.
-                     * @returns JSON object
-                     */
-                    public toJSON(): { [k: string]: any };
-                }
-
-                namespace ConversationEvent {
-
-                    /** Type enum. */
-                    enum Type {
-                        TYPE_UNSPECIFIED = 0,
-                        CONVERSATION_STARTED = 1,
-                        CONVERSATION_FINISHED = 2,
-                        NEW_MESSAGE = 5,
-                        UNRECOVERABLE_ERROR = 4
-                    }
                 }
 
                 /** Represents a ConversationProfiles */
@@ -50908,6 +50785,15 @@ export namespace google {
 
                 namespace Document {
 
+                    /** KnowledgeType enum. */
+                    enum KnowledgeType {
+                        KNOWLEDGE_TYPE_UNSPECIFIED = 0,
+                        FAQ = 1,
+                        EXTRACTIVE_QA = 2,
+                        ARTICLE_SUGGESTION = 3,
+                        SMART_REPLY = 4
+                    }
+
                     /** Properties of a ReloadStatus. */
                     interface IReloadStatus {
 
@@ -51002,15 +50888,6 @@ export namespace google {
                          * @returns JSON object
                          */
                         public toJSON(): { [k: string]: any };
-                    }
-
-                    /** KnowledgeType enum. */
-                    enum KnowledgeType {
-                        KNOWLEDGE_TYPE_UNSPECIFIED = 0,
-                        FAQ = 1,
-                        EXTRACTIVE_QA = 2,
-                        ARTICLE_SUGGESTION = 3,
-                        SMART_REPLY = 4
                     }
                 }
 
@@ -52109,6 +51986,129 @@ export namespace google {
                      * @returns JSON object
                      */
                     public toJSON(): { [k: string]: any };
+                }
+
+                /** Properties of a ConversationEvent. */
+                interface IConversationEvent {
+
+                    /** ConversationEvent conversation */
+                    conversation?: (string|null);
+
+                    /** ConversationEvent type */
+                    type?: (google.cloud.dialogflow.v2beta1.ConversationEvent.Type|keyof typeof google.cloud.dialogflow.v2beta1.ConversationEvent.Type|null);
+
+                    /** ConversationEvent errorStatus */
+                    errorStatus?: (google.rpc.IStatus|null);
+
+                    /** ConversationEvent newMessagePayload */
+                    newMessagePayload?: (google.cloud.dialogflow.v2beta1.IMessage|null);
+                }
+
+                /** Represents a ConversationEvent. */
+                class ConversationEvent implements IConversationEvent {
+
+                    /**
+                     * Constructs a new ConversationEvent.
+                     * @param [properties] Properties to set
+                     */
+                    constructor(properties?: google.cloud.dialogflow.v2beta1.IConversationEvent);
+
+                    /** ConversationEvent conversation. */
+                    public conversation: string;
+
+                    /** ConversationEvent type. */
+                    public type: (google.cloud.dialogflow.v2beta1.ConversationEvent.Type|keyof typeof google.cloud.dialogflow.v2beta1.ConversationEvent.Type);
+
+                    /** ConversationEvent errorStatus. */
+                    public errorStatus?: (google.rpc.IStatus|null);
+
+                    /** ConversationEvent newMessagePayload. */
+                    public newMessagePayload?: (google.cloud.dialogflow.v2beta1.IMessage|null);
+
+                    /** ConversationEvent payload. */
+                    public payload?: "newMessagePayload";
+
+                    /**
+                     * Creates a new ConversationEvent instance using the specified properties.
+                     * @param [properties] Properties to set
+                     * @returns ConversationEvent instance
+                     */
+                    public static create(properties?: google.cloud.dialogflow.v2beta1.IConversationEvent): google.cloud.dialogflow.v2beta1.ConversationEvent;
+
+                    /**
+                     * Encodes the specified ConversationEvent message. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ConversationEvent.verify|verify} messages.
+                     * @param message ConversationEvent message or plain object to encode
+                     * @param [writer] Writer to encode to
+                     * @returns Writer
+                     */
+                    public static encode(message: google.cloud.dialogflow.v2beta1.IConversationEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                    /**
+                     * Encodes the specified ConversationEvent message, length delimited. Does not implicitly {@link google.cloud.dialogflow.v2beta1.ConversationEvent.verify|verify} messages.
+                     * @param message ConversationEvent message or plain object to encode
+                     * @param [writer] Writer to encode to
+                     * @returns Writer
+                     */
+                    public static encodeDelimited(message: google.cloud.dialogflow.v2beta1.IConversationEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                    /**
+                     * Decodes a ConversationEvent message from the specified reader or buffer.
+                     * @param reader Reader or buffer to decode from
+                     * @param [length] Message length if known beforehand
+                     * @returns ConversationEvent
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): google.cloud.dialogflow.v2beta1.ConversationEvent;
+
+                    /**
+                     * Decodes a ConversationEvent message from the specified reader or buffer, length delimited.
+                     * @param reader Reader or buffer to decode from
+                     * @returns ConversationEvent
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): google.cloud.dialogflow.v2beta1.ConversationEvent;
+
+                    /**
+                     * Verifies a ConversationEvent message.
+                     * @param message Plain object to verify
+                     * @returns `null` if valid, otherwise the reason why it is not
+                     */
+                    public static verify(message: { [k: string]: any }): (string|null);
+
+                    /**
+                     * Creates a ConversationEvent message from a plain object. Also converts values to their respective internal types.
+                     * @param object Plain object
+                     * @returns ConversationEvent
+                     */
+                    public static fromObject(object: { [k: string]: any }): google.cloud.dialogflow.v2beta1.ConversationEvent;
+
+                    /**
+                     * Creates a plain object from a ConversationEvent message. Also converts values to other types if specified.
+                     * @param message ConversationEvent
+                     * @param [options] Conversion options
+                     * @returns Plain object
+                     */
+                    public static toObject(message: google.cloud.dialogflow.v2beta1.ConversationEvent, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                    /**
+                     * Converts this ConversationEvent to JSON.
+                     * @returns JSON object
+                     */
+                    public toJSON(): { [k: string]: any };
+                }
+
+                namespace ConversationEvent {
+
+                    /** Type enum. */
+                    enum Type {
+                        TYPE_UNSPECIFIED = 0,
+                        CONVERSATION_STARTED = 1,
+                        CONVERSATION_FINISHED = 2,
+                        NEW_MESSAGE = 5,
+                        UNRECOVERABLE_ERROR = 4
+                    }
                 }
 
                 /** Properties of a HumanAgentAssistantEvent. */
