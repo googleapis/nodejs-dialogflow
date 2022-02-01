@@ -862,6 +862,118 @@ describe('v2.ParticipantsClient', () => {
     });
   });
 
+  describe('suggestSmartReplies', () => {
+    it('invokes suggestSmartReplies without error', async () => {
+      const client = new participantsModule.v2.ParticipantsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2.SuggestSmartRepliesRequest()
+      );
+      request.parent = '';
+      const expectedHeaderRequestParams = 'parent=';
+      const expectedOptions = {
+        otherArgs: {
+          headers: {
+            'x-goog-request-params': expectedHeaderRequestParams,
+          },
+        },
+      };
+      const expectedResponse = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2.SuggestSmartRepliesResponse()
+      );
+      client.innerApiCalls.suggestSmartReplies =
+        stubSimpleCall(expectedResponse);
+      const [response] = await client.suggestSmartReplies(request);
+      assert.deepStrictEqual(response, expectedResponse);
+      assert(
+        (client.innerApiCalls.suggestSmartReplies as SinonStub)
+          .getCall(0)
+          .calledWith(request, expectedOptions, undefined)
+      );
+    });
+
+    it('invokes suggestSmartReplies without error using callback', async () => {
+      const client = new participantsModule.v2.ParticipantsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2.SuggestSmartRepliesRequest()
+      );
+      request.parent = '';
+      const expectedHeaderRequestParams = 'parent=';
+      const expectedOptions = {
+        otherArgs: {
+          headers: {
+            'x-goog-request-params': expectedHeaderRequestParams,
+          },
+        },
+      };
+      const expectedResponse = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2.SuggestSmartRepliesResponse()
+      );
+      client.innerApiCalls.suggestSmartReplies =
+        stubSimpleCallWithCallback(expectedResponse);
+      const promise = new Promise((resolve, reject) => {
+        client.suggestSmartReplies(
+          request,
+          (
+            err?: Error | null,
+            result?: protos.google.cloud.dialogflow.v2.ISuggestSmartRepliesResponse | null
+          ) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+      });
+      const response = await promise;
+      assert.deepStrictEqual(response, expectedResponse);
+      assert(
+        (client.innerApiCalls.suggestSmartReplies as SinonStub)
+          .getCall(0)
+          .calledWith(request, expectedOptions /*, callback defined above */)
+      );
+    });
+
+    it('invokes suggestSmartReplies with error', async () => {
+      const client = new participantsModule.v2.ParticipantsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2.SuggestSmartRepliesRequest()
+      );
+      request.parent = '';
+      const expectedHeaderRequestParams = 'parent=';
+      const expectedOptions = {
+        otherArgs: {
+          headers: {
+            'x-goog-request-params': expectedHeaderRequestParams,
+          },
+        },
+      };
+      const expectedError = new Error('expected');
+      client.innerApiCalls.suggestSmartReplies = stubSimpleCall(
+        undefined,
+        expectedError
+      );
+      await assert.rejects(client.suggestSmartReplies(request), expectedError);
+      assert(
+        (client.innerApiCalls.suggestSmartReplies as SinonStub)
+          .getCall(0)
+          .calledWith(request, expectedOptions, undefined)
+      );
+    });
+  });
+
   describe('listParticipants', () => {
     it('invokes listParticipants without error', async () => {
       const client = new participantsModule.v2.ParticipantsClient({
