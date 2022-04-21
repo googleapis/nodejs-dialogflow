@@ -18,6 +18,8 @@ async function main(parentId, displayName) {
   // [START dialogflow_set_agent_sample]
   const {AgentsClient} = require('@google-cloud/dialogflow');
 
+  // parentID is the projectID, 
+  // make sure to pass projectID as the input parameter
   const parent = 'projects/' + parentId + '/locations/global';
 
   const agent = {
