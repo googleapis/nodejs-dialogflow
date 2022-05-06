@@ -3470,6 +3470,9 @@ export namespace google {
                     /** AnalyzeContentRequest assistQueryParams */
                     assistQueryParams?: (google.cloud.dialogflow.v2.IAssistQueryParameters|null);
 
+                    /** AnalyzeContentRequest cxParameters */
+                    cxParameters?: (google.protobuf.IStruct|null);
+
                     /** AnalyzeContentRequest requestId */
                     requestId?: (string|null);
                 }
@@ -3500,6 +3503,9 @@ export namespace google {
 
                     /** AnalyzeContentRequest assistQueryParams. */
                     public assistQueryParams?: (google.cloud.dialogflow.v2.IAssistQueryParameters|null);
+
+                    /** AnalyzeContentRequest cxParameters. */
+                    public cxParameters?: (google.protobuf.IStruct|null);
 
                     /** AnalyzeContentRequest requestId. */
                     public requestId: string;

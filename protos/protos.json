@@ -1353,6 +1353,10 @@
                           "type": "AssistQueryParameters",
                           "id": 14
                         },
+                        "cxParameters": {
+                          "type": "google.protobuf.Struct",
+                          "id": 18
+                        },
                         "requestId": {
                           "type": "string",
                           "id": 11

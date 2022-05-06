@@ -56,6 +56,14 @@ function main(participant) {
    */
   // const assistQueryParams = {}
   /**
+   *  Additional parameters to be put into Dialogflow CX session parameters. To
+   *  remove a parameter from the session, clients should explicitly set the
+   *  parameter value to null.
+   *  Note: this field should only be used if you are connecting to a Dialogflow
+   *  CX agent.
+   */
+  // const cxParameters = {}
+  /**
    *  A unique identifier for this request. Restricted to 36 ASCII characters.
    *  A random UUID is recommended.
    *  This request is only idempotent if a `request_id` is provided.
