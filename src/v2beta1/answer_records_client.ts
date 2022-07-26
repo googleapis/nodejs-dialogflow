@@ -711,8 +711,6 @@ export class AnswerRecordsClient {
    * @param {string} [request.filter]
    *   Optional. Filters to restrict results to specific answer records.
    *
-   *   Marked deprecated as it hasn't been, and isn't currently, supported.
-   *
    *   For more information about filtering, see
    *   [API Filtering](https://aip.dev/160).
    * @param {number} request.pageSize
@@ -823,8 +821,6 @@ export class AnswerRecordsClient {
    * @param {string} [request.filter]
    *   Optional. Filters to restrict results to specific answer records.
    *
-   *   Marked deprecated as it hasn't been, and isn't currently, supported.
-   *
    *   For more information about filtering, see
    *   [API Filtering](https://aip.dev/160).
    * @param {number} request.pageSize
@@ -882,8 +878,6 @@ export class AnswerRecordsClient {
    *   ID>`.
    * @param {string} [request.filter]
    *   Optional. Filters to restrict results to specific answer records.
-   *
-   *   Marked deprecated as it hasn't been, and isn't currently, supported.
    *
    *   For more information about filtering, see
    *   [API Filtering](https://aip.dev/160).
