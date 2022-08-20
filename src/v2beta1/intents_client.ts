@@ -32,7 +32,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -458,7 +457,8 @@ export class IntentsClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -1104,7 +1104,7 @@ export class IntentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.batchUpdateIntents,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2beta1.BatchUpdateIntentsResponse,
@@ -1258,7 +1258,7 @@ export class IntentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.batchDeleteIntents,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1438,7 +1438,7 @@ export class IntentsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listIntents.createStream(
-      this.innerApiCalls.listIntents as gax.GaxCall,
+      this.innerApiCalls.listIntents as GaxCall,
       request,
       callSettings
     );
@@ -1504,7 +1504,7 @@ export class IntentsClient {
     this.initialize();
     return this.descriptors.page.listIntents.asyncIterate(
       this.innerApiCalls['listIntents'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2beta1.IIntent>;
   }

@@ -32,7 +32,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import {PassThrough} from 'stream';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
@@ -42,7 +41,7 @@ import jsonProtos = require('../../protos/protos.json');
  * This file defines retry strategy and timeouts for all API methods in this library.
  */
 import * as gapicConfig from './participants_client_config.json';
-import {operationsProtos} from 'google-gax';
+
 const version = require('../../../package.json').version;
 
 /**
@@ -464,7 +463,8 @@ export class ParticipantsClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -1619,7 +1619,7 @@ export class ParticipantsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listParticipants.createStream(
-      this.innerApiCalls.listParticipants as gax.GaxCall,
+      this.innerApiCalls.listParticipants as GaxCall,
       request,
       callSettings
     );
@@ -1670,7 +1670,7 @@ export class ParticipantsClient {
     this.initialize();
     return this.descriptors.page.listParticipants.asyncIterate(
       this.innerApiCalls['listParticipants'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2beta1.IParticipant>;
   }
@@ -1866,7 +1866,7 @@ export class ParticipantsClient {
       'DeprecationWarning'
     );
     return this.descriptors.page.listSuggestions.createStream(
-      this.innerApiCalls.listSuggestions as gax.GaxCall,
+      this.innerApiCalls.listSuggestions as GaxCall,
       request,
       callSettings
     );
@@ -1932,7 +1932,7 @@ export class ParticipantsClient {
     );
     return this.descriptors.page.listSuggestions.asyncIterate(
       this.innerApiCalls['listSuggestions'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2beta1.ISuggestion>;
   }

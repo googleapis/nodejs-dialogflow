@@ -32,7 +32,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -519,7 +518,8 @@ export class DocumentsClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -813,7 +813,7 @@ export class DocumentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.createDocument,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.Document,
@@ -973,7 +973,7 @@ export class DocumentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.importDocuments,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.ImportDocumentsResponse,
@@ -1120,7 +1120,7 @@ export class DocumentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.deleteDocument,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1268,7 +1268,7 @@ export class DocumentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.updateDocument,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.Document,
@@ -1432,7 +1432,7 @@ export class DocumentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.reloadDocument,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.Document,
@@ -1587,7 +1587,7 @@ export class DocumentsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.exportDocument,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.Document,
@@ -1781,7 +1781,7 @@ export class DocumentsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listDocuments.createStream(
-      this.innerApiCalls.listDocuments as gax.GaxCall,
+      this.innerApiCalls.listDocuments as GaxCall,
       request,
       callSettings
     );
@@ -1854,7 +1854,7 @@ export class DocumentsClient {
     this.initialize();
     return this.descriptors.page.listDocuments.asyncIterate(
       this.innerApiCalls['listDocuments'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IDocument>;
   }

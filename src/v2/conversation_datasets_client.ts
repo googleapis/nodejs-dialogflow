@@ -32,7 +32,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -501,7 +500,8 @@ export class ConversationDatasetsClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -814,7 +814,7 @@ export class ConversationDatasetsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.createConversationDataset,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.ConversationDataset,
@@ -965,7 +965,7 @@ export class ConversationDatasetsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.deleteConversationDataset,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1119,7 +1119,7 @@ export class ConversationDatasetsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.importConversationData,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.ImportConversationDataOperationResponse,
@@ -1272,7 +1272,7 @@ export class ConversationDatasetsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listConversationDatasets.createStream(
-      this.innerApiCalls.listConversationDatasets as gax.GaxCall,
+      this.innerApiCalls.listConversationDatasets as GaxCall,
       request,
       callSettings
     );
@@ -1322,7 +1322,7 @@ export class ConversationDatasetsClient {
     this.initialize();
     return this.descriptors.page.listConversationDatasets.asyncIterate(
       this.innerApiCalls['listConversationDatasets'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IConversationDataset>;
   }

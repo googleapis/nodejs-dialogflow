@@ -32,7 +32,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -518,7 +517,8 @@ export class EntityTypesClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -1147,7 +1147,7 @@ export class EntityTypesClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.batchUpdateEntityTypes,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse,
@@ -1302,7 +1302,7 @@ export class EntityTypesClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.batchDeleteEntityTypes,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1458,7 +1458,7 @@ export class EntityTypesClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.batchCreateEntities,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1619,7 +1619,7 @@ export class EntityTypesClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.batchUpdateEntities,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1777,7 +1777,7 @@ export class EntityTypesClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.batchDeleteEntities,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1937,7 +1937,7 @@ export class EntityTypesClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listEntityTypes.createStream(
-      this.innerApiCalls.listEntityTypes as gax.GaxCall,
+      this.innerApiCalls.listEntityTypes as GaxCall,
       request,
       callSettings
     );
@@ -1993,7 +1993,7 @@ export class EntityTypesClient {
     this.initialize();
     return this.descriptors.page.listEntityTypes.asyncIterate(
       this.innerApiCalls['listEntityTypes'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IEntityType>;
   }

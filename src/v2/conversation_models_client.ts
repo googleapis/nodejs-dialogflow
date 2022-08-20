@@ -32,7 +32,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -535,7 +534,8 @@ export class ConversationModelsClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -946,7 +946,7 @@ export class ConversationModelsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.createConversationModel,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.ConversationModel,
@@ -1096,7 +1096,7 @@ export class ConversationModelsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.deleteConversationModel,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1249,7 +1249,7 @@ export class ConversationModelsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.deployConversationModel,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1402,7 +1402,7 @@ export class ConversationModelsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.undeployConversationModel,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.protobuf.Empty,
@@ -1547,7 +1547,7 @@ export class ConversationModelsClient {
     const decodeOperation = new gax.Operation(
       operation,
       this.descriptors.longrunning.createConversationModelEvaluation,
-      gax.createDefaultBackoffSettings()
+      this._gaxModule.createDefaultBackoffSettings()
     );
     return decodeOperation as LROperation<
       protos.google.cloud.dialogflow.v2.ConversationModelEvaluation,
@@ -1699,7 +1699,7 @@ export class ConversationModelsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listConversationModels.createStream(
-      this.innerApiCalls.listConversationModels as gax.GaxCall,
+      this.innerApiCalls.listConversationModels as GaxCall,
       request,
       callSettings
     );
@@ -1749,7 +1749,7 @@ export class ConversationModelsClient {
     this.initialize();
     return this.descriptors.page.listConversationModels.asyncIterate(
       this.innerApiCalls['listConversationModels'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IConversationModel>;
   }
@@ -1899,7 +1899,7 @@ export class ConversationModelsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listConversationModelEvaluations.createStream(
-      this.innerApiCalls.listConversationModelEvaluations as gax.GaxCall,
+      this.innerApiCalls.listConversationModelEvaluations as GaxCall,
       request,
       callSettings
     );
@@ -1950,7 +1950,7 @@ export class ConversationModelsClient {
     this.initialize();
     return this.descriptors.page.listConversationModelEvaluations.asyncIterate(
       this.innerApiCalls['listConversationModelEvaluations'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IConversationModelEvaluation>;
   }

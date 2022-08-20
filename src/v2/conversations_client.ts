@@ -31,7 +31,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -40,7 +39,7 @@ import jsonProtos = require('../../protos/protos.json');
  * This file defines retry strategy and timeouts for all API methods in this library.
  */
 import * as gapicConfig from './conversations_client_config.json';
-import {operationsProtos} from 'google-gax';
+
 const version = require('../../../package.json').version;
 
 /**
@@ -450,7 +449,8 @@ export class ConversationsClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -1008,7 +1008,7 @@ export class ConversationsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listConversations.createStream(
-      this.innerApiCalls.listConversations as gax.GaxCall,
+      this.innerApiCalls.listConversations as GaxCall,
       request,
       callSettings
     );
@@ -1076,7 +1076,7 @@ export class ConversationsClient {
     this.initialize();
     return this.descriptors.page.listConversations.asyncIterate(
       this.innerApiCalls['listConversations'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IConversation>;
   }
@@ -1245,7 +1245,7 @@ export class ConversationsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listMessages.createStream(
-      this.innerApiCalls.listMessages as gax.GaxCall,
+      this.innerApiCalls.listMessages as GaxCall,
       request,
       callSettings
     );
@@ -1305,7 +1305,7 @@ export class ConversationsClient {
     this.initialize();
     return this.descriptors.page.listMessages.asyncIterate(
       this.innerApiCalls['listMessages'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2.IMessage>;
   }

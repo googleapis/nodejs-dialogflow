@@ -31,7 +31,6 @@ import {
 } from 'google-gax';
 
 import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -40,7 +39,7 @@ import jsonProtos = require('../../protos/protos.json');
  * This file defines retry strategy and timeouts for all API methods in this library.
  */
 import * as gapicConfig from './environments_client_config.json';
-import {operationsProtos} from 'google-gax';
+
 const version = require('../../../package.json').version;
 
 /**
@@ -435,7 +434,8 @@ export class EnvironmentsClient {
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
-        descriptor
+        descriptor,
+        this._opts.fallback
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -1061,7 +1061,7 @@ export class EnvironmentsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listEnvironments.createStream(
-      this.innerApiCalls.listEnvironments as gax.GaxCall,
+      this.innerApiCalls.listEnvironments as GaxCall,
       request,
       callSettings
     );
@@ -1113,7 +1113,7 @@ export class EnvironmentsClient {
     this.initialize();
     return this.descriptors.page.listEnvironments.asyncIterate(
       this.innerApiCalls['listEnvironments'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2beta1.IEnvironment>;
   }
@@ -1264,7 +1264,7 @@ export class EnvironmentsClient {
     const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.getEnvironmentHistory.createStream(
-      this.innerApiCalls.getEnvironmentHistory as gax.GaxCall,
+      this.innerApiCalls.getEnvironmentHistory as GaxCall,
       request,
       callSettings
     );
@@ -1317,7 +1317,7 @@ export class EnvironmentsClient {
     this.initialize();
     return this.descriptors.page.getEnvironmentHistory.asyncIterate(
       this.innerApiCalls['getEnvironmentHistory'] as GaxCall,
-      request as unknown as RequestType,
+      request as {},
       callSettings
     ) as AsyncIterable<protos.google.cloud.dialogflow.v2beta1.EnvironmentHistory.IEntry>;
   }
