@@ -430,6 +430,7 @@ export class ConversationsClient {
       'completeConversation',
       'batchCreateMessages',
       'listMessages',
+      'suggestConversationSummary',
     ];
     for (const methodName of conversationsStubMethods) {
       const callPromise = this.conversationsStub.then(
@@ -946,6 +947,122 @@ export class ConversationsClient {
       });
     this.initialize();
     return this.innerApiCalls.batchCreateMessages(request, options, callback);
+  }
+  /**
+   * Suggest summary for a conversation based on specific historical messages.
+   * The range of the messages to be used for summary can be specified in the
+   * request.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.conversation
+   *   Required. The conversation to fetch suggestion for.
+   *   Format: `projects/<Project ID>/locations/<Location
+   *   ID>/conversations/<Conversation ID>`.
+   * @param {string} request.latestMessage
+   *   The name of the latest conversation message used as context for
+   *   compiling suggestion. If empty, the latest message of the conversation will
+   *   be used.
+   *
+   *   Format: `projects/<Project ID>/locations/<Location
+   *   ID>/conversations/<Conversation ID>/messages/<Message ID>`.
+   * @param {number} request.contextSize
+   *   Max number of messages prior to and including
+   *   [latest_message] to use as context when compiling the
+   *   suggestion. By default 500 and at most 1000.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [SuggestConversationSummaryResponse]{@link google.cloud.dialogflow.v2beta1.SuggestConversationSummaryResponse}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example <caption>include:samples/generated/v2beta1/conversations.suggest_conversation_summary.js</caption>
+   * region_tag:dialogflow_v2beta1_generated_Conversations_SuggestConversationSummary_async
+   */
+  suggestConversationSummary(
+    request?: protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryResponse,
+      (
+        | protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  suggestConversationSummary(
+    request: protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryResponse,
+      | protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  suggestConversationSummary(
+    request: protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest,
+    callback: Callback<
+      protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryResponse,
+      | protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  suggestConversationSummary(
+    request?: protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryResponse,
+          | protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryResponse,
+      | protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryResponse,
+      (
+        | protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      this._gaxModule.routingHeader.fromParams({
+        conversation: request.conversation ?? '',
+      });
+    this.initialize();
+    return this.innerApiCalls.suggestConversationSummary(
+      request,
+      options,
+      callback
+    );
   }
 
   /**

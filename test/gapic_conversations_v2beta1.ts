@@ -750,6 +750,143 @@ describe('v2beta1.ConversationsClient', () => {
     });
   });
 
+  describe('suggestConversationSummary', () => {
+    it('invokes suggestConversationSummary without error', async () => {
+      const client = new conversationsModule.v2beta1.ConversationsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest()
+      );
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest',
+        ['conversation']
+      );
+      request.conversation = defaultValue1;
+      const expectedHeaderRequestParams = `conversation=${defaultValue1}`;
+      const expectedResponse = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryResponse()
+      );
+      client.innerApiCalls.suggestConversationSummary =
+        stubSimpleCall(expectedResponse);
+      const [response] = await client.suggestConversationSummary(request);
+      assert.deepStrictEqual(response, expectedResponse);
+      const actualRequest = (
+        client.innerApiCalls.suggestConversationSummary as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.suggestConversationSummary as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
+    });
+
+    it('invokes suggestConversationSummary without error using callback', async () => {
+      const client = new conversationsModule.v2beta1.ConversationsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest()
+      );
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest',
+        ['conversation']
+      );
+      request.conversation = defaultValue1;
+      const expectedHeaderRequestParams = `conversation=${defaultValue1}`;
+      const expectedResponse = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryResponse()
+      );
+      client.innerApiCalls.suggestConversationSummary =
+        stubSimpleCallWithCallback(expectedResponse);
+      const promise = new Promise((resolve, reject) => {
+        client.suggestConversationSummary(
+          request,
+          (
+            err?: Error | null,
+            result?: protos.google.cloud.dialogflow.v2beta1.ISuggestConversationSummaryResponse | null
+          ) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+      });
+      const response = await promise;
+      assert.deepStrictEqual(response, expectedResponse);
+      const actualRequest = (
+        client.innerApiCalls.suggestConversationSummary as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.suggestConversationSummary as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
+    });
+
+    it('invokes suggestConversationSummary with error', async () => {
+      const client = new conversationsModule.v2beta1.ConversationsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest()
+      );
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest',
+        ['conversation']
+      );
+      request.conversation = defaultValue1;
+      const expectedHeaderRequestParams = `conversation=${defaultValue1}`;
+      const expectedError = new Error('expected');
+      client.innerApiCalls.suggestConversationSummary = stubSimpleCall(
+        undefined,
+        expectedError
+      );
+      await assert.rejects(
+        client.suggestConversationSummary(request),
+        expectedError
+      );
+      const actualRequest = (
+        client.innerApiCalls.suggestConversationSummary as SinonStub
+      ).getCall(0).args[0];
+      assert.deepStrictEqual(actualRequest, request);
+      const actualHeaderRequestParams = (
+        client.innerApiCalls.suggestConversationSummary as SinonStub
+      ).getCall(0).args[1].otherArgs.headers['x-goog-request-params'];
+      assert(actualHeaderRequestParams.includes(expectedHeaderRequestParams));
+    });
+
+    it('invokes suggestConversationSummary with closed client', async () => {
+      const client = new conversationsModule.v2beta1.ConversationsClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      client.initialize();
+      const request = generateSampleMessage(
+        new protos.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest()
+      );
+      const defaultValue1 = getTypeDefaultValue(
+        '.google.cloud.dialogflow.v2beta1.SuggestConversationSummaryRequest',
+        ['conversation']
+      );
+      request.conversation = defaultValue1;
+      const expectedError = new Error('The client has already been closed.');
+      client.close();
+      await assert.rejects(
+        client.suggestConversationSummary(request),
+        expectedError
+      );
+    });
+  });
+
   describe('listConversations', () => {
     it('invokes listConversations without error', async () => {
       const client = new conversationsModule.v2beta1.ConversationsClient({
