@@ -41544,6 +41544,9 @@ export namespace google {
 
                     /** SpeechToTextConfig speechModelVariant */
                     speechModelVariant?: (google.cloud.dialogflow.v2beta1.SpeechModelVariant|keyof typeof google.cloud.dialogflow.v2beta1.SpeechModelVariant|null);
+
+                    /** SpeechToTextConfig model */
+                    model?: (string|null);
                 }
 
                 /** Represents a SpeechToTextConfig. */
@@ -41557,6 +41560,9 @@ export namespace google {
 
                     /** SpeechToTextConfig speechModelVariant. */
                     public speechModelVariant: (google.cloud.dialogflow.v2beta1.SpeechModelVariant|keyof typeof google.cloud.dialogflow.v2beta1.SpeechModelVariant);
+
+                    /** SpeechToTextConfig model. */
+                    public model: string;
 
                     /**
                      * Creates a new SpeechToTextConfig instance using the specified properties.

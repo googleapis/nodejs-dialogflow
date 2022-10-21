@@ -11895,6 +11895,10 @@
                         "speechModelVariant": {
                           "type": "SpeechModelVariant",
                           "id": 1
+                        },
+                        "model": {
+                          "type": "string",
+                          "id": 2
                         }
                       }
                     },
