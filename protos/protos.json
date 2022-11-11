@@ -376,6 +376,11 @@
                           }
                         },
                         "Tier": {
+                          "valuesOptions": {
+                            "TIER_ENTERPRISE_PLUS": {
+                              "deprecated": true
+                            }
+                          },
                           "values": {
                             "TIER_UNSPECIFIED": 0,
                             "TIER_STANDARD": 1,
@@ -3254,6 +3259,11 @@
                           },
                           "nested": {
                             "Type": {
+                              "valuesOptions": {
+                                "TEMPLATE": {
+                                  "deprecated": true
+                                }
+                              },
                               "values": {
                                 "TYPE_UNSPECIFIED": 0,
                                 "EXAMPLE": 1,
@@ -9929,6 +9939,11 @@
                           }
                         },
                         "Tier": {
+                          "valuesOptions": {
+                            "TIER_ENTERPRISE_PLUS": {
+                              "deprecated": true
+                            }
+                          },
                           "values": {
                             "TIER_UNSPECIFIED": 0,
                             "TIER_STANDARD": 1,
@@ -13314,6 +13329,11 @@
                           },
                           "nested": {
                             "Type": {
+                              "valuesOptions": {
+                                "TEMPLATE": {
+                                  "deprecated": true
+                                }
+                              },
                               "values": {
                                 "TYPE_UNSPECIFIED": 0,
                                 "EXAMPLE": 1,
