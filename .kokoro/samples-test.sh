@@ -1,8 +1,7 @@
 #!/bin/bash
-
-# Copyright 2018 Google LLC
+# Copyright 2022 Google LLC
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the License);
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -13,32 +12,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 set -eo pipefail
-
 export NPM_CONFIG_PREFIX=${HOME}/.npm-global
-
 # Setup service account credentials.
 export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
 export GCLOUD_PROJECT=long-door-651
-
 cd $(dirname $0)/..
-
 # Run a pre-test hook, if a pre-samples-test.sh is in the project
 if [ -f .kokoro/pre-samples-test.sh ]; then
     set +x
     . .kokoro/pre-samples-test.sh
     set -x
 fi
-
 if [ -f samples/package.json ]; then
-    npm install
-
     # Install and link samples
     cd samples/
-    npm link ../
     npm install
-    cd ..
     # If tests are running against main branch, configure flakybot
     # to open issues on failures:
     if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"continuous"* ]] || [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"nightly"* ]]; then
@@ -50,10 +39,8 @@ if [ -f samples/package.json ]; then
       }
       trap cleanup EXIT HUP
     fi
-
-    npm run samples-test
+    npm run test
 fi
-
 # codecov combines coverage across integration and unit tests. Include
 # the logic below for any environment you wish to collect coverage for:
 COVERAGE_NODE=12
